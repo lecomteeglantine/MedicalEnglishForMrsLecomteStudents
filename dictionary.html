@@ -50,17 +50,39 @@
   </header>
 
   <main>
-    <section class="tool-panel" aria-label="Vocabulary tools">
-      <div class="search-wrap">
-        <label for="searchInput">Search vocabulary</label>
-        <div class="search-box">
-          <span aria-hidden="true">⌕</span>
-          <input id="searchInput" type="search" autocomplete="off" placeholder="Try: pneumonia, pain, scan, AI…">
-          <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search">×</button>
-        </div>
-        <div id="suggestions" class="suggestions" role="listbox" aria-label="Search suggestions"></div>
+    <section class="dictionary-search-engine" aria-labelledby="searchHeading">
+      <div class="search-engine-copy">
+        <p class="section-kicker">MEDICAL ENGLISH SEARCH</p>
+        <h2 id="searchHeading">Find a medical term</h2>
+        <p>Search in <strong>English or French</strong>. You can also search a symptom, definition, specialty or topic.</p>
       </div>
 
+      <div class="search-wrap search-wrap-large">
+        <label class="sr-only" for="searchInput">Search the Medical English dictionary</label>
+        <div class="search-box search-box-large">
+          <span class="search-icon" aria-hidden="true">⌕</span>
+          <input
+            id="searchInput"
+            type="search"
+            autocomplete="off"
+            spellcheck="false"
+            aria-autocomplete="list"
+            aria-controls="suggestions"
+            placeholder="Search: pneumonia, douleur, heart, scan, psychiatry, AI…">
+          <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search">×</button>
+        </div>
+        <div id="suggestions" class="suggestions search-suggestions-large" role="listbox" aria-label="Search suggestions"></div>
+        <div class="search-help">
+          <span>Try:</span>
+          <button type="button" class="search-example" data-example="pneumonia">pneumonia</button>
+          <button type="button" class="search-example" data-example="douleur">douleur</button>
+          <button type="button" class="search-example" data-example="scan">scan</button>
+          <button type="button" class="search-example" data-example="AI">AI</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tool-panel dictionary-tools" aria-label="Vocabulary tools">
       <div class="tool-actions">
         <a class="secondary-btn tool-link-btn" href="flashcards.html">🃏 Flashcards</a>
         <a class="secondary-btn tool-link-btn" href="notebook.html">📓 My notebook <span id="notebookCountBadge" class="count-badge">0</span></a>
@@ -91,7 +113,7 @@
     </section>
 
     <section class="results-bar" aria-live="polite">
-      <p><strong id="resultCount">0</strong> terms shown</p>
+      <p id="searchStatus"><strong id="resultCount">0</strong> terms shown</p>
       <p class="audio-note">🔊 Audio uses an <strong>English (UK)</strong> browser voice when available.</p>
     </section>
 
@@ -99,8 +121,9 @@
 
     <div id="emptyState" class="empty-state" hidden>
       <div class="empty-icon">🔎</div>
-      <h2>No match found</h2>
-      <p>Try another English word, French translation, definition or category.</p>
+      <h2>This term is not in the dictionary yet.</h2>
+      <p>Try another English word, a French translation, a symptom, a definition or a medical category.</p>
+      <button id="resetSearchFromEmpty" class="secondary-btn" type="button">Clear search</button>
     </div>
   </main>
 

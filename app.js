@@ -12,6 +12,8 @@
   const termCount = document.getElementById("termCount");
   const categoryCount = document.getElementById("categoryCount");
   const emptyState = document.getElementById("emptyState");
+  const searchStatus = document.getElementById("searchStatus");
+  const resetSearchFromEmpty = document.getElementById("resetSearchFromEmpty");
   const randomBtn = document.getElementById("randomBtn");
   const toggleFrench = document.getElementById("toggleFrench");
   const toggleDefinitions = document.getElementById("toggleDefinitions");
@@ -32,6 +34,57 @@
       .toLocaleLowerCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function tokens(value) {
+    return normalise(value)
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean);
+  }
+
+  function looseWord(value) {
+    const v = normalise(value).trim();
+    if (v.length > 4 && v.endsWith("ies")) return v.slice(0, -3) + "y";
+    if (v.length > 4 && v.endsWith("es")) return v.slice(0, -2);
+    if (v.length > 3 && v.endsWith("s")) return v.slice(0, -1);
+    return v;
+  }
+
+  function searchScore(item, rawQuery) {
+    const q = normalise(rawQuery).trim();
+    if (!q) return 1;
+
+    const word = normalise(item.word);
+    const french = normalise(item.fr);
+    const category = normalise(item.category);
+    const definition = normalise(item.definition);
+    const ipa = normalise(item.ipa);
+
+    if (word === q) return 1000;
+    if (french === q) return 950;
+    if (word.startsWith(q)) return 850;
+    if (french.startsWith(q)) return 800;
+    if (word.split(/\s+/).some(part => part.startsWith(q))) return 760;
+    if (french.split(/\s+/).some(part => part.startsWith(q))) return 720;
+    if (word.includes(q)) return 650;
+    if (french.includes(q)) return 620;
+    if (category.includes(q)) return 420;
+    if (definition.includes(q)) return 350;
+    if (ipa.includes(q)) return 200;
+
+    const queryTokens = tokens(q);
+    const combined = `${word} ${french} ${category} ${definition}`;
+    if (queryTokens.length > 1 && queryTokens.every(t => combined.includes(t))) return 300;
+
+    const looseQ = looseWord(q);
+    if (looseQ !== q) {
+      if (looseWord(word).includes(looseQ)) return 560;
+      if (looseWord(french).includes(looseQ)) return 530;
+    }
+
+    return 0;
   }
 
   function escapeHTML(value) {
@@ -62,34 +115,28 @@
   }
 
   function getFiltered() {
-    const q = normalise(searchInput.value.trim());
-    let items = all.filter(item => {
-      const categoryOK = activeCategory === "All" || item.category === activeCategory;
-      if (!categoryOK) return false;
-      if (!q) return true;
+    const query = searchInput.value.trim();
 
-      const haystack = normalise([
-        item.word,
-        item.ipa,
-        item.definition,
-        item.fr,
-        item.category
-      ].join(" "));
-
-      return haystack.includes(q);
-    });
+    let items = all
+      .map(item => ({ item, score: searchScore(item, query) }))
+      .filter(({ item, score }) => {
+        const categoryOK = activeCategory === "All" || item.category === activeCategory;
+        return categoryOK && (!query || score > 0);
+      });
 
     const mode = sortSelect.value;
-    items = [...items].sort((a, b) => {
-      if (mode === "za") return b.word.localeCompare(a.word, "en");
+
+    items.sort((a, b) => {
+      if (query && b.score !== a.score) return b.score - a.score;
+      if (mode === "za") return b.item.word.localeCompare(a.item.word, "en");
       if (mode === "category") {
-        return a.category.localeCompare(b.category, "en")
-          || a.word.localeCompare(b.word, "en");
+        return a.item.category.localeCompare(b.item.category, "en") ||
+               a.item.word.localeCompare(b.item.word, "en");
       }
-      return a.word.localeCompare(b.word, "en");
+      return a.item.word.localeCompare(b.item.word, "en");
     });
 
-    return items;
+    return items.map(({ item }) => item);
   }
 
   function cardTemplate(item) {
@@ -151,6 +198,12 @@
   function render() {
     const items = getFiltered();
     resultCount.textContent = items.length;
+    const query = searchInput.value.trim();
+    if (searchStatus) {
+      searchStatus.innerHTML = query
+        ? `<strong>${items.length}</strong> ${items.length === 1 ? "result" : "results"} for <strong>“${escapeHTML(query)}”</strong>`
+        : `<strong>${items.length}</strong> terms shown`;
+    }
     emptyState.hidden = items.length !== 0;
     grid.innerHTML = items.map(cardTemplate).join("");
 
@@ -213,52 +266,65 @@
   }
 
   function updateSuggestions() {
-    const q = normalise(searchInput.value.trim());
+    const query = searchInput.value.trim();
 
-    if (!q) {
+    if (!query) {
       suggestions.style.display = "none";
       suggestions.innerHTML = "";
       return;
     }
 
     const matches = all
-      .filter(item =>
-        normalise(item.word).includes(q) ||
-        normalise(item.fr).includes(q)
-      )
-      .slice(0, 8);
+      .map(item => ({ item, score: searchScore(item, query) }))
+      .filter(result => result.score > 0)
+      .sort((a, b) => b.score - a.score || a.item.word.localeCompare(b.item.word, "en"))
+      .slice(0, 10)
+      .map(result => result.item);
 
     if (!matches.length) {
-      suggestions.style.display = "none";
-      suggestions.innerHTML = "";
+      suggestions.innerHTML = `
+        <div class="suggestion-no-result">
+          <strong>No exact term found yet.</strong>
+          <span>Press Enter to see all possible matches.</span>
+        </div>`;
+      suggestions.style.display = "block";
       return;
     }
 
     suggestions.innerHTML = matches.map(item => `
       <button type="button"
-              class="suggestion"
+              class="suggestion smart-suggestion"
+              role="option"
               data-suggestion="${escapeHTML(item.word)}">
-        <span><strong>${escapeHTML(item.word)}</strong></span>
-        <small>${escapeHTML(item.fr)}</small>
+        <span class="suggestion-icon" aria-hidden="true">${escapeHTML(item.illustration || "🩺")}</span>
+        <span class="suggestion-main">
+          <strong>${escapeHTML(item.word)}</strong>
+          <small>${escapeHTML(item.fr)}</small>
+        </span>
+        <span class="suggestion-category">${escapeHTML(item.category)}</span>
       </button>
     `).join("");
 
     suggestions.style.display = "block";
 
     suggestions.querySelectorAll("[data-suggestion]").forEach(btn => {
-      btn.addEventListener("click", () => {
-        searchInput.value = btn.dataset.suggestion;
-        suggestions.style.display = "none";
-        activeCategory = "All";
-        buildFilters();
-        render();
-
-        const card = [...grid.querySelectorAll(".vocab-card")]
-          .find(c => normalise(c.dataset.word) === normalise(btn.dataset.suggestion));
-
-        card?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
+      btn.addEventListener("click", () => selectSuggestion(btn.dataset.suggestion));
     });
+  }
+
+  function selectSuggestion(word) {
+    searchInput.value = word;
+    suggestions.style.display = "none";
+    activeCategory = "All";
+    buildFilters();
+    render();
+
+    const card = [...grid.querySelectorAll(".vocab-card")]
+      .find(c => normalise(c.dataset.word) === normalise(word));
+
+    card?.scrollIntoView({ behavior: "smooth", block: "center" });
+    card?.classList.add("search-hit");
+    setTimeout(() => card?.classList.remove("search-hit"), 1100);
   }
 
   searchInput.addEventListener("input", () => {
@@ -267,7 +333,43 @@
   });
 
   searchInput.addEventListener("keydown", event => {
-    if (event.key === "Escape") suggestions.style.display = "none";
+    if (event.key === "Escape") {
+      suggestions.style.display = "none";
+      return;
+    }
+
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const firstSuggestion = suggestions.querySelector("[data-suggestion]");
+      if (firstSuggestion) {
+        selectSuggestion(firstSuggestion.dataset.suggestion);
+      } else {
+        suggestions.style.display = "none";
+        render();
+        grid.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  });
+
+  document.querySelectorAll("[data-example]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      searchInput.value = btn.dataset.example || "";
+      activeCategory = "All";
+      buildFilters();
+      updateSuggestions();
+      render();
+      searchInput.focus();
+    });
+  });
+
+  resetSearchFromEmpty?.addEventListener("click", () => {
+    searchInput.value = "";
+    activeCategory = "All";
+    buildFilters();
+    suggestions.style.display = "none";
+    render();
+    searchInput.focus();
+    document.getElementById("searchHeading")?.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 
   document.addEventListener("click", event => {
