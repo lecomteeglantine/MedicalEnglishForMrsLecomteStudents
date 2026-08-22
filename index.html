@@ -3,94 +3,128 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive medical English vocabulary bank for medical students.">
-  <title>Medical English Vocabulary</title>
+  <meta name="description" content="Medical English resources created by Mrs Lecomte for her students.">
+  <title>Medical English for Mrs Lecomte's Students</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <a class="skip-link" href="#vocabulary">Skip to vocabulary</a>
+<body class="home-page">
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="site-header">
-    <div class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">MEDICAL ENGLISH · VOCABULARY BANK</p>
-        <h1>Medical English Vocabulary</h1>
-        <p class="hero-text">Explore medical vocabulary with British English pronunciation, definitions, French translations and visual cues.</p>
-
-        <div class="hero-stats" aria-label="Vocabulary statistics">
-          <div class="stat"><strong id="termCount">0</strong><span>terms</span></div>
-          <div class="stat"><strong id="categoryCount">0</strong><span>categories</span></div>
-          <div class="stat"><strong>EN → FR</strong><span>bilingual</span></div>
-        </div>
-      </div>
-
-      <div class="hero-art" aria-hidden="true">
-        <div class="orbit orbit-one"></div>
-        <div class="orbit orbit-two"></div>
-        <div class="medical-card">
-          <span class="medical-card-icon">🩺</span>
-          <span class="pulse-line">⌁⌁⌁</span>
-          <span class="medical-card-icon">🧠</span>
-        </div>
-        <div class="ai-bubble">AI</div>
-      </div>
-    </div>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">🩺</span>
+      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="active" href="index.html">Home</a>
+      <a href="dictionary.html">Dictionary</a>
+      <a href="fgsm2.html">FGSM2</a>
+      <a href="fgsm3.html">FGSM3</a>
+      <a href="games.html">Games</a>
+    </nav>
   </header>
 
-  <main>
-    <section class="tool-panel" aria-label="Vocabulary tools">
-      <div class="search-wrap">
-        <label for="searchInput">Search vocabulary</label>
-        <div class="search-box">
-          <span aria-hidden="true">⌕</span>
-          <input id="searchInput" type="search" autocomplete="off" placeholder="Try: pneumonia, pain, scan, AI…">
-          <button id="clearSearch" type="button" aria-label="Clear search" title="Clear search">×</button>
+  <main id="main" class="home-main">
+    <section class="home-hero">
+      <div class="home-hero-copy">
+        <p class="eyebrow dark-eyebrow">CREATED BY MRS LECOMTE</p>
+        <h1>Medical English<br><span>for Mrs Lecomte's Students</span></h1>
+        <p>Vocabulary, course resources, pronunciation and games to build your medical English.</p>
+        <div class="hero-buttons">
+          <a class="primary-link" href="dictionary.html">Explore the dictionary →</a>
+          <a class="ghost-link" href="games.html">Play & revise →</a>
         </div>
-        <div id="suggestions" class="suggestions" role="listbox" aria-label="Search suggestions"></div>
       </div>
-
-      <div class="tool-actions">
-        <button id="randomBtn" class="secondary-btn" type="button">🎲 Surprise me</button>
-        <button id="toggleFrench" class="secondary-btn" type="button" aria-pressed="false">🇫🇷 Hide French</button>
-        <button id="toggleDefinitions" class="secondary-btn" type="button" aria-pressed="false">💡 Hide definitions</button>
-      </div>
-
-      <div class="filter-row">
-        <div>
-          <span class="filter-label">Browse by category</span>
-          <div id="categoryFilters" class="category-filters" aria-label="Categories"></div>
-        </div>
-        <label class="sort-control">
-          <span>Sort</span>
-          <select id="sortSelect">
-            <option value="az">A → Z</option>
-            <option value="za">Z → A</option>
-            <option value="category">By category</option>
-          </select>
-        </label>
+      <div class="home-visual" aria-hidden="true">
+        <div class="visual-card vc-one"><span>🫀</span><b>HEART</b></div>
+        <div class="visual-card vc-two"><span>🔊</span><b>/hɑːt/</b></div>
+        <div class="visual-card vc-three"><span>🧠</span><b>MEDICAL<br>ENGLISH</b></div>
+        <div class="visual-line"></div>
       </div>
     </section>
 
-    <section class="results-bar" aria-live="polite">
-      <p><strong id="resultCount">0</strong> terms shown</p>
-      <p class="audio-note">🔊 Audio uses an <strong>English (UK)</strong> browser voice when available.</p>
+    <section class="section-intro">
+      <p class="section-kicker">CHOOSE YOUR SECTION</p>
+      <h2>Where do you want to go?</h2>
     </section>
 
-    <section id="vocabulary" class="vocabulary-grid" aria-label="Medical vocabulary cards"></section>
+    <section class="portal-grid" aria-label="Main sections">
+      <a class="portal-card dictionary-portal" href="dictionary.html">
+        <div class="portal-icon">📘</div>
+        <div class="portal-number">01</div>
+        <h3>Dictionary</h3>
+        <p>Medical vocabulary with illustrations, British English pronunciation, definitions and French translations.</p>
+        <span class="portal-action">Explore the dictionary →</span>
+      </a>
 
-    <div id="emptyState" class="empty-state" hidden>
-      <div class="empty-icon">🔎</div>
-      <h2>No match found</h2>
-      <p>Try another English word, French translation, definition or category.</p>
-    </div>
+      <a class="portal-card fgsm2-portal" href="fgsm2.html">
+        <div class="portal-icon">🩺</div>
+        <div class="portal-number">02</div>
+        <h3>FGSM2</h3>
+        <p>Course resources, vocabulary, language practice and activities for Mrs Lecomte's FGSM2 students.</p>
+        <span class="coming-pill">Coming soon</span>
+      </a>
+
+      <a class="portal-card fgsm3-portal" href="fgsm3.html">
+        <div class="portal-icon">🧠</div>
+        <div class="portal-number">03</div>
+        <h3>FGSM3</h3>
+        <p>Clinical English, AI and medicine, healthcare systems and course resources for Mrs Lecomte's FGSM3 students.</p>
+        <span class="coming-pill">Coming soon</span>
+      </a>
+
+      <a class="portal-card games-portal" href="games.html">
+        <div class="portal-icon">🎮</div>
+        <div class="portal-number">04</div>
+        <h3>Games</h3>
+        <p>Learn, revise and challenge yourself through vocabulary, pronunciation and Medical English games.</p>
+        <span class="portal-action">Play & revise →</span>
+      </a>
+    </section>
+
+    <section class="word-day-section">
+      <div class="word-day-copy">
+        <p class="section-kicker">A LITTLE EVERY DAY</p>
+        <h2>Word of the day</h2>
+        <p>One Medical English word, picked automatically from Mrs Lecomte's dictionary.</p>
+      </div>
+      <article class="word-day-card" id="wordOfDay">
+        <div id="wodIllustration" class="wod-icon">🩺</div>
+        <div class="wod-main">
+          <span id="wodCategory" class="category-tag">Medical English</span>
+          <h3 id="wodWord">Loading…</h3>
+          <p id="wodIPA" class="ipa"></p>
+          <p id="wodDefinition" class="wod-definition"></p>
+          <p class="wod-fr"><span>Français</span> <strong id="wodFrench"></strong></p>
+          <div class="wod-actions">
+            <button id="wodListen" class="listen-btn" type="button">🔊 Listen</button>
+            <button id="anotherWord" class="secondary-btn" type="button">🎲 Another word</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="method-strip">
+      <div class="method-title">
+        <p class="section-kicker">YOUR MEDICAL ENGLISH TOOLKIT</p>
+        <h2>Learn it. Hear it. Use it. Play with it.</h2>
+      </div>
+      <div class="method-grid">
+        <div><span>👁️</span><h3>Learn it</h3><p>Definitions, translations and visual cues.</p></div>
+        <div><span>🔊</span><h3>Hear it</h3><p>British English pronunciation and IPA.</p></div>
+        <div><span>💬</span><h3>Use it</h3><p>Course activities and Medical English in context.</p></div>
+        <div><span>🎮</span><h3>Play with it</h3><p>Games and challenges to make revision stick.</p></div>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <p><strong>Medical English Vocabulary</strong></p>
-    <p>No personal data is collected or stored by this site.</p>
+  <footer class="site-footer">
+    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
+    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
+    <p class="privacy">No personal data is collected or stored by this website.</p>
   </footer>
 
   <script src="data/vocabulary.js"></script>
-  <script src="app.js"></script>
+  <script src="home.js"></script>
 </body>
 </html>
