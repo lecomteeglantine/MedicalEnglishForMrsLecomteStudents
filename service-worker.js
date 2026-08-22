@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v7-games-20260822";
+const CACHE_NAME = "mrs-lecomte-medical-english-v8-course-days-20260822";
 
 const APP_SHELL = [
   "./",
@@ -6,13 +6,23 @@ const APP_SHELL = [
   "./dictionary.html",
   "./fgsm2.html",
   "./fgsm3.html",
+  "./fgsm2-day1.html",
+  "./fgsm2-day2.html",
+  "./fgsm2-day3.html",
+  "./fgsm2-day4.html",
+  "./fgsm2-day5.html",
+  "./fgsm3-day1.html",
+  "./fgsm3-day2.html",
+  "./fgsm3-day3.html",
+  "./fgsm3-day4.html",
+  "./fgsm3-day5.html",
   "./games.html",
   "./flashcards.html",
   "./notebook.html",
   "./privacy.html",
   "./accessibility.html",
   "./404.html",
-  "./styles-v7.css",
+  "./styles-v8.css",
   "./app.js",
   "./home.js",
   "./games.js",
