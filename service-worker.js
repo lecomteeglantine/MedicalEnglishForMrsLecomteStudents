@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v6-style-hotfix-20260822";
+const CACHE_NAME = "mrs-lecomte-medical-english-v7-games-20260822";
 
 const APP_SHELL = [
   "./",
@@ -12,9 +12,10 @@ const APP_SHELL = [
   "./privacy.html",
   "./accessibility.html",
   "./404.html",
-  "./styles-v6.css",
+  "./styles-v7.css",
   "./app.js",
   "./home.js",
+  "./games.js",
   "./flashcards.js",
   "./notebook.js",
   "./student-data.js",

@@ -10,59 +10,197 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Medical English games and revision tools created by Mrs Lecomte for her students.">
+  <meta name="description" content="Interactive Medical English vocabulary games created by Mrs Lecomte for her students.">
   <title>Games · Medical English for Mrs Lecomte's Students</title>
-  <link rel="stylesheet" href="styles-v6.css">
+  <link rel="stylesheet" href="styles-v7.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="topbar">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">🩺</span>
+      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
+    </a>
     <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a href="fgsm3.html">FGSM3</a><a class="active" href="games.html">Games</a>
+      <a href="index.html">Home</a>
+      <a href="dictionary.html">Dictionary</a>
+      <a href="fgsm2.html">FGSM2</a>
+      <a href="fgsm3.html">FGSM3</a>
+      <a class="active" aria-current="page" href="games.html">Games</a>
     </nav>
   </header>
 
-  <main id="main" class="games-main">
+  <main id="main" class="games-main games-v7-main">
     <section class="mini-hero games-hero">
       <div>
         <p class="eyebrow">FOR MRS LECOMTE'S STUDENTS · GAMES</p>
         <h1>Play. Revise. Remember.</h1>
-        <p>Use short, active challenges to make Medical English vocabulary stick.</p>
+        <p>Six vocabulary challenges, one dictionary. Choose what you want to practise and work at your own pace.</p>
       </div>
       <div class="mini-hero-icon" aria-hidden="true">🎮</div>
     </section>
 
-    <section class="game-grid">
+    <section class="games-privacy-note" aria-label="Privacy information">
+      <span aria-hidden="true">🔒</span>
+      <p><strong>Your scores stay private.</strong> Game results are stored only in this browser on this device. They are not sent to Mrs Lecomte or stored in a student database.</p>
+    </section>
+
+    <section class="game-settings" aria-labelledby="gameSettingsHeading">
+      <div class="game-settings-heading">
+        <p class="section-kicker">CHOOSE YOUR PRACTICE SET</p>
+        <h2 id="gameSettingsHeading">What do you want to revise?</h2>
+      </div>
+
+      <div class="game-setting-controls">
+        <label>
+          <span>Vocabulary set</span>
+          <select id="gameSource">
+            <option value="all">All vocabulary</option>
+            <option value="notebook">My notebook</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Category</span>
+          <select id="gameCategory"></select>
+        </label>
+
+        <label>
+          <span>Questions</span>
+          <select id="gameQuestionCount">
+            <option value="5">5 questions</option>
+            <option value="10" selected>10 questions</option>
+            <option value="15">15 questions</option>
+          </select>
+        </label>
+      </div>
+
+      <p id="gamePoolStatus" class="game-pool-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="games-section-heading">
+      <p class="section-kicker">CHOOSE A CHALLENGE</p>
+      <h2>Vocabulary games</h2>
+      <p>Every game uses the terms, definitions and translations from Mrs Lecomte's Medical English Dictionary.</p>
+    </section>
+
+    <section class="game-grid expanded-game-grid" aria-label="Available vocabulary games">
       <a class="game-card live-game" href="flashcards.html">
-        <div class="game-card-icon">🃏</div>
-        <span class="live-pill">Ready to play</span>
-        <h2>Vocabulary Flashcards</h2>
-        <p>Choose a category, flip the cards, listen to the word and keep track of what you know.</p>
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🃏</div>
+          <span class="live-pill">Revision</span>
+        </div>
+        <h2>Flashcards</h2>
+        <p>Flip the card, listen to the word and decide whether you know it or need to review it again.</p>
         <span class="portal-action">Start flashcards →</span>
       </a>
 
+      <button class="game-card live-game game-launch-card" type="button" data-game="matching">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🔗</div>
+          <span class="live-pill">Active recall</span>
+        </div>
+        <h2>Match It!</h2>
+        <p>Match each English medical term with its French translation. No dragging required.</p>
+        <span class="game-best" data-best="matching">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
+      <button class="game-card live-game game-launch-card" type="button" data-game="definition">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🕵️</div>
+          <span class="live-pill">Meaning</span>
+        </div>
+        <h2>Definition Detective</h2>
+        <p>Read an English definition and identify the correct medical term from four choices.</p>
+        <span class="game-best" data-best="definition">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
+      <button class="game-card live-game game-launch-card" type="button" data-game="translation">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🇬🇧</div>
+          <span class="live-pill">EN ↔ FR</span>
+        </div>
+        <h2>French ↔ English</h2>
+        <p>Move in both directions between the English medical term and its French translation.</p>
+        <span class="game-best" data-best="translation">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
+      <button class="game-card live-game game-launch-card" type="button" data-game="listening">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🔊</div>
+          <span class="live-pill">Pronunciation</span>
+        </div>
+        <h2>Listen &amp; Choose</h2>
+        <p>Listen to a British-English pronunciation and choose the word you heard. A text alternative is always available.</p>
+        <span class="game-best" data-best="listening">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
+      <button class="game-card live-game game-launch-card" type="button" data-game="spelling">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">✍️</div>
+          <span class="live-pill">Production</span>
+        </div>
+        <h2>Spell It!</h2>
+        <p>Use the definition and French translation to retrieve and type the English medical term.</p>
+        <span class="game-best" data-best="spelling">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
+      <button class="game-card live-game game-launch-card" type="button" data-game="odd">
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">🧩</div>
+          <span class="live-pill">Categories</span>
+        </div>
+        <h2>Odd One Out</h2>
+        <p>Three terms belong to the same medical category. Find the one that does not belong.</p>
+        <span class="game-best" data-best="odd">Best: —</span>
+        <span class="portal-action">Play →</span>
+      </button>
+
       <a class="game-card live-game notebook-game" href="flashcards.html?source=notebook">
-        <div class="game-card-icon">📓</div>
-        <span class="live-pill">Personal deck</span>
+        <div class="game-card-topline">
+          <div class="game-card-icon" aria-hidden="true">📓</div>
+          <span class="live-pill">Personal deck</span>
+        </div>
         <h2>Revise My Notebook</h2>
-        <p>Practise only the Medical English terms you have personally saved.</p>
+        <p>Use flashcards to practise only the Medical English terms you have personally saved.</p>
         <span class="portal-action">Study my words →</span>
       </a>
+    </section>
 
-      <article class="game-card future-game">
-        <div class="game-card-icon">🔗</div>
-        <span class="coming-pill">Coming later</span>
-        <h2>Matching Challenge</h2>
-        <p>Match English terms, definitions and French translations.</p>
-      </article>
+    <section id="gameStage" class="game-stage" hidden aria-labelledby="activeGameTitle">
+      <div class="game-stage-head">
+        <div>
+          <p id="activeGameKicker" class="section-kicker">VOCABULARY GAME</p>
+          <h2 id="activeGameTitle">Game</h2>
+          <p id="activeGameInstructions"></p>
+        </div>
+        <button id="closeGame" class="secondary-btn" type="button">← Choose another game</button>
+      </div>
 
-      <article class="game-card future-game">
-        <div class="game-card-icon">⚡</div>
-        <span class="coming-pill">Coming later</span>
-        <h2>Speed Round</h2>
-        <p>Recognise Medical English vocabulary against the clock.</p>
-      </article>
+      <div class="game-live-stats" aria-label="Current game score">
+        <div><strong id="gameProgress">0 / 0</strong><span>progress</span></div>
+        <div><strong id="gameScore">0</strong><span>correct</span></div>
+        <div><strong id="gameBest">—</strong><span>best score</span></div>
+      </div>
+
+      <div id="gameFeedback" class="game-feedback" role="status" aria-live="polite"></div>
+      <div id="gameBoard" class="game-board"></div>
+
+      <div id="gameEnd" class="game-end" hidden>
+        <div class="game-end-icon" aria-hidden="true">🏁</div>
+        <h3 id="gameEndTitle">Round complete!</h3>
+        <p id="gameEndScore"></p>
+        <div class="game-end-actions">
+          <button id="playAgain" class="primary-game-btn" type="button">Play again</button>
+          <button id="chooseAnother" class="secondary-btn" type="button">Choose another game</button>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -71,6 +209,10 @@
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
     <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
   </footer>
+
+  <script src="data/vocabulary.js"></script>
+  <script src="student-data.js"></script>
+  <script src="games.js"></script>
   <script src="pwa.js" defer></script>
   <script src="accessibility.js" defer></script>
 </body>
