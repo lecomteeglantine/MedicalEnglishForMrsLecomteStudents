@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Personal Medical English vocabulary notebook for Mrs Lecomte's students.">
+  <title>My Notebook · Medical English for Mrs Lecomte's Students</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to my notebook</a>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a><a class="active" href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a href="fgsm3.html">FGSM3</a><a href="games.html">Games</a>
+    </nav>
+  </header>
+
+  <main id="main" class="notebook-main">
+    <section class="mini-hero notebook-hero">
+      <div>
+        <p class="eyebrow">FOR MRS LECOMTE'S STUDENTS · PERSONAL VOCABULARY</p>
+        <h1>My Notebook</h1>
+        <p>Save the terms you want to remember and add your own study notes.</p>
+      </div>
+      <div class="mini-hero-icon" aria-hidden="true">📓</div>
+    </section>
+
+    <section class="notebook-privacy">
+      <div>🔒</div>
+      <div>
+        <h2>Private to this browser</h2>
+        <p>Your notebook is stored locally on this device. It is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site.</p>
+        <p><strong>Never enter patient-identifying or confidential clinical information here.</strong></p>
+      </div>
+    </section>
+
+    <section class="notebook-toolbar">
+      <div class="notebook-stat"><strong id="notebookCount">0</strong><span>saved terms</span></div>
+      <div class="notebook-actions">
+        <a class="primary-link small-primary" href="flashcards.html?source=notebook">🃏 Revise my notebook</a>
+        <a class="secondary-btn tool-link-btn" href="dictionary.html">＋ Add words</a>
+        <button id="exportNotebook" class="secondary-btn" type="button">⇩ Export</button>
+        <label class="secondary-btn import-label">⇧ Import<input id="importNotebook" type="file" accept=".json,application/json"></label>
+        <button id="clearNotebook" class="danger-btn" type="button">Clear notebook</button>
+      </div>
+    </section>
+
+    <section id="notebookEmpty" class="notebook-empty" hidden>
+      <div>📘</div>
+      <h2>Your notebook is empty.</h2>
+      <p>Open the dictionary and use <strong>Add to notebook</strong> on any term you want to keep.</p>
+      <a class="primary-link" href="dictionary.html">Explore the dictionary →</a>
+    </section>
+
+    <section id="notebookGrid" class="notebook-grid" aria-live="polite"></section>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
+    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a></p>
+  </footer>
+  <script src="data/vocabulary.js"></script>
+  <script src="student-data.js"></script>
+  <script src="notebook.js"></script>
+</body>
+</html>

@@ -62,6 +62,8 @@
       </div>
 
       <div class="tool-actions">
+        <a class="secondary-btn tool-link-btn" href="flashcards.html">🃏 Flashcards</a>
+        <a class="secondary-btn tool-link-btn" href="notebook.html">📓 My notebook <span id="notebookCountBadge" class="count-badge">0</span></a>
         <button id="randomBtn" class="secondary-btn" type="button">🎲 Surprise me</button>
         <button id="toggleFrench" class="secondary-btn" type="button" aria-pressed="false">🇫🇷 Hide French</button>
         <button id="toggleDefinitions" class="secondary-btn" type="button" aria-pressed="false">💡 Hide definitions</button>
@@ -83,6 +85,11 @@
       </div>
     </section>
 
+    <section class="local-data-note">
+      <span aria-hidden="true">🔒</span>
+      <p><strong>Private study tools:</strong> words saved to your notebook and flashcard progress stay in this browser on this device. They are not sent to Mrs Lecomte or stored in a student database. <a href="privacy.html">Privacy details</a></p>
+    </section>
+
     <section class="results-bar" aria-live="polite">
       <p><strong id="resultCount">0</strong> terms shown</p>
       <p class="audio-note">🔊 Audio uses an <strong>English (UK)</strong> browser voice when available.</p>
@@ -100,10 +107,11 @@
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy">No personal data is collected or stored by this website.</p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a></p>
   </footer>
 
   <script src="data/vocabulary.js"></script>
+  <script src="student-data.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

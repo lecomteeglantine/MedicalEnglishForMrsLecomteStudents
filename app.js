@@ -15,6 +15,8 @@
   const randomBtn = document.getElementById("randomBtn");
   const toggleFrench = document.getElementById("toggleFrench");
   const toggleDefinitions = document.getElementById("toggleDefinitions");
+  const notebookCountBadge = document.getElementById("notebookCountBadge");
+  const StudentData = window.MedicalStudentData;
 
   let activeCategory = "All";
   let hideFrench = false;
@@ -126,6 +128,15 @@
               🔊 Listen
             </button>
             <button
+              class="notebook-btn ${StudentData && StudentData.hasWord(item.word) ? "saved" : ""}"
+              type="button"
+              data-notebook="${escapeHTML(item.word)}"
+              aria-pressed="${StudentData && StudentData.hasWord(item.word) ? "true" : "false"}"
+              aria-label="${StudentData && StudentData.hasWord(item.word) ? "Remove" : "Add"} ${escapeHTML(item.word)} ${StudentData && StudentData.hasWord(item.word) ? "from" : "to"} my notebook"
+              title="${StudentData && StudentData.hasWord(item.word) ? "Saved in my notebook" : "Add to my notebook"}">
+              ${StudentData && StudentData.hasWord(item.word) ? "★" : "☆"}
+            </button>
+            <button
               class="copy-btn"
               type="button"
               data-copy="${escapeHTML(item.word)}"
@@ -155,6 +166,17 @@
           btn.textContent = "✓";
           setTimeout(() => btn.textContent = old, 900);
         } catch (_) {}
+      });
+    });
+
+    grid.querySelectorAll("[data-notebook]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (!StudentData) return;
+        const word = btn.dataset.notebook;
+        if (StudentData.hasWord(word)) StudentData.removeWord(word);
+        else StudentData.addWord(word);
+        updateNotebookCount();
+        render();
       });
     });
   }
@@ -301,7 +323,15 @@
     }, 30);
   });
 
+  function updateNotebookCount() {
+    if (notebookCountBadge && StudentData) {
+      notebookCountBadge.textContent = StudentData.getNotebook().length;
+    }
+  }
+
+  window.addEventListener("medicalNotebookChanged", updateNotebookCount);
   buildFilters();
+  updateNotebookCount();
   render();
 
   if ("speechSynthesis" in window) {

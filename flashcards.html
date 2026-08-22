@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Medical English vocabulary flashcards for Mrs Lecomte's students.">
+  <title>Flashcards · Medical English for Mrs Lecomte's Students</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to flashcards</a>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a href="fgsm3.html">FGSM3</a><a class="active" href="games.html">Games</a>
+    </nav>
+  </header>
+
+  <main id="main" class="flashcards-main">
+    <section class="mini-hero flashcards-hero">
+      <div>
+        <p class="eyebrow">FOR MRS LECOMTE'S STUDENTS · VOCABULARY</p>
+        <h1>Flashcards</h1>
+        <p>Choose your deck, flip the card and decide whether you want to review it again.</p>
+      </div>
+      <div class="mini-hero-icon" aria-hidden="true">🃏</div>
+    </section>
+
+    <section class="flash-controls">
+      <label>
+        <span>Deck</span>
+        <select id="deckSelect">
+          <option value="all">All vocabulary</option>
+          <option value="notebook">My notebook</option>
+        </select>
+      </label>
+      <label>
+        <span>Category</span>
+        <select id="flashCategory"></select>
+      </label>
+      <button id="shuffleFlashcards" class="secondary-btn" type="button">🔀 Shuffle</button>
+      <a class="secondary-btn tool-link-btn" href="notebook.html">📓 My notebook</a>
+    </section>
+
+    <section class="flash-progress" aria-live="polite">
+      <div><strong id="flashPosition">0 / 0</strong><span>card</span></div>
+      <div><strong id="knownCount">0</strong><span>I knew it</span></div>
+      <div><strong id="reviewCount">0</strong><span>review again</span></div>
+    </section>
+
+    <section id="flashEmpty" class="flash-empty" hidden>
+      <div>📓</div>
+      <h2>Your notebook is empty.</h2>
+      <p>Add words from the dictionary first, then come back to practise them.</p>
+      <a class="primary-link" href="dictionary.html">Open the dictionary →</a>
+    </section>
+
+    <section id="flashStudy" class="flash-study">
+      <button id="flashcard" class="flashcard" type="button" aria-label="Flip flashcard">
+        <div class="flashcard-inner">
+          <div class="flash-face flash-front">
+            <span id="flashCategoryTag" class="category-tag"></span>
+            <div id="flashIcon" class="flash-icon"></div>
+            <h2 id="flashWord"></h2>
+            <p id="flashIPA" class="ipa"></p>
+            <span class="flip-prompt">Tap to reveal →</span>
+          </div>
+          <div class="flash-face flash-back">
+            <span class="info-label">Definition</span>
+            <p id="flashDefinition" class="flash-definition"></p>
+            <span class="info-label">Français</span>
+            <p id="flashFrench" class="flash-french"></p>
+            <span class="flip-prompt">Tap to see the word →</span>
+          </div>
+        </div>
+      </button>
+
+      <div class="flash-actions">
+        <button id="flashListen" class="listen-btn" type="button">🔊 Listen</button>
+        <button id="addFlashNotebook" class="secondary-btn" type="button">☆ Add to notebook</button>
+      </div>
+
+      <div class="knowledge-actions">
+        <button id="reviewAgain" class="review-btn" type="button">↺ Review again</button>
+        <button id="knewIt" class="known-btn" type="button">✓ I knew it</button>
+      </div>
+
+      <div class="flash-navigation">
+        <button id="prevFlash" class="secondary-btn" type="button">← Previous</button>
+        <button id="nextFlash" class="secondary-btn" type="button">Next →</button>
+      </div>
+    </section>
+
+    <section class="local-data-note flash-local-note">
+      <span aria-hidden="true">🔒</span>
+      <p>Your flashcard progress is saved locally in this browser only. It is not sent to Mrs Lecomte or stored in a student database. <a href="privacy.html">Privacy details</a></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
+    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a></p>
+  </footer>
+  <script src="data/vocabulary.js"></script>
+  <script src="student-data.js"></script>
+  <script src="flashcards.js"></script>
+</body>
+</html>
