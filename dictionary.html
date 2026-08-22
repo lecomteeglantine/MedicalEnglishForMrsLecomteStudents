@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta name="theme-color" content="#0c2d66">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Medical English">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Interactive Medical English dictionary for Mrs Lecomte's students.">
@@ -109,7 +116,7 @@
 
     <section class="local-data-note">
       <span aria-hidden="true">🔒</span>
-      <p><strong>Private study tools:</strong> words saved to your notebook and flashcard progress stay in this browser on this device. They are not sent to Mrs Lecomte or stored in a student database. <a href="privacy.html">Privacy details</a></p>
+      <p><strong>Private study tools:</strong> words saved to your notebook and flashcard progress stay in this browser on this device. They are not sent to Mrs Lecomte or stored in a student database. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
     </section>
 
     <section class="results-bar" aria-live="polite">
@@ -130,11 +137,13 @@
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a></p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
   </footer>
 
   <script src="data/vocabulary.js"></script>
   <script src="student-data.js"></script>
   <script src="app.js"></script>
+  <script src="pwa.js" defer></script>
+  <script src="accessibility.js" defer></script>
 </body>
 </html>

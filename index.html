@@ -1,6 +1,13 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <meta name="theme-color" content="#0c2d66">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Medical English">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Medical English resources created by Mrs Lecomte for her students.">
@@ -33,6 +40,7 @@
         <div class="hero-buttons">
           <a class="primary-link" href="dictionary.html">Explore the dictionary →</a>
           <a class="ghost-link" href="games.html">Play &amp; revise →</a>
+          <a class="ghost-link" href="#mobile-app">📱 Phone &amp; offline</a>
         </div>
       </div>
       <div class="home-visual" aria-hidden="true">
@@ -102,6 +110,39 @@
       </div>
     </section>
 
+
+    <section id="mobile-app" class="app-home">
+      <div class="app-home-visual" aria-hidden="true">
+        <div class="phone-shell">
+          <div class="phone-notch"></div>
+          <div class="phone-app-icon">🩺</div>
+          <strong>Medical English</strong>
+          <span>Mrs Lecomte's Students</span>
+          <div class="offline-check">✓ OFFLINE</div>
+        </div>
+      </div>
+
+      <div class="app-home-copy">
+        <p class="section-kicker">ON YOUR PHONE · EVEN OFFLINE</p>
+        <h2>Install it like an app.</h2>
+        <p>Add Medical English for Mrs Lecomte's Students to your phone or tablet home screen. After the first complete visit, the dictionary, flashcards, notebook, games and course pages are available even without an internet connection.</p>
+
+        <div class="app-actions">
+          <button id="installAppButton" class="primary-link app-button" type="button" hidden>📲 Install the app</button>
+          <button id="installHelpButton" class="secondary-btn" type="button" aria-expanded="false" aria-controls="installHelp">How to install</button>
+          <span id="connectionStatus" class="connection-status" role="status" aria-live="polite">● Online</span>
+        </div>
+
+        <div id="installHelp" class="install-help" hidden tabindex="-1">
+          <p><strong>Android / Chrome:</strong> use <em>Install app</em> when offered, or open the browser menu and choose <em>Install app</em> / <em>Add to Home screen</em>.</p>
+          <p><strong>iPhone / iPad:</strong> open the site in Safari, tap <em>Share</em>, then <em>Add to Home Screen</em>.</p>
+        </div>
+
+        <p id="appInstallState" class="app-state" aria-live="polite">Offline access is prepared automatically after your first visit.</p>
+        <p class="app-audio-note"><strong>Pronunciation note:</strong> the vocabulary itself works offline. The Listen button uses the English speech voice installed in your browser or device, so offline pronunciation availability can depend on the phone.</p>
+      </div>
+    </section>
+
     <section class="privacy-home">
       <div class="privacy-home-icon" aria-hidden="true">🔒</div>
       <div>
@@ -145,6 +186,7 @@
         <div><span>🔊</span><h3>Hear it</h3><p>British English pronunciation and IPA.</p></div>
         <div><span>💬</span><h3>Use it</h3><p>Course activities and Medical English in context.</p></div>
         <div><span>🎮</span><h3>Play with it</h3><p>Games and challenges to make revision stick.</p></div>
+        <div><span>♿</span><h3>Adapt it</h3><p>Text size, spacing, contrast, reduced motion and reading support.</p></div>
       </div>
     </section>
   </main>
@@ -152,10 +194,12 @@
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a></p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
   </footer>
 
   <script src="data/vocabulary.js"></script>
   <script src="home.js"></script>
+  <script src="pwa.js" defer></script>
+  <script src="accessibility.js" defer></script>
 </body>
 </html>

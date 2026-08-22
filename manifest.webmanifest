@@ -1,0 +1,55 @@
+{
+  "id": "./",
+  "name": "Medical English for Mrs Lecomte's Students",
+  "short_name": "Medical English",
+  "description": "Medical English dictionary, flashcards, notebook, games and course resources created by Mrs Lecomte for her students.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f9fc",
+  "theme_color": "#0c2d66",
+  "categories": [
+    "education",
+    "medical",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dictionary",
+      "short_name": "Dictionary",
+      "url": "./dictionary.html"
+    },
+    {
+      "name": "Flashcards",
+      "short_name": "Flashcards",
+      "url": "./flashcards.html"
+    },
+    {
+      "name": "My Notebook",
+      "short_name": "Notebook",
+      "url": "./notebook.html"
+    },
+    {
+      "name": "Games",
+      "short_name": "Games",
+      "url": "./games.html"
+    }
+  ]
+}
