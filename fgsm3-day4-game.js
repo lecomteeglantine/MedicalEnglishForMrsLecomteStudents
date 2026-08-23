@@ -1,6 +1,7 @@
 (() => {
   "use strict";
   const STORAGE_KEY = "mrsLecomteFgsm3Day4AIControlV41";
+  const MUSIC_KEY = "mrsLecomteFgsm3Day4Music";
   const ACTIVITY_ORDER = ["lexicon","signals","boundaries","clearance"];
   const meta = {
     lexicon:["Load the Vocabulary","Decode the ten core terms from the Day 4 worksheet."],
@@ -46,22 +47,36 @@
   let current = null, index = 0, attempts = 0, sessionScore = 0;
   const $ = id => document.getElementById(id);
   const screen=$("ai4Screen"), feedback=$("ai4Feedback"), workspaceTitle=$("ai4WorkspaceTitle"), workspaceIntro=$("ai4WorkspaceIntro");
+  const music=$("day4Music"), musicToggle=$("day4MusicToggle"), audioStatus=$("day4AudioStatus");
+  let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
   function freshState(){return {completed:{lexicon:false,signals:false,boundaries:false,clearance:false}, firstTryScore:0, started:false};}
   function loadState(){try{return Object.assign(freshState(),JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}"));}catch(e){return freshState();}}
   function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+
+  function startMusicPlayback(){
+    if(!music) return;
+    music.volume=.18;
+    const p=music.play();
+    if(p&&typeof p.catch==="function") p.catch(()=>{audioStatus.textContent="Music is ready. Tap Music again if your browser blocked playback.";});
+  }
+  function stopMusicPlayback(){if(!music)return;music.pause();music.currentTime=0;}
+  function syncMusicButton(){if(!musicToggle)return;musicToggle.setAttribute("aria-pressed",String(musicOn));musicToggle.textContent=musicOn?"🎵 Music ON":"🎵 Music OFF";}
+  function applyMusicState(fromUser=false){syncMusicButton();if(!music)return;if(musicOn){if(fromUser)startMusicPlayback();}else stopMusicPlayback();}
   function shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
   function itemsFor(name){if(name==="lexicon") return vocab.map(v=>({q:v.term,a:v.def,opts:shuffle([v.def,...shuffle(vocab.filter(x=>x.term!==v.term).map(x=>x.def)).slice(0,3)]),ex:v.def,term:v.term,ipa:v.ipa,kind:"vocab"})); if(name==="signals") return signals.map(x=>({...x,opts:shuffle(x.opts)})); if(name==="boundaries") return boundaries.map(x=>({...x,opts:shuffle(x.opts)})); return clearance.map(x=>({...x,opts:shuffle(x.opts)}));}
   function speak(text){if(!state.soundOff && "speechSynthesis" in window){speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang="en-GB";u.rate=.88;speechSynthesis.speak(u);}}
   function cue(good=true){if(state.soundOff) return; try{const C=window.AudioContext||window.webkitAudioContext;const c=new C(),o=c.createOscillator(),g=c.createGain();o.frequency.value=good?660:210;g.gain.setValueAtTime(.055,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.16);o.connect(g).connect(c.destination);o.start();o.stop(c.currentTime+.16);}catch(e){}}
   function updateUI(){const done=ACTIVITY_ORDER.filter(a=>state.completed[a]).length;$("day4ProgressText").textContent=`${done} / 4`;$("day4ProgressBar").style.width=`${done*25}%`;$("day4Score").textContent=state.firstTryScore;const statusIds={lexicon:"ai4StatusLexicon",signals:"ai4StatusSignals",boundaries:"ai4StatusBoundaries",clearance:"ai4StatusClearance"};ACTIVITY_ORDER.forEach((a,i)=>{const btn=document.querySelector(`[data-ai4-activity="${a}"]`),unlocked=i===0||state.completed[ACTIVITY_ORDER[i-1]];btn.disabled=!unlocked;$(statusIds[a]).textContent=state.completed[a]?"CLEARED":unlocked?"READY":"LOCKED";});const all=done===4;$("day4Mission1Complete").classList.toggle("is-locked",!all);$("day4CompleteTitle").textContent=all?"🧠 System Boot cleared.":"System Boot is not cleared yet.";$("day4CompleteText").textContent=all?"Core AI vocabulary loaded. Human oversight confirmed. Mission 2 is ready for deployment.":"Complete all four control-room activities.";$("day4Mission2Button").disabled=!all;$("day4Mission2Button").textContent=all?"Mission 2 · Live Clinical Feed →":"🔒 Mission 2 · Live Clinical Feed";$("day4Clearance").textContent=all?"Mission 1 cleared":state.started?"System boot in progress":"Clearance pending";$("day4SoundToggle").textContent=state.soundOff?"🔇 Sound OFF":"🔊 Sound ON";$("day4SoundToggle").setAttribute("aria-pressed",String(!state.soundOff));}
-  function start(name){current={name,items:shuffle(itemsFor(name))};index=0;attempts=0;sessionScore=0;state.started=true;save();workspaceTitle.textContent=meta[name][0];workspaceIntro.textContent=meta[name][1];feedback.textContent="";feedback.className="ai4-feedback";render();}
+  function start(name){if(musicOn) startMusicPlayback();current={name,items:shuffle(itemsFor(name))};index=0;attempts=0;sessionScore=0;state.started=true;save();workspaceTitle.textContent=meta[name][0];workspaceIntro.textContent=meta[name][1];feedback.textContent="";feedback.className="ai4-feedback";render();}
   function render(){const it=current.items[index];if(!it){completeActivity();return;}let head=`<div class="ai4-question-top"><span>${current.name.toUpperCase()} · CHECKPOINT ${index+1}</span><b>${index+1} / ${current.items.length}</b></div>`;let prompt=it.kind==="vocab"?`<h3 class="ai4-term">${it.term}</h3><p class="ai4-ipa">${it.ipa}</p><button class="ai4-audio-btn" type="button" data-speak="${it.term.replace(/"/g,'&quot;')}">🔊 Hear word</button><p class="ai4-definition">Choose the correct definition.</p>`:`<h3 class="ai4-question">${it.q}</h3>`;screen.innerHTML=head+prompt+`<div class="ai4-options">${it.opts.map((o,i)=>`<button class="ai4-option" type="button" data-answer="${encodeURIComponent(o)}"><b>${String.fromCharCode(65+i)}</b> · ${o}</button>`).join("")}</div>`;screen.querySelectorAll("[data-answer]").forEach(b=>b.addEventListener("click",answer));screen.querySelectorAll("[data-speak]").forEach(b=>b.addEventListener("click",()=>speak(b.dataset.speak)));screen.focus();}
   function answer(e){const it=current.items[index], chosen=decodeURIComponent(e.currentTarget.dataset.answer), good=chosen===it.a;attempts++;screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});if(good){const pts=attempts===1?10:6;sessionScore+=pts;state.firstTryScore+=pts;feedback.className="ai4-feedback good";feedback.innerHTML=`<strong>System check passed.</strong> ${it.ex}`;cue(true);}else{feedback.className="ai4-feedback bad";feedback.innerHTML=`<strong>Review the signal.</strong> ${it.ex}`;cue(false);}save();const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=index===current.items.length-1?"Clear activity →":"Next checkpoint →";next.addEventListener("click",()=>{index++;attempts=0;feedback.textContent="";feedback.className="ai4-feedback";render();});feedback.appendChild(document.createElement("br"));feedback.appendChild(next);updateUI();}
   function completeActivity(){state.completed[current.name]=true;save();screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${meta[current.name][0]} cleared</h3><p>Activity score: ${sessionScore}. ${nextText(current.name)}</p></div>`;feedback.textContent="";updateUI();}
   function nextText(name){const i=ACTIVITY_ORDER.indexOf(name);return i<ACTIVITY_ORDER.length-1?`${meta[ACTIVITY_ORDER[i+1]][0]} is now unlocked.`:"Mission 1 is complete. Live Clinical Feed is now ready.";}
   $("startDay4Mission1").addEventListener("click",()=>start("lexicon"));document.querySelectorAll("[data-ai4-activity]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)start(b.dataset.ai4Activity);}));
-  $("day4SoundToggle").addEventListener("click",()=>{state.soundOff=!state.soundOff;save();updateUI();$("day4AudioStatus").textContent=state.soundOff?"Sound effects and UK speech are off.":"Sound effects and UK speech are on. Day 4 music will be installed separately.";});
+  $("day4SoundToggle").addEventListener("click",()=>{state.soundOff=!state.soundOff;save();updateUI();audioStatus.textContent=state.soundOff?"Sound effects and UK speech are off. Music is controlled separately.":"Sound effects and UK speech are on. Music is controlled separately.";});
+  musicToggle.addEventListener("click",()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");applyMusicState(true);audioStatus.textContent=musicOn?"Music on. AI Clinical Control — Human in the Loop is playing.":"Music off. Sound effects and UK speech remain available.";});
   $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";updateUI();}});
   $("day4Mission2Button").addEventListener("click",()=>{$("day4AudioStatus").textContent="Mission 2 · Live Clinical Feed will be added in the next update.";});
   updateUI();
+  applyMusicState(false);
 })();

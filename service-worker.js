@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v41-day4-system-boot-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v41b-day4-suno-music-20260823";
 
 const APP_SHELL = [
   "./",
@@ -77,6 +77,7 @@ const APP_SHELL = [
   "./assets/fgsm3/day3/music/day3-field-briefing-suno.mp3",
   "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
   "./assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp",
+  "./assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3",
   "./app.js",
   "./home.js",
   "./games.js",

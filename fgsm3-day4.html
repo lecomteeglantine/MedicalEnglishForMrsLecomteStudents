@@ -40,10 +40,10 @@
       <div><strong>Clinical control panel</strong><span>Progress is stored only on this device.</span></div>
       <div class="ai4-toolbar-actions">
         <button id="day4SoundToggle" class="ai4-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
-        <button id="day4MusicToggle" class="ai4-toggle" type="button" disabled aria-disabled="true">🎵 Music pending</button>
+        <button id="day4MusicToggle" class="ai4-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
         <button id="resetDay4" class="ai4-reset" type="button">Reset Day 4</button>
       </div>
-      <p id="day4AudioStatus" class="ai4-status-text" role="status" aria-live="polite">Day 4 soundtrack has not been installed yet. Sound effects and UK speech are available.</p>
+      <p id="day4AudioStatus" class="ai4-status-text" role="status" aria-live="polite">Day 4 soundtrack installed. Tap Music OFF to start the AI Clinical Control theme.</p>
     </section>
 
     <section class="ai4-board" aria-labelledby="ai4MissionTitle">
@@ -86,6 +86,10 @@
       <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
     </section>
   </main>
+
+  <audio id="day4Music" loop preload="none">
+    <source src="assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3" type="audio/mpeg">
+  </audio>
 
   <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
   <script src="fgsm3-day4-game.js" defer></script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
