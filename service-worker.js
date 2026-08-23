@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v29-day2-mystery-destination-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v30b-day2-suno-music-20260823";
 
 const APP_SHELL = [
   "./",
@@ -51,6 +51,14 @@ const APP_SHELL = [
   "./assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp",
   "./assets/fgsm3/day1/music/fgsm3-day1-control-room-theme.mp3",
+  "./assets/fgsm3/day2/images/fgsm3-day2-departure-lounge.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-london-nhs-reception.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-newyork-insurance-desk.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-toronto-medicare-clinic.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-sydney-gp-consultation.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-wellington-hospital-alert.png",
+  "./assets/fgsm3/day2/images/fgsm3-day2-dublin-workforce-meeting.png",
+  "./assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3",
   "./assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4",
   "./app.js",
   "./home.js",
