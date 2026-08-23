@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v26.css">
+  <link rel="stylesheet" href="styles-v27.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -542,6 +542,67 @@
       <div id="dublinFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+
+    <section id="passiveArea" class="passport-mission passport-passive is-locked" aria-labelledby="passiveTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">LANGUAGE IMMIGRATION DESK · PASSIVE CONTROL</p>
+          <h2 id="passiveTitle">Clear your scientific English</h2>
+          <p id="passiveInstruction">Complete Dublin before presenting your research language for inspection.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>LANGUAGE CHECK</span>
+          <strong id="passiveCheckpoint">0 / 12</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="passiveProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="passive-brief">
+        <div class="passive-control-card" aria-hidden="true">
+          <span>GLOBAL MEDICAL EXCHANGE</span>
+          <strong>📐 LANGUAGE CONTROL</strong>
+          <b>PASSIVE CLEARANCE</b>
+          <small>RESEARCH COMMUNICATION · DAY 2</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">WHY THE PASSIVE?</span>
+          <strong>In a research talk, the focus is often on what was done, measured, found or reported — not on who did it.</strong>
+          <p>Your checkpoint covers the three forms from the Day 2 Presentation Check-in: present simple passive, past simple passive and present perfect passive. Use them naturally where they fit the research message.</p>
+        </div>
+        <button id="startPassive" class="passport-primary" type="button" disabled>Language Desk locked</button>
+      </div>
+
+      <div class="passive-tense-grid" aria-label="Three passive forms used in research presentations">
+        <article><span>PRESENT SIMPLE</span><strong>Routine / method</strong><code>Data are collected at each visit.</code><p>am / is / are + past participle</p></article>
+        <article><span>PAST SIMPLE</span><strong>Completed study action</strong><code>240 patients were recruited.</code><p>was / were + past participle</p></article>
+        <article><span>PRESENT PERFECT</span><strong>Past research linked to now</strong><code>Similar results have been reported before.</code><p>has / have been + past participle</p></article>
+      </div>
+
+      <div class="passive-helper">
+        <div class="passive-helper-intro">
+          <span>PAST PARTICIPLE CHECK</span>
+          <h3>Your verb bank</h3>
+          <p>You need the past participle to build the passive. Some are regular; some have to be remembered.</p>
+        </div>
+        <div class="passive-verb-bank" aria-label="Past participle helper">
+          <span>conduct → conducted</span><span>measure → measured</span><span>analyse → analysed</span><span>reduce → reduced</span><span>carry out → carried out</span>
+          <span>show → shown</span><span>find → found</span><span>give → given</span><span>take → taken</span><span>choose → chosen</span>
+        </div>
+      </div>
+
+      <div class="passive-mission-strip" aria-label="Passive Control Desk phases">
+        <article><span>PHASE 1</span><strong>Tense scan</strong><p>Recognise present, past and present perfect passive in research English.</p></article>
+        <article><span>PHASE 2</span><strong>Rewrite for focus</strong><p>Move from active to passive when the process or result matters more than the agent.</p></article>
+        <article><span>PHASE 3</span><strong>Participle clearance</strong><p>Choose the correct past participle and finish with a three-tense research check.</p></article>
+      </div>
+
+      <div id="passiveScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Language Control locked</h3><p>Collect the Workforce Planner stamp in Dublin first.</p></div>
+      </div>
+      <div id="passiveFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -556,17 +617,17 @@
         <div id="stampFinalS" class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
         <div id="stampNz" class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
         <div id="stampIe" class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
-        <div class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control</strong><small>Language Desk</small></div>
+        <div id="stampPassive" class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control Cleared</strong><small>Language Desk</small></div>
       </div>
     </section>
 
     <section class="passport-coming" aria-labelledby="comingTitle">
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
-        <h2 id="comingTitle">Next after Dublin: Language Control.</h2>
-        <p>The Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <h2 id="comingTitle">Next after Language Control: Global Health Forum.</h2>
+        <p>Use evidence, comparisons and nuance to defend a healthcare-policy position before the final Mystery Destination.</p>
       </div>
-      <div class="passport-coming-icons" aria-hidden="true">📐 · ⭐</div>
+      <div class="passport-coming-icons" aria-hidden="true">🏛️ · ⭐</div>
     </section>
   </main>
 

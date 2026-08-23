@@ -990,6 +990,154 @@
     }
   ];
 
+
+  const passiveItems = [
+    {
+      phase: "TENSE SCAN",
+      tag: "PRESENT SIMPLE",
+      prompt: "Which sentence uses the present simple passive to describe a routine research method?",
+      options: [
+        { text: "Data are collected at each visit.", correct: true },
+        { text: "Data were collected at each visit.", correct: false },
+        { text: "Data have been collected at each visit.", correct: false }
+      ],
+      model: "Data are collected at each visit.",
+      explanation: "Present simple passive uses am, is or are plus the past participle and is useful for a routine method or general process."
+    },
+    {
+      phase: "TENSE SCAN",
+      tag: "PRESENT SIMPLE",
+      prompt: "Complete the healthcare-system sentence: “The health service ___ by the government.”",
+      options: [
+        { text: "is funded", correct: true },
+        { text: "was funded", correct: false },
+        { text: "has been funded", correct: false }
+      ],
+      model: "The health service is funded by the government.",
+      explanation: "This describes how the system is funded now, so the present simple passive is the natural choice."
+    },
+    {
+      phase: "TENSE SCAN",
+      tag: "PAST SIMPLE",
+      prompt: "Which sentence reports a completed action in a finished study?",
+      options: [
+        { text: "240 patients were recruited.", correct: true },
+        { text: "240 patients are recruited.", correct: false },
+        { text: "240 patients have recruited.", correct: false }
+      ],
+      model: "Two hundred and forty patients were recruited.",
+      explanation: "Past simple passive uses was or were plus the past participle for a completed past research action."
+    },
+    {
+      phase: "REWRITE FOR FOCUS",
+      tag: "ACTIVE → PASSIVE",
+      prompt: "The active sentence is: “The government created 612 new places.” Which passive version keeps the focus on the places?",
+      options: [
+        { text: "612 new places were created.", correct: true },
+        { text: "612 new places are created.", correct: false },
+        { text: "612 new places have creating.", correct: false }
+      ],
+      model: "Six hundred and twelve new places were created.",
+      explanation: "The action belongs to a completed policy announcement, so were created is the correct past passive form."
+    },
+    {
+      phase: "REWRITE FOR FOCUS",
+      tag: "PAST SIMPLE",
+      prompt: "Choose the correct passive sentence about the 2022 reform.",
+      options: [
+        { text: "The health boards were merged in 2022.", correct: true },
+        { text: "The health boards are merged in 2022.", correct: false },
+        { text: "The health boards have merge in 2022.", correct: false }
+      ],
+      model: "The health boards were merged in 2022.",
+      explanation: "The finished time marker in 2022 calls for the past simple passive."
+    },
+    {
+      phase: "TENSE SCAN",
+      tag: "PRESENT PERFECT",
+      prompt: "Which sentence uses the present perfect passive correctly?",
+      options: [
+        { text: "Similar results have been reported before.", correct: true },
+        { text: "Similar results were report before.", correct: false },
+        { text: "Similar results have reported before.", correct: false }
+      ],
+      model: "Similar results have been reported before.",
+      explanation: "Present perfect passive uses has or have been plus the past participle."
+    },
+    {
+      phase: "REWRITE FOR FOCUS",
+      tag: "PRESENT PERFECT",
+      prompt: "Rewrite the idea with the result as the focus: “The minister has announced the expansion.”",
+      options: [
+        { text: "The expansion has been announced by the minister.", correct: true },
+        { text: "The expansion was announce by the minister.", correct: false },
+        { text: "The expansion has announced by the minister.", correct: false }
+      ],
+      model: "The expansion has been announced by the minister.",
+      explanation: "The result of a recent announcement matters now, so has been announced is the correct present perfect passive."
+    },
+    {
+      phase: "REWRITE FOR FOCUS",
+      tag: "PRESENT PERFECT",
+      prompt: "Which sentence correctly puts “nurses” in focus?",
+      options: [
+        { text: "Nurses have been pushed towards burnout by staff shortages.", correct: true },
+        { text: "Nurses have pushed towards burnout by staff shortages.", correct: false },
+        { text: "Nurses were been pushed towards burnout by staff shortages.", correct: false }
+      ],
+      model: "Nurses have been pushed towards burnout by staff shortages.",
+      explanation: "Have been pushed is the present perfect passive form used in the Day 2 answer key."
+    },
+    {
+      phase: "PARTICIPLE CLEARANCE",
+      tag: "IRREGULAR VERB",
+      prompt: "Which past participle completes the passive form of show?",
+      options: [
+        { text: "shown", correct: true },
+        { text: "showed", correct: false },
+        { text: "show", correct: false }
+      ],
+      model: "The results were shown in the final table.",
+      explanation: "The past participle of show is shown."
+    },
+    {
+      phase: "PARTICIPLE CLEARANCE",
+      tag: "IRREGULAR VERB",
+      prompt: "Which past participle completes the passive form of find?",
+      options: [
+        { text: "found", correct: true },
+        { text: "finded", correct: false },
+        { text: "find", correct: false }
+      ],
+      model: "A difference was found between the two groups.",
+      explanation: "The past participle of find is found."
+    },
+    {
+      phase: "PARTICIPLE CLEARANCE",
+      tag: "IRREGULAR VERB",
+      prompt: "Which past participle completes the passive form of choose?",
+      options: [
+        { text: "chosen", correct: true },
+        { text: "choosed", correct: false },
+        { text: "chose", correct: false }
+      ],
+      model: "Participants were chosen according to the study criteria.",
+      explanation: "Choose becomes chose in the past simple, but chosen is the past participle used in the passive."
+    },
+    {
+      phase: "FINAL CLEARANCE",
+      tag: "THREE-TENSE CHECK",
+      prompt: "Which sequence labels the three model sentences correctly? “Data are collected…” · “Patients were recruited…” · “Results have been reported…”",
+      options: [
+        { text: "Present simple · Past simple · Present perfect", correct: true },
+        { text: "Past simple · Present simple · Present perfect", correct: false },
+        { text: "Present perfect · Past simple · Present simple", correct: false }
+      ],
+      model: "Data are collected. Patients were recruited. Similar results have been reported before.",
+      explanation: "You have cleared all three passive forms required in the Day 2 Presentation Check-in."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -1030,7 +1178,12 @@
     dublinIndex: 0,
     dublinScore: 0,
     dublinMissed: [],
-    dublinComplete: false
+    dublinComplete: false,
+    passiveStarted: false,
+    passiveIndex: 0,
+    passiveScore: 0,
+    passiveMissed: [],
+    passiveComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -1095,6 +1248,13 @@
     dublinCheckpoint: $("dublinCheckpoint"),
     dublinProgressBar: $("dublinProgressBar"),
     dublinInstruction: $("dublinInstruction"),
+    passiveArea: $("passiveArea"),
+    startPassive: $("startPassive"),
+    passiveScreen: $("passiveScreen"),
+    passiveFeedback: $("passiveFeedback"),
+    passiveCheckpoint: $("passiveCheckpoint"),
+    passiveProgressBar: $("passiveProgressBar"),
+    passiveInstruction: $("passiveInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -1114,7 +1274,8 @@
     stampAu: $("stampAu"),
     stampFinalS: $("stampFinalS"),
     stampNz: $("stampNz"),
-    stampIe: $("stampIe")
+    stampIe: $("stampIe"),
+    stampPassive: $("stampPassive")
   };
 
   let state = loadState();
@@ -1247,8 +1408,12 @@
     els.dublinCheckpoint.textContent = `${ieDone} / ${dublinItems.length}`;
     els.dublinProgressBar.style.width = `${(ieDone / dublinItems.length) * 100}%`;
 
+    const passiveDone = state.passiveComplete ? passiveItems.length : Math.min(state.passiveIndex, passiveItems.length);
+    els.passiveCheckpoint.textContent = `${passiveDone} / ${passiveItems.length}`;
+    els.passiveProgressBar.style.width = `${(passiveDone / passiveItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.passiveComplete ? "Language cleared" : state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -1418,9 +1583,24 @@
       els.routeIe.classList.remove("destination-next", "destination-locked");
       els.routeIe.classList.add("destination-cleared");
       els.routeIeStatus.textContent = "CLEARED";
+      els.passiveArea.classList.remove("is-locked");
+      els.startPassive.disabled = false;
+      els.startPassive.textContent = state.passiveStarted ? "Resume Passive Control →" : "Enter Language Control →";
+      els.passiveInstruction.textContent = state.passiveComplete ? "Language Control completed. Your Passive Control Cleared stamp has been issued." : "Dublin cleared. Present your research language for inspection.";
     } else {
       els.stampIe.classList.remove("stamp-earned");
       els.stampIe.classList.add("stamp-empty");
+      els.passiveArea.classList.add("is-locked");
+      els.startPassive.disabled = true;
+      els.startPassive.textContent = "Language Desk locked";
+    }
+
+    if (state.passiveComplete) {
+      els.stampPassive.classList.remove("stamp-empty");
+      els.stampPassive.classList.add("stamp-earned");
+    } else {
+      els.stampPassive.classList.remove("stamp-earned");
+      els.stampPassive.classList.add("stamp-empty");
     }
   }
 
@@ -1841,7 +2021,8 @@
 
     if (state.dublinComplete) {
       const pct = Math.round((state.dublinScore / dublinItems.length) * 100);
-      els.dublinScreen.innerHTML = `<div class="passport-complete-card ie-complete"><div class="passport-complete-icon" aria-hidden="true">🇮🇪</div><p class="passport-case-kicker">STOP 06 CLEARED</p><h3>Workforce Planner</h3><p>You can explain Ireland's HSE and Sláintecare context, interpret the 612-place workforce expansion, and connect training capacity with shortages, burnout, recruitment and retention.</p><div class="passport-score-line"><strong>${state.dublinScore} / ${dublinItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Ireland has a mixed, historically two-tier system run publicly through the HSE. The 2026 training expansion creates 612 extra annual healthcare places to strengthen the domestic workforce pipeline as demand grows.”</p><button id="hearIrelandSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket ie-ticket"><span>DUBLIN</span><b>Workforce Planner</b><span>✓</span><b>Six destinations cleared</b><span>LANGUAGE DESK NEXT</span></div><div class="passport-next-route ie-next-card"><strong>Next checkpoint</strong><span>📐 Passive Control Desk · present, past and present perfect passive.</span></div></div>`;
+      els.dublinScreen.innerHTML = `<div class="passport-complete-card ie-complete"><div class="passport-complete-icon" aria-hidden="true">🇮🇪</div><p class="passport-case-kicker">STOP 06 CLEARED</p><h3>Workforce Planner</h3><p>You can explain Ireland's HSE and Sláintecare context, interpret the 612-place workforce expansion, and connect training capacity with shortages, burnout, recruitment and retention.</p><div class="passport-score-line"><strong>${state.dublinScore} / ${dublinItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Ireland has a mixed, historically two-tier system run publicly through the HSE. The 2026 training expansion creates 612 extra annual healthcare places to strengthen the domestic workforce pipeline as demand grows.”</p><button id="hearIrelandSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket ie-ticket"><span>DUBLIN</span><b>Workforce Planner</b><span>✓</span><b>Six destinations cleared</b><span>LANGUAGE DESK NEXT</span></div><div class="passport-next-route ie-next-card"><strong>Next checkpoint</strong><span>📐 Passive Control Desk · present, past and present perfect passive.</span></div><button id="goPassiveDesk" class="passport-primary" type="button">Proceed to Language Control →</button></div>`;
+      $("goPassiveDesk").addEventListener("click", () => { els.passiveArea.scrollIntoView({ behavior: "smooth", block: "start" }); window.setTimeout(() => els.startPassive.focus({ preventScroll: true }), 450); });
       $("hearIrelandSummary").addEventListener("click", () => speak("Ireland has a mixed, historically two-tier system run publicly through the H S E. The 2026 training expansion creates 612 extra annual healthcare places to strengthen the domestic workforce pipeline as demand grows."));
       updateProgress();
       return;
@@ -1884,6 +2065,62 @@
     window.setTimeout(() => els.dublinScreen.focus({ preventScroll: true }), 450);
   }
 
+
+  function renderPassive() {
+    updateProgress();
+    els.passiveFeedback.innerHTML = "";
+    if (!state.dublinComplete) return;
+
+    if (!state.passiveStarted) {
+      els.passiveScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">📐</span><h3>Language Control ready</h3><p>Show that you can choose the right passive tense, refocus active sentences and use the past participles from your research-talk helper.</p></div>`;
+      return;
+    }
+
+    if (state.passiveComplete) {
+      const pct = Math.round((state.passiveScore / passiveItems.length) * 100);
+      els.passiveScreen.innerHTML = `<div class="passport-complete-card passive-complete"><div class="passport-complete-icon" aria-hidden="true">📐</div><p class="passport-case-kicker">LANGUAGE CONTROL CLEARED</p><h3>Passive Control Cleared</h3><p>You can now use the present simple, past simple and present perfect passive to keep the focus on methods, procedures and findings in a scientific presentation.</p><div class="passport-score-line"><strong>${state.passiveScore} / ${passiveItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passive-formula"><div><b>PRESENT</b><span>are collected</span></div><div><b>PAST</b><span>were recruited</span></div><div><b>PRESENT PERFECT</b><span>have been reported</span></div></div><div class="passport-model-box"><span>MODEL THREE-TENSE CHECK</span><p>“Data are collected at each visit. Two hundred and forty patients were recruited. Similar results have been reported before.”</p><button id="hearPassiveSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket passive-ticket"><span>LANGUAGE DESK</span><b>Passive Control Cleared</b><span>✓</span><b>Research English</b><span>FORUM NEXT</span></div><div class="passport-next-route passive-next-card"><strong>Next checkpoint</strong><span>🏛️ Global Health Forum · take a position, support it with evidence and add nuance.</span></div></div>`;
+      $("hearPassiveSummary").addEventListener("click", () => speak("Data are collected at each visit. Two hundred and forty patients were recruited. Similar results have been reported before."));
+      updateProgress();
+      return;
+    }
+
+    const item = passiveItems[state.passiveIndex];
+    els.passiveScreen.innerHTML = `<div class="passport-question-card passive-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><div class="sound-chip">Checkpoint ${state.passiveIndex + 1} of ${passiveItems.length}</div><h3>${item.prompt}</h3><div id="passiveOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("passiveOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.passiveMissed.includes(state.passiveIndex)) state.passiveScore += 1;
+        state.passiveIndex += 1;
+        if (state.passiveIndex >= passiveItems.length) state.passiveComplete = true;
+        saveState();
+        playTone("good");
+        els.passiveFeedback.innerHTML = `<div class="feedback-good"><strong>Language check cleared.</strong><span>${item.explanation}</span></div><div class="passport-transcript passive-transcript"><span>MODEL SENTENCE</span><p>${item.model}</p><button id="hearPassiveModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="passiveNext" class="passport-next" type="button">${state.passiveComplete ? "Stamp passport →" : "Next language check →"}</button>`;
+        $("hearPassiveModel").addEventListener("click", () => speak(item.model));
+        $("passiveNext").addEventListener("click", renderPassive);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.passiveMissed.includes(state.passiveIndex)) state.passiveMissed.push(state.passiveIndex);
+        saveState();
+        playTone("bad");
+        const hint = item.phase === "TENSE SCAN" ? "Look for the auxiliary pattern: is/are + participle, was/were + participle, or has/have been + participle." : item.phase === "REWRITE FOR FOCUS" ? "Keep the original time reference, move the object into subject position, then build be + past participle." : "Check the past participle in the helper bank above.";
+        els.passiveFeedback.innerHTML = `<div class="feedback-bad"><strong>Passport control says: re-check.</strong><span>${hint}</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startPassive() {
+    if (!state.dublinComplete) return;
+    state.passiveStarted = true;
+    saveState();
+    renderPassive();
+    els.passiveArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.passiveScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -1898,6 +2135,7 @@
     renderFinalS();
     renderWellington();
     renderDublin();
+    renderPassive();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1916,6 +2154,7 @@
   els.startFinalS.addEventListener("click", startFinalS);
   els.startWellington.addEventListener("click", startWellington);
   els.startDublin.addEventListener("click", startDublin);
+  els.startPassive.addEventListener("click", startPassive);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -1937,4 +2176,5 @@
   renderFinalS();
   renderWellington();
   renderDublin();
+  renderPassive();
 })();
