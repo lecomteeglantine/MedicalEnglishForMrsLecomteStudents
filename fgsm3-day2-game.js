@@ -1138,6 +1138,166 @@
     }
   ];
 
+
+  const forumItems = [
+    {
+      resolution: "RESOLUTION 01 · FUNDING & FAIRNESS",
+      tag: "OPEN A POSITION",
+      prompt: "Which opening sounds appropriately argumentative without pretending that the issue is already settled?",
+      options: [
+        { text: "My position is that a tax-funded system can offer a fairer basis for access, but the evidence still needs to be weighed.", correct: true },
+        { text: "Obviously tax-funded healthcare is always the fairest system.", correct: false },
+        { text: "Everyone knows insurance-based healthcare is unfair.", correct: false }
+      ],
+      model: "My position is that a tax-funded system can offer a fairer basis for access, but the evidence still needs to be weighed.",
+      explanation: "The forum rewards a clear position without turning an opinion into an unquestionable fact.",
+      evidence: "Useful language: My position is that… / I'd argue strongly that… / The heart of the matter is…"
+    },
+    {
+      resolution: "RESOLUTION 01 · FUNDING & FAIRNESS",
+      tag: "USE EVIDENCE",
+      prompt: "Which evidence statement is supported by the Day 2 country cards?",
+      options: [
+        { text: "A clear example is the NHS: it is tax-funded, universal and most care is free at the point of use.", correct: true },
+        { text: "The NHS has no waiting lists because it is tax-funded.", correct: false },
+        { text: "Private insurance is the main way British patients obtain healthcare.", correct: false }
+      ],
+      model: "A clear example is the NHS: it is tax-funded, universal and most care is free at the point of use.",
+      explanation: "This uses the UK card accurately. The same card also identifies waiting lists, staff shortages and funding pressure as challenges.",
+      evidence: "UK card: Beveridge model; NHS; universal; mainly taxation and National Insurance; most care free at the point of use."
+    },
+    {
+      resolution: "RESOLUTION 01 · FUNDING & FAIRNESS",
+      tag: "DO NOT OVERCLAIM",
+      prompt: "The US card gives spending at about 17% of GDP and the UK card about 10–11%. Which sentence uses those figures responsibly?",
+      options: [
+        { text: "The figures show that the US spends a larger share of GDP than the UK, but spending alone does not prove which system is fairer.", correct: true },
+        { text: "The figures prove that the NHS is the best healthcare system.", correct: false },
+        { text: "Because US spending is higher, every US patient receives better care.", correct: false }
+      ],
+      model: "The figures show that the US spends a larger share of GDP than the UK, but spending alone does not prove which system is fairer.",
+      explanation: "A figure can support comparison, but it cannot by itself settle a broader value judgement such as fairness.",
+      evidence: "Country cards: UK ≈ 10–11% of GDP; USA ≈ 17% of GDP."
+    },
+    {
+      resolution: "RESOLUTION 01 · FUNDING & FAIRNESS",
+      tag: "CONCEDE & WEIGH",
+      prompt: "Which sentence best adds nuance using challenges actually described in the materials?",
+      options: [
+        { text: "Admittedly, universal public systems can still face serious access pressures: the UK card mentions waiting lists and New Zealand reports workforce shortages and waiting times.", correct: true },
+        { text: "Tax-funded systems never have access problems.", correct: false },
+        { text: "Long waits only exist in countries without universal healthcare.", correct: false }
+      ],
+      model: "Admittedly, universal public systems can still face serious access pressures: the UK card mentions waiting lists and New Zealand reports workforce shortages and waiting times.",
+      explanation: "A strong concession accepts relevant counter-evidence before returning to the main argument.",
+      evidence: "UK challenges: waiting lists and staff shortages. NZ challenges: workforce shortages and waiting times."
+    },
+    {
+      resolution: "RESOLUTION 02 · WORKFORCE",
+      tag: "USE THE IRELAND ARTICLE",
+      prompt: "Which sentence accurately uses the Irish workforce reform as evidence?",
+      options: [
+        { text: "The article reports 612 extra annual healthcare places, intended to expand the domestic workforce and help address a significant workforce gap.", correct: true },
+        { text: "Ireland has already eliminated its healthcare workforce gap by creating 612 places.", correct: false },
+        { text: "The article says Ireland will stop recruiting all professionals trained abroad.", correct: false }
+      ],
+      model: "The article reports six hundred and twelve extra annual healthcare places, intended to expand the domestic workforce and help address a significant workforce gap.",
+      explanation: "The article presents the expansion as a response to the workforce gap; it does not say the problem has already been solved.",
+      evidence: "Ireland article: 612 extra annual places; workforce gap projected to worsen as the population grows and ages."
+    },
+    {
+      resolution: "RESOLUTION 02 · WORKFORCE",
+      tag: "ADD NUANCE",
+      prompt: "Which is the most defensible sentence if someone claims that training more people at home is always the single best solution?",
+      options: [
+        { text: "To some extent, the Irish expansion supports domestic training, but the sources do not establish that local training alone is always the best workforce strategy.", correct: true },
+        { text: "The documents prove that international recruitment should end.", correct: false },
+        { text: "Domestic training is guaranteed to solve burnout and waiting lists immediately.", correct: false }
+      ],
+      model: "To some extent, the Irish expansion supports domestic training, but the sources do not establish that local training alone is always the best workforce strategy.",
+      explanation: "This keeps the claim at the strength supported by the source instead of turning one policy measure into a universal rule.",
+      evidence: "The article says Ireland wants to strengthen home-grown supply and rebalance an over-reliance on recruiting professionals trained abroad."
+    },
+    {
+      resolution: "RESOLUTION 02 · WORKFORCE",
+      tag: "CONCEDE & REBUT",
+      prompt: "Which sentence correctly uses the concession–rebuttal structure from your debate language bank?",
+      options: [
+        { text: "While it's true that recruiting abroad can add staff, the fact remains that Ireland is also trying to strengthen its own training pipeline.", correct: true },
+        { text: "While recruiting abroad, Ireland training pipeline.", correct: false },
+        { text: "Recruiting abroad is bad, full stop.", correct: false }
+      ],
+      model: "While it's true that recruiting abroad can add staff, the fact remains that Ireland is also trying to strengthen its own training pipeline.",
+      explanation: "The structure concedes one point and then returns to evidence from the Irish reform without claiming that one strategy must replace the other entirely.",
+      evidence: "Useful language: While it's true that…, the fact remains… / Admittedly…, but… / I take that point, yet…"
+    },
+    {
+      resolution: "RESOLUTION 02 · WORKFORCE",
+      tag: "SUM UP",
+      prompt: "Which conclusion best weighs the workforce debate instead of simply repeating one side?",
+      options: [
+        { text: "On balance, the key trade-off is how to expand and retain a sustainable workforce while avoiding over-reliance on any single source of staff.", correct: true },
+        { text: "On balance, local graduates are always better than internationally trained staff.", correct: false },
+        { text: "The only relevant issue is the number of university places.", correct: false }
+      ],
+      model: "On balance, the key trade-off is how to expand and retain a sustainable workforce while avoiding over-reliance on any single source of staff.",
+      explanation: "The conclusion weighs training, recruitment and retention rather than making a claim that the source does not establish.",
+      evidence: "Ireland: workforce gap, training expansion, over-reliance on staff trained abroad, and a retention proposal linked to HSE service."
+    },
+    {
+      resolution: "RESOLUTION 03 · CO-PAYMENTS",
+      tag: "USE EVIDENCE",
+      prompt: "Which statement about patient charges is directly supported by the Day 2 materials?",
+      options: [
+        { text: "New Zealand's card says GP co-payments can be a cost barrier, while public hospital care is free.", correct: true },
+        { text: "New Zealand charges every patient for hospital treatment.", correct: false },
+        { text: "The documents prove that co-payments always reduce unnecessary consultations.", correct: false }
+      ],
+      model: "New Zealand's card says GP co-payments can be a cost barrier, while public hospital care is free.",
+      explanation: "This is explicitly stated in the New Zealand system card. The materials do not establish a general benefit from co-payments.",
+      evidence: "NZ: public hospital care free; GP visits subsidised but co-payment common; GP co-payments can be a cost barrier."
+    },
+    {
+      resolution: "RESOLUTION 03 · CO-PAYMENTS",
+      tag: "COMPARE IRELAND",
+      prompt: "Which comparison with Ireland is accurate?",
+      options: [
+        { text: "Ireland has historically not been fully free at the point of use: many people pay to see a GP unless they qualify for a medical card.", correct: true },
+        { text: "All GP visits in Ireland are automatically free for everyone.", correct: false },
+        { text: "Private insurance is illegal in Ireland.", correct: false }
+      ],
+      model: "Ireland has historically not been fully free at the point of use: many people pay to see a G.P. unless they qualify for a medical card.",
+      explanation: "The Ireland card describes a historically two-tier system with charges and means-tested medical-card access.",
+      evidence: "Ireland: many people pay to see a GP; the medical card gives free GP and hospital care to lower incomes."
+    },
+    {
+      resolution: "RESOLUTION 03 · CO-PAYMENTS",
+      tag: "CHALLENGE A CLAIM",
+      prompt: "Someone says, “A small co-payment definitely makes healthcare work better.” Which response challenges the claim without inventing evidence?",
+      options: [
+        { text: "Where's the evidence that a co-payment improves the system? Our materials show possible cost barriers, but they do not establish that broader claim.", correct: true },
+        { text: "That's ridiculous and obviously false.", correct: false },
+        { text: "Co-payments always make healthcare worse in every country.", correct: false }
+      ],
+      model: "Where's the evidence that a co-payment improves the system? Our materials show possible cost barriers, but they do not establish that broader claim.",
+      explanation: "A good challenge probes the evidence instead of replacing one unsupported absolute claim with another.",
+      evidence: "Useful language: Where's the evidence that…? / How would you respond to…? / Isn't the real issue…?"
+    },
+    {
+      resolution: "FINAL FORUM CHECK",
+      tag: "BUILD THE ARGUMENT",
+      prompt: "Which sequence gives the strongest overall structure for a short policy response?",
+      options: [
+        { text: "Position → evidence → nuance / concession → weighed conclusion", correct: true },
+        { text: "Opinion → stronger opinion → repeat the opinion → stop", correct: false },
+        { text: "Statistic → claim it proves everything → ignore counter-evidence → conclusion", correct: false }
+      ],
+      model: "My position is that… A clear example is… Admittedly…, but… On balance, the key trade-off is…",
+      explanation: "That sequence mirrors the useful language in the Day 2 debate sheet and keeps evidence and nuance at the centre of the argument.",
+      evidence: "Debate bank: open a position; support with evidence; add nuance; concede and rebut; challenge; sum up and weigh."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -1183,7 +1343,12 @@
     passiveIndex: 0,
     passiveScore: 0,
     passiveMissed: [],
-    passiveComplete: false
+    passiveComplete: false,
+    forumStarted: false,
+    forumIndex: 0,
+    forumScore: 0,
+    forumMissed: [],
+    forumComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -1255,6 +1420,13 @@
     passiveCheckpoint: $("passiveCheckpoint"),
     passiveProgressBar: $("passiveProgressBar"),
     passiveInstruction: $("passiveInstruction"),
+    forumArea: $("forumArea"),
+    startForum: $("startForum"),
+    forumScreen: $("forumScreen"),
+    forumFeedback: $("forumFeedback"),
+    forumCheckpoint: $("forumCheckpoint"),
+    forumProgressBar: $("forumProgressBar"),
+    forumInstruction: $("forumInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -1275,7 +1447,8 @@
     stampFinalS: $("stampFinalS"),
     stampNz: $("stampNz"),
     stampIe: $("stampIe"),
-    stampPassive: $("stampPassive")
+    stampPassive: $("stampPassive"),
+    stampForum: $("stampForum")
   };
 
   let state = loadState();
@@ -1412,8 +1585,12 @@
     els.passiveCheckpoint.textContent = `${passiveDone} / ${passiveItems.length}`;
     els.passiveProgressBar.style.width = `${(passiveDone / passiveItems.length) * 100}%`;
 
+    const forumDone = state.forumComplete ? forumItems.length : Math.min(state.forumIndex, forumItems.length);
+    els.forumCheckpoint.textContent = `${forumDone} / ${forumItems.length}`;
+    els.forumProgressBar.style.width = `${(forumDone / forumItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.passiveComplete ? "Language cleared" : state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.forumComplete ? "Forum cleared" : state.passiveComplete ? "Language cleared" : state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -1598,9 +1775,24 @@
     if (state.passiveComplete) {
       els.stampPassive.classList.remove("stamp-empty");
       els.stampPassive.classList.add("stamp-earned");
+      els.forumArea.classList.remove("is-locked");
+      els.startForum.disabled = false;
+      els.startForum.textContent = state.forumStarted ? "Resume Global Health Forum →" : "Enter Global Health Forum →";
+      els.forumInstruction.textContent = state.forumComplete ? "Forum completed. Your Policy Advocate stamp has been issued." : "Passive Control cleared. Your policy forum pass is active.";
     } else {
       els.stampPassive.classList.remove("stamp-earned");
       els.stampPassive.classList.add("stamp-empty");
+      els.forumArea.classList.add("is-locked");
+      els.startForum.disabled = true;
+      els.startForum.textContent = "Forum locked";
+    }
+
+    if (state.forumComplete) {
+      els.stampForum.classList.remove("stamp-empty");
+      els.stampForum.classList.add("stamp-earned");
+    } else {
+      els.stampForum.classList.remove("stamp-earned");
+      els.stampForum.classList.add("stamp-empty");
     }
   }
 
@@ -2078,7 +2270,8 @@
 
     if (state.passiveComplete) {
       const pct = Math.round((state.passiveScore / passiveItems.length) * 100);
-      els.passiveScreen.innerHTML = `<div class="passport-complete-card passive-complete"><div class="passport-complete-icon" aria-hidden="true">📐</div><p class="passport-case-kicker">LANGUAGE CONTROL CLEARED</p><h3>Passive Control Cleared</h3><p>You can now use the present simple, past simple and present perfect passive to keep the focus on methods, procedures and findings in a scientific presentation.</p><div class="passport-score-line"><strong>${state.passiveScore} / ${passiveItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passive-formula"><div><b>PRESENT</b><span>are collected</span></div><div><b>PAST</b><span>were recruited</span></div><div><b>PRESENT PERFECT</b><span>have been reported</span></div></div><div class="passport-model-box"><span>MODEL THREE-TENSE CHECK</span><p>“Data are collected at each visit. Two hundred and forty patients were recruited. Similar results have been reported before.”</p><button id="hearPassiveSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket passive-ticket"><span>LANGUAGE DESK</span><b>Passive Control Cleared</b><span>✓</span><b>Research English</b><span>FORUM NEXT</span></div><div class="passport-next-route passive-next-card"><strong>Next checkpoint</strong><span>🏛️ Global Health Forum · take a position, support it with evidence and add nuance.</span></div></div>`;
+      els.passiveScreen.innerHTML = `<div class="passport-complete-card passive-complete"><div class="passport-complete-icon" aria-hidden="true">📐</div><p class="passport-case-kicker">LANGUAGE CONTROL CLEARED</p><h3>Passive Control Cleared</h3><p>You can now use the present simple, past simple and present perfect passive to keep the focus on methods, procedures and findings in a scientific presentation.</p><div class="passport-score-line"><strong>${state.passiveScore} / ${passiveItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passive-formula"><div><b>PRESENT</b><span>are collected</span></div><div><b>PAST</b><span>were recruited</span></div><div><b>PRESENT PERFECT</b><span>have been reported</span></div></div><div class="passport-model-box"><span>MODEL THREE-TENSE CHECK</span><p>“Data are collected at each visit. Two hundred and forty patients were recruited. Similar results have been reported before.”</p><button id="hearPassiveSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket passive-ticket"><span>LANGUAGE DESK</span><b>Passive Control Cleared</b><span>✓</span><b>Research English</b><span>FORUM NEXT</span></div><div class="passport-next-route passive-next-card"><strong>Next checkpoint</strong><span>🏛️ Global Health Forum · take a position, support it with evidence and add nuance.</span></div><button id="goForum" class="passport-primary" type="button">Enter Global Health Forum →</button></div>`;
+      $("goForum").addEventListener("click", () => { els.forumArea.scrollIntoView({ behavior: "smooth", block: "start" }); window.setTimeout(() => els.startForum.focus({ preventScroll: true }), 450); });
       $("hearPassiveSummary").addEventListener("click", () => speak("Data are collected at each visit. Two hundred and forty patients were recruited. Similar results have been reported before."));
       updateProgress();
       return;
@@ -2121,6 +2314,61 @@
     window.setTimeout(() => els.passiveScreen.focus({ preventScroll: true }), 450);
   }
 
+
+  function renderForum() {
+    updateProgress();
+    els.forumFeedback.innerHTML = "";
+    if (!state.passiveComplete) return;
+
+    if (!state.forumStarted) {
+      els.forumScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🏛️</span><h3>The forum is ready</h3><p>Three resolutions await. The game scores evidence, nuance and language — never which side you personally take.</p></div>`;
+      return;
+    }
+
+    if (state.forumComplete) {
+      const pct = Math.round((state.forumScore / forumItems.length) * 100);
+      els.forumScreen.innerHTML = `<div class="passport-complete-card forum-complete"><div class="passport-complete-icon" aria-hidden="true">🏛️</div><p class="passport-case-kicker">GLOBAL HEALTH FORUM CLEARED</p><h3>Policy Advocate</h3><p>You used Day 2 evidence without overclaiming, distinguished evidence from opinion, added concessions and finished by weighing the trade-off.</p><div class="passport-score-line"><strong>${state.forumScore} / ${forumItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="forum-score-skills"><div><b>POSITION</b><span>Clear claim</span></div><div><b>EVIDENCE</b><span>Source-grounded</span></div><div><b>NUANCE</b><span>No overclaiming</span></div><div><b>WEIGHING</b><span>Trade-off stated</span></div></div><div class="passport-model-box"><span>MODEL ARGUMENT FRAME</span><p>“My position is that… A clear example is… Admittedly…, but… On balance, the key trade-off is…”</p><button id="hearForumSummary" class="passport-hear" type="button">🔊 Hear argument frame</button></div><div class="comparison-ticket forum-ticket"><span>GLOBAL HEALTH FORUM</span><b>Policy Advocate</b><span>✓</span><b>Evidence + nuance</b><span>FINAL NEXT</span></div><div class="passport-next-route forum-next-card"><strong>Final destination</strong><span>⭐ Mystery Destination · the final assignment will mix systems, vocabulary, comparisons, pronunciation and scientific English.</span></div></div>`;
+      $("hearForumSummary").addEventListener("click", () => speak("My position is that. A clear example is. Admittedly, but. On balance, the key trade-off is."));
+      updateProgress();
+      return;
+    }
+
+    const item = forumItems[state.forumIndex];
+    els.forumScreen.innerHTML = `<div class="passport-question-card forum-question"><div class="passport-question-meta"><span>${item.resolution}</span><b>${item.tag}</b></div><div class="sound-chip">Forum check ${state.forumIndex + 1} of ${forumItems.length}</div><h3>${item.prompt}</h3><div id="forumOptions" class="passport-options"></div><div class="forum-evidence-note"><span aria-hidden="true">📎</span><div><b>Evidence reminder</b><br>${item.evidence}</div></div></div>`;
+    const optionWrap = $("forumOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.forumMissed.includes(state.forumIndex)) state.forumScore += 1;
+        state.forumIndex += 1;
+        if (state.forumIndex >= forumItems.length) state.forumComplete = true;
+        saveState();
+        playTone("good");
+        els.forumFeedback.innerHTML = `<div class="feedback-good"><strong>Argument move accepted.</strong><span>${item.explanation}</span></div><div class="passport-transcript forum-transcript"><span>MODEL LINE</span><p>${item.model}</p><button id="hearForumModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="forumNext" class="passport-next" type="button">${state.forumComplete ? "Stamp passport →" : "Next forum check →"}</button>`;
+        $("hearForumModel").addEventListener("click", () => speak(item.model));
+        $("forumNext").addEventListener("click", renderForum);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.forumMissed.includes(state.forumIndex)) state.forumMissed.push(state.forumIndex);
+        saveState();
+        playTone("bad");
+        els.forumFeedback.innerHTML = `<div class="feedback-bad"><strong>Forum chair: re-check the claim.</strong><span>Choose the option that is both well-structured and supported by the Day 2 materials. Avoid absolutes such as always, never or proves when the sources do not justify them.</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startForum() {
+    if (!state.passiveComplete) return;
+    state.forumStarted = true;
+    saveState();
+    renderForum();
+    els.forumArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.forumScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -2136,6 +2384,7 @@
     renderWellington();
     renderDublin();
     renderPassive();
+    renderForum();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2155,6 +2404,7 @@
   els.startWellington.addEventListener("click", startWellington);
   els.startDublin.addEventListener("click", startDublin);
   els.startPassive.addEventListener("click", startPassive);
+  els.startForum.addEventListener("click", startForum);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -2177,4 +2427,5 @@
   renderWellington();
   renderDublin();
   renderPassive();
+  renderForum();
 })();
