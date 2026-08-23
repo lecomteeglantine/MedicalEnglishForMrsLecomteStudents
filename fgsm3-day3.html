@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v33.css">
+  <link rel="stylesheet" href="styles-v34.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -202,8 +202,73 @@
       <button id="mission4Button" class="field-primary" type="button" disabled>🔒 Mission 4 · Radio Stress Check</button>
     </section>
 
-    <section id="mission4Teaser" class="field-next-mission is-locked" aria-labelledby="mission4Title">
-      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission4Title">Mission 4 · Radio Stress Check</h2><p>Field communication has to be understandable under pressure. Next, you will work on word stress in long humanitarian and scientific words such as <em>humanitarian, evacuation, catastrophic, population, commodities</em> and <em>coordination</em>.</p></div><span class="field-next-icon" aria-hidden="true">📻</span>
+    <section id="mission4Area" class="radio-mission is-locked" aria-labelledby="mission4Title">
+      <div class="radio-hero">
+        <img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="News interview frame used for the Day 3 humanitarian medicine lesson.">
+        <div class="radio-hero-shade" aria-hidden="true"></div>
+        <div class="radio-hero-copy">
+          <p class="field-kicker">MISSION 04 · COMMUNICATION CLEARANCE</p>
+          <h2 id="mission4Title">Radio Stress Check</h2>
+          <p class="radio-tagline">Make the key syllable land clearly.</p>
+          <p>In long words, one syllable carries the main stress. This mission uses the word-stress patterns from your Day 3 worksheet and Presentation Check-in, then transfers them into short field and research messages.</p>
+          <button id="startMission4" class="field-primary" type="button" disabled>🔒 Complete Mission 3 first</button>
+        </div>
+        <div class="radio-hero-score"><span>MISSION 4 SCORE</span><strong id="mission4Score">0 / 20</strong><small>first-attempt points</small></div>
+      </div>
+
+      <div class="radio-rule-card">
+        <div class="radio-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div><span>QUICK RULE</span><strong>One syllable is stressed: louder and longer.</strong><p>For words ending in <em>-tion / -sion / -cian</em>, your Presentation Check-in reminds you that the stress falls on the syllable immediately before the ending.</p></div>
+        <button id="hearStressRule" class="field-hear" type="button">🔊 Hear rule</button>
+      </div>
+
+      <div class="radio-word-bank" aria-label="Day 3 long-word practice bank">
+        <span>humanitarian</span><span>emergency</span><span>evacuation</span><span>catastrophic</span><span>population</span><span>commodities</span><span>coordination</span><span>communication</span><span>infrastructure</span><span>malnutrition</span><span>dehydration</span><span>sanitation</span><span>vaccination</span><span>deterioration</span><span>resuscitation</span>
+      </div>
+      <p class="radio-bank-note">This larger bank comes from your Day 3 speaking task. The scored checkpoints below use stress patterns explicitly supplied in the worksheet answer key or Presentation Check-in.</p>
+
+      <div class="radio-progress-card" aria-live="polite">
+        <span>MISSION 4 PROGRESS</span><strong id="mission4ProgressText">0 / 4</strong>
+        <div class="field-progress-track"><i id="mission4ProgressBar"></i></div>
+      </div>
+
+      <div class="radio-activity-grid">
+        <button class="radio-activity-card" data-m4-activity="scanner" type="button" disabled>
+          <span class="radio-card-number">01</span><div class="radio-card-icon" aria-hidden="true">🎚️</div>
+          <div><small>STRESS SCANNER</small><strong>Hear &amp; Mark</strong><p>Identify the main stress in six humanitarian practice words.</p><b id="m4StatusScanner">LOCKED</b></div>
+        </button>
+        <button class="radio-activity-card" data-m4-activity="rule" type="button" disabled>
+          <span class="radio-card-number">02</span><div class="radio-card-icon" aria-hidden="true">-TION</div>
+          <div><small>PATTERN CHECK</small><strong>-tion / -sion Rule</strong><p>Apply the stress rule from the Presentation Check-in.</p><b id="m4StatusRule">LOCKED</b></div>
+        </button>
+        <button class="radio-activity-card" data-m4-activity="research" type="button" disabled>
+          <span class="radio-card-number">03</span><div class="radio-card-icon" aria-hidden="true">🔬</div>
+          <div><small>PRESENTATION TRANSFER</small><strong>Research Words</strong><p>Practise the six long words marked in your scientific-talk check-in.</p><b id="m4StatusResearch">LOCKED</b></div>
+        </button>
+        <button class="radio-activity-card" data-m4-activity="transmission" type="button" disabled>
+          <span class="radio-card-number">04</span><div class="radio-card-icon" aria-hidden="true">📻</div>
+          <div><small>FINAL READBACK</small><strong>Radio Transmission</strong><p>Keep the correct stress patterns inside complete messages.</p><b id="m4StatusTransmission">LOCKED</b></div>
+        </button>
+      </div>
+
+      <div id="mission4Workspace" class="radio-workspace" aria-labelledby="mission4WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">MISSION 04 · RADIO DESK</p><h2 id="mission4WorkspaceTitle">Communication desk locked</h2><p id="mission4WorkspaceIntro">Complete Mission 3 to open this assignment.</p></div>
+          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission4ActivityScore">0</strong></div>
+        </div>
+        <div id="mission4Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">📻</span><h3>Radio Stress Check locked</h3><p>Complete Access Restricted first.</p></div></div>
+        <div id="mission4Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mission4Complete" class="field-completion radio-completion is-locked" aria-labelledby="mission4CompleteTitle">
+      <div class="field-completion-badge" aria-hidden="true">📻</div>
+      <div><p class="field-kicker dark">MISSION 04 CLEARANCE</p><h2 id="mission4CompleteTitle">Radio Stress Check is not cleared yet.</h2><p id="mission4CompleteText">Complete all four Mission 4 activities.</p></div>
+      <button id="mission5Button" class="field-primary" type="button" disabled>🔒 Mission 5 · Emergency Contingency Plan</button>
+    </section>
+
+    <section id="mission5Teaser" class="field-next-mission is-locked" aria-labelledby="mission5Title">
+      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission5Title">Mission 5 · Emergency Contingency Plan</h2><p>Patient numbers are rising, roads are becoming harder to use and supplies may be delayed. Next, you will build the 24-hour plan from your Day 3 worksheet using zero conditional, first conditional and <em>even if</em>.</p></div><span class="field-next-icon" aria-hidden="true">🗂️</span>
     </section>
   </main>
 

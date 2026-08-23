@@ -146,6 +146,54 @@
     }
   };
 
+
+  const mission4Activities = {
+    scanner: {
+      title: "Hear & Mark",
+      intro: "These six stress patterns come directly from the Day 3 answer key. Listen to the word, then choose the version with the main stressed syllable marked correctly.",
+      items: [
+        {word:"coordinator", q:"Which version marks the main stress in coordinator correctly?", a:"co-OR-di-na-tor", wrong:["CO-or-di-na-tor","co-or-di-NA-tor"], model:"co-OR-di-na-tor", phrase:"The coordinator is updating the field team."},
+        {word:"community", q:"Which version marks the main stress in community correctly?", a:"com-MU-ni-ty", wrong:["COM-mu-ni-ty","com-mu-NI-ty"], model:"com-MU-ni-ty", phrase:"The community needs reliable access to care."},
+        {word:"situation", q:"Which version marks the main stress in situation correctly?", a:"sit-u-A-tion", wrong:["SIT-u-a-tion","sit-U-a-tion"], model:"sit-u-A-tion", phrase:"The situation is changing quickly."},
+        {word:"continuous", q:"Which version marks the main stress in continuous correctly?", a:"con-TIN-u-ous", wrong:["CON-tin-u-ous","con-tin-U-ous"], model:"con-TIN-u-ous", phrase:"Continuous strikes can make access too dangerous."},
+        {word:"condition", q:"Which version marks the main stress in condition correctly?", a:"con-DI-tion", wrong:["CON-di-tion","con-di-TION"], model:"con-DI-tion", phrase:"A health condition may make evacuation harder."},
+        {word:"protected", q:"Which version marks the main stress in protected correctly?", a:"pro-TEC-ted", wrong:["PRO-tec-ted","pro-tec-TED"], model:"pro-TEC-ted", phrase:"Medical teams need to be protected."}
+      ]
+    },
+    rule: {
+      title: "-tion / -sion Rule",
+      intro: "Use the exact reminder from Presentation Check-in ③: in -tion, -sion and -cian words, the stress falls on the syllable just before the ending.",
+      items: [
+        {word:"rule", q:"What is the Day 3 rule for words ending in -tion / -sion / -cian?", a:"Stress the syllable immediately before the ending", wrong:["Always stress the first syllable","Always stress the final syllable"], model:"In -tion, -sion and -cian words, stress the syllable just before the ending.", phrase:"In evaluation, the stress comes just before -tion."},
+        {word:"evaluation", q:"Using that rule, where does the stress fall in evaluation?", a:"On the syllable A, immediately before -tion", wrong:["On the first syllable e","On the final -tion syllable"], model:"evalu-A-tion", phrase:"The evaluation was completed before the presentation."},
+        {word:"precision", q:"Using the rule, what should you do in a word such as precision?", a:"Stress the syllable immediately before -sion", wrong:["Stress -sion itself","Ignore word stress because spelling is enough"], model:"The stress falls immediately before -sion.", phrase:"Precision matters when you present scientific results."},
+        {word:"situation", q:"Why does sit-u-A-tion fit the rule?", a:"The stressed A syllable comes immediately before -tion", wrong:["Because -tion itself carries the main stress","Because all four-syllable words stress the first syllable"], model:"sit-u-A-tion: the stress is on the syllable just before -tion.", phrase:"The situation is changing quickly."}
+      ]
+    },
+    research: {
+      title: "Research Words",
+      intro: "Transfer the same listening skill to the six long words marked in your scientific article Presentation Check-in.",
+      items: [
+        {word:"methodology", q:"Which version matches the stress pattern supplied for methodology?", a:"me-THO-do-lo-gy", wrong:["ME-tho-do-lo-gy","me-tho-do-LO-gy"], model:"me-THO-do-lo-gy", phrase:"The methodology is explained on the next slide."},
+        {word:"hypothesis", q:"Which version matches the supplied pattern for hypothesis?", a:"hy-PO-the-sis", wrong:["HY-po-the-sis","hy-po-THE-sis"], model:"hy-PO-the-sis", phrase:"The hypothesis was tested in the study."},
+        {word:"significant", q:"Which version matches the supplied pattern for significant?", a:"sig-NI-fi-cant", wrong:["SIG-ni-fi-cant","sig-ni-FI-cant"], model:"sig-NI-fi-cant", phrase:"The difference was statistically significant."},
+        {word:"parameters", q:"Which version matches the supplied pattern for parameters?", a:"pa-RA-me-ters", wrong:["PA-ra-me-ters","pa-ra-ME-ters"], model:"pa-RA-me-ters", phrase:"The parameters were defined before analysis."},
+        {word:"randomised", q:"Which version matches the supplied pattern for randomised?", a:"ran-do-MI-sed", wrong:["RAN-do-mi-sed","ran-DO-mi-sed"], model:"ran-do-MI-sed", phrase:"Participants were randomised into two groups."},
+        {word:"analysis", q:"Which version matches the supplied pattern for analysis?", a:"a-NA-ly-sis", wrong:["A-na-ly-sis","a-na-LY-sis"], model:"a-NA-ly-sis", phrase:"The analysis showed a clear difference."}
+      ]
+    },
+    transmission: {
+      title: "Radio Transmission",
+      intro: "Keep the source-backed stress patterns while the words are embedded in complete field or research messages.",
+      items: [
+        {word:"coordinator + situation", q:"Which readback preserves both supplied stress patterns in: ‘The coordinator described the situation’?", a:"co-OR-di-na-tor · sit-u-A-tion", wrong:["CO-or-di-na-tor · SIT-u-a-tion","co-or-di-NA-tor · sit-U-a-tion"], model:"co-OR-di-na-tor · sit-u-A-tion", phrase:"The coordinator described the situation."},
+        {word:"community + protected", q:"Which readback preserves both supplied stress patterns in: ‘The community must be protected’?", a:"com-MU-ni-ty · pro-TEC-ted", wrong:["COM-mu-ni-ty · PRO-tec-ted","com-mu-NI-ty · pro-tec-TED"], model:"com-MU-ni-ty · pro-TEC-ted", phrase:"The community must be protected."},
+        {word:"condition + continuous", q:"Which readback preserves both supplied stress patterns in: ‘The condition requires continuous monitoring’?", a:"con-DI-tion · con-TIN-u-ous", wrong:["CON-di-tion · CON-tin-u-ous","con-di-TION · con-tin-U-ous"], model:"con-DI-tion · con-TIN-u-ous", phrase:"The condition requires continuous monitoring."},
+        {word:"methodology + analysis", q:"Which readback preserves both Presentation Check-in patterns in: ‘The methodology and analysis were explained’?", a:"me-THO-do-lo-gy · a-NA-ly-sis", wrong:["ME-tho-do-lo-gy · A-na-ly-sis","me-tho-do-LO-gy · a-na-LY-sis"], model:"me-THO-do-lo-gy · a-NA-ly-sis", phrase:"The methodology and analysis were explained."}
+      ]
+    }
+  };
+
   const defaults = {
     started:false,current:"vocab",
     indices:{vocab:0,situation:0,video:0,signals:0},
@@ -168,6 +216,14 @@
       missed:{roads:[],vulnerable:[],supplies:[],evenif:[]},
       complete:{roads:false,vulnerable:false,supplies:false,evenif:false},
       completeAll:false
+    },
+    mission4:{
+      started:false,current:"scanner",
+      indices:{scanner:0,rule:0,research:0,transmission:0},
+      scores:{scanner:0,rule:0,research:0,transmission:0},
+      missed:{scanner:[],rule:[],research:[],transmission:[]},
+      complete:{scanner:false,rule:false,research:false,transmission:false},
+      completeAll:false
     }
   };
   let state = load();
@@ -178,7 +234,8 @@
     start:$("startFieldMission"),sound:$("day3SoundToggle"),musicToggle:$("day3MusicToggle"),music:$("day3Music"),reset:$("resetDay3"),status:$("day3AudioStatus"),
     screen:$("fieldScreen"),feedback:$("fieldFeedback"),workspaceTitle:$("workspaceTitle"),workspaceIntro:$("workspaceIntro"),score:$("fieldScore"),progressText:$("missionProgressText"),progressBar:$("missionProgressBar"),clearance:$("fieldClearance"),complete:$("missionComplete"),completeTitle:$("missionCompleteTitle"),completeText:$("missionCompleteText"),mission2Button:$("mission2Button"),
     mission2Area:$("mission2Area"),startMission2:$("startMission2"),mission2Score:$("mission2Score"),mission2ProgressText:$("mission2ProgressText"),mission2ProgressBar:$("mission2ProgressBar"),mission2Workspace:$("mission2Workspace"),mission2WorkspaceTitle:$("mission2WorkspaceTitle"),mission2WorkspaceIntro:$("mission2WorkspaceIntro"),mission2ActivityScore:$("mission2ActivityScore"),mission2Screen:$("mission2Screen"),mission2Feedback:$("mission2Feedback"),mission2Complete:$("mission2Complete"),mission2CompleteTitle:$("mission2CompleteTitle"),mission2CompleteText:$("mission2CompleteText"),mission3Button:$("mission3Button"),
-    mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),mission4Teaser:$("mission4Teaser")
+    mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),
+    mission4Area:$("mission4Area"),startMission4:$("startMission4"),mission4Score:$("mission4Score"),mission4ProgressText:$("mission4ProgressText"),mission4ProgressBar:$("mission4ProgressBar"),mission4Workspace:$("mission4Workspace"),mission4WorkspaceTitle:$("mission4WorkspaceTitle"),mission4WorkspaceIntro:$("mission4WorkspaceIntro"),mission4ActivityScore:$("mission4ActivityScore"),mission4Screen:$("mission4Screen"),mission4Feedback:$("mission4Feedback"),mission4Complete:$("mission4Complete"),mission4CompleteTitle:$("mission4CompleteTitle"),mission4CompleteText:$("mission4CompleteText"),mission5Button:$("mission5Button"),mission5Teaser:$("mission5Teaser"),hearStressRule:$("hearStressRule")
   };
 
   function load(){
@@ -202,6 +259,12 @@
       merged.mission3.scores={...base.mission3.scores,...(s3.scores||{})};
       merged.mission3.missed={...base.mission3.missed,...(s3.missed||{})};
       merged.mission3.complete={...base.mission3.complete,...(s3.complete||{})};
+      const s4=saved.mission4||{};
+      merged.mission4={...base.mission4,...s4};
+      merged.mission4.indices={...base.mission4.indices,...(s4.indices||{})};
+      merged.mission4.scores={...base.mission4.scores,...(s4.scores||{})};
+      merged.mission4.missed={...base.mission4.missed,...(s4.missed||{})};
+      merged.mission4.complete={...base.mission4.complete,...(s4.complete||{})};
       return merged;
     }catch{return structuredClone(defaults);}
   }
@@ -376,11 +439,13 @@
       els.mission3CompleteTitle.textContent="Access Coordinator";
       els.mission3CompleteText.textContent="You reported access limitations without overclaiming, recognised who may need extra evacuation support, adapted supply planning and used conditional language to communicate remaining limits.";
       els.mission4Button.disabled=false;els.mission4Button.textContent="Mission 4 · Radio Stress Check →";
-      els.mission4Teaser.classList.remove("is-locked");
+      els.mission4Area.classList.remove("is-locked");
+      els.startMission4.disabled=false;els.startMission4.textContent=state.mission4.started?"Resume Mission 4 →":"Start Mission 4 →";
       els.startMission3.textContent="Replay Mission 3 →";
     }else{
-      els.mission3Complete.classList.add("is-locked");els.mission4Button.disabled=true;els.mission4Teaser.classList.add("is-locked");
+      els.mission3Complete.classList.add("is-locked");els.mission4Button.disabled=true;els.mission4Area.classList.add("is-locked");els.startMission4.disabled=true;els.startMission4.textContent="🔒 Complete Mission 3 first";
     }
+    updateMission4UI();
     save();
   }
 
@@ -421,6 +486,89 @@
     $("continueMission3").onclick=()=>{if(next){state.mission3.current=next;save();renderMission3();}else{state.mission3.completeAll=true;cue("unlock");save();updateMission3UI();els.mission3Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
   }
 
+
+  function mission4Order(){return ["scanner","rule","research","transmission"];}
+  function mission4Unlocked(key){const order=mission4Order(),i=order.indexOf(key);return state.mission3.completeAll&&(i===0||state.mission4.complete[order[i-1]]);}
+  function mission4CompletedCount(){return Object.values(state.mission4.complete).filter(Boolean).length;}
+  function mission4TotalScore(){return Object.values(state.mission4.scores).reduce((a,b)=>a+b,0);}
+  function mission4MaxScore(){return mission4Order().reduce((n,k)=>n+mission4Activities[k].items.length,0);}
+
+  function updateMission4UI(){
+    if(!els.mission4Area)return;
+    const count=mission4CompletedCount();
+    state.mission4.completeAll=count===4;
+    els.mission4ProgressText.textContent=`${count} / 4`;
+    els.mission4ProgressBar.style.width=`${count*25}%`;
+    els.mission4Score.textContent=`${mission4TotalScore()} / ${mission4MaxScore()}`;
+    const labels={scanner:"m4StatusScanner",rule:"m4StatusRule",research:"m4StatusResearch",transmission:"m4StatusTransmission"};
+    mission4Order().forEach(k=>{
+      const label=$(labels[k]),card=document.querySelector(`[data-m4-activity="${k}"]`);
+      if(!label||!card)return;
+      if(state.mission4.complete[k]){label.textContent="CLEARED";card.disabled=false;card.classList.add("is-cleared");card.classList.remove("is-locked");}
+      else if(mission4Unlocked(k)){label.textContent=state.mission4.started&&state.mission4.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
+      else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
+    });
+    if(state.mission4.completeAll){
+      els.clearance.textContent="Mission 4 cleared";
+      els.mission4Complete.classList.remove("is-locked");
+      els.mission4CompleteTitle.textContent="Clear Field Communicator";
+      els.mission4CompleteText.textContent="You identified the supplied word-stress patterns, applied the -tion / -sion rule and transferred long-word stress into humanitarian and scientific messages.";
+      els.mission5Button.disabled=false;els.mission5Button.textContent="Mission 5 · Emergency Contingency Plan →";
+      els.mission5Teaser.classList.remove("is-locked");
+      els.startMission4.textContent="Replay Mission 4 →";
+    }else{
+      els.mission4Complete.classList.add("is-locked");els.mission5Button.disabled=true;els.mission5Teaser.classList.add("is-locked");
+    }
+    save();
+  }
+
+  function renderMission4(){
+    updateMission4UI();
+    els.mission4Feedback.innerHTML="";
+    if(!state.mission3.completeAll){els.mission4WorkspaceTitle.textContent="Communication desk locked";els.mission4WorkspaceIntro.textContent="Complete Mission 3 to open this assignment.";return;}
+    if(!state.mission4.started){els.mission4WorkspaceTitle.textContent="Mission 4 ready";els.mission4WorkspaceIntro.textContent="Start with Hear & Mark, then work through the four communication activities in order.";els.mission4Screen.innerHTML=`<div class="field-waiting radio-waiting"><span aria-hidden="true">📻</span><h3>Radio desk ready</h3><p>The scored stress patterns come from your Day 3 answer key and Presentation Check-in. Use the Listen buttons as often as you need.</p></div>`;return;}
+    let key=state.mission4.current;
+    if(!mission4Unlocked(key)){key=mission4Order().find(k=>mission4Unlocked(k)&&!state.mission4.complete[k])||"scanner";state.mission4.current=key;save();}
+    const act=mission4Activities[key],idx=state.mission4.indices[key]||0;
+    els.mission4WorkspaceTitle.textContent=act.title;els.mission4WorkspaceIntro.textContent=act.intro;els.mission4ActivityScore.textContent=`${state.mission4.scores[key]} / ${act.items.length}`;
+    if(state.mission4.complete[key])return renderMission4CompleteActivity(key);
+    const item=act.items[idx];
+    els.mission4Screen.innerHTML=`<div class="field-question radio-question"><div class="field-question-meta"><span>${act.title.toUpperCase()}</span><b>${idx+1} / ${act.items.length}</b></div><div class="radio-listen-row"><button id="hearM4Word" class="field-hear" type="button">🔊 Hear ${item.word==="rule"?"rule":"word"}</button><button id="hearM4Phrase" class="field-hear" type="button">🎧 Hear in context</button></div><h3>${item.q}</h3><div id="mission4Options" class="field-options stress-options"></div><p class="radio-source-note">Capital letters mark the stressed syllable in the course notation.</p></div>`;
+    $("hearM4Word").onclick=()=>speak(item.word==="rule"?item.model:item.word);
+    $("hearM4Phrase").onclick=()=>speak(item.phrase);
+    const wrap=$("mission4Options");
+    shuffled([item.a,...item.wrong]).forEach(text=>{const b=document.createElement("button");b.className="field-option stress-option";b.type="button";b.textContent=text;b.onclick=()=>answerMission4(key,idx,text===item.a,b,wrap,item);wrap.appendChild(b);});
+  }
+
+  function answerMission4(key,idx,isCorrect,button,wrap,item){
+    if(isCorrect){
+      wrap.querySelectorAll("button").forEach(b=>b.disabled=true);button.classList.add("is-correct");
+      if(!state.mission4.missed[key].includes(idx))state.mission4.scores[key]+=1;
+      state.mission4.indices[key]+=1;cue("good");save();
+      els.mission4Feedback.innerHTML=`<div class="field-good"><strong>Stress cleared.</strong><span>${item.model}</span></div><div class="radio-model-line"><span>HEAR THE COMPLETE MESSAGE</span><p>${item.phrase}</p><button id="hearM4Model" class="field-hear" type="button">🔊 Listen again</button></div><button id="mission4Next" class="field-next" type="button">${state.mission4.indices[key]>=mission4Activities[key].items.length?"Complete activity →":"Next stress check →"}</button>`;
+      $("hearM4Model").onclick=()=>speak(item.phrase);
+      $("mission4Next").onclick=()=>{if(state.mission4.indices[key]>=mission4Activities[key].items.length){state.mission4.complete[key]=true;const order=mission4Order(),i=order.indexOf(key);if(i<order.length-1)state.mission4.current=order[i+1];cue("unlock");save();}renderMission4();};
+      updateMission4UI();
+    }else{
+      button.disabled=true;button.classList.add("is-wrong");if(!state.mission4.missed[key].includes(idx))state.mission4.missed[key].push(idx);cue("bad");save();
+      els.mission4Feedback.innerHTML=`<div class="field-bad"><strong>Stress not cleared yet.</strong><span>Listen again and look for the single syllable that is marked as louder and longer in the Day 3 course notation.</span></div>`;
+    }
+  }
+
+  function renderMission4CompleteActivity(key){
+    const order=mission4Order(),i=order.indexOf(key),next=order[i+1],act=mission4Activities[key];
+    els.mission4Screen.innerHTML=`<div class="field-cleared-card radio-cleared-card"><span aria-hidden="true">📻</span><p class="field-kicker dark">MISSION 4 ACTIVITY CLEARED</p><h3>${act.title}</h3><p>First-try score: <strong>${state.mission4.scores[key]} / ${act.items.length}</strong>.</p>${next?`<button id="continueMission4" class="field-primary" type="button">Open ${mission4Activities[next].title} →</button>`:`<button id="continueMission4" class="field-primary" type="button">Complete Mission 4 →</button>`}</div>`;
+    $("continueMission4").onclick=()=>{if(next){state.mission4.current=next;save();renderMission4();}else{state.mission4.completeAll=true;cue("unlock");save();updateMission4UI();els.mission4Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
+  }
+
+  function startMission4(){
+    if(!state.mission3.completeAll)return;
+    if(state.mission4.completeAll){state.mission4={...structuredClone(defaults.mission4),started:true};}
+    else state.mission4.started=true;
+    state.mission4.current=mission4Order().find(k=>mission4Unlocked(k)&&!state.mission4.complete[k])||"scanner";
+    save();cue("start");if(musicOn)startMusic();renderMission4();els.mission4Workspace.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>els.mission4Screen.focus({preventScroll:true}),450);
+  }
+
   function startMission3(){
     if(!state.mission2.completeAll)return;
     if(state.mission3.completeAll){state.mission3={...structuredClone(defaults.mission3),started:true};}
@@ -443,14 +591,18 @@
   els.start.onclick=start;
   els.sound.onclick=()=>{soundOn=!soundOn;localStorage.setItem(SOUND_KEY,soundOn?"on":"off");if(!soundOn&&"speechSynthesis" in window)speechSynthesis.cancel();syncControls();status(soundOn?"Sound on.":"Sound off. All audio-dependent content also appears as text.");};
   els.musicToggle.onclick=()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");syncControls();if(musicOn)startMusic();else stopMusic();status(musicOn?"Music on. Field briefing ambience is playing.":"Music off.");};
-  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
+  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
   els.mission2Button.onclick=()=>{els.mission2Area.scrollIntoView({behavior:"smooth",block:"start"});};
   els.startMission2.onclick=startMission2;
   document.querySelectorAll(".triage-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m2Activity;if(!mission2Unlocked(key))return;state.mission2.started=true;state.mission2.current=key;save();renderMission2();els.mission2Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
   els.mission3Button.onclick=()=>els.mission3Area.scrollIntoView({behavior:"smooth",block:"start"});
   els.startMission3.onclick=startMission3;
   document.querySelectorAll(".access-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m3Activity;if(!mission3Unlocked(key))return;state.mission3.started=true;state.mission3.current=key;save();renderMission3();els.mission3Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
-  els.mission4Button.onclick=()=>els.mission4Teaser.scrollIntoView({behavior:"smooth",block:"center"});
+  els.mission4Button.onclick=()=>els.mission4Area.scrollIntoView({behavior:"smooth",block:"start"});
+  els.startMission4.onclick=startMission4;
+  document.querySelectorAll(".radio-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m4Activity;if(!mission4Unlocked(key))return;state.mission4.started=true;state.mission4.current=key;save();renderMission4();els.mission4Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
+  els.hearStressRule.onclick=()=>speak("In long words, one syllable is stressed. In words ending in tion, sion or cian, the stress falls on the syllable just before the ending.");
+  els.mission5Button.onclick=()=>els.mission5Teaser.scrollIntoView({behavior:"smooth",block:"center"});
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();renderMission3();
+  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();
 })();
