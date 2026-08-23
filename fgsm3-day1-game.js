@@ -8,6 +8,7 @@
   const STORAGE_ONLINE_DECISION_KEY = "mrsLecomteFGSM3Day1OnlineDecisionV1";
   const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3V1";
   const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4V1";
+  const STORAGE_RESEARCH_KEY = "mrsLecomteFGSM3Day1ResearchCommsV1";
 
   const checkpoints = [
     {
@@ -479,6 +480,145 @@
   ];
 
 
+  const researchItems = [
+    {
+      id:"methods-passive",
+      phase:"METHODS LOG",
+      icon:"🧪",
+      title:"Checkpoint 1 · Put the method in focus",
+      instruction:"You are presenting the methods. Which sentence sounds natural when the patients and procedure matter more than the researchers?",
+      context:"Study method: 240 patients / recruit",
+      options:[
+        {text:"240 patients were recruited.", correct:true},
+        {text:"240 patients recruited.", correct:false},
+        {text:"240 patients are recruited yesterday.", correct:false}
+      ],
+      feedback:"Research talks often describe completed methods in the past, and the passive is useful when the process or participants are the focus.",
+      model:"240 patients were recruited."
+    },
+    {
+      id:"measured-weekly",
+      phase:"METHODS LOG",
+      icon:"🩺",
+      title:"Checkpoint 2 · Report the procedure",
+      instruction:"Choose the sentence that correctly reports a repeated measurement in a completed study.",
+      context:"Blood pressure / measure / every week",
+      options:[
+        {text:"Blood pressure was measured weekly.", correct:true},
+        {text:"Blood pressure measured weekly.", correct:false},
+        {text:"Blood pressure has measured weekly during the finished study.", correct:false}
+      ],
+      feedback:"The worksheet model uses the past passive for completed methods: was/were + past participle.",
+      model:"Blood pressure was measured weekly."
+    },
+    {
+      id:"analysed",
+      phase:"METHODS LOG",
+      icon:"🔬",
+      title:"Checkpoint 3 · Keep the tense consistent",
+      instruction:"The study is finished. Which sentence fits a methods/results presentation?",
+      context:"Samples / analyse / in the laboratory",
+      options:[
+        {text:"The samples were analysed in the laboratory.", correct:true},
+        {text:"The samples are analysed in the laboratory last month.", correct:false},
+        {text:"The samples were analyse in the laboratory.", correct:false}
+      ],
+      feedback:"For a finished study, keep methods and results in the past. In the passive, use was/were + past participle.",
+      model:"The samples were analysed in the laboratory."
+    },
+    {
+      id:"verb-bank",
+      phase:"RESEARCH VERB BANK",
+      icon:"🧠",
+      title:"Checkpoint 4 · Choose the research verb",
+      instruction:"Which verb best completes this sentence?",
+      context:"The study ______ whether dose was associated with treatment response.",
+      options:[
+        {text:"investigated", correct:true},
+        {text:"entertained", correct:false},
+        {text:"complained", correct:false}
+      ],
+      feedback:"Investigated is one of the research verbs in your presentation bank. Choose verbs that describe what the study actually did.",
+      model:"The study investigated whether dose was associated with treatment response."
+    },
+    {
+      id:"higher-than",
+      phase:"RESULTS DASHBOARD",
+      icon:"📈",
+      title:"Checkpoint 5 · Compare two groups",
+      instruction:"Fictional practice data: mean recovery score = 78 in Group A and 69 in Group B. Choose the clearest comparison.",
+      context:"FICTIONAL PRACTICE DATA · Group A 78 · Group B 69",
+      options:[
+        {text:"Group A had a higher mean recovery score than Group B.", correct:true},
+        {text:"Group A had a more high mean recovery score that Group B.", correct:false},
+        {text:"Group A was the higher score of Group B.", correct:false}
+      ],
+      feedback:"With a short adjective such as high, use the comparative form higher + than.",
+      model:"Group A had a higher mean recovery score than Group B."
+    },
+    {
+      id:"more-likely",
+      phase:"RESULTS DASHBOARD",
+      icon:"📊",
+      title:"Checkpoint 6 · Express likelihood",
+      instruction:"Fictional practice data: 64% responded in Group A versus 48% in Group B. Choose the best sentence.",
+      context:"FICTIONAL PRACTICE DATA · Response: A 64% · B 48%",
+      options:[
+        {text:"Patients in Group A were more likely to respond than patients in Group B.", correct:true},
+        {text:"Patients in Group A were likelier respond that Group B.", correct:false},
+        {text:"Patients in Group A were more likely responding than Group B.", correct:false}
+      ],
+      feedback:"Use more likely to + verb when comparing probability or frequency of an outcome.",
+      model:"Patients in Group A were more likely to respond than patients in Group B."
+    },
+    {
+      id:"not-as-common",
+      phase:"RESULTS DASHBOARD",
+      icon:"↔️",
+      title:"Checkpoint 7 · Compare frequency",
+      instruction:"Fictional practice data: adverse events occurred in 12% of Group A and 20% of Group B. Choose the accurate sentence.",
+      context:"FICTIONAL PRACTICE DATA · Adverse events: A 12% · B 20%",
+      options:[
+        {text:"Adverse events were not as common in Group A as in Group B.", correct:true},
+        {text:"Adverse events were not so common than Group B.", correct:false},
+        {text:"Adverse events were the less common in Group A as Group B.", correct:false}
+      ],
+      feedback:"The pattern (not) as + adjective + as gives a clear comparison without exaggerating the difference.",
+      model:"Adverse events were not as common in Group A as in Group B."
+    },
+    {
+      id:"greater-proportion",
+      phase:"RESULTS DASHBOARD",
+      icon:"◫",
+      title:"Checkpoint 8 · Compare proportions",
+      instruction:"Fictional practice data: 71% of women and 55% of men completed follow-up. Choose the presentation-ready sentence.",
+      context:"FICTIONAL PRACTICE DATA · Follow-up completed: women 71% · men 55%",
+      options:[
+        {text:"A greater proportion of women than men completed follow-up.", correct:true},
+        {text:"A more great proportion of women that men completed follow-up.", correct:false},
+        {text:"Women completed a greater follow-up than men.", correct:false}
+      ],
+      feedback:"A higher/greater proportion of X than Y is useful when the comparison is between percentages or shares of groups.",
+      model:"A greater proportion of women than men completed follow-up."
+    },
+    {
+      id:"most-frequent",
+      phase:"RESULTS DASHBOARD",
+      icon:"★",
+      title:"Checkpoint 9 · Highlight the main result",
+      instruction:"Fictional practice data: nausea was the most frequently reported side effect. Choose the clearest summary sentence.",
+      context:"FICTIONAL PRACTICE DATA · Most frequent side effect: nausea",
+      options:[
+        {text:"The most frequent side effect was nausea.", correct:true},
+        {text:"The more frequent side effect was nausea.", correct:false},
+        {text:"Nausea was more frequent of all the side effects.", correct:false}
+      ],
+      feedback:"Use the most / most frequent when identifying the highest item within a set.",
+      model:"The most frequent side effect was nausea."
+    }
+  ];
+
+
   const onlineDecisionCases = [
     {
       id:"medication-followup",
@@ -623,7 +763,15 @@
     patient4Checkpoint: document.getElementById("patient4CheckpointNumber"),
     patient4Progress: document.getElementById("patient4ProgressBar"),
     patient4Start: document.getElementById("startPatient4"),
-    researchMap: document.getElementById("researchMap")
+    researchMap: document.getElementById("researchMap"),
+    researchArea: document.getElementById("researchArea"),
+    researchScreen: document.getElementById("researchScreen"),
+    researchFeedback: document.getElementById("researchFeedback"),
+    researchInstruction: document.getElementById("researchInstruction"),
+    researchCheckpoint: document.getElementById("researchCheckpointNumber"),
+    researchProgress: document.getElementById("researchProgressBar"),
+    researchStart: document.getElementById("startResearch"),
+    closeSafelyMap: document.getElementById("closeSafelyMap")
   };
 
   let state = readState();
@@ -634,6 +782,7 @@
   let onlineDecisionState = readOnlineDecisionState();
   let patient3State = readPatient3State();
   let patient4State = readPatient4State();
+  let researchState = readResearchState();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -734,6 +883,19 @@
   function savePatient4State() {
     try { localStorage.setItem(STORAGE_PATIENT4_KEY, JSON.stringify(patient4State)); } catch (_) {}
   }
+
+  function readResearchState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_RESEARCH_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, lastModel: ""};
+  }
+
+  function saveResearchState() {
+    try { localStorage.setItem(STORAGE_RESEARCH_KEY, JSON.stringify(researchState)); } catch (_) {}
+  }
+
 
   function readAudioPrefs() {
     try {
@@ -2454,6 +2616,7 @@
     setPatient4Feedback("<strong>Next:</strong> Research Comms Terminal — past passive, research verbs and comparison language from the scientific article presentation.", "info");
     document.getElementById("replayPatient4")?.addEventListener("click", resetPatient4);
     renderPatient4Progress();
+    unlockResearch();
   }
 
   function startPatient4() {
@@ -2473,6 +2636,199 @@
     els.patient4Screen.innerHTML = patient4IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">💊</div><h3>Incoming call · Patient 04</h3><p>New medication five days ago · nausea · upset stomach · considering stopping it.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 04 is waiting</h3><p>Finish Patient 03 first.</p></div>`;
     setPatient4Feedback();
   }
+
+  function setResearchFeedback(html = "", type = "") {
+    if (!els.researchFeedback) return;
+    els.researchFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.researchFeedback.innerHTML = html;
+  }
+
+  function researchIsUnlocked() {
+    return patient4State.completed || researchState.completed;
+  }
+
+  function renderResearchProgress() {
+    if (!els.researchArea) return;
+    const unlocked = researchIsUnlocked();
+    const total = researchItems.length;
+    const done = researchState.completed ? total : Math.min(researchState.index, total);
+
+    if (!unlocked) {
+      els.researchArea.classList.add("is-locked");
+      els.researchStart.disabled = true;
+      els.researchStart.textContent = "Research Terminal locked";
+      els.researchCheckpoint.textContent = `0 / ${total}`;
+      els.researchProgress.style.width = "0%";
+      if (els.researchMap) {
+        els.researchMap.classList.remove("live", "done", "next-ready", "research-ready");
+        els.researchMap.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.closeSafelyMap) {
+        els.closeSafelyMap.classList.remove("live", "done", "next-ready");
+        els.closeSafelyMap.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.researchArea.classList.remove("is-locked");
+    els.researchStart.disabled = false;
+    els.researchStart.textContent = researchState.completed ? "View completed Research Terminal →" : researchState.index > 0 ? "Continue Research Terminal →" : "Enter Research Terminal →";
+    els.researchCheckpoint.textContent = `${done} / ${total}`;
+    els.researchProgress.style.width = `${(done / total) * 100}%`;
+
+    if (els.researchMap) {
+      els.researchMap.classList.remove("live", "done", "next-ready", "research-ready");
+      els.researchMap.classList.add(researchState.completed ? "done" : "live");
+      els.researchMap.querySelector("b").textContent = researchState.completed ? "DONE" : "LIVE";
+    }
+    if (els.closeSafelyMap) {
+      els.closeSafelyMap.classList.remove("live", "done", "next-ready");
+      if (researchState.completed) els.closeSafelyMap.classList.add("next-ready");
+      els.closeSafelyMap.querySelector("b").textContent = researchState.completed ? "NEXT" : "LOCKED";
+    }
+  }
+
+  function unlockResearch() {
+    renderResearchProgress();
+    if (!researchIsUnlocked()) return;
+    if (!researchState.completed && researchState.index === 0) {
+      els.researchInstruction.textContent = "The research terminal is online. Move from methods language to precise comparison of results.";
+      els.researchScreen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📊</div><h3>Research Comms Terminal online</h3><p>Methods Log → Research Verb Bank → Results Dashboard.</p></div>`;
+    }
+  }
+
+  function researchVerbBank() {
+    const verbs = ["conducted","recruited","reported","investigated","concluded","included","increased","assessed","based","published","reduced","developed","analysed","measured","compared","observed","showed","enrolled"];
+    return `<div class="research-verb-bank"><span>VERB BANK FROM YOUR CHECK-IN</span><div>${verbs.map(v => `<b>${escapeHTML(v)}</b>`).join("")}</div></div>`;
+  }
+
+  function researchTerminalPanel(item, number) {
+    const phaseClass = item.phase === "RESULTS DASHBOARD" ? "results" : item.phase === "RESEARCH VERB BANK" ? "verbs" : "methods";
+    return `<article class="research-terminal-card ${phaseClass}">
+      <div class="research-terminal-top"><span>● TERMINAL ONLINE</span><b>${escapeHTML(item.phase)}</b></div>
+      <div class="research-terminal-body">
+        <div class="research-terminal-icon" aria-hidden="true">${item.icon}</div>
+        <span class="research-terminal-step">CHECK ${number} / ${researchItems.length}</span>
+        <h3>${escapeHTML(item.title.replace(/^Checkpoint \d+ · /, ""))}</h3>
+        <div class="research-context">${escapeHTML(item.context)}</div>
+        ${item.phase === "RESEARCH VERB BANK" ? researchVerbBank() : `<div class="research-rule-mini"><span>${item.phase === "METHODS LOG" ? "PAST / PASSIVE" : "COMPARISON LANGUAGE"}</span><small>${item.phase === "METHODS LOG" ? "Completed study → past tense. Passive is often useful when the procedure or participants are the focus." : "Describe the difference that the figures actually support — no stronger."}</small></div>`}
+      </div>
+    </article>`;
+  }
+
+  function renderResearchItem() {
+    renderResearchProgress();
+    if (!researchIsUnlocked()) return;
+    if (researchState.completed || researchState.index >= researchItems.length) return renderResearchComplete();
+
+    const item = researchItems[researchState.index];
+    const number = researchState.index + 1;
+    els.researchInstruction.textContent = item.instruction;
+    setResearchFeedback();
+    els.researchCheckpoint.textContent = `${researchState.index} / ${researchItems.length}`;
+    els.researchProgress.style.width = `${(researchState.index / researchItems.length) * 100}%`;
+
+    els.researchScreen.innerHTML = `<div class="research-shell">
+      ${researchTerminalPanel(item, number)}
+      <article class="research-decision-card">
+        <span class="research-round-kicker">${escapeHTML(item.phase)}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="research-options">${item.options.map((option,index) => `<button class="research-choice" type="button" data-research-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
+        <div class="research-source-note"><strong>Presentation habit:</strong> keep methods/results in the past, use the passive naturally rather than mechanically, and make comparison language match the evidence.</div>
+      </article>
+    </div>`;
+
+    els.researchScreen.querySelectorAll("[data-research-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const option = item.options[Number(button.dataset.researchChoice)];
+        els.researchScreen.querySelectorAll("[data-research-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          researchState.lastModel = item.model;
+          saveResearchState();
+          setResearchFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="research-hear-model" type="button">🔊 Hear model sentence</button>`, "success");
+          const listen = els.researchFeedback.querySelector(".research-hear-model");
+          listen?.addEventListener("click", () => speak(item.model, listen, 0.92));
+          advanceResearchButton(number === researchItems.length ? "Complete Research Terminal →" : "Continue →");
+        } else {
+          button.classList.add("wrong-choice");
+          beep("warn");
+          researchState.mistakes += 1;
+          saveResearchState();
+          setResearchFeedback(`<strong>Not quite.</strong> Look again at the tense or comparison pattern. ${escapeHTML(item.feedback)}`, "warning");
+          setTimeout(() => {
+            els.researchScreen.querySelectorAll("[data-research-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advanceResearchButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.researchFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      researchState.index += 1;
+      researchState.lastModel = "";
+      if (researchState.index >= researchItems.length) researchState.completed = true;
+      saveResearchState();
+      renderResearchItem();
+      els.researchScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderResearchComplete() {
+    researchState.completed = true;
+    researchState.index = researchItems.length;
+    saveResearchState();
+    els.researchInstruction.textContent = "Research Comms Terminal complete: methods in the past, natural passive structures and precise comparison language are ready for your article presentation.";
+    els.researchCheckpoint.textContent = `${researchItems.length} / ${researchItems.length}`;
+    els.researchProgress.style.width = "100%";
+    els.shiftStatus.textContent = "Research Comms complete · Close Safely next";
+    const score = Math.max(0, 100 - researchState.mistakes * 6);
+    const quality = researchState.mistakes === 0 ? "Presentation-ready precision" : researchState.mistakes <= 2 ? "Research communication ready" : "Research communication ready after revision";
+
+    els.researchScreen.innerHTML = `<div class="mission-complete-card research-complete-card">
+      <div class="mission-badge research-badge" aria-hidden="true">📊</div>
+      <p class="mission-step-label">RESEARCH COMMS TERMINAL COMPLETE</p>
+      <h3>Research Communicator badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You kept a completed study in the past, used passive structures where they put the method or participants in focus, and turned fictional results into accurate comparisons.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>terminal score</span></div>
+      <div class="research-summary-grid">
+        <div><span>METHODS</span><strong>Past + passive</strong><small>“240 patients were recruited.”</small></div>
+        <div><span>RESULTS</span><strong>Compare precisely</strong><small>higher than · more likely to · not as … as</small></div>
+        <div><span>DELIVERY</span><strong>Say the model aloud</strong><small>Use the 🔊 button to hear presentation-ready phrasing.</small></div>
+      </div>
+      <div class="timeline-preview close-preview"><span>NEXT MODULE · CLOSE SAFELY</span><p><strong>Summarise · check understanding · follow-up · safety-netting</strong></p><small>Return to the consultation and finish the call as professionally as you started it.</small></div>
+      <div class="mission-complete-actions"><button id="replayResearch" class="tcr-secondary-button" type="button">Replay Research Terminal</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setResearchFeedback("<strong>Next:</strong> Close Safely — summarise the problem and plan, check understanding, arrange follow-up and give clear safety-netting advice.", "info");
+    document.getElementById("replayResearch")?.addEventListener("click", resetResearch);
+    renderResearchProgress();
+  }
+
+  function startResearch() {
+    if (!researchIsUnlocked()) return;
+    if (researchState.completed) renderResearchComplete();
+    else renderResearchItem();
+    els.researchArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.researchScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetResearch() {
+    researchState = {index:0, completed:false, mistakes:0, lastModel:""};
+    saveResearchState();
+    renderResearchProgress();
+    els.researchInstruction.textContent = researchIsUnlocked() ? "The research terminal is online. Move from methods language to precise comparison of results." : "Complete Patient 04 to unlock the research terminal.";
+    els.researchScreen.innerHTML = researchIsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📊</div><h3>Research Comms Terminal online</h3><p>Methods Log → Research Verb Bank → Results Dashboard.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Research terminal locked</h3><p>Finish Patient 04 first.</p></div>`;
+    setResearchFeedback();
+  }
+
 
   function feedbackFor(id) {
     const map = {
@@ -2560,6 +2916,7 @@
     onlineDecisionState = {index: 0, completed: false, mistakes: 0};
     patient3State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     patient4State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
+    researchState = {index: 0, completed: false, mistakes: 0, lastModel: ""};
     saveState();
     saveClinicalState();
     saveAudioLabState();
@@ -2568,6 +2925,7 @@
     saveOnlineDecisionState();
     savePatient3State();
     savePatient4State();
+    saveResearchState();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -2580,6 +2938,7 @@
     resetOnlineDecision();
     resetPatient3();
     resetPatient4();
+    resetResearch();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -2599,6 +2958,7 @@
   els.onlineDecisionStart?.addEventListener("click", startOnlineDecision);
   els.patient3Start?.addEventListener("click", startPatient3);
   els.patient4Start?.addEventListener("click", startPatient4);
+  els.researchStart?.addEventListener("click", startResearch);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -2635,8 +2995,9 @@
   renderOnlineDecisionProgress();
   renderPatient3Progress();
   renderPatient4Progress();
+  renderResearchProgress();
   if (state.completed) {
-    els.shiftStatus.textContent = patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = researchState.completed ? "Research Comms complete · Close Safely next" : patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
@@ -2645,5 +3006,6 @@
     if (patient2State.completed || onlineDecisionState.completed) unlockOnlineDecision();
     if (onlineDecisionState.completed || patient3State.completed) unlockPatient3();
     if (patient3State.completed || patient4State.completed) unlockPatient4();
+    if (patient4State.completed || researchState.completed) unlockResearch();
   }
 })();

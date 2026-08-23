@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v16.css">
+  <link rel="stylesheet" href="styles-v17.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -371,6 +371,42 @@
       <div id="patient4Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+    <section id="researchArea" class="tcr-mission research-section is-locked" aria-labelledby="researchTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">TRAINING BAY · RESEARCH COMMS TERMINAL</p>
+          <h2 id="researchTitle">Turn results into clear research English</h2>
+          <p id="researchInstruction">Complete Patient 04 to unlock the research terminal.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>RESEARCH CHECK</span>
+          <strong id="researchCheckpointNumber">0 / 9</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="researchProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="research-brief">
+        <div class="research-brief-icon" aria-hidden="true">📊</div>
+        <div>
+          <span class="case-brief-kicker">SCIENTIFIC ARTICLE PRESENTATION</span>
+          <strong>Methods in the past. Passive when it helps. Comparisons that say exactly what the data show.</strong>
+          <p>Move through three consoles: Methods Log, Research Verb Bank and Results Dashboard. The comparison figures in this game are fictional practice data, not results from your own article.</p>
+        </div>
+        <button id="startResearch" class="tcr-primary" type="button" disabled>Research Terminal locked</button>
+      </div>
+
+      <div id="researchScreen" class="mission-screen research-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Research terminal locked</h3>
+          <p>Finish Patient 04 first. The scientific-presentation training will unlock automatically.</p>
+        </div>
+      </div>
+
+      <div id="researchFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
       <div class="mission-map-heading">
         <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
@@ -387,7 +423,7 @@
         <article id="patient3Map" class="mission-map-card"><span>06</span><div><strong>Patient 03 · Fatigue</strong><small>Fatigue · weight loss · dizziness · further assessment</small></div><b>LOCKED</b></article>
         <article id="patient4Map" class="mission-map-card"><span>07</span><div><strong>Patient 04 · Medication</strong><small>New medication · nausea · side effects · review plan</small></div><b>LOCKED</b></article>
         <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
-        <article class="mission-map-card"><span>08</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
+        <article id="closeSafelyMap" class="mission-map-card"><span>08</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
         <article class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
       </div>
     </section>
