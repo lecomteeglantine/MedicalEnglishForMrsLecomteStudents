@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v42.css">
+  <link rel="stylesheet" href="styles-v43.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -118,13 +118,46 @@
       <button id="day4Mission3Button" class="ai4-primary" type="button" disabled>🔒 Mission 3 · Override the Algorithm</button>
     </section>
 
+
+    <section id="day4Mission3" class="ai4-board ai4-mission3 is-locked" aria-labelledby="ai4Mission3Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 03</p><h2 id="ai4Mission3Title">Mission 3 · Override the Algorithm</h2><p>Eight worksheet cases contain a mismatch between the AI's first answer and the rest of the clinical information. Spot the conflict, keep your language cautious and know when human review is essential.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 3 PROGRESS</span><strong id="day4Mission3ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission3ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-override-banner" role="note">
+        <div class="ai4-override-icon" aria-hidden="true">🛑</div>
+        <div><span>HUMAN REVIEW PROTOCOL</span><strong>Do not diagnose. Check the mismatch.</strong><p>These are English-learning scenarios from the Day 4 worksheet. Your task is to notice information the AI output does not adequately explain, not to practise real clinical decision-making.</p></div>
+        <div class="ai4-override-stats"><b>8</b><span>case files</span><b>9</b><span>silent-letter checks</span></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m3-grid">
+        <button class="ai4-activity-card" data-ai4-m3="conflict" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI-supported medical case."><div><small>CASE SCANNER</small><strong>Spot the Conflict</strong><p>Find the detail that makes the AI's first answer incomplete.</p><b id="ai4M3StatusConflict">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="review" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation from the Day 4 report."><div><small>HUMAN OVERRIDE</small><strong>Re-check the AI</strong><p>Choose the most source-consistent reason for human review.</p><b id="ai4M3StatusReview">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="silent" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical English pronunciation activity."><div><small>PRONUNCIATION SCANNER</small><strong>Silent Letter Check</strong><p>Hear the word, then identify the letter you write but do not pronounce.</p><b id="ai4M3StatusSilent">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="brief" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Human clinician checking an AI output."><div><small>CAUTIOUS REPORTING</small><strong>Override Brief</strong><p>Select the clearest, most cautious way to explain why the case needs another look.</p><b id="ai4M3StatusBrief">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m3-workspace" aria-labelledby="ai4M3WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">OVERRIDE CONSOLE</p><h2 id="ai4M3WorkspaceTitle">Override waiting</h2><p id="ai4M3WorkspaceIntro">Clear Mission 2, then open Spot the Conflict.</p></div><div class="ai4-score-box"><span>MISSION 3 SCORE</span><strong id="day4Mission3Score">0</strong></div></div>
+        <div id="ai4M3Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div></div>
+        <div id="ai4M3Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission3Complete" class="ai4-completion ai4-m3-complete is-locked" aria-labelledby="day4M3CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🛑</div>
+      <div><p class="ai4-kicker dark">MISSION 03 CLEARANCE</p><h2 id="day4M3CompleteTitle">Override the Algorithm is not cleared yet.</h2><p id="day4M3CompleteText">Complete all four human-review activities.</p></div>
+      <button id="day4Mission4Button" class="ai4-primary" type="button" disabled>🔒 Mission 4 · Evidence Scanner</button>
+    </section>
+
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
       <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
       <div class="ai4-roadmap-grid">
         <div class="ai4-roadmap-card active"><span>01 · ACTIVE</span><strong>System Boot</strong><p>Vocabulary and human-in-the-loop principles.</p><b>NOW</b></div>
         <div id="ai4RoadmapM2" class="ai4-roadmap-card"><span id="ai4RoadmapM2State">02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
         <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
-        <div class="ai4-roadmap-card"><span>04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
+        <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
         <div class="ai4-roadmap-card"><span>05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
         <div class="ai4-roadmap-card"><span>06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
         <div class="ai4-roadmap-card"><span>FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>

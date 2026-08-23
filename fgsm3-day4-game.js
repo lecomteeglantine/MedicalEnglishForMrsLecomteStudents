@@ -5,6 +5,7 @@
   const MUSIC_KEY = "mrsLecomteFgsm3Day4Music";
   const ACTIVITY_ORDER = ["lexicon", "signals", "boundaries", "clearance"];
   const M2_ORDER = ["overview", "sepsis", "tools", "human"];
+  const M3_ORDER = ["conflict", "review", "silent", "brief"];
 
   const meta = {
     lexicon: ["Load the Vocabulary", "Decode the ten core terms from the Day 4 worksheet."],
@@ -18,6 +19,15 @@
     sepsis: ["Sepsis Feed", "Verify how the early-warning system monitors patients and why earlier alerts matter."],
     tools: ["Navigation + Neuro", "Check what the spine-navigation and seizure-detection systems actually do."],
     human: ["Keep the Human in the Loop", "Confirm the patient perspective, risks and the final-decision boundary."]
+  };
+
+
+
+  const m3Meta = {
+    conflict: ["Spot the Conflict", "Read all the information in each worksheet case and identify the detail the AI's first answer does not explain."],
+    review: ["Re-check the AI", "Choose the most source-consistent reason the case needs human review rather than automatic acceptance."],
+    silent: ["Silent Letter Check", "Hear each word and identify the letter that is written but not pronounced."],
+    brief: ["Override Brief", "Choose cautious English that reports the mismatch without pretending the evidence proves more than it does."]
   };
 
   const vocab = [
@@ -93,13 +103,61 @@
     {q:"Which principle best summarises the safety boundary in the report?",a:"AI should complement doctors, with a human making the final decision.",opts:["AI should complement doctors, with a human making the final decision.","AI should make the final decision whenever it is faster.","A doctor should accept every AI recommendation.","Patients should use AI as a substitute for medical advice."],ex:"The report's stated principle is complement, not replace: a human remains responsible for the final decision."}
   ];
 
+
+
+  /* Mission 3 follows the eight "AI made a mistake" cases and silent-letter work in the supplied Day 4 worksheet. */
+  const m3Conflict = [
+    {caseId:"CASE 01 · MUSCLE PAIN?",ai:"AI output: muscle strain",summary:"A 68-year-old man has shoulder and upper-back pain, tiredness and slight shortness of breath.",q:"Which extra information most clearly conflicts with accepting 'muscle strain' on its own?",a:"The pain is spreading to his jaw and the ECG shows a subtle abnormality.",opts:["The pain is spreading to his jaw and the ECG shows a subtle abnormality.","He is 68 years old.","The pain is in the shoulder and upper back.","He feels tired."],ex:"The worksheet deliberately adds pain spreading to the jaw and a subtle ECG abnormality, then asks whether something more serious could be happening."},
+    {caseId:"CASE 02 · PNEUMONIA?",ai:"AI output: pneumonia",summary:"A 29-year-old woman develops sudden chest pain and difficulty breathing.",q:"Which detail makes the pneumonia answer need another look?",a:"She has no fever or cough, and the symptoms started very suddenly.",opts:["She has no fever or cough, and the symptoms started very suddenly.","She is 29 years old.","She has chest pain.","An X-ray was analysed."],ex:"The worksheet contrasts the AI's pneumonia answer with sudden onset and no fever or cough; the doctor considers pneumothorax."},
+    {caseId:"CASE 03 · ANXIETY?",ai:"AI output: psychiatric assessment",summary:"A 42-year-old woman is tired, anxious and has difficulty sleeping.",q:"Which physical information should stop the team from focusing only on a psychological explanation?",a:"She has lost weight, sweats a lot and has a very fast heartbeat.",opts:["She has lost weight, sweats a lot and has a very fast heartbeat.","She has difficulty sleeping.","She feels anxious.","She is 42 years old."],ex:"The worksheet says the doctor thinks there may be a physical cause and asks whether the AI focused too much on psychological symptoms."},
+    {caseId:"CASE 04 · KNEE INJURY?",ai:"AI output: minor ligament injury",summary:"A 35-year-old patient has knee pain after running.",q:"Which detail makes the word 'minor' questionable?",a:"The knee is very swollen and the patient cannot put weight on it.",opts:["The knee is very swollen and the patient cannot put weight on it.","The pain started after running.","The patient is 35.","The pain is in the knee."],ex:"The worksheet highlights severe swelling and inability to bear weight, then asks whether the injury could be more serious."},
+    {caseId:"CASE 05 · WRIST SPRAIN?",ai:"AI output: simple sprain",summary:"A patient falls on their hand and has severe wrist pain.",q:"Which information suggests the simple-sprain label may be insufficient?",a:"The wrist is very swollen and the patient cannot move it normally.",opts:["The wrist is very swollen and the patient cannot move it normally.","The patient fell on their hand.","The pain is in the wrist.","The AI used the word 'sprain'."],ex:"The worksheet asks whether there could be a fracture because of the severe pain, swelling and reduced movement."},
+    {caseId:"CASE 06 · PSYCHOLOGICAL PROBLEM?",ai:"AI output: psychological stress",summary:"A student reports headaches, tiredness and difficulty concentrating.",q:"Which physical symptoms may have been ignored?",a:"A high temperature and neck pain.",opts:["A high temperature and neck pain.","Tiredness and difficulty concentrating.","Being a student.","Having headaches."],ex:"The worksheet explicitly asks whether the AI has ignored an important physical symptom after adding high temperature and neck pain."},
+    {caseId:"CASE 07 · MUSCLE WEAKNESS?",ai:"AI output: muscle fatigue",summary:"A 60-year-old patient develops sudden weakness in one arm.",q:"Which additional signs make this a possible neurological emergency in the worksheet?",a:"Difficulty speaking and one side of the face looking different.",opts:["Difficulty speaking and one side of the face looking different.","The patient is 60 years old.","Only one arm feels weak.","The AI used the word 'fatigue'."],ex:"The worksheet adds difficulty speaking and facial asymmetry and asks whether this could be a neurological emergency."},
+    {caseId:"CASE 08 · PNEUMONIA AGAIN?",ai:"AI output: dehydration",summary:"An elderly patient feels weak and confused.",q:"Which symptoms may have been underestimated?",a:"Rapid breathing and a cough.",opts:["Rapid breathing and a cough.","Weakness and confusion.","The patient's age alone.","The fact that dehydration was suggested."],ex:"The worksheet says the doctor suspects pneumonia and asks which symptoms may have been underestimated: rapid breathing and cough are the added respiratory clues."}
+  ];
+
+  const m3Review = [
+    {caseId:"CASE 01",ai:"Muscle strain",summary:"Jaw-spreading pain + subtle ECG abnormality",q:"Which response best matches the worksheet's human-review logic?",a:"Do not treat the AI label as sufficient; the additional signs need clinician review.",opts:["Do not treat the AI label as sufficient; the additional signs need clinician review.","Accept muscle strain because the AI has already classified the pain.","Ignore the ECG because the abnormality is subtle.","The AI output proves a different diagnosis."],ex:"The source asks whether something more serious could be happening. It supports reassessment, not a new definitive diagnosis."},
+    {caseId:"CASE 02",ai:"Pneumonia",summary:"Sudden chest pain + breathlessness, but no fever or cough",q:"What is the best reason to re-check the AI output?",a:"The symptom pattern conflicts with the pneumonia explanation given by the AI.",opts:["The symptom pattern conflicts with the pneumonia explanation given by the AI.","Pneumonia can never cause chest pain.","Any AI interpretation of an X-ray must be rejected.","The patient's age proves the AI is wrong."],ex:"The worksheet itself contrasts sudden onset and absence of fever/cough with the AI answer and notes the doctor's alternative concern."},
+    {caseId:"CASE 03",ai:"Psychiatric assessment",summary:"Weight loss + sweating + very fast heartbeat",q:"What should human review protect against here?",a:"Focusing so much on psychological symptoms that important physical signs are missed.",opts:["Focusing so much on psychological symptoms that important physical signs are missed.","Assuming anxiety is never a real symptom.","Refusing all psychiatric assessment.","Treating weight loss as proof of one specific disease."],ex:"That is the exact tension posed by the worksheet: did the AI focus too much on the psychological symptoms?"},
+    {caseId:"CASE 04",ai:"Minor ligament injury",summary:"Very swollen knee + cannot bear weight",q:"Why is human review justified?",a:"The severity and loss of function do not sit comfortably with the word 'minor'.",opts:["The severity and loss of function do not sit comfortably with the word 'minor'.","Running always causes a fracture.","All knee pain requires the same response.","The AI must be wrong because swelling is present."],ex:"The worksheet uses swelling and inability to bear weight to question whether the injury could be more serious."},
+    {caseId:"CASE 05",ai:"Simple sprain",summary:"Severe wrist pain + swelling + abnormal movement",q:"Which statement stays closest to the worksheet?",a:"A fracture is possible, so the simple-sprain output should be reviewed.",opts:["A fracture is possible, so the simple-sprain output should be reviewed.","A fracture is certain.","A sprain is impossible after a fall.","No further information is relevant."],ex:"The worksheet asks, 'Could there be a fracture?' — possibility, not certainty."},
+    {caseId:"CASE 06",ai:"Psychological stress",summary:"High temperature + neck pain",q:"What is the key human-review point?",a:"The AI may have ignored physical symptoms that do not fit a purely psychological explanation.",opts:["The AI may have ignored physical symptoms that do not fit a purely psychological explanation.","Psychological stress can never cause headaches.","A high temperature proves one specific diagnosis.","Students cannot have physical illness."],ex:"The worksheet directly asks whether an important physical symptom has been ignored."},
+    {caseId:"CASE 07",ai:"Muscle fatigue",summary:"Sudden one-arm weakness + speech difficulty + facial change",q:"What is the safest source-consistent conclusion?",a:"The added signs make a possible neurological emergency important to consider urgently.",opts:["The added signs make a possible neurological emergency important to consider urgently.","The AI has proved that this is only fatigue.","The exact neurological diagnosis is certain from the worksheet alone.","Speech difficulty is unrelated to the case."],ex:"The worksheet asks whether this could be a neurological emergency; it does not name a definitive diagnosis."},
+    {caseId:"CASE 08",ai:"Dehydration",summary:"Weak/confused + rapid breathing + cough",q:"What did the doctor notice that the AI may have underweighted?",a:"Respiratory symptoms that support considering pneumonia.",opts:["Respiratory symptoms that support considering pneumonia.","Confusion proves dehydration is impossible.","The AI should ignore the cough because the patient is elderly.","Pneumonia is proven without further assessment."],ex:"The worksheet says the doctor suspects pneumonia and asks which symptoms may have been underestimated."}
+  ];
+
+  const m3Silent = [
+    {word:"subtle",display:"su(b)tle",ipa:"/ˈsʌtl/",q:"Which written letter is silent?",a:"b",opts:["b","t","l","s"],ex:"Silent b: subtle. The b is written but not pronounced."},
+    {word:"hours",display:"(h)ours",ipa:"/ˈaʊəz/",q:"Which written letter is silent?",a:"h",opts:["h","o","u","r"],ex:"Silent h: hours. The word begins with a vowel sound."},
+    {word:"muscle",display:"mus(c)le",ipa:"/ˈmʌsl/",q:"Which written letter is silent?",a:"c",opts:["c","s","l","m"],ex:"Silent c: muscle. Do not pronounce every written letter."},
+    {word:"receipt",display:"recei(p)t",ipa:"/rɪˈsiːt/",q:"Which written letter is silent?",a:"p",opts:["p","c","t","r"],ex:"Silent p: receipt."},
+    {word:"pneumonia",display:"(p)neumonia",ipa:"/njuːˈməʊniə/",q:"Which written letter is silent?",a:"p",opts:["p","n","m","a"],ex:"Silent p in pn-: pneumonia."},
+    {word:"psychiatry",display:"(p)sychiatry",ipa:"/saɪˈkaɪətri/",q:"Which written letter is silent?",a:"p",opts:["p","s","y","t"],ex:"Silent p in ps-: psychiatry."},
+    {word:"psychology",display:"(p)sychology",ipa:"/saɪˈkɒlədʒi/",q:"Which written letter is silent?",a:"p",opts:["p","s","c","g"],ex:"Silent p in ps-: psychology."},
+    {word:"diaphragm",display:"diaphra(g)m",ipa:"/ˈdaɪəfræm/",q:"Which written letter is silent?",a:"g",opts:["g","h","m","p"],ex:"Silent g: diaphragm."},
+    {word:"knee",display:"(k)nee",ipa:"/niː/",q:"Which written letter is silent?",a:"k",opts:["k","n","e","none"],ex:"Silent k before n: knee."}
+  ];
+
+  const m3Brief = [
+    {caseId:"CASE 01 · OVERRIDE BRIEF",ai:"AI output: muscle strain",summary:"Jaw-spreading pain + subtle ECG abnormality",q:"Which briefing sentence is appropriately cautious?",a:"The AI may have missed important additional signs, so the muscle-strain explanation needs human review.",opts:["The AI may have missed important additional signs, so the muscle-strain explanation needs human review.","The AI is definitely wrong and the patient has a heart attack.","The subtle ECG change is irrelevant because the AI chose muscle strain.","AI systems cannot assess pain."],ex:"The worksheet gives reasons to question the first answer, but does not establish a definitive alternative diagnosis."},
+    {caseId:"CASE 02 · OVERRIDE BRIEF",ai:"AI output: pneumonia",summary:"Sudden onset + no fever or cough",q:"Which sentence best reports the mismatch?",a:"The sudden onset and absence of fever or cough could make the pneumonia explanation less convincing.",opts:["The sudden onset and absence of fever or cough could make the pneumonia explanation less convincing.","Pneumonia is impossible in this patient.","The X-ray proves the AI is correct.","The patient must have pneumothorax because the doctor mentioned it."],ex:"The worksheet presents pneumothorax as the doctor's concern, not as a proven diagnosis."},
+    {caseId:"CASE 03 · OVERRIDE BRIEF",ai:"AI output: psychiatric assessment",summary:"Weight loss + sweating + fast heartbeat",q:"Which sentence avoids overclaiming?",a:"The physical signs suggest that a non-psychological cause may also need to be considered.",opts:["The physical signs suggest that a non-psychological cause may also need to be considered.","The patient definitely has a physical disease.","Anxiety cannot occur with physical illness.","The psychiatric interpretation is automatically unsafe."],ex:"The worksheet says the doctor thinks there may be a physical cause."},
+    {caseId:"CASE 05 · OVERRIDE BRIEF",ai:"AI output: simple sprain",summary:"Severe pain + swelling + reduced movement",q:"Which sentence matches the worksheet's level of certainty?",a:"The severity of the symptoms means a fracture could be possible and should be considered.",opts:["The severity of the symptoms means a fracture could be possible and should be considered.","The wrist is certainly fractured.","A sprain cannot cause swelling.","The AI output is enough to exclude fracture."],ex:"The worksheet asks, 'Could there be a fracture?' — use possibility rather than certainty."},
+    {caseId:"CASE 07 · OVERRIDE BRIEF",ai:"AI output: muscle fatigue",summary:"Sudden weakness + speech difficulty + facial change",q:"Which sentence is both clear and cautious?",a:"These additional signs could indicate a neurological emergency, so urgent human assessment is important.",opts:["These additional signs could indicate a neurological emergency, so urgent human assessment is important.","These signs prove one exact neurological diagnosis.","The AI must be correct because muscle weakness is present.","Speech difficulty should be ignored until the AI changes its answer."],ex:"The worksheet itself asks whether this could be a neurological emergency."},
+    {caseId:"CASE 08 · OVERRIDE BRIEF",ai:"AI output: dehydration",summary:"Rapid breathing + cough",q:"Which sentence best reflects the source?",a:"The respiratory symptoms may have been underestimated, so pneumonia should remain under consideration.",opts:["The respiratory symptoms may have been underestimated, so pneumonia should remain under consideration.","The patient definitely has pneumonia.","Dehydration and pneumonia can never occur together.","The cough is not relevant because the patient is confused."],ex:"The doctor suspects pneumonia; the worksheet asks which respiratory symptoms may have been underestimated."}
+  ];
+
   let state = loadState();
   let current = null, index = 0, attempts = 0, sessionScore = 0;
   let m2Current = null, m2Index = 0, m2Attempts = 0, m2SessionScore = 0;
+  let m3Current = null, m3Index = 0, m3Attempts = 0, m3SessionScore = 0;
 
   const $ = id => document.getElementById(id);
   const screen = $("ai4Screen"), feedback = $("ai4Feedback"), workspaceTitle = $("ai4WorkspaceTitle"), workspaceIntro = $("ai4WorkspaceIntro");
   const m2Screen = $("ai4M2Screen"), m2Feedback = $("ai4M2Feedback"), m2WorkspaceTitle = $("ai4M2WorkspaceTitle"), m2WorkspaceIntro = $("ai4M2WorkspaceIntro");
+  const m3Screen = $("ai4M3Screen"), m3Feedback = $("ai4M3Feedback"), m3WorkspaceTitle = $("ai4M3WorkspaceTitle"), m3WorkspaceIntro = $("ai4M3WorkspaceIntro");
   const music = $("day4Music"), musicToggle = $("day4MusicToggle"), audioStatus = $("day4AudioStatus"), clinicalVideo = $("day4ClinicalVideo");
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
   let videoPausedMusic = false;
@@ -108,10 +166,13 @@
     return {
       completed: {lexicon:false, signals:false, boundaries:false, clearance:false},
       mission2Completed: {overview:false, sepsis:false, tools:false, human:false},
+      mission3Completed: {conflict:false, review:false, silent:false, brief:false},
       firstTryScore: 0,
       mission2FirstTryScore: 0,
+      mission3FirstTryScore: 0,
       started: false,
       mission2Started: false,
+      mission3Started: false,
       soundOff: false
     };
   }
@@ -124,7 +185,8 @@
         ...base,
         ...saved,
         completed: {...base.completed, ...(saved.completed || {})},
-        mission2Completed: {...base.mission2Completed, ...(saved.mission2Completed || {})}
+        mission2Completed: {...base.mission2Completed, ...(saved.mission2Completed || {})},
+        mission3Completed: {...base.mission3Completed, ...(saved.mission3Completed || {})}
       };
     } catch (e) {
       return base;
@@ -158,6 +220,13 @@
     return bank.map(x => ({...x, opts: shuffle(x.opts)}));
   }
 
+
+
+  function m3ItemsFor(name) {
+    const bank = name === "conflict" ? m3Conflict : name === "review" ? m3Review : name === "silent" ? m3Silent : m3Brief;
+    return bank.map(x => ({...x, opts: shuffle(x.opts)}));
+  }
+
   function updateUI() {
     const done = ACTIVITY_ORDER.filter(a=>state.completed[a]).length;
     $("day4ProgressText").textContent = `${done} / 4`;
@@ -179,6 +248,7 @@
     $("day4SoundToggle").textContent=state.soundOff?"🔇 Sound OFF":"🔊 Sound ON";
     $("day4SoundToggle").setAttribute("aria-pressed",String(!state.soundOff));
     updateMission2UI();
+    updateMission3UI();
   }
 
   function updateMission2UI() {
@@ -206,6 +276,35 @@
     if(r2){r2.classList.toggle("ready",m1Cleared&&!all);r2.classList.toggle("cleared",all);r2s.textContent=all?"02 · CLEARED":m1Cleared?"02 · READY":"02 · LOCKED";}
     if(r3){r3.classList.toggle("ready",all);r3s.textContent=all?"03 · READY":"03 · LOCKED";}
     if(m1Cleared && !state.mission2Started && m2Screen){m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Live Clinical Feed ready</h3><p>Watch the supplied report, then start Feed Orientation.</p></div>';m2WorkspaceIntro.textContent="Watch the supplied report, then start Feed Orientation.";}
+  }
+
+
+
+  function updateMission3UI() {
+    if (!$("day4Mission3")) return;
+    const m2Cleared = M2_ORDER.every(a=>state.mission2Completed[a]);
+    const done = M3_ORDER.filter(a=>state.mission3Completed[a]).length;
+    $("day4Mission3").classList.toggle("is-locked", !m2Cleared);
+    $("day4Mission3ProgressText").textContent = `${done} / 4`;
+    $("day4Mission3ProgressBar").style.width = `${done*25}%`;
+    $("day4Mission3Score").textContent = state.mission3FirstTryScore;
+    const ids={conflict:"ai4M3StatusConflict",review:"ai4M3StatusReview",silent:"ai4M3StatusSilent",brief:"ai4M3StatusBrief"};
+    M3_ORDER.forEach((a,i)=>{
+      const btn=document.querySelector(`[data-ai4-m3="${a}"]`);
+      const unlocked=m2Cleared && (i===0 || state.mission3Completed[M3_ORDER[i-1]]);
+      btn.disabled=!unlocked;
+      $(ids[a]).textContent=state.mission3Completed[a]?"CLEARED":unlocked?"READY":"LOCKED";
+    });
+    const all = done===4;
+    $("day4Mission3Complete").classList.toggle("is-locked", !all);
+    $("day4M3CompleteTitle").textContent = all ? "🛑 Human Override Cleared." : "Override the Algorithm is not cleared yet.";
+    $("day4M3CompleteText").textContent = all ? "You spotted conflicting signals, kept the wording cautious and checked the silent-letter patterns from the Day 4 material." : "Complete all four human-review activities.";
+    $("day4Mission4Button").disabled=!all;
+    $("day4Mission4Button").textContent=all?"Mission 4 · Evidence Scanner →":"🔒 Mission 4 · Evidence Scanner";
+    const r3=$("ai4RoadmapM3"), r3s=$("ai4RoadmapM3State"), r4=$("ai4RoadmapM4"), r4s=$("ai4RoadmapM4State");
+    if(r3){r3.classList.toggle("ready",m2Cleared&&!all);r3.classList.toggle("cleared",all);r3s.textContent=all?"03 · CLEARED":m2Cleared?"03 · READY":"03 · LOCKED";}
+    if(r4){r4.classList.toggle("ready",all);r4s.textContent=all?"04 · READY":"04 · LOCKED";}
+    if(m2Cleared && !state.mission3Started && m3Screen){m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review ready</h3><p>Open Spot the Conflict to begin the eight-case audit.</p></div>';m3WorkspaceIntro.textContent="Open Spot the Conflict to begin the eight-case audit.";}
   }
 
   function start(name) {
@@ -264,17 +363,52 @@
     m2Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m2Meta[m2Current.name][0]} cleared</h3><p>Activity score: ${m2SessionScore}. ${next}</p></div>`; m2Feedback.textContent=""; updateUI();
   }
 
+
+
+  function startM3(name) {
+    if (!M2_ORDER.every(a=>state.mission2Completed[a])) return;
+    if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
+    m3Current={name,items:shuffle(m3ItemsFor(name))}; m3Index=0; m3Attempts=0; m3SessionScore=0; state.mission3Started=true; save();
+    m3WorkspaceTitle.textContent=m3Meta[name][0]; m3WorkspaceIntro.textContent=m3Meta[name][1]; m3Feedback.textContent=""; m3Feedback.className="ai4-feedback"; renderM3();
+  }
+
+  function renderM3() {
+    const it=m3Current.items[m3Index]; if(!it){completeM3Activity();return;}
+    const label=m3Current.name==="conflict"?"CASE SCANNER":m3Current.name==="review"?"HUMAN OVERRIDE":m3Current.name==="silent"?"PRONUNCIATION SCANNER":"OVERRIDE BRIEF";
+    const casePanel=it.caseId?`<div class="ai4-case-panel"><span class="ai4-case-id">${it.caseId}</span><h4>${it.summary||""}</h4>${it.ai?`<span class="ai4-ai-output">🤖 ${it.ai}</span>`:""}</div>`:"";
+    const silentPanel=m3Current.name==="silent"?`<div class="ai4-silent-display"><strong>${it.display}</strong><code>${it.ipa}</code><button class="ai4-audio-btn" type="button" data-m3-speak="${it.word}">🔊 Hear word</button></div><div class="ai4-pronunciation-rule"><strong>Rule:</strong> say the word from the sound, not from every letter you can see.</div>`:"";
+    const guard=m3Current.name==="brief"?'<div class="ai4-brief-preview"><strong>Calibration rule:</strong> question the AI output without turning a possibility into a diagnosis.</div>':m3Current.name!=="silent"?'<div class="ai4-red-flag"><strong>Human-in-the-loop check:</strong> use only the information supplied in the worksheet case.</div>':'';
+    m3Screen.innerHTML=`<span class="ai4-feed-label">${label}</span><div class="ai4-question-top"><span>OVERRIDE · CHECKPOINT ${m3Index+1}</span><b>${m3Index+1} / ${m3Current.items.length}</b></div>${casePanel}${silentPanel}<h3 class="ai4-question">${it.q}</h3><div class="ai4-options">${it.opts.map((o,i)=>`<button class="ai4-option" type="button" data-m3-answer="${encodeURIComponent(o)}"><b>${String.fromCharCode(65+i)}</b> · ${o}</button>`).join("")}</div>${guard}`;
+    m3Screen.querySelectorAll("[data-m3-answer]").forEach(b=>b.addEventListener("click",answerM3));
+    m3Screen.querySelectorAll("[data-m3-speak]").forEach(b=>b.addEventListener("click",()=>speak(b.dataset.m3Speak)));
+    m3Screen.focus();
+  }
+
+  function answerM3(e) {
+    const it=m3Current.items[m3Index], chosen=decodeURIComponent(e.currentTarget.dataset.m3Answer), good=chosen===it.a; m3Attempts++;
+    m3Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m3Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
+    if(good){const pts=m3Attempts===1?10:6;m3SessionScore+=pts;state.mission3FirstTryScore+=pts;m3Feedback.className="ai4-feedback good";m3Feedback.innerHTML=`<strong>Human review check passed.</strong> ${it.ex}`;cue(true);}else{m3Feedback.className="ai4-feedback bad";m3Feedback.innerHTML=`<strong>Re-check the case details.</strong> ${it.ex}`;cue(false);}
+    save(); const next=document.createElement("button"); next.type="button"; next.className="ai4-primary ai4-next"; next.textContent=m3Index===m3Current.items.length-1?"Clear override module →":"Next override checkpoint →"; next.addEventListener("click",()=>{m3Index++;m3Attempts=0;m3Feedback.textContent="";m3Feedback.className="ai4-feedback";renderM3();}); m3Feedback.appendChild(document.createElement("br")); m3Feedback.appendChild(next); updateUI();
+  }
+
+  function completeM3Activity() {
+    state.mission3Completed[m3Current.name]=true; save(); const i=M3_ORDER.indexOf(m3Current.name); const next=i<M3_ORDER.length-1?`${m3Meta[M3_ORDER[i+1]][0]} is now unlocked.`:"Mission 3 is complete. Evidence Scanner is ready.";
+    m3Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m3Meta[m3Current.name][0]} cleared</h3><p>Activity score: ${m3SessionScore}. ${next}</p></div>`; m3Feedback.textContent=""; updateUI();
+  }
+
   $("startDay4Mission1").addEventListener("click",()=>start("lexicon"));
   document.querySelectorAll("[data-ai4-activity]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)start(b.dataset.ai4Activity);}));
   document.querySelectorAll("[data-ai4-m2]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM2(b.dataset.ai4M2);}));
+  document.querySelectorAll("[data-ai4-m3]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM3(b.dataset.ai4M3);}));
 
   $("day4SoundToggle").addEventListener("click",()=>{state.soundOff=!state.soundOff;save();updateUI();audioStatus.textContent=state.soundOff?"Sound effects and UK speech are off. Music is controlled separately.":"Sound effects and UK speech are on. Music is controlled separately.";});
   musicToggle.addEventListener("click",()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");applyMusicState(true);audioStatus.textContent=musicOn?"Music on. AI Clinical Control — Human in the Loop is playing.":"Music off. Sound effects and UK speech remain available.";});
 
-  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";updateUI();}});
+  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;m3Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div>';m3WorkspaceTitle.textContent="Override waiting";m3WorkspaceIntro.textContent="Clear Mission 2, then open Spot the Conflict.";m3Feedback.textContent="";updateUI();}});
 
   $("day4Mission2Button").addEventListener("click",()=>{if(!$("day4Mission2Button").disabled){$("day4Mission2").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 2 ready. Watch the supplied video, then open Feed Orientation.";}});
-  $("day4Mission3Button").addEventListener("click",()=>{if(!$("day4Mission3Button").disabled){audioStatus.textContent="Mission 3 · Override the Algorithm is unlocked and will be added in the next update.";}});
+  $("day4Mission3Button").addEventListener("click",()=>{if(!$("day4Mission3Button").disabled){$("day4Mission3").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 3 ready. Open Spot the Conflict to start the human-review audit.";}});
+  $("day4Mission4Button").addEventListener("click",()=>{if(!$("day4Mission4Button").disabled){audioStatus.textContent="Mission 4 · Evidence Scanner is unlocked and will be added in the next update.";}});
 
   if (clinicalVideo) {
     clinicalVideo.addEventListener("play",()=>{
