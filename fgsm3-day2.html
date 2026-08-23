@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#0c2d66">
+  <meta name="theme-color" content="#0b3b45">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Medical English">
@@ -10,12 +10,13 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 2 Medical English course resources for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 2 · Medical English for Mrs Lecomte's Students</title>
-  <link rel="stylesheet" href="styles-v8.css">
+  <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
+  <title>FGSM3 · Day 2 · Global Health Passport</title>
+  <link rel="stylesheet" href="styles-v20.css">
 </head>
-<body>
+<body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="topbar">
     <a class="brand" href="index.html">
       <span class="brand-mark" aria-hidden="true">🩺</span>
@@ -30,33 +31,208 @@
     </nav>
   </header>
 
-  <main id="main" class="course-day-main">
+  <main id="main" class="passport-main">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span aria-hidden="true">›</span>
-      <a href="fgsm3.html">FGSM3</a>
-      <span aria-hidden="true">›</span>
+      <a href="index.html">Home</a><span aria-hidden="true">›</span>
+      <a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span>
       <span aria-current="page">Day 2</span>
     </nav>
 
-    <section class="course-day-placeholder day-purple">
-      <div class="day-placeholder-number">02</div>
-      <div class="day-placeholder-copy">
-        <p class="eyebrow dark-eyebrow">FOR MRS LECOMTE'S STUDENTS · FGSM3</p>
-        <h1>Day 2</h1>
-        <p>This page is ready for the course materials, activities and resources for Day 2.</p>
-        <span class="coming-large">Content coming soon</span>
-        <a class="ghost-link dark-ghost" href="fgsm3.html">← Back to FGSM3</a>
+    <section class="passport-hero" aria-labelledby="passportTitle">
+      <div class="passport-hero-grid"></div>
+      <div class="passport-hero-copy">
+        <p class="passport-overline">FGSM3 · DAY 2 GAME</p>
+        <h1 id="passportTitle">Global Health<br>Passport</h1>
+        <p class="passport-lead">Six systems. Six destinations. One medical journey.</p>
+        <p class="passport-intro">Join the Global Medical Exchange programme and learn what healthcare systems mean for real patients: who pays, who provides care, who is covered and what patients pay themselves.</p>
+        <div class="passport-hero-actions">
+          <button id="startPassport" class="passport-primary" type="button">Enter Departure Lounge →</button>
+          <a class="passport-ghost" href="#route-map">View route</a>
+        </div>
       </div>
-      <div class="day-placeholder-icon" aria-hidden="true">🧠</div>
+
+      <div class="passport-document" aria-label="Global Health Passport card">
+        <div class="passport-document-top">
+          <span>GLOBAL MEDICAL EXCHANGE</span>
+          <strong>HEALTH PASSPORT</strong>
+        </div>
+        <div class="passport-document-body">
+          <div class="passport-emblem" aria-hidden="true">⚕</div>
+          <dl>
+            <div><dt>Holder</dt><dd>Medical Student</dd></div>
+            <div><dt>Status</dt><dd>International Medical Observer</dd></div>
+            <div><dt>Destinations</dt><dd>06</dd></div>
+            <div><dt>Clearance</dt><dd id="passportClearance">Not issued</dd></div>
+          </dl>
+        </div>
+        <div class="passport-machine-line" aria-hidden="true">MED&lt;&lt;GLOBAL&lt;HEALTH&lt;PASSPORT&lt;&lt;FGSM3&lt;&lt;02</div>
+      </div>
+    </section>
+
+    <section class="passport-toolbar" aria-label="Day 2 game controls">
+      <div>
+        <strong>Travel controls</strong>
+        <span>Your progress stays on this device.</span>
+      </div>
+      <div class="passport-toolbar-actions">
+        <button id="day2SoundToggle" class="passport-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="resetDay2Progress" class="passport-reset" type="button">Reset Day 2</button>
+      </div>
+      <p id="day2AudioStatus" class="passport-status-text" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="route-map" class="passport-route" aria-labelledby="routeTitle">
+      <div class="passport-section-heading">
+        <p class="section-kicker">YOUR ROUTE</p>
+        <h2 id="routeTitle">Six healthcare systems to unlock</h2>
+        <p>Each stop has a different challenge. Complete the current destination to receive its passport stamp and unlock the next leg of the journey.</p>
+      </div>
+
+      <div class="passport-destinations" aria-label="Global Health Passport destinations">
+        <article id="routeUk" class="destination-card destination-next">
+          <span class="destination-flag" aria-hidden="true">🇬🇧</span>
+          <div><small>STOP 01</small><strong>London</strong><span>NHS · Beveridge model</span></div>
+          <b id="routeUkStatus">NEXT</b>
+        </article>
+        <article class="destination-card destination-locked">
+          <span class="destination-flag" aria-hidden="true">🇺🇸</span>
+          <div><small>STOP 02</small><strong>New York</strong><span>Insurance Maze</span></div>
+          <b>LOCKED</b>
+        </article>
+        <article class="destination-card destination-locked">
+          <span class="destination-flag" aria-hidden="true">🇨🇦</span>
+          <div><small>STOP 03</small><strong>Toronto</strong><span>Medicare</span></div>
+          <b>LOCKED</b>
+        </article>
+        <article class="destination-card destination-locked">
+          <span class="destination-flag" aria-hidden="true">🇦🇺</span>
+          <div><small>STOP 04</small><strong>Sydney</strong><span>Bulk Billing</span></div>
+          <b>LOCKED</b>
+        </article>
+        <article class="destination-card destination-locked">
+          <span class="destination-flag" aria-hidden="true">🇳🇿</span>
+          <div><small>STOP 05</small><strong>Wellington</strong><span>Health System Alert</span></div>
+          <b>LOCKED</b>
+        </article>
+        <article class="destination-card destination-locked">
+          <span class="destination-flag" aria-hidden="true">🇮🇪</span>
+          <div><small>STOP 06</small><strong>Dublin</strong><span>Workforce Emergency</span></div>
+          <b>LOCKED</b>
+        </article>
+      </div>
+    </section>
+
+    <section id="departureArea" class="passport-mission" aria-labelledby="departureTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">DEPARTURE LOUNGE · PASSPORT CONTROL</p>
+          <h2 id="departureTitle">What makes a healthcare system?</h2>
+          <p id="departureInstruction">Before travelling, prove you know the four questions that help you decode any healthcare system.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>CHECK</span>
+          <strong id="departureCheckpoint">0 / 4</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="departureProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="departure-board">
+        <div class="departure-board-head">
+          <span>GLOBAL MEDICAL EXCHANGE</span>
+          <strong>DEPARTURES</strong>
+          <time>DAY 2</time>
+        </div>
+        <div class="departure-board-row"><span>GME 101</span><strong>LONDON</strong><em id="departureBoardStatus">CHECK-IN</em></div>
+        <div class="departure-board-row muted"><span>GME 202</span><strong>NEW YORK</strong><em>LOCKED</em></div>
+        <div class="departure-board-row muted"><span>GME 303</span><strong>TORONTO</strong><em>LOCKED</em></div>
+      </div>
+
+      <div id="departureScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting">
+          <span aria-hidden="true">🛂</span>
+          <h3>Passport not issued yet</h3>
+          <p>Enter the Departure Lounge to begin your international rotation.</p>
+        </div>
+      </div>
+      <div id="departureFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="londonArea" class="passport-mission passport-london is-locked" aria-labelledby="londonTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">STOP 01 · LONDON</p>
+          <h2 id="londonTitle">NHS Arrival</h2>
+          <p id="londonInstruction">Complete Passport Control to board your first flight.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>LONDON CHECK</span>
+          <strong id="londonCheckpoint">0 / 9</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="londonProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="london-brief">
+        <div class="london-roundel" aria-hidden="true"><span>UK</span></div>
+        <div>
+          <span class="passport-case-kicker">🇬🇧 UNITED KINGDOM · THE NHS</span>
+          <strong>First assignment: understand access before advising a visiting patient.</strong>
+          <p>The NHS is a Beveridge-style system: publicly funded, mostly publicly provided and universal. Your job is to decode funding, access, the private sector, patient pathways and current pressures.</p>
+        </div>
+        <button id="startLondon" class="passport-primary" type="button" disabled>London locked</button>
+      </div>
+
+      <div class="nhs-facts" aria-label="NHS briefing categories">
+        <span><small>MODEL</small><strong>Beveridge</strong></span>
+        <span><small>RUN BY</small><strong>NHS / government</strong></span>
+        <span><small>COVERAGE</small><strong>Universal</strong></span>
+        <span><small>SPEND</small><strong>≈ 10–11% GDP</strong></span>
+      </div>
+
+      <div id="londonScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting">
+          <span aria-hidden="true">🔒</span>
+          <h3>London gate closed</h3>
+          <p>Complete the Departure Lounge checks first.</p>
+        </div>
+      </div>
+      <div id="londonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="passport-stamps" aria-labelledby="stampsTitle">
+      <div class="passport-section-heading compact">
+        <p class="section-kicker">YOUR PASSPORT</p>
+        <h2 id="stampsTitle">Stamps collected</h2>
+      </div>
+      <div class="stamp-grid">
+        <div id="stampDeparture" class="passport-stamp stamp-empty"><span>🛂</span><strong>Passport Issued</strong><small>Departure Lounge</small></div>
+        <div id="stampUk" class="passport-stamp stamp-empty"><span>🇬🇧</span><strong>NHS Navigator</strong><small>London</small></div>
+        <div class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
+        <div class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
+        <div class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
+        <div class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
+        <div class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
+        <div class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
+        <div class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control</strong><small>Language Desk</small></div>
+      </div>
+    </section>
+
+    <section class="passport-coming" aria-labelledby="comingTitle">
+      <div>
+        <p class="section-kicker">NEXT DESTINATIONS</p>
+        <h2 id="comingTitle">Your international rotation has only just begun.</h2>
+        <p>New York, Toronto, Sydney, the final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+      </div>
+      <div class="passport-coming-icons" aria-hidden="true">🇺🇸 · 🇨🇦 · 🇦🇺 · 🇳🇿 · 🇮🇪</div>
     </section>
   </main>
 
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Game progress is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
   </footer>
+
+  <script src="fgsm3-day2-game.js" defer></script>
   <script src="pwa.js" defer></script>
   <script src="accessibility.js" defer></script>
 </body>

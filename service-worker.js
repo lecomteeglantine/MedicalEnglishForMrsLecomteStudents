@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v19-final-live-shift-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v20-global-health-passport-20260823";
 
 const APP_SHELL = [
   "./",
@@ -33,7 +33,9 @@ const APP_SHELL = [
   "./styles-v17.css",
   "./styles-v18.css",
   "./styles-v19.css",
+  "./styles-v20.css",
   "./fgsm3-day1-game.js",
+  "./fgsm3-day2-game.js",
   "./assets/fgsm3/day1/images/fgsm3-day1-control-room.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp",
