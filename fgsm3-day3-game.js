@@ -242,6 +242,54 @@
   };
 
 
+  const mission6Activities = {
+    frame: {
+      title: "Frame the Issue",
+      intro: "Use Stage 1 of the worksheet's debating box. Your job is to define the question and, where useful, appeal to principle before arguing a side.",
+      items: [
+        {q:"You want to identify what the debate is fundamentally about. Which supplied starter does that job?", a:"At its heart, this is about…", wrong:["Admittedly…","On balance,…"], model:"At its heart, this is about…"},
+        {q:"You want to turn a broad statement into the precise issue the group must decide. Which starter fits?", a:"The real question is whether…", wrong:["The usual counter is…","In the long run…"], model:"The real question is whether…"},
+        {q:"Which supplied phrase signals an appeal to principle?", a:"On principle,…", wrong:["Take the example of…","Even so,…"], model:"On principle,…"},
+        {q:"Which supplied phrase explicitly introduces an ethical obligation?", a:"There's an ethical duty to…", wrong:["The evidence points to…","Some would object that…"], model:"There's an ethical duty to…"},
+        {q:"Which Stage 1 phrase frames an argument in terms of rights and fairness?", a:"It's a matter of rights and fairness.", wrong:["The strongest case for this is…","All things considered, I'd argue…"], model:"It's a matter of rights and fairness."}
+      ]
+    },
+    case: {
+      title: "Build Your Case",
+      intro: "Use Stage 2: give a reason, support it and explain consequences. These checkpoints assess rhetorical function, not which side of the debate you choose.",
+      items: [
+        {q:"You are about to state your central reason. Which starter is designed for that?", a:"My main argument is that…", wrong:["Some would object that…","There's a real tension between…"], model:"My main argument is that…"},
+        {q:"You want to introduce what you consider the strongest justification. Which phrase fits?", a:"The strongest case for this is…", wrong:["On principle,…","Admittedly…"], model:"The strongest case for this is…"},
+        {q:"You want to connect your point to material studied in class. Which supplied support phrase does that?", a:"As the video and article showed…", wrong:["It's not simply either/or.","The usual counter is…"], model:"As the video and article showed…"},
+        {q:"Which phrase most directly introduces evidence?", a:"The evidence points to…", wrong:["The priority has to be…","There's some truth in that, but…"], model:"The evidence points to…"},
+        {q:"You want to make a likely consequence explicit. Which supplied structure fits?", a:"If we do this, the likely result is…", wrong:["Where's the evidence for…?","The real question is whether…"], model:"If we do this, the likely result is…"}
+      ]
+    },
+    challenge: {
+      title: "Handle the Other Side",
+      intro: "Use Stage 3 to anticipate, concede and rebut. A strong debate response shows that you have understood the objection before answering it.",
+      items: [
+        {q:"Which supplied phrase anticipates an objection before your opponent raises it?", a:"Some would object that…", wrong:["My main argument is that…","On balance,…"], model:"Some would object that…"},
+        {q:"Which phrase introduces a familiar opposing argument?", a:"The usual counter is…", wrong:["At its heart, this is about…","Take the example of…"], model:"The usual counter is…"},
+        {q:"You want to concede part of the other side's point in one word. Which supplied option fits?", a:"Admittedly…", wrong:["Even so,…","In the long run…"], model:"Admittedly…"},
+        {q:"Which phrase concedes some merit but immediately creates space for your response?", a:"There's some truth in that, but…", wrong:["The strongest case for this is…","The priority has to be…"], model:"There's some truth in that, but…"},
+        {q:"You have conceded a point and now want to rebut it. Which supplied phrase works as the pivot?", a:"Even so,…", wrong:["On principle,…","The real question is whether…"], model:"Even so,…"}
+      ]
+    },
+    land: {
+      title: "Land It",
+      intro: "Use Stage 4 to acknowledge complexity and finish with a clear position. Nuance is part of the argument, not a sign that you have no opinion.",
+      items: [
+        {q:"Which supplied phrase explicitly acknowledges competing considerations?", a:"There's a real tension between…", wrong:["My main argument is that…","Where's the evidence for…?"], model:"There's a real tension between…"},
+        {q:"Which phrase rejects an over-simple binary choice?", a:"It's not simply either/or.", wrong:["On principle,…","The evidence points to…"], model:"It's not simply either/or."},
+        {q:"Which supplied phrase introduces a final weighed judgement?", a:"On balance,…", wrong:["Some would object that…","Take the example of…"], model:"On balance,…"},
+        {q:"Which phrase lets you state what matters most after weighing the arguments?", a:"The priority has to be…", wrong:["Admittedly…","The usual counter is…"], model:"The priority has to be…"},
+        {q:"Which supplied starter gives a clear final position while signalling that several considerations were weighed?", a:"All things considered, I'd argue…", wrong:["At its heart, this is about…","As the video and article showed…"], model:"All things considered, I'd argue…"}
+      ]
+    }
+  };
+
+
   const defaults = {
     started:false,current:"vocab",
     indices:{vocab:0,situation:0,video:0,signals:0},
@@ -280,6 +328,15 @@
       missed:{surge:[],access:[],supplies:[],continuity:[]},
       complete:{surge:false,access:false,supplies:false,continuity:false},
       completeAll:false
+    },
+    mission6:{
+      started:false,current:"frame",
+      indices:{frame:0,case:0,challenge:0,land:0},
+      scores:{frame:0,case:0,challenge:0,land:0},
+      missed:{frame:[],case:[],challenge:[],land:[]},
+      complete:{frame:false,case:false,challenge:false,land:false},
+      completeAll:false,
+      boardPrompt:0,stance:""
     }
   };
   let state = load();
@@ -292,7 +349,8 @@
     mission2Area:$("mission2Area"),startMission2:$("startMission2"),mission2Score:$("mission2Score"),mission2ProgressText:$("mission2ProgressText"),mission2ProgressBar:$("mission2ProgressBar"),mission2Workspace:$("mission2Workspace"),mission2WorkspaceTitle:$("mission2WorkspaceTitle"),mission2WorkspaceIntro:$("mission2WorkspaceIntro"),mission2ActivityScore:$("mission2ActivityScore"),mission2Screen:$("mission2Screen"),mission2Feedback:$("mission2Feedback"),mission2Complete:$("mission2Complete"),mission2CompleteTitle:$("mission2CompleteTitle"),mission2CompleteText:$("mission2CompleteText"),mission3Button:$("mission3Button"),
     mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),
     mission4Area:$("mission4Area"),startMission4:$("startMission4"),mission4Score:$("mission4Score"),mission4ProgressText:$("mission4ProgressText"),mission4ProgressBar:$("mission4ProgressBar"),mission4Workspace:$("mission4Workspace"),mission4WorkspaceTitle:$("mission4WorkspaceTitle"),mission4WorkspaceIntro:$("mission4WorkspaceIntro"),mission4ActivityScore:$("mission4ActivityScore"),mission4Screen:$("mission4Screen"),mission4Feedback:$("mission4Feedback"),mission4Complete:$("mission4Complete"),mission4CompleteTitle:$("mission4CompleteTitle"),mission4CompleteText:$("mission4CompleteText"),mission5Button:$("mission5Button"),hearStressRule:$("hearStressRule"),
-    mission5Area:$("mission5Area"),startMission5:$("startMission5"),mission5Score:$("mission5Score"),mission5ProgressText:$("mission5ProgressText"),mission5ProgressBar:$("mission5ProgressBar"),mission5Workspace:$("mission5Workspace"),mission5WorkspaceTitle:$("mission5WorkspaceTitle"),mission5WorkspaceIntro:$("mission5WorkspaceIntro"),mission5ActivityScore:$("mission5ActivityScore"),mission5Screen:$("mission5Screen"),mission5Feedback:$("mission5Feedback"),mission5Complete:$("mission5Complete"),mission5CompleteTitle:$("mission5CompleteTitle"),mission5CompleteText:$("mission5CompleteText"),mission6Button:$("mission6Button"),mission6Teaser:$("mission6Teaser")
+    mission5Area:$("mission5Area"),startMission5:$("startMission5"),mission5Score:$("mission5Score"),mission5ProgressText:$("mission5ProgressText"),mission5ProgressBar:$("mission5ProgressBar"),mission5Workspace:$("mission5Workspace"),mission5WorkspaceTitle:$("mission5WorkspaceTitle"),mission5WorkspaceIntro:$("mission5WorkspaceIntro"),mission5ActivityScore:$("mission5ActivityScore"),mission5Screen:$("mission5Screen"),mission5Feedback:$("mission5Feedback"),mission5Complete:$("mission5Complete"),mission5CompleteTitle:$("mission5CompleteTitle"),mission5CompleteText:$("mission5CompleteText"),mission6Button:$("mission6Button"),
+    mission6Area:$("mission6Area"),startMission6:$("startMission6"),mission6Score:$("mission6Score"),mission6ProgressText:$("mission6ProgressText"),mission6ProgressBar:$("mission6ProgressBar"),mission6Workspace:$("mission6Workspace"),mission6WorkspaceTitle:$("mission6WorkspaceTitle"),mission6WorkspaceIntro:$("mission6WorkspaceIntro"),mission6ActivityScore:$("mission6ActivityScore"),mission6Screen:$("mission6Screen"),mission6Feedback:$("mission6Feedback"),mission6Complete:$("mission6Complete"),mission6CompleteTitle:$("mission6CompleteTitle"),mission6CompleteText:$("mission6CompleteText"),mission7Button:$("mission7Button"),mission7Teaser:$("mission7Teaser"),ethicsBoardBrief:$("ethicsBoardBrief"),ethicsPromptText:$("ethicsPromptText"),newEthicsPrompt:$("newEthicsPrompt"),ethicsStanceStatus:$("ethicsStanceStatus")
   };
 
   function load(){
@@ -328,6 +386,12 @@
       merged.mission5.scores={...base.mission5.scores,...(s5.scores||{})};
       merged.mission5.missed={...base.mission5.missed,...(s5.missed||{})};
       merged.mission5.complete={...base.mission5.complete,...(s5.complete||{})};
+      const s6=saved.mission6||{};
+      merged.mission6={...base.mission6,...s6};
+      merged.mission6.indices={...base.mission6.indices,...(s6.indices||{})};
+      merged.mission6.scores={...base.mission6.scores,...(s6.scores||{})};
+      merged.mission6.missed={...base.mission6.missed,...(s6.missed||{})};
+      merged.mission6.complete={...base.mission6.complete,...(s6.complete||{})};
       return merged;
     }catch{return structuredClone(defaults);}
   }
@@ -653,11 +717,12 @@
       els.mission5CompleteTitle.textContent="Contingency Planner";
       els.mission5CompleteText.textContent="You built a four-part 24-hour plan for patient arrivals, access, supplies and continuity using source-grounded conditional language.";
       els.mission6Button.disabled=false;els.mission6Button.textContent="Mission 6 · Humanitarian Ethics Board →";
-      els.mission6Teaser.classList.remove("is-locked");
+      els.mission6Area.classList.remove("is-locked");els.startMission6.disabled=false;els.startMission6.textContent=state.mission6.started?"Resume Mission 6 →":"Enter the Ethics Board →";
       els.startMission5.textContent="Replay Mission 5 →";
     }else{
-      els.mission5Complete.classList.add("is-locked");els.mission6Button.disabled=true;els.mission6Teaser.classList.add("is-locked");
+      els.mission5Complete.classList.add("is-locked");els.mission6Button.disabled=true;els.mission6Area.classList.add("is-locked");els.startMission6.disabled=true;els.startMission6.textContent="🔒 Complete Mission 5 first";
     }
+    updateMission6UI();
     save();
   }
 
@@ -699,6 +764,103 @@
     $("continueMission5").onclick=()=>{if(next){state.mission5.current=next;save();renderMission5();}else{state.mission5.completeAll=true;cue("unlock");save();updateMission5UI();els.mission5Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
   }
 
+
+  function mission6Order(){return ["frame","case","challenge","land"];}
+  function mission6Unlocked(key){const order=mission6Order(),i=order.indexOf(key);return state.mission5.completeAll&&(i===0||state.mission6.complete[order[i-1]]);}
+  function mission6CompletedCount(){return Object.values(state.mission6.complete).filter(Boolean).length;}
+  function mission6TotalScore(){return Object.values(state.mission6.scores).reduce((a,b)=>a+b,0);}
+  function mission6MaxScore(){return mission6Order().reduce((n,k)=>n+mission6Activities[k].items.length,0);}
+  const ethicsPrompts=[
+    "Humanitarian organisations like MSF should stay completely neutral and treat everyone the same — including fighters.",
+    "Rich countries have a duty to fund and staff humanitarian responses in conflict zones.",
+    "It is more effective to train and employ local health workers than to send international teams."
+  ];
+
+  function updateEthicsBrief(){
+    if(!els.ethicsBoardBrief)return;
+    if(!state.mission6.completeAll){els.ethicsBoardBrief.classList.add("is-locked");return;}
+    els.ethicsBoardBrief.classList.remove("is-locked");
+    const i=Math.max(0,Math.min(ethicsPrompts.length-1,state.mission6.boardPrompt||0));
+    els.ethicsPromptText.textContent=`“${ethicsPrompts[i]}”`;
+    document.querySelectorAll("[data-ethics-stance]").forEach(b=>b.classList.toggle("is-selected",b.dataset.ethicsStance===state.mission6.stance));
+    els.ethicsStanceStatus.textContent=state.mission6.stance?`Your chosen position: ${state.mission6.stance}. Now build the four-stage response aloud.`:"Choose any position. The site does not grade your opinion.";
+  }
+
+  function updateMission6UI(){
+    if(!els.mission6Area)return;
+    const count=mission6CompletedCount();
+    state.mission6.completeAll=count===4;
+    els.mission6ProgressText.textContent=`${count} / 4`;
+    els.mission6ProgressBar.style.width=`${count*25}%`;
+    els.mission6Score.textContent=`${mission6TotalScore()} / ${mission6MaxScore()}`;
+    const labels={frame:"m6StatusFrame",case:"m6StatusCase",challenge:"m6StatusChallenge",land:"m6StatusLand"};
+    mission6Order().forEach(k=>{
+      const label=$(labels[k]),card=document.querySelector(`[data-m6-activity="${k}"]`);
+      if(!label||!card)return;
+      if(state.mission6.complete[k]){label.textContent="CLEARED";card.disabled=false;card.classList.add("is-cleared");card.classList.remove("is-locked");}
+      else if(mission6Unlocked(k)){label.textContent=state.mission6.started&&state.mission6.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
+      else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
+    });
+    if(state.mission6.completeAll){
+      els.clearance.textContent="Mission 6 cleared";
+      els.mission6Complete.classList.remove("is-locked");
+      els.mission6CompleteTitle.textContent="Humanitarian Ethics Advisor";
+      els.mission6CompleteText.textContent="You can frame a difficult question, build a supported case, handle an objection and reach a nuanced conclusion without having your viewpoint graded.";
+      els.mission7Button.disabled=false;els.mission7Button.textContent="FINAL · 24 Hours to Respond →";
+      els.mission7Teaser.classList.remove("is-locked");
+      els.startMission6.textContent="Replay Mission 6 →";
+    }else{
+      els.mission6Complete.classList.add("is-locked");els.mission7Button.disabled=true;els.mission7Teaser.classList.add("is-locked");
+    }
+    updateEthicsBrief();save();
+  }
+
+  function renderMission6(){
+    updateMission6UI();
+    els.mission6Feedback.innerHTML="";
+    if(!state.mission5.completeAll){els.mission6WorkspaceTitle.textContent="Ethics Board locked";els.mission6WorkspaceIntro.textContent="Complete Mission 5 to open this assignment.";return;}
+    if(!state.mission6.started){els.mission6WorkspaceTitle.textContent="Mission 6 ready";els.mission6WorkspaceIntro.textContent="Four stages, five language checkpoints each. Your stance is never scored — only how well you structure the argument.";els.mission6Screen.innerHTML=`<div class="field-waiting ethics-waiting"><span aria-hidden="true">⚖️</span><h3>The Board is ready</h3><p>Frame it. Build it. Challenge it. Land it. Then use the unscored Board Brief to prepare your own spoken position.</p></div>`;return;}
+    let key=state.mission6.current;
+    if(!mission6Unlocked(key)){key=mission6Order().find(k=>mission6Unlocked(k)&&!state.mission6.complete[k])||"frame";state.mission6.current=key;save();}
+    const act=mission6Activities[key],idx=state.mission6.indices[key]||0;
+    els.mission6WorkspaceTitle.textContent=act.title;els.mission6WorkspaceIntro.textContent=act.intro;els.mission6ActivityScore.textContent=`${state.mission6.scores[key]} / ${act.items.length}`;
+    if(state.mission6.complete[key])return renderMission6CompleteActivity(key);
+    const item=act.items[idx];
+    els.mission6Screen.innerHTML=`<div class="field-question ethics-question"><div class="field-question-meta"><span>${act.title.toUpperCase()}</span><b>${idx+1} / ${act.items.length}</b></div><h3>${item.q}</h3><div id="mission6Options" class="field-options"></div><p class="ethics-source-note">Every scored phrase in this mission comes from the worksheet's “Useful language — debating” box. The site scores language function, not political or ethical opinion.</p></div>`;
+    const wrap=$("mission6Options");
+    shuffled([item.a,...item.wrong]).forEach(text=>{const b=document.createElement("button");b.className="field-option";b.type="button";b.textContent=text;b.onclick=()=>answerMission6(key,idx,text===item.a,b,wrap,item);wrap.appendChild(b);});
+  }
+
+  function answerMission6(key,idx,isCorrect,button,wrap,item){
+    if(isCorrect){
+      wrap.querySelectorAll("button").forEach(b=>b.disabled=true);button.classList.add("is-correct");
+      if(!state.mission6.missed[key].includes(idx))state.mission6.scores[key]+=1;
+      state.mission6.indices[key]+=1;cue("good");save();
+      els.mission6Feedback.innerHTML=`<div class="field-good"><strong>Argument move cleared.</strong><span>${item.a}</span></div><div class="ethics-model-line"><span>USEFUL LANGUAGE</span><p>${item.model}</p><button id="hearM6Model" class="field-hear" type="button">🔊 Hear it</button></div><button id="mission6Next" class="field-next" type="button">${state.mission6.indices[key]>=mission6Activities[key].items.length?"Complete stage →":"Next board checkpoint →"}</button>`;
+      $("hearM6Model").onclick=()=>speak(item.model.replace("…",""));
+      $("mission6Next").onclick=()=>{if(state.mission6.indices[key]>=mission6Activities[key].items.length){state.mission6.complete[key]=true;const order=mission6Order(),i=order.indexOf(key);if(i<order.length-1)state.mission6.current=order[i+1];cue("unlock");save();}renderMission6();};
+      updateMission6UI();
+    }else{
+      button.disabled=true;button.classList.add("is-wrong");if(!state.mission6.missed[key].includes(idx))state.mission6.missed[key].push(idx);cue("bad");save();
+      els.mission6Feedback.innerHTML=`<div class="field-bad"><strong>Different rhetorical job.</strong><span>Look at the function named in the question: framing, supporting, conceding, rebutting or concluding. Your opinion is not being assessed.</span></div>`;
+    }
+  }
+
+  function renderMission6CompleteActivity(key){
+    const order=mission6Order(),i=order.indexOf(key),next=order[i+1],act=mission6Activities[key];
+    const stageRecap={frame:"At its heart… · The real question is whether… · On principle…",case:"My main argument… · The evidence points to… · If we do this…",challenge:"Some would object… · Admittedly… · Even so…",land:"There's a real tension… · On balance… · All things considered…"}[key];
+    els.mission6Screen.innerHTML=`<div class="field-cleared-card ethics-cleared-card"><span aria-hidden="true">✓</span><p class="field-kicker dark">MISSION 6 STAGE CLEARED</p><h3>${act.title}</h3><p>First-try score: <strong>${state.mission6.scores[key]} / ${act.items.length}</strong>.</p><div class="ethics-model-line"><span>STAGE TOOLKIT</span><p>${stageRecap}</p></div>${next?`<button id="continueMission6" class="field-primary" type="button">Open ${mission6Activities[next].title} →</button>`:`<button id="continueMission6" class="field-primary" type="button">Clear the Ethics Board →</button>`}</div>`;
+    $("continueMission6").onclick=()=>{if(next){state.mission6.current=next;save();renderMission6();}else{state.mission6.completeAll=true;state.mission6.boardPrompt=Math.floor(Math.random()*ethicsPrompts.length);cue("unlock");save();updateMission6UI();els.mission6Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
+  }
+
+  function startMission6(){
+    if(!state.mission5.completeAll)return;
+    if(state.mission6.completeAll){state.mission6={...structuredClone(defaults.mission6),started:true};}
+    else state.mission6.started=true;
+    state.mission6.current=mission6Order().find(k=>mission6Unlocked(k)&&!state.mission6.complete[k])||"frame";
+    save();cue("start");if(musicOn)startMusic();renderMission6();els.mission6Workspace.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>els.mission6Screen.focus({preventScroll:true}),450);
+  }
+
   function startMission5(){
     if(!state.mission4.completeAll)return;
     if(state.mission5.completeAll){state.mission5={...structuredClone(defaults.mission5),started:true};}
@@ -737,7 +899,7 @@
   els.start.onclick=start;
   els.sound.onclick=()=>{soundOn=!soundOn;localStorage.setItem(SOUND_KEY,soundOn?"on":"off");if(!soundOn&&"speechSynthesis" in window)speechSynthesis.cancel();syncControls();status(soundOn?"Sound on.":"Sound off. All audio-dependent content also appears as text.");};
   els.musicToggle.onclick=()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");syncControls();if(musicOn)startMusic();else stopMusic();status(musicOn?"Music on. Field briefing ambience is playing.":"Music off.");};
-  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();renderMission5();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
+  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
   els.mission2Button.onclick=()=>{els.mission2Area.scrollIntoView({behavior:"smooth",block:"start"});};
   els.startMission2.onclick=startMission2;
   document.querySelectorAll(".triage-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m2Activity;if(!mission2Unlocked(key))return;state.mission2.started=true;state.mission2.current=key;save();renderMission2();els.mission2Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
@@ -751,7 +913,12 @@
   els.mission5Button.onclick=()=>els.mission5Area.scrollIntoView({behavior:"smooth",block:"start"});
   els.startMission5.onclick=startMission5;
   document.querySelectorAll(".contingency-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m5Activity;if(!mission5Unlocked(key))return;state.mission5.started=true;state.mission5.current=key;save();renderMission5();els.mission5Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
-  els.mission6Button.onclick=()=>els.mission6Teaser.scrollIntoView({behavior:"smooth",block:"center"});
+  els.mission6Button.onclick=()=>els.mission6Area.scrollIntoView({behavior:"smooth",block:"start"});
+  els.startMission6.onclick=startMission6;
+  document.querySelectorAll(".ethics-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m6Activity;if(!mission6Unlocked(key))return;state.mission6.started=true;state.mission6.current=key;save();renderMission6();els.mission6Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
+  els.newEthicsPrompt.onclick=()=>{if(!state.mission6.completeAll)return;let next=(state.mission6.boardPrompt+1)%ethicsPrompts.length;state.mission6.boardPrompt=next;state.mission6.stance="";save();updateEthicsBrief();cue("good");};
+  document.querySelectorAll("[data-ethics-stance]").forEach(button=>button.addEventListener("click",()=>{if(!state.mission6.completeAll)return;state.mission6.stance=button.dataset.ethicsStance;save();updateEthicsBrief();cue("good");}));
+  els.mission7Button.onclick=()=>els.mission7Teaser.scrollIntoView({behavior:"smooth",block:"center"});
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();
+  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();
 })();

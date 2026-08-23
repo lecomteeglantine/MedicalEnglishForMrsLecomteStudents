@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v35.css">
+  <link rel="stylesheet" href="styles-v36.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -337,8 +337,85 @@
       <button id="mission6Button" class="field-primary" type="button" disabled>🔒 Mission 6 · Humanitarian Ethics Board</button>
     </section>
 
-    <section id="mission6Teaser" class="field-next-mission is-locked" aria-labelledby="mission6Title">
-      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission6Title">Mission 6 · Humanitarian Ethics Board</h2><p>Neutrality, responsibility and local versus international staffing: the next mission turns the three Day 3 debate statements into an evidence-and-argument challenge.</p></div><span class="field-next-icon" aria-hidden="true">⚖️</span>
+    <section id="mission6Area" class="ethics-mission is-locked" aria-labelledby="mission6Title">
+      <div class="ethics-hero">
+        <img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Medical and humanitarian staff discussing a field response together.">
+        <div class="ethics-hero-shade" aria-hidden="true"></div>
+        <div class="ethics-hero-copy">
+          <p class="field-kicker">MISSION 06 · HUMANITARIAN ETHICS BOARD</p>
+          <h2 id="mission6Title">Make the case. Challenge it. Land it.</h2>
+          <p class="ethics-tagline">Your opinion is not being marked. Your argument is.</p>
+          <p>The Day 3 worksheet gives three difficult debate statements. This mission checks whether you can frame an issue, build a case, handle the other side and reach a nuanced position using the supplied debating language.</p>
+          <button id="startMission6" class="field-primary" type="button" disabled>🔒 Complete Mission 5 first</button>
+        </div>
+        <div class="ethics-hero-score"><span>MISSION 6 SCORE</span><strong id="mission6Score">0 / 20</strong><small>language &amp; argument structure</small></div>
+      </div>
+
+      <div class="ethics-statement-board" aria-label="The three debate statements from the Day 3 worksheet">
+        <article><span>BOARD QUESTION 01</span><p>“Humanitarian organisations like MSF should stay completely neutral and treat everyone the same — including fighters.”</p></article>
+        <article><span>BOARD QUESTION 02</span><p>“Rich countries have a duty to fund and staff humanitarian responses in conflict zones.”</p></article>
+        <article><span>BOARD QUESTION 03</span><p>“It is more effective to train and employ local health workers than to send international teams.”</p></article>
+      </div>
+
+      <div class="ethics-notice"><strong>⚖️ No opinion is marked right or wrong.</strong><span>The scored checkpoints assess rhetorical function, evidence language, concession, rebuttal and balanced conclusions.</span></div>
+
+      <div class="ethics-progress-card" aria-live="polite">
+        <span>MISSION 6 PROGRESS</span><strong id="mission6ProgressText">0 / 4</strong>
+        <div class="field-progress-track"><i id="mission6ProgressBar"></i></div>
+      </div>
+
+      <div class="ethics-activity-grid">
+        <button class="ethics-activity-card" data-m6-activity="frame" type="button" disabled>
+          <span class="ethics-card-number">01</span><div class="ethics-card-icon" aria-hidden="true">◉</div>
+          <div><small>STAGE 1</small><strong>Frame the Issue</strong><p>State the core question and appeal to principle without taking shortcuts.</p><b id="m6StatusFrame">LOCKED</b></div>
+        </button>
+        <button class="ethics-activity-card" data-m6-activity="case" type="button" disabled>
+          <span class="ethics-card-number">02</span><div class="ethics-card-icon" aria-hidden="true">▤</div>
+          <div><small>STAGE 2</small><strong>Build Your Case</strong><p>Give a reason, support it and make the consequence explicit.</p><b id="m6StatusCase">LOCKED</b></div>
+        </button>
+        <button class="ethics-activity-card" data-m6-activity="challenge" type="button" disabled>
+          <span class="ethics-card-number">03</span><div class="ethics-card-icon" aria-hidden="true">⇄</div>
+          <div><small>STAGE 3</small><strong>Handle the Other Side</strong><p>Anticipate, concede and rebut instead of ignoring objections.</p><b id="m6StatusChallenge">LOCKED</b></div>
+        </button>
+        <button class="ethics-activity-card" data-m6-activity="land" type="button" disabled>
+          <span class="ethics-card-number">04</span><div class="ethics-card-icon" aria-hidden="true">⚖</div>
+          <div><small>STAGE 4</small><strong>Land It</strong><p>Acknowledge complexity and finish with a clear, qualified position.</p><b id="m6StatusLand">LOCKED</b></div>
+        </button>
+      </div>
+
+      <div id="mission6Workspace" class="ethics-workspace" aria-labelledby="mission6WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">MISSION 06 · BOARDROOM</p><h2 id="mission6WorkspaceTitle">Ethics Board locked</h2><p id="mission6WorkspaceIntro">Complete Mission 5 to open this assignment.</p></div>
+          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission6ActivityScore">0</strong></div>
+        </div>
+        <div id="mission6Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">⚖️</span><h3>Humanitarian Ethics Board locked</h3><p>Complete the Emergency Contingency Plan first.</p></div></div>
+        <div id="mission6Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mission6Complete" class="field-completion ethics-completion is-locked" aria-labelledby="mission6CompleteTitle">
+      <div class="field-completion-badge" aria-hidden="true">⚖️</div>
+      <div><p class="field-kicker dark">MISSION 06 CLEARANCE</p><h2 id="mission6CompleteTitle">Humanitarian Ethics Board is not cleared yet.</h2><p id="mission6CompleteText">Complete all four argument stages.</p></div>
+      <button id="mission7Button" class="field-primary" type="button" disabled>🔒 FINAL · 24 Hours to Respond</button>
+    </section>
+
+    <section id="ethicsBoardBrief" class="ethics-board-brief is-locked" aria-labelledby="ethicsBriefTitle">
+      <div class="ethics-brief-head"><div><p class="field-kicker dark">UNSCORED SPEAKING TRANSFER</p><h2 id="ethicsBriefTitle">Your 60-second Board Brief</h2><p>Your viewpoint is yours. Use the structure below to prepare one spoken response.</p></div><button id="newEthicsPrompt" class="field-secondary" type="button">↻ New board question</button></div>
+      <blockquote id="ethicsPromptText">Complete Mission 6 to draw a board question.</blockquote>
+      <div class="ethics-stance-row" aria-label="Choose a position">
+        <button type="button" data-ethics-stance="Agree">Agree</button><button type="button" data-ethics-stance="Disagree">Disagree</button><button type="button" data-ethics-stance="Qualified / mixed position">Qualified / mixed</button>
+      </div>
+      <div id="ethicsBriefTemplate" class="ethics-brief-template">
+        <article><b>FRAME</b><span>At its heart, this is about… / The real question is whether…</span></article>
+        <article><b>BUILD</b><span>My main argument is that… / The evidence points to…</span></article>
+        <article><b>CHALLENGE</b><span>Admittedly… / Even so,…</span></article>
+        <article><b>LAND</b><span>On balance,… / All things considered, I’d argue…</span></article>
+      </div>
+      <p id="ethicsStanceStatus" class="ethics-stance-status">Choose any position. The site does not grade your opinion.</p>
+    </section>
+
+    <section id="mission7Teaser" class="field-next-mission is-locked" aria-labelledby="mission7Title">
+      <div><p class="field-kicker">FINAL DAY 3 ASSIGNMENT</p><h2 id="mission7Title">FINAL · 24 Hours to Respond</h2><p>A final mixed mission will combine humanitarian vocabulary, situation assessment, access, resources, word stress, conditional planning and ethical reasoning.</p></div><span class="field-next-icon" aria-hidden="true">⏱️</span>
     </section>
   </main>
 
