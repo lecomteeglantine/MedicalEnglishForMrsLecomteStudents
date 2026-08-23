@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v20.css">
+  <link rel="stylesheet" href="styles-v21.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -94,15 +94,15 @@
           <div><small>STOP 01</small><strong>London</strong><span>NHS · Beveridge model</span></div>
           <b id="routeUkStatus">NEXT</b>
         </article>
-        <article class="destination-card destination-locked">
+        <article id="routeUs" class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇺🇸</span>
           <div><small>STOP 02</small><strong>New York</strong><span>Insurance Maze</span></div>
-          <b>LOCKED</b>
+          <b id="routeUsStatus">LOCKED</b>
         </article>
-        <article class="destination-card destination-locked">
+        <article id="routeCa" class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇨🇦</span>
           <div><small>STOP 03</small><strong>Toronto</strong><span>Medicare</span></div>
-          <b>LOCKED</b>
+          <b id="routeCaStatus">LOCKED</b>
         </article>
         <article class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇦🇺</span>
@@ -198,6 +198,58 @@
       <div id="londonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="newYorkArea" class="passport-mission passport-new-york is-locked" aria-labelledby="newYorkTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">STOP 02 · NEW YORK</p>
+          <h2 id="newYorkTitle">The Insurance Maze</h2>
+          <p id="newYorkInstruction">Clear London to unlock your US assignment.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>NEW YORK CHECK</span>
+          <strong id="newYorkCheckpoint">0 / 11</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="newYorkProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="us-brief">
+        <div class="us-card-visual" aria-hidden="true">
+          <span>HEALTH PLAN</span>
+          <strong>MEMBER ID</strong>
+          <small>NETWORK · COST · COVERAGE</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">🇺🇸 UNITED STATES · MIXED, PRIVATE-LED</span>
+          <strong>Second assignment: decode insurance before you can explain access.</strong>
+          <p>Most people are covered through employer insurance. Medicare and Medicaid cover specific groups, but coverage is not universal and private insurance remains central.</p>
+        </div>
+        <button id="startNewYork" class="passport-primary" type="button" disabled>New York locked</button>
+      </div>
+
+      <div class="us-facts" aria-label="US healthcare briefing categories">
+        <span><small>MODEL</small><strong>Mixed · private-led</strong></span>
+        <span><small>PUBLIC PROGRAMMES</small><strong>Medicare + Medicaid</strong></span>
+        <span><small>COVERAGE</small><strong>Not universal</strong></span>
+        <span><small>SPEND</small><strong>≈ 17% GDP</strong></span>
+      </div>
+
+      <div class="insurance-terms" aria-label="US insurance vocabulary preview">
+        <article><span>PREMIUM</span><p>Monthly payment for insurance.</p></article>
+        <article><span>DEDUCTIBLE</span><p>What you pay yourself before insurance starts paying.</p></article>
+        <article><span>CO-PAY</span><p>A fixed fee per visit or drug.</p></article>
+        <article><span>OUT-OF-NETWORK</span><p>A provider without an agreement with your insurer — usually more expensive.</p></article>
+      </div>
+
+      <div id="newYorkScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting">
+          <span aria-hidden="true">🔒</span>
+          <h3>New York gate closed</h3>
+          <p>Collect your NHS Navigator stamp first.</p>
+        </div>
+      </div>
+      <div id="newYorkFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -206,8 +258,8 @@
       <div class="stamp-grid">
         <div id="stampDeparture" class="passport-stamp stamp-empty"><span>🛂</span><strong>Passport Issued</strong><small>Departure Lounge</small></div>
         <div id="stampUk" class="passport-stamp stamp-empty"><span>🇬🇧</span><strong>NHS Navigator</strong><small>London</small></div>
-        <div class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
-        <div class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
+        <div id="stampUs" class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
+        <div id="stampCa" class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
         <div class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
         <div class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
         <div class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
@@ -220,7 +272,7 @@
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
         <h2 id="comingTitle">Your international rotation has only just begun.</h2>
-        <p>New York, Toronto, Sydney, the final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <p>Toronto, Sydney, the final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
       </div>
       <div class="passport-coming-icons" aria-hidden="true">🇺🇸 · 🇨🇦 · 🇦🇺 · 🇳🇿 · 🇮🇪</div>
     </section>
