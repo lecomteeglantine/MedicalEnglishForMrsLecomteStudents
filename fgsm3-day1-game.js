@@ -12,6 +12,16 @@
   const STORAGE_CLOSE_KEY = "mrsLecomteFGSM3Day1CloseSafelyV1";
   const STORAGE_FINAL_KEY = "mrsLecomteFGSM3Day1FinalLiveShiftV1";
 
+  // V38: randomise answer positions without changing which answer is correct.
+  function shuffled(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
   const checkpoints = [
     {
       id: "station",
@@ -1266,6 +1276,7 @@
     setFeedback();
 
     if (cp.type === "multi") {
+      const displayOptions = shuffled(cp.options);
       els.screen.innerHTML = `
         <div class="mission-grid-layout">
           <div class="station-check-card">
@@ -1273,7 +1284,7 @@
             <h3>Pre-call technical check</h3>
             <p>Select all the actions that make the consultation safer and clearer.</p>
             <form id="stationForm" class="station-options">
-              ${cp.options.map(opt => `
+              ${displayOptions.map(opt => `
                 <label class="station-option">
                   <input type="checkbox" name="station" value="${opt.id}">
                   <span>${escapeHTML(opt.text)}</span>
@@ -1306,6 +1317,7 @@
       return;
     }
 
+    const displayOptions = shuffled(cp.options);
     els.screen.innerHTML = `
       <div class="consultation-checkpoint">
         ${patientPanel(state.lastReply || "")}
@@ -1313,7 +1325,7 @@
           <p class="mission-step-label">${escapeHTML(cp.title)}</p>
           <h3>${escapeHTML(cp.instruction)}</h3>
           <div class="doctor-choice-list">
-            ${cp.options.map((opt, idx) => `
+            ${displayOptions.map((opt, idx) => `
               <button class="doctor-choice" type="button" data-choice="${idx}">
                 <span>${String.fromCharCode(65 + idx)}</span>${escapeHTML(opt.text)}
               </button>`).join("")}
@@ -1323,7 +1335,7 @@
 
     els.screen.querySelectorAll("[data-choice]").forEach(button => {
       button.addEventListener("click", () => {
-        const opt = cp.options[Number(button.dataset.choice)];
+        const opt = displayOptions[Number(button.dataset.choice)];
         els.screen.querySelectorAll("[data-choice]").forEach(btn => { btn.disabled = true; });
         if (opt.correct) {
           button.classList.add("correct-choice");
@@ -1436,6 +1448,7 @@
     els.m2Instruction.textContent = cp.instruction;
     setClinicalFeedback();
 
+    const displayOptions = shuffled(cp.options);
     els.m2Screen.innerHTML = `
       <div class="consultation-checkpoint">
         ${patientPanel(clinicalState.lastReply || "")}
@@ -1444,7 +1457,7 @@
           <h3>${escapeHTML(cp.instruction)}</h3>
           <div class="clinical-focus-chip">${clinicalFocusFor(cp.id)}</div>
           <div class="doctor-choice-list">
-            ${cp.options.map((opt, idx) => `
+            ${displayOptions.map((opt, idx) => `
               <button class="doctor-choice" type="button" data-m2-choice="${idx}">
                 <span>${String.fromCharCode(65 + idx)}</span>${escapeHTML(opt.text)}
               </button>`).join("")}
@@ -1456,7 +1469,7 @@
 
     els.m2Screen.querySelectorAll("[data-m2-choice]").forEach(button => {
       button.addEventListener("click", () => {
-        const opt = cp.options[Number(button.dataset.m2Choice)];
+        const opt = displayOptions[Number(button.dataset.m2Choice)];
         els.m2Screen.querySelectorAll("[data-m2-choice]").forEach(btn => { btn.disabled = true; });
 
         if (opt.correct) {
@@ -1658,9 +1671,11 @@
           <h3>How does <em>-ed</em> sound?</h3>
           <p>Choose the sound you hear — or work it out from the final sound of the base verb.</p>
           <div class="ed-sound-options" role="group" aria-label="Choose the -ed ending sound">
-            <button class="ed-sound-choice" type="button" data-ed-sound="/ɪd/"><span>/ɪd/</span><small>extra syllable</small></button>
-            <button class="ed-sound-choice" type="button" data-ed-sound="/t/"><span>/t/</span><small>voiceless ending</small></button>
-            <button class="ed-sound-choice" type="button" data-ed-sound="/d/"><span>/d/</span><small>voiced ending</small></button>
+            ${shuffled([
+              {sound:"/ɪd/", note:"extra syllable"},
+              {sound:"/t/", note:"voiceless ending"},
+              {sound:"/d/", note:"voiced ending"}
+            ]).map(choice => `<button class="ed-sound-choice" type="button" data-ed-sound="${choice.sound}"><span>${choice.sound}</span><small>${choice.note}</small></button>`).join("")}
           </div>
           <div class="ed-rule-strip"><strong>Rule:</strong> after <code>/t/</code> or <code>/d/</code> → <code>/ɪd/</code>; after a voiceless sound → <code>/t/</code>; after a voiced sound → <code>/d/</code>.</div>
         </article>
@@ -1894,6 +1909,7 @@
     els.timelineInstruction.textContent = `Timeline check ${number}: choose the tense that matches the clinical time reference.`;
     setTimelineFeedback();
 
+    const displayOptions = shuffled(item.options.map((text, originalIndex) => ({ text, correct: originalIndex === item.correct })));
     els.timelineScreen.innerHTML = `
       <div class="timeline-shell">
         <article class="timeline-patient-card">
@@ -1913,7 +1929,7 @@
           <h3>${escapeHTML(item.prompt)}</h3>
           <p>Choose the form or question that keeps the patient's timeline accurate.</p>
           <div class="timeline-options" role="group" aria-label="Choose the correct tense or question">
-            ${item.options.map((option, idx) => `<button class="timeline-choice" type="button" data-timeline-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option)}</b></button>`).join("")}
+            ${displayOptions.map((option, idx) => `<button class="timeline-choice" type="button" data-timeline-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
           </div>
           <div class="timeline-rule-box"><strong>Quick rule</strong><span><em>yesterday / ago / last… / exact past time</em> → Past Simple</span><span><em>since / for / recently / up to now</em> → Present Perfect</span></div>
         </article>
@@ -1924,9 +1940,9 @@
 
     els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(button => {
       button.addEventListener("click", () => {
-        const chosen = Number(button.dataset.timelineChoice);
+        const chosen = displayOptions[Number(button.dataset.timelineChoice)];
         els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(btn => { btn.disabled = true; });
-        if (chosen === item.correct) {
+        if (chosen.correct) {
           button.classList.add("correct-choice");
           beep("ok");
           setTimelineFeedback(`<strong>✓ ${escapeHTML(item.tense)}.</strong> ${escapeHTML(item.explanation)} <button class="inline-listen-correct" type="button">🔊 Hear it</button>`, "correct");
@@ -2120,6 +2136,7 @@
     els.patient2Checkpoint.textContent = `${patient2State.index} / ${patient2Items.length}`;
     els.patient2Progress.style.width = `${(patient2State.index / patient2Items.length) * 100}%`;
 
+    const displayOptions = shuffled(item.options);
     els.patient2Screen.innerHTML = `<div class="p2-shell">
       ${patient2VideoPanel(patient2State.lastReply || "")}
       <article class="p2-decision-card">
@@ -2127,7 +2144,7 @@
         <h3>${escapeHTML(item.title)}</h3>
         <p>${escapeHTML(item.instruction)}</p>
         <div class="p2-options" role="group" aria-label="Choose the safest consultation response">
-          ${item.options.map((option, idx) => `<button class="p2-choice" type="button" data-p2-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+          ${displayOptions.map((option, idx) => `<button class="p2-choice" type="button" data-p2-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
         </div>
         <div class="p2-safety-note"><strong>Video-consultation principle:</strong> use what the camera can show, but never pretend it replaces an examination you cannot perform remotely.</div>
       </article>
@@ -2139,7 +2156,7 @@
     els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(button => {
       button.addEventListener("click", () => {
         const chosen = Number(button.dataset.p2Choice);
-        const option = item.options[chosen];
+        const option = displayOptions[chosen];
         els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
@@ -2323,6 +2340,7 @@
     els.onlineDecisionProgress.style.width = `${(onlineDecisionState.index / onlineDecisionCases.length) * 100}%`;
     setOnlineDecisionFeedback();
 
+    const displayOptions = shuffled(onlineDecisionOptions);
     els.onlineDecisionScreen.innerHTML = `<div class="online-decision-shell">
       <article class="online-case-card">
         <div class="online-case-top"><span class="online-case-icon" aria-hidden="true">${item.icon}</span><div><span>${escapeHTML(item.label)}</span><h3>${escapeHTML(item.title)}</h3></div></div>
@@ -2333,7 +2351,7 @@
         <span class="online-round-kicker">DECISION ${number} OF ${onlineDecisionCases.length}</span>
         <h3>What should happen next?</h3>
         <div class="online-choice-grid" role="group" aria-label="Choose the next step">
-          ${onlineDecisionOptions.map(option => `<button class="online-choice" type="button" data-online-choice="${option.id}"><span aria-hidden="true">${option.icon}</span><b>${escapeHTML(option.label)}</b><small>${escapeHTML(option.sub)}</small></button>`).join("")}
+          ${displayOptions.map(option => `<button class="online-choice" type="button" data-online-choice="${option.id}"><span aria-hidden="true">${option.icon}</span><b>${escapeHTML(option.label)}</b><small>${escapeHTML(option.sub)}</small></button>`).join("")}
         </div>
       </article>
     </div>`;
@@ -2531,6 +2549,7 @@
     els.patient3Checkpoint.textContent = `${patient3State.index} / ${patient3Items.length}`;
     els.patient3Progress.style.width = `${(patient3State.index / patient3Items.length) * 100}%`;
 
+    const displayOptions = shuffled(item.options);
     els.patient3Screen.innerHTML = `<div class="p3-shell">
       ${patient3VideoPanel(patient3State.lastReply || "")}
       <article class="p3-decision-card">
@@ -2538,7 +2557,7 @@
         <h3>${escapeHTML(item.title)}</h3>
         <p>${escapeHTML(item.instruction)}</p>
         <div class="p3-options" role="group" aria-label="Choose the best consultation response">
-          ${item.options.map((option, idx) => `<button class="p3-choice" type="button" data-p3-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+          ${displayOptions.map((option, idx) => `<button class="p3-choice" type="button" data-p3-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
         </div>
         <div class="p3-clinical-note"><strong>History-taking principle:</strong> ask, listen and summarise before you interpret. Concern deserves an answer, but uncertainty should be explained honestly.</div>
       </article>
@@ -2550,7 +2569,7 @@
     els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(button => {
       button.addEventListener("click", () => {
         const chosen = Number(button.dataset.p3Choice);
-        const option = item.options[chosen];
+        const option = displayOptions[chosen];
         els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
@@ -2748,6 +2767,7 @@
     els.patient4Checkpoint.textContent = `${patient4State.index} / ${patient4Items.length}`;
     els.patient4Progress.style.width = `${(patient4State.index / patient4Items.length) * 100}%`;
 
+    const displayOptions = shuffled(item.options);
     els.patient4Screen.innerHTML = `<div class="p4-shell">
       ${patient4VideoPanel(patient4State.lastReply || "")}
       <article class="p4-decision-card">
@@ -2755,7 +2775,7 @@
         <h3>${escapeHTML(item.title)}</h3>
         <p>${escapeHTML(item.instruction)}</p>
         <div class="p4-options" role="group" aria-label="Choose the best medication-review response">
-          ${item.options.map((option, idx) => `<button class="p4-choice" type="button" data-p4-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+          ${displayOptions.map((option, idx) => `<button class="p4-choice" type="button" data-p4-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
         </div>
         <div class="p4-clinical-note"><strong>Medication-safety principle:</strong> establish what was taken, when and what happened before advising. Do not turn a temporal association into a certain diagnosis.</div>
       </article>
@@ -2767,7 +2787,7 @@
     els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(button => {
       button.addEventListener("click", () => {
         const chosen = Number(button.dataset.p4Choice);
-        const option = item.options[chosen];
+        const option = displayOptions[chosen];
         els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
@@ -2955,20 +2975,21 @@
     els.researchCheckpoint.textContent = `${researchState.index} / ${researchItems.length}`;
     els.researchProgress.style.width = `${(researchState.index / researchItems.length) * 100}%`;
 
+    const displayOptions = shuffled(item.options);
     els.researchScreen.innerHTML = `<div class="research-shell">
       ${researchTerminalPanel(item, number)}
       <article class="research-decision-card">
         <span class="research-round-kicker">${escapeHTML(item.phase)}</span>
         <h3>${escapeHTML(item.title)}</h3>
         <p>${escapeHTML(item.instruction)}</p>
-        <div class="research-options">${item.options.map((option,index) => `<button class="research-choice" type="button" data-research-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
+        <div class="research-options">${displayOptions.map((option,index) => `<button class="research-choice" type="button" data-research-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
         <div class="research-source-note"><strong>Presentation habit:</strong> keep methods/results in the past, use the passive naturally rather than mechanically, and make comparison language match the evidence.</div>
       </article>
     </div>`;
 
     els.researchScreen.querySelectorAll("[data-research-choice]").forEach(button => {
       button.addEventListener("click", () => {
-        const option = item.options[Number(button.dataset.researchChoice)];
+        const option = displayOptions[Number(button.dataset.researchChoice)];
         els.researchScreen.querySelectorAll("[data-research-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
@@ -3145,6 +3166,7 @@
     els.closeCheckpoint.textContent = `${closeState.index} / ${closeItems.length}`;
     els.closeProgress.style.width = `${(closeState.index / closeItems.length) * 100}%`;
 
+    const displayOptions = shuffled(item.options);
     els.closeScreen.innerHTML = `<div class="close-shell">
       ${closePatientPanel(item)}
       <article class="close-decision-card">
@@ -3152,7 +3174,7 @@
         <div class="close-icon" aria-hidden="true">${item.icon}</div>
         <h3>${escapeHTML(item.title)}</h3>
         <p>${escapeHTML(item.instruction)}</p>
-        <div class="close-options">${item.options.map((option,index) => `<button class="close-choice" type="button" data-close-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
+        <div class="close-options">${displayOptions.map((option,index) => `<button class="close-choice" type="button" data-close-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
         <div class="close-rule-note"><strong>Close ≠ rush.</strong> The patient should leave knowing what you understood, what happens next and what to do if things change.</div>
       </article>
     </div>`;
@@ -3164,7 +3186,7 @@
 
     els.closeScreen.querySelectorAll("[data-close-choice]").forEach(button => {
       button.addEventListener("click", () => {
-        const option = item.options[Number(button.dataset.closeChoice)];
+        const option = displayOptions[Number(button.dataset.closeChoice)];
         els.closeScreen.querySelectorAll("[data-close-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
@@ -3363,7 +3385,7 @@
     els.finalProgress.style.width = `${(finalState.index / caseData.items.length) * 100}%`;
     setFinalFeedback();
 
-    const displayOptions = [...item.options].sort(() => Math.random() - 0.5);
+    const displayOptions = shuffled(item.options);
     els.finalScreen.innerHTML = `<div class="final-live-shell">
       ${finalPatientPanel(caseData)}
       <article class="final-decision-card">
