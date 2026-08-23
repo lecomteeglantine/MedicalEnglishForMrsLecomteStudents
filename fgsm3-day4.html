@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v41.css">
+  <link rel="stylesheet" href="styles-v42.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -72,12 +72,58 @@
       <button id="day4Mission2Button" class="ai4-primary" type="button" disabled>🔒 Mission 2 · Live Clinical Feed</button>
     </section>
 
+    <section id="day4Mission2" class="ai4-board ai4-mission2 is-locked" aria-labelledby="ai4Mission2Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 02</p><h2 id="ai4Mission2Title">Mission 2 · Live Clinical Feed</h2><p>Watch the supplied news report, then verify exactly what each AI system does — and where human judgement still matters.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 2 PROGRESS</span><strong id="day4Mission2ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission2ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-video-console">
+        <div class="ai4-video-frame">
+          <video id="day4ClinicalVideo" controls preload="metadata" poster="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp">
+            <source src="assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4" type="video/mp4">
+            Your browser does not support embedded video.
+          </video>
+        </div>
+        <div class="ai4-video-brief">
+          <span class="ai4-live-chip">● LIVE CLINICAL FEED</span>
+          <h3>How AI is transforming healthcare</h3>
+          <p>The report follows three clinical uses: early sepsis detection, live 3-D navigation in spine surgery and seizure detection from brainwaves.</p>
+          <div class="ai4-feed-modules" aria-label="Three AI systems in the report">
+            <article><b>01</b><strong>SEPSIS</strong><span>Vital-sign monitoring</span></article>
+            <article><b>02</b><strong>SPINE</strong><span>Live 3-D navigation</span></article>
+            <article><b>03</b><strong>EEG</strong><span>Seizure detection</span></article>
+          </div>
+          <p class="ai4-video-note"><strong>Audio behaviour:</strong> your Day 4 music pauses while the video plays and resumes afterwards if Music is ON.</p>
+        </div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m2-grid">
+        <button class="ai4-activity-card" data-ai4-m2="overview" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="3-D visualisation from the supplied AI and medicine news report."><div><small>FIRST VIEWING</small><strong>Feed Orientation</strong><p>Seven rapid checks on the report's main ideas.</p><b id="ai4M2StatusOverview">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="sepsis" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor and AI system in a medical setting."><div><small>EARLY WARNING</small><strong>Sepsis Feed</strong><p>Track what the system monitors and why earlier alerts matter.</p><b id="ai4M2StatusSepsis">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="tools" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Spinal navigation image from the supplied report."><div><small>CLINICAL TOOLS</small><strong>Navigation + Neuro</strong><p>Verify the spine-navigation and seizure-detection systems.</p><b id="ai4M2StatusTools">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="human" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system."><div><small>SAFETY LAYER</small><strong>Keep the Human in the Loop</strong><p>Check the patient's view, risks and final-decision boundary.</p><b id="ai4M2StatusHuman">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m2-workspace" aria-labelledby="ai4M2WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">LIVE FEED CONSOLE</p><h2 id="ai4M2WorkspaceTitle">Feed waiting</h2><p id="ai4M2WorkspaceIntro">Clear Mission 1, then start Feed Orientation.</p></div><div class="ai4-score-box"><span>MISSION 2 SCORE</span><strong id="day4Mission2Score">0</strong></div></div>
+        <div id="ai4M2Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div></div>
+        <div id="ai4M2Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission2Complete" class="ai4-completion ai4-m2-complete is-locked" aria-labelledby="day4M2CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">📡</div>
+      <div><p class="ai4-kicker dark">MISSION 02 CLEARANCE</p><h2 id="day4M2CompleteTitle">Live Clinical Feed is not cleared yet.</h2><p id="day4M2CompleteText">Complete all four live-feed activities.</p></div>
+      <button id="day4Mission3Button" class="ai4-primary" type="button" disabled>🔒 Mission 3 · Override the Algorithm</button>
+    </section>
+
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
       <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
       <div class="ai4-roadmap-grid">
         <div class="ai4-roadmap-card active"><span>01 · ACTIVE</span><strong>System Boot</strong><p>Vocabulary and human-in-the-loop principles.</p><b>NOW</b></div>
-        <div class="ai4-roadmap-card"><span>02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
-        <div class="ai4-roadmap-card"><span>03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
+        <div id="ai4RoadmapM2" class="ai4-roadmap-card"><span id="ai4RoadmapM2State">02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
+        <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
         <div class="ai4-roadmap-card"><span>04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
         <div class="ai4-roadmap-card"><span>05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
         <div class="ai4-roadmap-card"><span>06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>

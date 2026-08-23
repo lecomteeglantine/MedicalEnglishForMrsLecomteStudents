@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v41b-day4-suno-music-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v42-day4-live-clinical-feed-20260823";
 
 const APP_SHELL = [
   "./",
@@ -51,6 +51,7 @@ const APP_SHELL = [
   "./styles-v36.css",
   "./styles-v37.css",
   "./styles-v41.css",
+  "./styles-v42.css",
   "./fgsm3-day1-game.js",
   "./fgsm3-day2-game.js",
   "./fgsm3-day3-game.js",
@@ -78,6 +79,8 @@ const APP_SHELL = [
   "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
   "./assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp",
   "./assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3",
+  "./assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp",
+  "./assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4",
   "./app.js",
   "./home.js",
   "./games.js",
