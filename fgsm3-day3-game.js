@@ -194,6 +194,54 @@
     }
   };
 
+  const mission5Activities = {
+    surge: {
+      title: "More Patients Arrive",
+      intro: "The worksheet says patient arrivals have increased sharply and more people are expected. Use first-conditional language to prepare rather than wait for the surge to happen.",
+      items: [
+        {q:"What has changed during the last 24 hours in the worksheet scenario?", a:"The number of patients arriving at the clinic has increased sharply", wrong:["The clinic has stopped receiving patients","The number of patients has fallen sharply"], model:"Patient arrivals have increased sharply over the last 24 hours."},
+        {q:"Which sentence correctly plans for a further rise in arrivals?", a:"If more patients arrive, the team will need to review capacity and prioritise available care.", wrong:["If more patients will arrive, the team will need to review capacity.","If more patients arrive, the team definitely has unlimited capacity."], model:"If more patients arrive, the team will need to review capacity and prioritise available care."},
+        {q:"Why is the first conditional appropriate here?", a:"It describes a realistic future possibility and its likely response", wrong:["It describes an impossible past event","It proves that the increase will definitely happen"], model:"The first conditional is useful for a realistic future possibility and its consequence."},
+        {q:"Which if-clause is formed correctly?", a:"If more patients arrive, ...", wrong:["If more patients will arrive, ...","If more patients arriving, ..."], model:"Use the present tense in the if-clause: If more patients arrive..."},
+        {q:"Which planning statement avoids overclaiming?", a:"More people are expected, so the team should prepare for a possible further increase in demand.", wrong:["The clinic will certainly be overwhelmed within hours.","The source proves that every patient will require emergency treatment."], model:"More people are expected, so the team should prepare for a possible further increase in demand."}
+      ]
+    },
+    access: {
+      title: "Roads Become Difficult",
+      intro: "Several roads are becoming difficult to use. Plan for reduced access while keeping the wording realistic and safety-conscious.",
+      items: [
+        {q:"What access problem is explicitly included in the flooding scenario?", a:"Several roads are becoming difficult to use", wrong:["Every road has been completely destroyed","The clinic has been permanently cut off"], model:"Several roads are becoming difficult to use."},
+        {q:"Choose the correct first conditional for worsening access.", a:"If access to the clinic becomes more difficult, the team will need to adapt the response.", wrong:["If access to the clinic will become more difficult, the team will adapt the response.","If access becomes difficult, the team will definitely reach everyone."], model:"If access to the clinic becomes more difficult, the team will need to adapt the response."},
+        {q:"Which response is appropriately cautious?", a:"The team should reassess what can be reached safely and adapt the plan as conditions change.", wrong:["The team should promise that every route will remain open.","The team should ignore access problems until supplies run out."], model:"The team should reassess what can be reached safely and adapt the plan as conditions change."},
+        {q:"What does the contingency-plan task ask you to explain about access?", a:"What will happen if access to the clinic becomes more difficult", wrong:["Why the flooding definitely happened","Which road will reopen first"], model:"The plan should explain what will happen if access to the clinic becomes more difficult."},
+        {q:"Which sentence correctly keeps uncertainty in the plan?", a:"If roads become harder to use, some activities may need to be reorganised.", wrong:["If roads become harder to use, all care will stop.","If roads will become harder to use, all activities stay unchanged."], model:"If roads become harder to use, some activities may need to be reorganised."}
+      ]
+    },
+    supplies: {
+      title: "Resources Run Low",
+      intro: "The worksheet says medical supplies may be delayed. Build a response that prioritises available resources without inventing specific stock levels.",
+      items: [
+        {q:"What does the worksheet say about medical supplies?", a:"They may be delayed", wrong:["They have already run out completely","A new delivery is guaranteed this evening"], model:"Medical supplies may be delayed."},
+        {q:"Which sentence plans appropriately for a delay?", a:"If medical supplies are delayed, the team will need to prioritise available resources and adjust the plan.", wrong:["If medical supplies will be delayed, the team will need prioritise resources.","If supplies are delayed, nothing in the plan needs to change."], model:"If medical supplies are delayed, the team will need to prioritise available resources and adjust the plan."},
+        {q:"The worksheet also asks you to plan for supplies that run out. Which response fits that open-production task?", a:"If a supply runs out, the team will need to reassess priorities using what remains available.", wrong:["If a supply runs out, the team can guarantee an immediate replacement.","If a supply will run out, the team should ignore the shortage."], model:"If a supply runs out, the team will need to reassess priorities using what remains available."},
+        {q:"Which statement avoids inventing information that the worksheet does not give?", a:"The exact stock level is not stated, so the plan should prepare for possible delays or shortages.", wrong:["The clinic has exactly 24 hours of medication left.","All essential medicines are already unavailable."], model:"The exact stock level is not stated, so the plan should prepare for possible delays or shortages."},
+        {q:"Which modal best keeps the source's uncertainty?", a:"may", wrong:["must definitely","cannot possibly"], model:"Use may when the scenario presents a possible delay rather than a certainty."}
+      ]
+    },
+    continuity: {
+      title: "Even If…",
+      intro: "The worksheet asks what the team will continue to do even if conditions deteriorate. Use concession language to keep a core response going without pretending conditions are easy.",
+      items: [
+        {q:"Which sentence uses even if correctly?", a:"Even if conditions deteriorate, the team will continue to reassess needs and what can be done safely.", wrong:["Even if conditions will deteriorate, the team will continue unchanged.","Even if conditions deteriorate, the team can guarantee normal operations."], model:"Even if conditions deteriorate, the team will continue to reassess needs and what can be done safely."},
+        {q:"What does even if express in this plan?", a:"A limit or difficult condition that does not automatically cancel the main action", wrong:["A guaranteed result","A completed event in the past"], model:"Even if introduces a difficult condition while keeping the main action in place."},
+        {q:"Which sentence follows the grammar reminder from Presentation Check-in ③?", a:"Even if the situation worsens, the team will continue to review the response.", wrong:["Even if the situation will worsen, the team will continue to review the response.","Even if the situation worsens, the team will continued to review the response."], model:"Even if the situation worsens, the team will continue to review the response."},
+        {q:"Which four-part plan best matches the worksheet prompts?", a:"Prepare for more arrivals; adapt if access worsens; prioritise resources if supplies are delayed; continue reassessing even if conditions deteriorate.", wrong:["Predict exactly how many patients will arrive; promise all roads stay open; assume supplies arrive; stop planning if conditions worsen.","Focus only on grammar and ignore patient numbers, access and supplies."], model:"A coherent contingency plan covers patient arrivals, access, supplies and what continues even if conditions deteriorate."},
+        {q:"Final clearance: which statement best describes a contingency plan?", a:"A plan for realistic possibilities that states how the team will adapt if conditions change", wrong:["A prediction that claims exactly what will happen","A list of guaranteed outcomes"], model:"A contingency plan prepares for realistic possibilities and explains how the response may adapt."}
+      ]
+    }
+  };
+
+
   const defaults = {
     started:false,current:"vocab",
     indices:{vocab:0,situation:0,video:0,signals:0},
@@ -224,6 +272,14 @@
       missed:{scanner:[],rule:[],research:[],transmission:[]},
       complete:{scanner:false,rule:false,research:false,transmission:false},
       completeAll:false
+    },
+    mission5:{
+      started:false,current:"surge",
+      indices:{surge:0,access:0,supplies:0,continuity:0},
+      scores:{surge:0,access:0,supplies:0,continuity:0},
+      missed:{surge:[],access:[],supplies:[],continuity:[]},
+      complete:{surge:false,access:false,supplies:false,continuity:false},
+      completeAll:false
     }
   };
   let state = load();
@@ -235,7 +291,8 @@
     screen:$("fieldScreen"),feedback:$("fieldFeedback"),workspaceTitle:$("workspaceTitle"),workspaceIntro:$("workspaceIntro"),score:$("fieldScore"),progressText:$("missionProgressText"),progressBar:$("missionProgressBar"),clearance:$("fieldClearance"),complete:$("missionComplete"),completeTitle:$("missionCompleteTitle"),completeText:$("missionCompleteText"),mission2Button:$("mission2Button"),
     mission2Area:$("mission2Area"),startMission2:$("startMission2"),mission2Score:$("mission2Score"),mission2ProgressText:$("mission2ProgressText"),mission2ProgressBar:$("mission2ProgressBar"),mission2Workspace:$("mission2Workspace"),mission2WorkspaceTitle:$("mission2WorkspaceTitle"),mission2WorkspaceIntro:$("mission2WorkspaceIntro"),mission2ActivityScore:$("mission2ActivityScore"),mission2Screen:$("mission2Screen"),mission2Feedback:$("mission2Feedback"),mission2Complete:$("mission2Complete"),mission2CompleteTitle:$("mission2CompleteTitle"),mission2CompleteText:$("mission2CompleteText"),mission3Button:$("mission3Button"),
     mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),
-    mission4Area:$("mission4Area"),startMission4:$("startMission4"),mission4Score:$("mission4Score"),mission4ProgressText:$("mission4ProgressText"),mission4ProgressBar:$("mission4ProgressBar"),mission4Workspace:$("mission4Workspace"),mission4WorkspaceTitle:$("mission4WorkspaceTitle"),mission4WorkspaceIntro:$("mission4WorkspaceIntro"),mission4ActivityScore:$("mission4ActivityScore"),mission4Screen:$("mission4Screen"),mission4Feedback:$("mission4Feedback"),mission4Complete:$("mission4Complete"),mission4CompleteTitle:$("mission4CompleteTitle"),mission4CompleteText:$("mission4CompleteText"),mission5Button:$("mission5Button"),mission5Teaser:$("mission5Teaser"),hearStressRule:$("hearStressRule")
+    mission4Area:$("mission4Area"),startMission4:$("startMission4"),mission4Score:$("mission4Score"),mission4ProgressText:$("mission4ProgressText"),mission4ProgressBar:$("mission4ProgressBar"),mission4Workspace:$("mission4Workspace"),mission4WorkspaceTitle:$("mission4WorkspaceTitle"),mission4WorkspaceIntro:$("mission4WorkspaceIntro"),mission4ActivityScore:$("mission4ActivityScore"),mission4Screen:$("mission4Screen"),mission4Feedback:$("mission4Feedback"),mission4Complete:$("mission4Complete"),mission4CompleteTitle:$("mission4CompleteTitle"),mission4CompleteText:$("mission4CompleteText"),mission5Button:$("mission5Button"),hearStressRule:$("hearStressRule"),
+    mission5Area:$("mission5Area"),startMission5:$("startMission5"),mission5Score:$("mission5Score"),mission5ProgressText:$("mission5ProgressText"),mission5ProgressBar:$("mission5ProgressBar"),mission5Workspace:$("mission5Workspace"),mission5WorkspaceTitle:$("mission5WorkspaceTitle"),mission5WorkspaceIntro:$("mission5WorkspaceIntro"),mission5ActivityScore:$("mission5ActivityScore"),mission5Screen:$("mission5Screen"),mission5Feedback:$("mission5Feedback"),mission5Complete:$("mission5Complete"),mission5CompleteTitle:$("mission5CompleteTitle"),mission5CompleteText:$("mission5CompleteText"),mission6Button:$("mission6Button"),mission6Teaser:$("mission6Teaser")
   };
 
   function load(){
@@ -265,6 +322,12 @@
       merged.mission4.scores={...base.mission4.scores,...(s4.scores||{})};
       merged.mission4.missed={...base.mission4.missed,...(s4.missed||{})};
       merged.mission4.complete={...base.mission4.complete,...(s4.complete||{})};
+      const s5=saved.mission5||{};
+      merged.mission5={...base.mission5,...s5};
+      merged.mission5.indices={...base.mission5.indices,...(s5.indices||{})};
+      merged.mission5.scores={...base.mission5.scores,...(s5.scores||{})};
+      merged.mission5.missed={...base.mission5.missed,...(s5.missed||{})};
+      merged.mission5.complete={...base.mission5.complete,...(s5.complete||{})};
       return merged;
     }catch{return structuredClone(defaults);}
   }
@@ -514,11 +577,12 @@
       els.mission4CompleteTitle.textContent="Clear Field Communicator";
       els.mission4CompleteText.textContent="You identified the supplied word-stress patterns, applied the -tion / -sion rule and transferred long-word stress into humanitarian and scientific messages.";
       els.mission5Button.disabled=false;els.mission5Button.textContent="Mission 5 · Emergency Contingency Plan →";
-      els.mission5Teaser.classList.remove("is-locked");
+      els.mission5Area.classList.remove("is-locked");els.startMission5.disabled=false;els.startMission5.textContent=state.mission5.started?"Resume Mission 5 →":"Start Mission 5 →";
       els.startMission4.textContent="Replay Mission 4 →";
     }else{
-      els.mission4Complete.classList.add("is-locked");els.mission5Button.disabled=true;els.mission5Teaser.classList.add("is-locked");
+      els.mission4Complete.classList.add("is-locked");els.mission5Button.disabled=true;els.mission5Area.classList.add("is-locked");els.startMission5.disabled=true;els.startMission5.textContent="🔒 Complete Mission 4 first";
     }
+    updateMission5UI();
     save();
   }
 
@@ -561,6 +625,88 @@
     $("continueMission4").onclick=()=>{if(next){state.mission4.current=next;save();renderMission4();}else{state.mission4.completeAll=true;cue("unlock");save();updateMission4UI();els.mission4Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
   }
 
+
+  function mission5Order(){return ["surge","access","supplies","continuity"];}
+  function mission5Unlocked(key){const order=mission5Order(),i=order.indexOf(key);return state.mission4.completeAll&&(i===0||state.mission5.complete[order[i-1]]);}
+  function mission5CompletedCount(){return Object.values(state.mission5.complete).filter(Boolean).length;}
+  function mission5TotalScore(){return Object.values(state.mission5.scores).reduce((a,b)=>a+b,0);}
+  function mission5MaxScore(){return mission5Order().reduce((n,k)=>n+mission5Activities[k].items.length,0);}
+
+  function updateMission5UI(){
+    if(!els.mission5Area)return;
+    const count=mission5CompletedCount();
+    state.mission5.completeAll=count===4;
+    els.mission5ProgressText.textContent=`${count} / 4`;
+    els.mission5ProgressBar.style.width=`${count*25}%`;
+    els.mission5Score.textContent=`${mission5TotalScore()} / ${mission5MaxScore()}`;
+    const labels={surge:"m5StatusSurge",access:"m5StatusAccess",supplies:"m5StatusSupplies",continuity:"m5StatusContinuity"};
+    mission5Order().forEach(k=>{
+      const label=$(labels[k]),card=document.querySelector(`[data-m5-activity="${k}"]`);
+      if(!label||!card)return;
+      if(state.mission5.complete[k]){label.textContent="CLEARED";card.disabled=false;card.classList.add("is-cleared");card.classList.remove("is-locked");}
+      else if(mission5Unlocked(k)){label.textContent=state.mission5.started&&state.mission5.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
+      else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
+    });
+    if(state.mission5.completeAll){
+      els.clearance.textContent="Mission 5 cleared";
+      els.mission5Complete.classList.remove("is-locked");
+      els.mission5CompleteTitle.textContent="Contingency Planner";
+      els.mission5CompleteText.textContent="You built a four-part 24-hour plan for patient arrivals, access, supplies and continuity using source-grounded conditional language.";
+      els.mission6Button.disabled=false;els.mission6Button.textContent="Mission 6 · Humanitarian Ethics Board →";
+      els.mission6Teaser.classList.remove("is-locked");
+      els.startMission5.textContent="Replay Mission 5 →";
+    }else{
+      els.mission5Complete.classList.add("is-locked");els.mission6Button.disabled=true;els.mission6Teaser.classList.add("is-locked");
+    }
+    save();
+  }
+
+  function renderMission5(){
+    updateMission5UI();
+    els.mission5Feedback.innerHTML="";
+    if(!state.mission4.completeAll){els.mission5WorkspaceTitle.textContent="Contingency desk locked";els.mission5WorkspaceIntro.textContent="Complete Mission 4 to open this assignment.";return;}
+    if(!state.mission5.started){els.mission5WorkspaceTitle.textContent="Mission 5 ready";els.mission5WorkspaceIntro.textContent="Work through the four planning pressures in order. The model lines are training examples for the worksheet's open contingency-plan task.";els.mission5Screen.innerHTML=`<div class="field-waiting contingency-waiting"><span aria-hidden="true">🗂️</span><h3>24-hour planning desk ready</h3><p>The scenario gives four pressures: more patients, difficult roads, delayed supplies and deteriorating conditions. Build one clear response for each.</p></div>`;return;}
+    let key=state.mission5.current;
+    if(!mission5Unlocked(key)){key=mission5Order().find(k=>mission5Unlocked(k)&&!state.mission5.complete[k])||"surge";state.mission5.current=key;save();}
+    const act=mission5Activities[key],idx=state.mission5.indices[key]||0;
+    els.mission5WorkspaceTitle.textContent=act.title;els.mission5WorkspaceIntro.textContent=act.intro;els.mission5ActivityScore.textContent=`${state.mission5.scores[key]} / ${act.items.length}`;
+    if(state.mission5.complete[key])return renderMission5CompleteActivity(key);
+    const item=act.items[idx];
+    els.mission5Screen.innerHTML=`<div class="field-question contingency-question"><div class="field-question-meta"><span>${act.title.toUpperCase()}</span><b>${idx+1} / ${act.items.length}</b></div><h3>${item.q}</h3><div id="mission5Options" class="field-options"></div><p class="contingency-source-note">The flooding scenario is an open-production task. Model operational lines are examples built from its four stated planning prompts, not additional factual claims about a real emergency.</p></div>`;
+    const wrap=$("mission5Options");
+    shuffled([item.a,...item.wrong]).forEach(text=>{const b=document.createElement("button");b.className="field-option";b.type="button";b.textContent=text;b.onclick=()=>answerMission5(key,idx,text===item.a,b,wrap,item);wrap.appendChild(b);});
+  }
+
+  function answerMission5(key,idx,isCorrect,button,wrap,item){
+    if(isCorrect){
+      wrap.querySelectorAll("button").forEach(b=>b.disabled=true);button.classList.add("is-correct");
+      if(!state.mission5.missed[key].includes(idx))state.mission5.scores[key]+=1;
+      state.mission5.indices[key]+=1;cue("good");save();
+      els.mission5Feedback.innerHTML=`<div class="field-good"><strong>Plan checkpoint cleared.</strong><span>${item.a}</span></div><div class="contingency-model-line"><span>MODEL PLANNING LINE</span><p>${item.model}</p><button id="hearM5Model" class="field-hear" type="button">🔊 Hear it</button></div><button id="mission5Next" class="field-next" type="button">${state.mission5.indices[key]>=mission5Activities[key].items.length?"Complete activity →":"Next planning checkpoint →"}</button>`;
+      $("hearM5Model").onclick=()=>speak(item.model);
+      $("mission5Next").onclick=()=>{if(state.mission5.indices[key]>=mission5Activities[key].items.length){state.mission5.complete[key]=true;const order=mission5Order(),i=order.indexOf(key);if(i<order.length-1)state.mission5.current=order[i+1];cue("unlock");save();}renderMission5();};
+      updateMission5UI();
+    }else{
+      button.disabled=true;button.classList.add("is-wrong");if(!state.mission5.missed[key].includes(idx))state.mission5.missed[key].push(idx);cue("bad");save();
+      els.mission5Feedback.innerHTML=`<div class="field-bad"><strong>Not cleared yet.</strong><span>Use the four facts given by the worksheet scenario and keep the conditional form accurate: no <em>will</em> in the if-clause, and no invented guarantees.</span></div>`;
+    }
+  }
+
+  function renderMission5CompleteActivity(key){
+    const order=mission5Order(),i=order.indexOf(key),next=order[i+1],act=mission5Activities[key];
+    const plan=key==="continuity"?`<div class="contingency-plan"><div><b>PATIENT SURGE</b><span>If more patients arrive, the team will need to review capacity and prioritise available care.</span></div><div><b>ACCESS</b><span>If access becomes more difficult, the team will need to adapt the response.</span></div><div><b>SUPPLIES</b><span>If supplies are delayed, the team will need to prioritise available resources and adjust the plan.</span></div><div><b>CONTINUITY</b><span>Even if conditions deteriorate, the team will continue to reassess needs and what can be done safely.</span></div></div>`:"";
+    els.mission5Screen.innerHTML=`<div class="field-cleared-card contingency-cleared-card"><span aria-hidden="true">✓</span><p class="field-kicker dark">MISSION 5 ACTIVITY CLEARED</p><h3>${act.title}</h3><p>First-try score: <strong>${state.mission5.scores[key]} / ${act.items.length}</strong>.</p>${plan}${next?`<button id="continueMission5" class="field-primary" type="button">Open ${mission5Activities[next].title} →</button>`:`<button id="continueMission5" class="field-primary" type="button">Complete Mission 5 →</button>`}</div>`;
+    $("continueMission5").onclick=()=>{if(next){state.mission5.current=next;save();renderMission5();}else{state.mission5.completeAll=true;cue("unlock");save();updateMission5UI();els.mission5Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
+  }
+
+  function startMission5(){
+    if(!state.mission4.completeAll)return;
+    if(state.mission5.completeAll){state.mission5={...structuredClone(defaults.mission5),started:true};}
+    else state.mission5.started=true;
+    state.mission5.current=mission5Order().find(k=>mission5Unlocked(k)&&!state.mission5.complete[k])||"surge";
+    save();cue("start");if(musicOn)startMusic();renderMission5();els.mission5Workspace.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>els.mission5Screen.focus({preventScroll:true}),450);
+  }
+
   function startMission4(){
     if(!state.mission3.completeAll)return;
     if(state.mission4.completeAll){state.mission4={...structuredClone(defaults.mission4),started:true};}
@@ -591,7 +737,7 @@
   els.start.onclick=start;
   els.sound.onclick=()=>{soundOn=!soundOn;localStorage.setItem(SOUND_KEY,soundOn?"on":"off");if(!soundOn&&"speechSynthesis" in window)speechSynthesis.cancel();syncControls();status(soundOn?"Sound on.":"Sound off. All audio-dependent content also appears as text.");};
   els.musicToggle.onclick=()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");syncControls();if(musicOn)startMusic();else stopMusic();status(musicOn?"Music on. Field briefing ambience is playing.":"Music off.");};
-  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
+  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();renderMission5();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
   els.mission2Button.onclick=()=>{els.mission2Area.scrollIntoView({behavior:"smooth",block:"start"});};
   els.startMission2.onclick=startMission2;
   document.querySelectorAll(".triage-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m2Activity;if(!mission2Unlocked(key))return;state.mission2.started=true;state.mission2.current=key;save();renderMission2();els.mission2Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
@@ -602,7 +748,10 @@
   els.startMission4.onclick=startMission4;
   document.querySelectorAll(".radio-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m4Activity;if(!mission4Unlocked(key))return;state.mission4.started=true;state.mission4.current=key;save();renderMission4();els.mission4Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
   els.hearStressRule.onclick=()=>speak("In long words, one syllable is stressed. In words ending in tion, sion or cian, the stress falls on the syllable just before the ending.");
-  els.mission5Button.onclick=()=>els.mission5Teaser.scrollIntoView({behavior:"smooth",block:"center"});
+  els.mission5Button.onclick=()=>els.mission5Area.scrollIntoView({behavior:"smooth",block:"start"});
+  els.startMission5.onclick=startMission5;
+  document.querySelectorAll(".contingency-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m5Activity;if(!mission5Unlocked(key))return;state.mission5.started=true;state.mission5.current=key;save();renderMission5();els.mission5Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
+  els.mission6Button.onclick=()=>els.mission6Teaser.scrollIntoView({behavior:"smooth",block:"center"});
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();
+  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();
 })();

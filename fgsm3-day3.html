@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v34.css">
+  <link rel="stylesheet" href="styles-v35.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -267,8 +267,78 @@
       <button id="mission5Button" class="field-primary" type="button" disabled>🔒 Mission 5 · Emergency Contingency Plan</button>
     </section>
 
-    <section id="mission5Teaser" class="field-next-mission is-locked" aria-labelledby="mission5Title">
-      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission5Title">Mission 5 · Emergency Contingency Plan</h2><p>Patient numbers are rising, roads are becoming harder to use and supplies may be delayed. Next, you will build the 24-hour plan from your Day 3 worksheet using zero conditional, first conditional and <em>even if</em>.</p></div><span class="field-next-icon" aria-hidden="true">🗂️</span>
+    <section id="mission5Area" class="contingency-mission is-locked" aria-labelledby="mission5Title">
+      <div class="contingency-hero">
+        <img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian field team and supplies in a temporary medical response setting.">
+        <div class="contingency-hero-shade" aria-hidden="true"></div>
+        <div class="contingency-hero-copy">
+          <p class="field-kicker">MISSION 05 · 24-HOUR PLANNING DESK</p>
+          <h2 id="mission5Title">Emergency Contingency Plan</h2>
+          <p class="contingency-tagline">Plan for what may happen next.</p>
+          <p>A severe flooding scenario from your Day 3 worksheet: patient arrivals have increased sharply, more people are expected, roads are becoming difficult to use, and medical supplies may be delayed. Build a clear 24-hour response using zero conditional, first conditional and <em>even if</em>.</p>
+          <button id="startMission5" class="field-primary" type="button" disabled>🔒 Complete Mission 4 first</button>
+        </div>
+        <div class="contingency-hero-score"><span>MISSION 5 SCORE</span><strong id="mission5Score">0 / 20</strong><small>first-attempt points</small></div>
+      </div>
+
+      <div class="contingency-source-card">
+        <div><span>WORKSHEET SCENARIO</span><strong>Severe flooding · next 24 hours</strong></div>
+        <ul>
+          <li>Patient numbers have increased sharply.</li>
+          <li>More people are expected to arrive.</li>
+          <li>Several roads are becoming difficult to use.</li>
+          <li>Medical supplies may be delayed.</li>
+        </ul>
+      </div>
+
+      <div class="contingency-language-strip" aria-label="Conditional language reminder">
+        <article><b>ZERO</b><strong>If + present, present</strong><span>General fact or method rule.</span></article>
+        <article><b>FIRST</b><strong>If + present, will / can / may</strong><span>Real future possibility or implication.</span></article>
+        <article><b>EVEN IF</b><strong>Concession / limit</strong><span>What remains true despite difficult conditions.</span></article>
+      </div>
+
+      <div class="contingency-progress-card" aria-live="polite">
+        <span>MISSION 5 PROGRESS</span><strong id="mission5ProgressText">0 / 4</strong>
+        <div class="field-progress-track"><i id="mission5ProgressBar"></i></div>
+      </div>
+
+      <div class="contingency-activity-grid">
+        <button class="contingency-activity-card" data-m5-activity="surge" type="button" disabled>
+          <span class="contingency-card-number">01</span><div class="contingency-card-icon" aria-hidden="true">👥</div>
+          <div><small>PATIENT SURGE</small><strong>More Patients Arrive</strong><p>Turn a rising caseload into a realistic first-conditional response.</p><b id="m5StatusSurge">LOCKED</b></div>
+        </button>
+        <button class="contingency-activity-card" data-m5-activity="access" type="button" disabled>
+          <span class="contingency-card-number">02</span><div class="contingency-card-icon" aria-hidden="true">🚧</div>
+          <div><small>ACCESS FAILURE</small><strong>Roads Become Difficult</strong><p>Adapt the response without promising access that may not be possible.</p><b id="m5StatusAccess">LOCKED</b></div>
+        </button>
+        <button class="contingency-activity-card" data-m5-activity="supplies" type="button" disabled>
+          <span class="contingency-card-number">03</span><div class="contingency-card-icon" aria-hidden="true">📦</div>
+          <div><small>SUPPLY DELAY</small><strong>Resources Run Low</strong><p>Use cautious operational language when supplies may be delayed or run out.</p><b id="m5StatusSupplies">LOCKED</b></div>
+        </button>
+        <button class="contingency-activity-card" data-m5-activity="continuity" type="button" disabled>
+          <span class="contingency-card-number">04</span><div class="contingency-card-icon" aria-hidden="true">🗂️</div>
+          <div><small>CONTINUITY PLAN</small><strong>Even If…</strong><p>Decide what the team can continue to do even if conditions deteriorate.</p><b id="m5StatusContinuity">LOCKED</b></div>
+        </button>
+      </div>
+
+      <div id="mission5Workspace" class="contingency-workspace" aria-labelledby="mission5WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">MISSION 05 · PLANNING DESK</p><h2 id="mission5WorkspaceTitle">Contingency desk locked</h2><p id="mission5WorkspaceIntro">Complete Mission 4 to open this assignment.</p></div>
+          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission5ActivityScore">0</strong></div>
+        </div>
+        <div id="mission5Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🗂️</span><h3>Mission 5 locked</h3><p>Complete Radio Stress Check first.</p></div></div>
+        <div id="mission5Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mission5Complete" class="field-completion contingency-completion is-locked" aria-labelledby="mission5CompleteTitle">
+      <div class="field-completion-badge" aria-hidden="true">📋</div>
+      <div><p class="field-kicker dark">MISSION 05 CLEARANCE</p><h2 id="mission5CompleteTitle">Emergency Contingency Plan is not cleared yet.</h2><p id="mission5CompleteText">Complete all four Mission 5 activities.</p></div>
+      <button id="mission6Button" class="field-primary" type="button" disabled>🔒 Mission 6 · Humanitarian Ethics Board</button>
+    </section>
+
+    <section id="mission6Teaser" class="field-next-mission is-locked" aria-labelledby="mission6Title">
+      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission6Title">Mission 6 · Humanitarian Ethics Board</h2><p>Neutrality, responsibility and local versus international staffing: the next mission turns the three Day 3 debate statements into an evidence-and-argument challenge.</p></div><span class="field-next-icon" aria-hidden="true">⚖️</span>
     </section>
   </main>
 
