@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v30b-day2-suno-music-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v31-day3-field-briefing-20260823";
 
 const APP_SHELL = [
   "./",
@@ -43,8 +43,10 @@ const APP_SHELL = [
   "./styles-v27.css",
   "./styles-v28.css",
   "./styles-v29.css",
+  "./styles-v31.css",
   "./fgsm3-day1-game.js",
   "./fgsm3-day2-game.js",
+  "./fgsm3-day3-game.js",
   "./assets/fgsm3/day1/images/fgsm3-day1-control-room.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp",
@@ -60,6 +62,12 @@ const APP_SHELL = [
   "./assets/fgsm3/day2/images/fgsm3-day2-dublin-workforce-meeting.png",
   "./assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3",
   "./assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4",
+  "./assets/fgsm3/day3/images/day3-field-clinical.webp",
+  "./assets/fgsm3/day3/images/day3-humanitarian-archive.webp",
+  "./assets/fgsm3/day3/images/day3-displacement-context.webp",
+  "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
+  "./assets/fgsm3/day3/music/day3-field-briefing-ambient.mp3",
+  "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
   "./app.js",
   "./home.js",
   "./games.js",
