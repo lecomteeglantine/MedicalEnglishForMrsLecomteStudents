@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v22.css">
+  <link rel="stylesheet" href="styles-v23.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -302,6 +302,58 @@
       <div id="torontoFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="sydneyArea" class="passport-mission passport-sydney is-locked" aria-labelledby="sydneyTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">STOP 04 · SYDNEY</p>
+          <h2 id="sydneyTitle">The Bulk Billing Challenge</h2>
+          <p id="sydneyInstruction">Clear Toronto to unlock your Australian assignment.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>SYDNEY CHECK</span>
+          <strong id="sydneyCheckpoint">0 / 11</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="sydneyProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="australia-brief">
+        <div class="australia-card-visual" aria-hidden="true">
+          <span>AUSTRALIA</span>
+          <strong>MEDICARE</strong>
+          <small>PUBLIC + PRIVATE TIER</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">🇦🇺 AUSTRALIA · UNIVERSAL PUBLIC INSURANCE + PRIVATE TIER</span>
+          <strong>Fourth assignment: work out when the patient pays — and when Medicare pays the doctor directly.</strong>
+          <p>Public hospital care is free, GP visits and medicines are subsidised, and private cover plays a substantial role alongside Medicare. Your key challenge is to decode bulk billing, gap fees and the PBS.</p>
+        </div>
+        <button id="startSydney" class="passport-primary" type="button" disabled>Sydney locked</button>
+      </div>
+
+      <div class="australia-facts" aria-label="Australian healthcare briefing categories">
+        <span><small>MODEL</small><strong>Universal + private tier</strong></span>
+        <span><small>RUN BY</small><strong>Medicare + states</strong></span>
+        <span><small>COVERAGE</small><strong>Universal</strong></span>
+        <span><small>SPEND</small><strong>≈ 10% GDP</strong></span>
+      </div>
+
+      <div class="bulk-billing-preview" aria-label="Australia healthcare vocabulary preview">
+        <article><span>MEDICARE LEVY</span><strong>Funding</strong><p>A dedicated tax on income that helps fund Medicare.</p></article>
+        <article><span>BULK BILLING</span><strong>No patient payment</strong><p>The doctor bills Medicare directly, so the patient pays nothing for that visit.</p></article>
+        <article><span>GAP FEE</span><strong>Out-of-pocket</strong><p>The extra amount a patient pays above the Medicare rebate.</p></article>
+        <article><span>PBS</span><strong>Medicines</strong><p>The Pharmaceutical Benefits Scheme subsidises medicines.</p></article>
+      </div>
+
+      <div id="sydneyScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting">
+          <span aria-hidden="true">🔒</span>
+          <h3>Sydney gate closed</h3>
+          <p>Collect your Medicare Specialist stamp first.</p>
+        </div>
+      </div>
+      <div id="sydneyFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -312,7 +364,7 @@
         <div id="stampUk" class="passport-stamp stamp-empty"><span>🇬🇧</span><strong>NHS Navigator</strong><small>London</small></div>
         <div id="stampUs" class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
         <div id="stampCa" class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
-        <div class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
+        <div id="stampAu" class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
         <div class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
         <div class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
         <div class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
@@ -324,7 +376,7 @@
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
         <h2 id="comingTitle">Your international rotation has only just begun.</h2>
-        <p>Sydney, the final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <p>The final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
       </div>
       <div class="passport-coming-icons" aria-hidden="true">🇺🇸 · 🇨🇦 · 🇦🇺 · 🇳🇿 · 🇮🇪</div>
     </section>

@@ -426,6 +426,141 @@
     }
   ];
 
+  const sydneyItems = [
+    {
+      phase: "SYSTEM ARRIVAL",
+      tag: "MODEL",
+      prompt: "Which description best matches Australia's healthcare system?",
+      options: [
+        { text: "Universal public insurance with a strong private tier", correct: true },
+        { text: "A private-led, non-universal insurance system", correct: false },
+        { text: "A purely local system with no national public insurance", correct: false }
+      ],
+      model: "Australia combines universal public Medicare with a strong private tier.",
+      explanation: "The country card describes Australia as universal public insurance plus a substantial private tier."
+    },
+    {
+      phase: "FUNDING DESK",
+      tag: "MEDICARE LEVY",
+      prompt: "What is the Medicare Levy?",
+      options: [
+        { text: "A tax on income that helps fund Medicare", correct: true },
+        { text: "A fee paid only when entering a public hospital", correct: false },
+        { text: "A monthly private insurance premium", correct: false }
+      ],
+      model: "The Medicare Levy is a tax on income that helps fund Australia's public system.",
+      explanation: "Australian Medicare is funded through general taxation plus a dedicated Medicare Levy on income."
+    },
+    {
+      phase: "ACCESS DESK",
+      tag: "PUBLIC HOSPITAL",
+      prompt: "What does the country card say about public hospital care?",
+      options: [
+        { text: "It is free under the universal public system", correct: true },
+        { text: "It is available only to people with private insurance", correct: false },
+        { text: "Patients must always pay a gap fee before admission", correct: false }
+      ],
+      model: "Public hospital care is free under Australia's universal system.",
+      explanation: "The card distinguishes free public hospital care from subsidised GP visits and medicines."
+    },
+    {
+      phase: "BULK BILLING DESK",
+      tag: "WHO PAYS?",
+      prompt: "A GP says, ‘We bulk bill.’ What does that mean for the patient?",
+      options: [
+        { text: "The doctor bills Medicare directly and the patient pays nothing for that visit", correct: true },
+        { text: "The patient pays the full consultation fee and receives no rebate", correct: false },
+        { text: "The consultation is paid only by private insurance", correct: false }
+      ],
+      model: "With bulk billing, the doctor bills Medicare directly and the patient pays nothing for that visit.",
+      explanation: "This is the key Australian access term: bulk billing removes the patient's payment for that consultation."
+    },
+    {
+      phase: "COST DESK",
+      tag: "GAP FEE",
+      prompt: "If a doctor's charge is higher than the Medicare rebate, what may the patient have to pay?",
+      options: [
+        { text: "A gap fee or out-of-pocket amount", correct: true },
+        { text: "A deductible before Medicare starts", correct: false },
+        { text: "A National Insurance contribution at reception", correct: false }
+      ],
+      model: "A gap fee is the extra amount the patient pays above the Medicare rebate.",
+      explanation: "The country card lists out-of-pocket gap fees as a current challenge."
+    },
+    {
+      phase: "MEDICINES DESK",
+      tag: "PBS",
+      prompt: "What is the role of the PBS?",
+      options: [
+        { text: "It subsidises medicines", correct: true },
+        { text: "It runs public hospitals", correct: false },
+        { text: "It provides no-fault injury cover", correct: false }
+      ],
+      model: "The Pharmaceutical Benefits Scheme, or PBS, subsidises medicines.",
+      explanation: "The PBS is one of the strengths identified on the Australia card because it helps keep medicines affordable."
+    },
+    {
+      phase: "PRIVATE TIER",
+      tag: "PRIVATE COVER",
+      prompt: "How important is private hospital insurance in Australia according to the card?",
+      options: [
+        { text: "It has a large role; around half the population holds private hospital cover", correct: true },
+        { text: "It is almost absent because private cover is banned", correct: false },
+        { text: "It is compulsory for every resident", correct: false }
+      ],
+      model: "Private hospital insurance has a substantial role alongside universal Medicare.",
+      explanation: "The card describes a two-tier public/private system and says around half the population holds private hospital cover."
+    },
+    {
+      phase: "PRIVATE TIER",
+      tag: "PRIVATE HEALTH REBATE",
+      prompt: "What is the private health rebate?",
+      options: [
+        { text: "A government subsidy designed to encourage private cover", correct: true },
+        { text: "A refund paid after every public hospital visit", correct: false },
+        { text: "A charge on patients who use bulk billing", correct: false }
+      ],
+      model: "The private health rebate is a government subsidy that encourages private cover.",
+      explanation: "Australia actively encourages a private tier alongside universal Medicare."
+    },
+    {
+      phase: "REALITY CHECK",
+      tag: "CURRENT PRESSURES",
+      prompt: "Which challenge is highlighted on the Australian country card?",
+      options: [
+        { text: "Gap fees, pressure on public hospitals and rural or remote access", correct: true },
+        { text: "No universal public hospital coverage", correct: false },
+        { text: "No subsidy for medicines", correct: false }
+      ],
+      model: "Australia faces out-of-pocket gap fees, pressure on public hospitals and access problems in rural and remote areas.",
+      explanation: "These are the three challenges listed on the country card."
+    },
+    {
+      phase: "COMPARE THE ROUTE",
+      tag: "AUSTRALIA vs UK",
+      prompt: "Which comparison best fits Australia and the UK?",
+      options: [
+        { text: "Both are universal, but Australia's private tier has a larger role and GP care may involve gap fees", correct: true },
+        { text: "Neither system offers universal coverage", correct: false },
+        { text: "Private insurance is the main route to care in both systems", correct: false }
+      ],
+      model: "Both systems are universal, but private insurance has a larger role in Australia and patients may face gap fees.",
+      explanation: "This comparison connects the Australian public/private mix with the more predominantly public NHS model."
+    },
+    {
+      phase: "BOARDING CHECK",
+      tag: "SYSTEM SUMMARY",
+      prompt: "Choose the best one-sentence summary of the Australian system.",
+      options: [
+        { text: "Universal Medicare funded through taxation and the Medicare Levy, with free public hospitals, subsidised primary care and medicines, and a strong private tier", correct: true },
+        { text: "A non-universal system based mainly on employer insurance and deductibles", correct: false },
+        { text: "A universal single-payer provincial system with no major private hospital tier", correct: false }
+      ],
+      model: "Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier.",
+      explanation: "That is the core Australian profile you need before the pronunciation training stop."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -446,7 +581,12 @@
     torontoIndex: 0,
     torontoScore: 0,
     torontoMissed: [],
-    torontoComplete: false
+    torontoComplete: false,
+    sydneyStarted: false,
+    sydneyIndex: 0,
+    sydneyScore: 0,
+    sydneyMissed: [],
+    sydneyComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -483,6 +623,13 @@
     torontoCheckpoint: $("torontoCheckpoint"),
     torontoProgressBar: $("torontoProgressBar"),
     torontoInstruction: $("torontoInstruction"),
+    sydneyArea: $("sydneyArea"),
+    startSydney: $("startSydney"),
+    sydneyScreen: $("sydneyScreen"),
+    sydneyFeedback: $("sydneyFeedback"),
+    sydneyCheckpoint: $("sydneyCheckpoint"),
+    sydneyProgressBar: $("sydneyProgressBar"),
+    sydneyInstruction: $("sydneyInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -494,7 +641,8 @@
     stampDeparture: $("stampDeparture"),
     stampUk: $("stampUk"),
     stampUs: $("stampUs"),
-    stampCa: $("stampCa")
+    stampCa: $("stampCa"),
+    stampAu: $("stampAu")
   };
 
   let state = loadState();
@@ -611,8 +759,12 @@
     els.torontoCheckpoint.textContent = `${torDone} / ${torontoItems.length}`;
     els.torontoProgressBar.style.width = `${(torDone / torontoItems.length) * 100}%`;
 
+    const sydDone = state.sydneyComplete ? sydneyItems.length : Math.min(state.sydneyIndex, sydneyItems.length);
+    els.sydneyCheckpoint.textContent = `${sydDone} / ${sydneyItems.length}`;
+    els.sydneyProgressBar.style.width = `${(sydDone / sydneyItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -689,15 +841,35 @@
       els.routeCa.classList.remove("destination-next", "destination-locked");
       els.routeCa.classList.add("destination-cleared");
       els.routeCaStatus.textContent = "CLEARED";
-      els.routeAu.classList.remove("destination-locked", "destination-cleared");
-      els.routeAu.classList.add("destination-next");
-      els.routeAuStatus.textContent = "NEXT";
+      els.sydneyArea.classList.remove("is-locked");
+      els.startSydney.disabled = false;
+      els.startSydney.textContent = state.sydneyStarted ? "Resume Sydney →" : "Enter Bulk Billing Challenge →";
+      els.sydneyInstruction.textContent = state.sydneyComplete ? "Sydney completed. Your Bulk Billing Expert stamp has been issued." : "Toronto cleared. Your Australian Medicare assignment is ready.";
+      if (!state.sydneyComplete) {
+        els.routeAu.classList.remove("destination-locked", "destination-cleared");
+        els.routeAu.classList.add("destination-next");
+        els.routeAuStatus.textContent = state.sydneyStarted ? "IN PROGRESS" : "NEXT";
+      }
     } else {
       els.stampCa.classList.remove("stamp-earned");
       els.stampCa.classList.add("stamp-empty");
+      els.sydneyArea.classList.add("is-locked");
+      els.startSydney.disabled = true;
+      els.startSydney.textContent = "Sydney locked";
       els.routeAu.classList.remove("destination-next", "destination-cleared");
       els.routeAu.classList.add("destination-locked");
       els.routeAuStatus.textContent = "LOCKED";
+    }
+
+    if (state.sydneyComplete) {
+      els.stampAu.classList.remove("stamp-empty");
+      els.stampAu.classList.add("stamp-earned");
+      els.routeAu.classList.remove("destination-next", "destination-locked");
+      els.routeAu.classList.add("destination-cleared");
+      els.routeAuStatus.textContent = "CLEARED";
+    } else {
+      els.stampAu.classList.remove("stamp-earned");
+      els.stampAu.classList.add("stamp-empty");
     }
   }
 
@@ -882,8 +1054,12 @@
 
     if (state.torontoComplete) {
       const pct = Math.round((state.torontoScore / torontoItems.length) * 100);
-      els.torontoScreen.innerHTML = `<div class="passport-complete-card canada-complete"><div class="passport-complete-icon" aria-hidden="true">🇨🇦</div><p class="passport-case-kicker">STOP 03 CLEARED</p><h3>Medicare Specialist</h3><p>You can explain Canada's provincial single-payer structure, distinguish universal hospital and physician coverage from services that may fall outside Medicare, and compare Canadian Medicare with the US system.</p><div class="passport-score-line"><strong>${state.torontoScore} / ${torontoItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services.”</p><button id="hearCanadaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket canada-ticket"><span>🇺🇸 NEW YORK</span><b>Medicare: 65+ public programme</b><span>≠</span><b>Medicare: public hospital + physician cover</b><span>🇨🇦 TORONTO</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇦🇺 Sydney · Bulk Billing — ready for the next build.</span></div></div>`;
+      els.torontoScreen.innerHTML = `<div class="passport-complete-card canada-complete"><div class="passport-complete-icon" aria-hidden="true">🇨🇦</div><p class="passport-case-kicker">STOP 03 CLEARED</p><h3>Medicare Specialist</h3><p>You can explain Canada's provincial single-payer structure, distinguish universal hospital and physician coverage from services that may fall outside Medicare, and compare Canadian Medicare with the US system.</p><div class="passport-score-line"><strong>${state.torontoScore} / ${torontoItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services.”</p><button id="hearCanadaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket canada-ticket"><span>🇺🇸 NEW YORK</span><b>Medicare: 65+ public programme</b><span>≠</span><b>Medicare: public hospital + physician cover</b><span>🇨🇦 TORONTO</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇦🇺 Sydney · The Bulk Billing Challenge.</span></div><button id="goSydney" class="passport-primary" type="button">Fly to Sydney →</button></div>`;
       $("hearCanadaSummary").addEventListener("click", () => speak("Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services."));
+      $("goSydney").addEventListener("click", () => {
+        els.sydneyArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => els.startSydney.focus({ preventScroll: true }), 450);
+      });
       updateProgress();
       return;
     }
@@ -924,6 +1100,60 @@
     window.setTimeout(() => els.torontoScreen.focus({ preventScroll: true }), 450);
   }
 
+  function renderSydney() {
+    updateProgress();
+    els.sydneyFeedback.innerHTML = "";
+    if (!state.torontoComplete) return;
+
+    if (!state.sydneyStarted) {
+      els.sydneyScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🇦🇺</span><h3>Welcome to Sydney</h3><p>Your Australian Medicare assignment is ready. Your key question: when does Medicare pay directly, and when can the patient face an out-of-pocket gap?</p></div>`;
+      return;
+    }
+
+    if (state.sydneyComplete) {
+      const pct = Math.round((state.sydneyScore / sydneyItems.length) * 100);
+      els.sydneyScreen.innerHTML = `<div class="passport-complete-card australia-complete"><div class="passport-complete-icon" aria-hidden="true">🇦🇺</div><p class="passport-case-kicker">STOP 04 CLEARED</p><h3>Bulk Billing Expert</h3><p>You can explain Australian Medicare, the Medicare Levy, bulk billing, gap fees, the PBS and the role of the private tier alongside universal public coverage.</p><div class="passport-score-line"><strong>${state.sydneyScore} / ${sydneyItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier.”</p><button id="hearAustraliaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket australia-ticket"><span>🇬🇧 LONDON</span><b>Private insurance: supplementary</b><span>↔</span><b>Private tier: substantial</b><span>🇦🇺 SYDNEY</span></div><div class="passport-next-route"><strong>Next checkpoint</strong><span>🔊 Transit Training Bay · Final -s — ready for the next build.</span></div></div>`;
+      $("hearAustraliaSummary").addEventListener("click", () => speak("Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier."));
+      updateProgress();
+      return;
+    }
+
+    const item = sydneyItems[state.sydneyIndex];
+    els.sydneyScreen.innerHTML = `<div class="passport-question-card australia-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><h3>${item.prompt}</h3><div id="sydneyOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("sydneyOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.sydneyMissed.includes(state.sydneyIndex)) state.sydneyScore += 1;
+        state.sydneyIndex += 1;
+        if (state.sydneyIndex >= sydneyItems.length) state.sydneyComplete = true;
+        saveState();
+        playTone("good");
+        els.sydneyFeedback.innerHTML = `<div class="feedback-good"><strong>Access decoded.</strong><span>${item.explanation}</span></div><div class="passport-transcript australia-transcript"><span>USEFUL ENGLISH</span><p>${item.model}</p><button id="hearAustraliaModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="sydneyNext" class="passport-next" type="button">${state.sydneyComplete ? "Stamp passport →" : "Continue Sydney assignment →"}</button>`;
+        $("hearAustraliaModel").addEventListener("click", () => speak(item.model));
+        $("sydneyNext").addEventListener("click", renderSydney);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.sydneyMissed.includes(state.sydneyIndex)) state.sydneyMissed.push(state.sydneyIndex);
+        saveState();
+        playTone("bad");
+        els.sydneyFeedback.innerHTML = `<div class="feedback-bad"><strong>Payment route incorrect.</strong><span>Use the Australian briefing carefully: distinguish public hospital care, subsidised care, bulk billing, gap fees and the private tier.</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startSydney() {
+    if (!state.torontoComplete) return;
+    state.sydneyStarted = true;
+    saveState();
+    renderSydney();
+    els.sydneyArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.sydneyScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -934,6 +1164,7 @@
     renderLondon();
     renderNewYork();
     renderToronto();
+    renderSydney();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -948,6 +1179,7 @@
   els.startLondon.addEventListener("click", startLondon);
   els.startNewYork.addEventListener("click", startNewYork);
   els.startToronto.addEventListener("click", startToronto);
+  els.startSydney.addEventListener("click", startSydney);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -965,4 +1197,5 @@
   renderLondon();
   renderNewYork();
   renderToronto();
+  renderSydney();
 })();
