@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v23.css">
+  <link rel="stylesheet" href="styles-v24.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -109,10 +109,10 @@
           <div><small>STOP 04</small><strong>Sydney</strong><span>Bulk Billing</span></div>
           <b id="routeAuStatus">LOCKED</b>
         </article>
-        <article class="destination-card destination-locked">
+        <article id="routeNz" class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇳🇿</span>
           <div><small>STOP 05</small><strong>Wellington</strong><span>Health System Alert</span></div>
-          <b>LOCKED</b>
+          <b id="routeNzStatus">LOCKED</b>
         </article>
         <article class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇮🇪</span>
@@ -354,6 +354,50 @@
       <div id="sydneyFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="finalSArea" class="passport-mission passport-final-s is-locked" aria-labelledby="finalSTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">TRANSIT TRAINING BAY · PRONUNCIATION</p>
+          <h2 id="finalSTitle">Final -s Sound Check</h2>
+          <p id="finalSInstruction">Clear Sydney to unlock your communication check before the flight to Wellington.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>SOUND CHECK</span>
+          <strong id="finalSCheckpoint">0 / 12</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="finalSProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="final-s-brief">
+        <div class="final-s-gate" aria-hidden="true">
+          <span>TRANSIT GATE T2</span>
+          <strong>FINAL -S</strong>
+          <small>/ɪz/ · /s/ · /z/</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">🔊 COMMUNICATION CHECK · HEALTHCARE ENGLISH</span>
+          <strong>Listen to the ending, then classify the final -s sound.</strong>
+          <p>The spelling stays visible for accessibility. Focus on the final sound before <em>-s</em>, not on the letter itself. You can hear each word and a short healthcare sentence before answering.</p>
+        </div>
+        <button id="startFinalS" class="passport-primary" type="button" disabled>Training Bay locked</button>
+      </div>
+
+      <div class="final-s-rule-grid" aria-label="Final s pronunciation rules">
+        <article class="final-s-rule"><span>/ɪz/</span><strong>Extra syllable</strong><p>After s, z, sh, ch or ge sounds: <em>doses, analyses, cases</em>.</p></article>
+        <article class="final-s-rule"><span>/s/</span><strong>Voiceless ending</strong><p>After p, t, k or f sounds: <em>results, patients, groups</em>.</p></article>
+        <article class="final-s-rule"><span>/z/</span><strong>Voiced ending</strong><p>After other voiced sounds: <em>findings, values, methods</em>.</p></article>
+      </div>
+
+      <div id="finalSScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting">
+          <span aria-hidden="true">🔒</span>
+          <h3>Communication gate closed</h3>
+          <p>Collect your Bulk Billing Expert stamp first.</p>
+        </div>
+      </div>
+      <div id="finalSFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -365,7 +409,7 @@
         <div id="stampUs" class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
         <div id="stampCa" class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
         <div id="stampAu" class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
-        <div class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
+        <div id="stampFinalS" class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
         <div class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
         <div class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
         <div class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control</strong><small>Language Desk</small></div>
@@ -376,9 +420,9 @@
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
         <h2 id="comingTitle">Your international rotation has only just begun.</h2>
-        <p>The final <em>-s</em> Training Bay, Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <p>Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
       </div>
-      <div class="passport-coming-icons" aria-hidden="true">🇺🇸 · 🇨🇦 · 🇦🇺 · 🇳🇿 · 🇮🇪</div>
+      <div class="passport-coming-icons" aria-hidden="true">🇳🇿 · 🇮🇪 · 📐 · ⭐</div>
     </section>
   </main>
 

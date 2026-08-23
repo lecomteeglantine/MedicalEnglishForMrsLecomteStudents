@@ -561,6 +561,105 @@
     }
   ];
 
+  const finalSItems = [
+    {
+      phase: "WORD CHECK",
+      tag: "SHORTAGES",
+      word: "shortages",
+      sentence: "Staff shortages are getting worse.",
+      correctSound: "/ɪz/",
+      explanation: "Shortage ends in the /dʒ/ sound, so plural -s is pronounced /ɪz/ and adds an extra syllable."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "SPECIALISTS",
+      word: "specialists",
+      sentence: "Patients sometimes wait too long to see specialists.",
+      correctSound: "/s/",
+      explanation: "Specialist ends in the voiceless /t/ sound, so final -s is pronounced /s/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "RESIGNATIONS",
+      word: "resignations",
+      sentence: "Several resignations have been reported.",
+      correctSound: "/z/",
+      explanation: "Resignation ends in the voiced /n/ sound, so plural -s is pronounced /z/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "MISSES",
+      word: "misses",
+      sentence: "Near misses can reveal serious safety problems.",
+      correctSound: "/ɪz/",
+      explanation: "Miss ends in /s/, so final -s is pronounced /ɪz/ and adds a syllable."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "LAYOFFS",
+      word: "layoffs",
+      sentence: "Layoffs can put additional pressure on a workforce.",
+      correctSound: "/s/",
+      explanation: "Layoff ends in the voiceless /f/ sound, so final -s is pronounced /s/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "FAILURES",
+      word: "failures",
+      sentence: "The report describes several system failures.",
+      correctSound: "/z/",
+      explanation: "Failure ends in a voiced sound, so plural -s is pronounced /z/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "NURSES",
+      word: "nurses",
+      sentence: "Nurses are working under pressure.",
+      correctSound: "/ɪz/",
+      explanation: "Nurse ends in /s/, so plural -s is pronounced /ɪz/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "PATIENTS",
+      word: "patients",
+      sentence: "Patients may face long waiting times.",
+      correctSound: "/s/",
+      explanation: "Patient ends in the voiceless /t/ sound, so final -s is pronounced /s/."
+    },
+    {
+      phase: "WORD CHECK",
+      tag: "STORIES",
+      word: "stories",
+      sentence: "Patient stories can show how access problems affect daily life.",
+      correctSound: "/z/",
+      explanation: "Story ends in a voiced vowel sound, so plural -s is pronounced /z/."
+    },
+    {
+      phase: "RULE TRANSFER",
+      tag: "DOSES · ANALYSES · CASES",
+      word: "doses, analyses, cases",
+      sentence: "The study compares doses, analyses and cases.",
+      correctSound: "/ɪz/",
+      explanation: "These words end in sibilant sounds, so the final -s creates the extra /ɪz/ syllable."
+    },
+    {
+      phase: "RULE TRANSFER",
+      tag: "RESULTS · PATIENTS · GROUPS",
+      word: "results, patients, groups",
+      sentence: "The results compare patients in two groups.",
+      correctSound: "/s/",
+      explanation: "After voiceless final sounds such as /t/ or /p/, final -s is pronounced /s/."
+    },
+    {
+      phase: "RULE TRANSFER",
+      tag: "FINDINGS · VALUES · METHODS",
+      word: "findings, values, methods",
+      sentence: "The findings, values and methods are clearly presented.",
+      correctSound: "/z/",
+      explanation: "After voiced sounds, final -s is normally pronounced /z/."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -586,7 +685,12 @@
     sydneyIndex: 0,
     sydneyScore: 0,
     sydneyMissed: [],
-    sydneyComplete: false
+    sydneyComplete: false,
+    finalSStarted: false,
+    finalSIndex: 0,
+    finalSScore: 0,
+    finalSMissed: [],
+    finalSComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -630,6 +734,13 @@
     sydneyCheckpoint: $("sydneyCheckpoint"),
     sydneyProgressBar: $("sydneyProgressBar"),
     sydneyInstruction: $("sydneyInstruction"),
+    finalSArea: $("finalSArea"),
+    startFinalS: $("startFinalS"),
+    finalSScreen: $("finalSScreen"),
+    finalSFeedback: $("finalSFeedback"),
+    finalSCheckpoint: $("finalSCheckpoint"),
+    finalSProgressBar: $("finalSProgressBar"),
+    finalSInstruction: $("finalSInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -638,11 +749,14 @@
     routeCaStatus: $("routeCaStatus"),
     routeAu: $("routeAu"),
     routeAuStatus: $("routeAuStatus"),
+    routeNz: $("routeNz"),
+    routeNzStatus: $("routeNzStatus"),
     stampDeparture: $("stampDeparture"),
     stampUk: $("stampUk"),
     stampUs: $("stampUs"),
     stampCa: $("stampCa"),
-    stampAu: $("stampAu")
+    stampAu: $("stampAu"),
+    stampFinalS: $("stampFinalS")
   };
 
   let state = loadState();
@@ -763,8 +877,12 @@
     els.sydneyCheckpoint.textContent = `${sydDone} / ${sydneyItems.length}`;
     els.sydneyProgressBar.style.width = `${(sydDone / sydneyItems.length) * 100}%`;
 
+    const sDone = state.finalSComplete ? finalSItems.length : Math.min(state.finalSIndex, finalSItems.length);
+    els.finalSCheckpoint.textContent = `${sDone} / ${finalSItems.length}`;
+    els.finalSProgressBar.style.width = `${(sDone / finalSItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -867,9 +985,30 @@
       els.routeAu.classList.remove("destination-next", "destination-locked");
       els.routeAu.classList.add("destination-cleared");
       els.routeAuStatus.textContent = "CLEARED";
+      els.finalSArea.classList.remove("is-locked");
+      els.startFinalS.disabled = false;
+      els.startFinalS.textContent = state.finalSStarted ? "Resume Sound Check →" : "Enter Training Bay →";
+      els.finalSInstruction.textContent = state.finalSComplete ? "Communication check completed. Your Clear Communicator stamp has been issued." : "Sydney cleared. Complete your pronunciation check before boarding for Wellington.";
     } else {
       els.stampAu.classList.remove("stamp-earned");
       els.stampAu.classList.add("stamp-empty");
+      els.finalSArea.classList.add("is-locked");
+      els.startFinalS.disabled = true;
+      els.startFinalS.textContent = "Training Bay locked";
+    }
+
+    if (state.finalSComplete) {
+      els.stampFinalS.classList.remove("stamp-empty");
+      els.stampFinalS.classList.add("stamp-earned");
+      els.routeNz.classList.remove("destination-locked", "destination-cleared");
+      els.routeNz.classList.add("destination-next");
+      els.routeNzStatus.textContent = "NEXT";
+    } else {
+      els.stampFinalS.classList.remove("stamp-earned");
+      els.stampFinalS.classList.add("stamp-empty");
+      els.routeNz.classList.remove("destination-next", "destination-cleared");
+      els.routeNz.classList.add("destination-locked");
+      els.routeNzStatus.textContent = "LOCKED";
     }
   }
 
@@ -1112,8 +1251,12 @@
 
     if (state.sydneyComplete) {
       const pct = Math.round((state.sydneyScore / sydneyItems.length) * 100);
-      els.sydneyScreen.innerHTML = `<div class="passport-complete-card australia-complete"><div class="passport-complete-icon" aria-hidden="true">🇦🇺</div><p class="passport-case-kicker">STOP 04 CLEARED</p><h3>Bulk Billing Expert</h3><p>You can explain Australian Medicare, the Medicare Levy, bulk billing, gap fees, the PBS and the role of the private tier alongside universal public coverage.</p><div class="passport-score-line"><strong>${state.sydneyScore} / ${sydneyItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier.”</p><button id="hearAustraliaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket australia-ticket"><span>🇬🇧 LONDON</span><b>Private insurance: supplementary</b><span>↔</span><b>Private tier: substantial</b><span>🇦🇺 SYDNEY</span></div><div class="passport-next-route"><strong>Next checkpoint</strong><span>🔊 Transit Training Bay · Final -s — ready for the next build.</span></div></div>`;
+      els.sydneyScreen.innerHTML = `<div class="passport-complete-card australia-complete"><div class="passport-complete-icon" aria-hidden="true">🇦🇺</div><p class="passport-case-kicker">STOP 04 CLEARED</p><h3>Bulk Billing Expert</h3><p>You can explain Australian Medicare, the Medicare Levy, bulk billing, gap fees, the PBS and the role of the private tier alongside universal public coverage.</p><div class="passport-score-line"><strong>${state.sydneyScore} / ${sydneyItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier.”</p><button id="hearAustraliaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket australia-ticket"><span>🇬🇧 LONDON</span><b>Private insurance: supplementary</b><span>↔</span><b>Private tier: substantial</b><span>🇦🇺 SYDNEY</span></div><div class="passport-next-route"><strong>Next checkpoint</strong><span>🔊 Transit Training Bay · Final -s.</span></div><button id="goFinalS" class="passport-primary" type="button">Enter Training Bay →</button></div>`;
       $("hearAustraliaSummary").addEventListener("click", () => speak("Australia combines universal Medicare, free public hospital care, subsidised GP visits and medicines, and a strong private tier."));
+      $("goFinalS").addEventListener("click", () => {
+        els.finalSArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => els.startFinalS.focus({ preventScroll: true }), 450);
+      });
       updateProgress();
       return;
     }
@@ -1154,6 +1297,67 @@
     window.setTimeout(() => els.sydneyScreen.focus({ preventScroll: true }), 450);
   }
 
+  function renderFinalS() {
+    updateProgress();
+    els.finalSFeedback.innerHTML = "";
+    if (!state.sydneyComplete) return;
+
+    if (!state.finalSStarted) {
+      els.finalSScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🔊</span><h3>Communication check ready</h3><p>Listen to each word or sentence, then choose /ɪz/, /s/ or /z/. Written forms remain visible so sound is never required to complete the activity.</p></div>`;
+      return;
+    }
+
+    if (state.finalSComplete) {
+      const pct = Math.round((state.finalSScore / finalSItems.length) * 100);
+      els.finalSScreen.innerHTML = `<div class="passport-complete-card final-s-complete"><div class="passport-complete-icon" aria-hidden="true">🔊</div><p class="passport-case-kicker">TRANSIT CHECK CLEARED</p><h3>Clear Communicator</h3><p>You can now sort final <em>-s</em> endings by sound and apply the rule to healthcare and research vocabulary.</p><div class="passport-score-line"><strong>${state.finalSScore} / ${finalSItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="sound-summary"><div><b>/ɪz/</b><span>shortages · misses · nurses</span></div><div><b>/s/</b><span>specialists · layoffs · patients</span></div><div><b>/z/</b><span>resignations · failures · stories</span></div></div><div class="passport-model-box"><span>QUICK RULE</span><p>“Use /ɪz/ after sibilant sounds, /s/ after voiceless sounds such as /p t k f/, and /z/ after other voiced sounds.”</p><button id="hearFinalSRule" class="passport-hear" type="button">🔊 Hear rule</button></div><div class="comparison-ticket transit-ticket"><span>SYDNEY</span><b>Bulk Billing Expert</b><span>✈</span><b>Clear Communicator</b><span>WELLINGTON NEXT</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇳🇿 Wellington · Health System Alert.</span></div><button id="goWellingtonRoute" class="passport-primary" type="button">View Wellington gate →</button></div>`;
+      $("hearFinalSRule").addEventListener("click", () => speak("Use iz after sibilant sounds, s after voiceless sounds such as p, t, k and f, and z after other voiced sounds."));
+      $("goWellingtonRoute").addEventListener("click", () => {
+        els.routeNz.scrollIntoView({ behavior: "smooth", block: "center" });
+        window.setTimeout(() => els.routeNz.focus?.({ preventScroll: true }), 450);
+      });
+      updateProgress();
+      return;
+    }
+
+    const item = finalSItems[state.finalSIndex];
+    const sounds = ["/ɪz/", "/s/", "/z/"];
+    els.finalSScreen.innerHTML = `<div class="passport-question-card final-s-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><div class="sound-chip">Checkpoint ${state.finalSIndex + 1} of ${finalSItems.length}</div><h3>How is the final <em>-s</em> pronounced in <strong>${item.word}</strong>?</h3><div class="final-s-audio-row"><button id="hearFinalSWord" class="passport-hear" type="button">🔊 Hear word</button><button id="hearFinalSSentence" class="passport-hear" type="button">🔊 Hear sentence</button></div><p class="passport-small-note">Sentence: “${item.sentence}”</p><div id="finalSOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("finalSOptions");
+    $("hearFinalSWord").addEventListener("click", () => speak(item.word));
+    $("hearFinalSSentence").addEventListener("click", () => speak(item.sentence));
+    optionButtons(sounds.map(sound => ({ text: sound, correct: sound === item.correctSound })), (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.finalSMissed.includes(state.finalSIndex)) state.finalSScore += 1;
+        state.finalSIndex += 1;
+        if (state.finalSIndex >= finalSItems.length) state.finalSComplete = true;
+        saveState();
+        playTone("good");
+        els.finalSFeedback.innerHTML = `<div class="feedback-good"><strong>${item.correctSound} — cleared.</strong><span>${item.explanation}</span></div><div class="passport-transcript final-s-transcript"><span>MODEL SENTENCE</span><p>${item.sentence}</p><button id="hearFinalSModel" class="passport-hear" type="button">🔊 Hear it again</button></div><button id="finalSNext" class="passport-next" type="button">${state.finalSComplete ? "Stamp passport →" : "Next sound check →"}</button>`;
+        $("hearFinalSModel").addEventListener("click", () => speak(item.sentence));
+        $("finalSNext").addEventListener("click", renderFinalS);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.finalSMissed.includes(state.finalSIndex)) state.finalSMissed.push(state.finalSIndex);
+        saveState();
+        playTone("bad");
+        els.finalSFeedback.innerHTML = `<div class="feedback-bad"><strong>Listen to the sound before -s.</strong><span>Do not decide from spelling alone. Use the rule card above, then try another sound.</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startFinalS() {
+    if (!state.sydneyComplete) return;
+    state.finalSStarted = true;
+    saveState();
+    renderFinalS();
+    els.finalSArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.finalSScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -1165,6 +1369,7 @@
     renderNewYork();
     renderToronto();
     renderSydney();
+    renderFinalS();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1180,6 +1385,7 @@
   els.startNewYork.addEventListener("click", startNewYork);
   els.startToronto.addEventListener("click", startToronto);
   els.startSydney.addEventListener("click", startSydney);
+  els.startFinalS.addEventListener("click", startFinalS);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -1198,4 +1404,5 @@
   renderNewYork();
   renderToronto();
   renderSydney();
+  renderFinalS();
 })();
