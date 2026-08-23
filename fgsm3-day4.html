@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v43.css">
+  <link rel="stylesheet" href="styles-v44.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -151,6 +151,41 @@
       <button id="day4Mission4Button" class="ai4-primary" type="button" disabled>🔒 Mission 4 · Evidence Scanner</button>
     </section>
 
+
+
+    <section id="day4Mission4" class="ai4-board ai4-mission4 is-locked" aria-labelledby="ai4Mission4Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 04</p><h2 id="ai4Mission4Title">Mission 4 · Evidence Scanner</h2><p>The Harvard study looks impressive — but your job is to read the numbers, limits and claims precisely. Separate what the article supports from what would be hype.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 4 PROGRESS</span><strong id="day4Mission4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission4ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-evidence-dashboard" role="note" aria-label="Key figures from the Harvard AI study reported in the supplied article">
+        <div><span>FAST TRIAGE</span><strong>67%</strong><small>AI exact / very close diagnosis</small></div>
+        <div><span>DOCTORS</span><strong>50–55%</strong><small>same fast-triage experiment</small></div>
+        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference not statistically significant</small></div>
+        <div><span>TREATMENT PLANS</span><strong>89% vs 34%</strong><small>AI vs 46 doctors</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m4-grid">
+        <button class="ai4-activity-card" data-ai4-m4="numbers" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation used as the evidence scanner illustration."><div><small>DATA CHECK</small><strong>Read the Numbers</strong><p>Match the figures to exactly what the study reported.</p><b id="ai4M4StatusNumbers">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="headlines" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI claim."><div><small>CLAIM CHECK</small><strong>Headline Scanner</strong><p>Decide whether a claim is supported, overclaimed or not supported.</p><b id="ai4M4StatusHeadlines">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="limits" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Medical AI display representing study limitations."><div><small>LIMITATION CHECK</small><strong>Find the Limitation</strong><p>Identify what the experiment did not test and what risks remain.</p><b id="ai4M4StatusLimits">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="tfng" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Evidence verification activity."><div><small>SOURCE VERIFICATION</small><strong>True · False · Not Given</strong><p>Use the article only — not outside knowledge.</p><b id="ai4M4StatusTfng">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m4-workspace" aria-labelledby="ai4M4WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">EVIDENCE CONSOLE</p><h2 id="ai4M4WorkspaceTitle">Scanner waiting</h2><p id="ai4M4WorkspaceIntro">Clear Mission 3, then open Read the Numbers.</p></div><div class="ai4-score-box"><span>MISSION 4 SCORE</span><strong id="day4Mission4Score">0</strong></div></div>
+        <div id="ai4M4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div></div>
+        <div id="ai4M4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission4Complete" class="ai4-completion ai4-m4-complete is-locked" aria-labelledby="day4M4CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🔎</div>
+      <div><p class="ai4-kicker dark">MISSION 04 CLEARANCE</p><h2 id="day4M4CompleteTitle">Evidence Scanner is not cleared yet.</h2><p id="day4M4CompleteText">Complete all four evidence-audit activities.</p></div>
+      <button id="day4Mission5Button" class="ai4-primary" type="button" disabled>🔒 Mission 5 · Certainty Calibration</button>
+    </section>
+
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
       <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
       <div class="ai4-roadmap-grid">
@@ -158,7 +193,7 @@
         <div id="ai4RoadmapM2" class="ai4-roadmap-card"><span id="ai4RoadmapM2State">02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
         <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
         <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
-        <div class="ai4-roadmap-card"><span>05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
+        <div id="ai4RoadmapM5" class="ai4-roadmap-card"><span id="ai4RoadmapM5State">05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
         <div class="ai4-roadmap-card"><span>06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
         <div class="ai4-roadmap-card"><span>FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
       </div>

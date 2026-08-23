@@ -6,6 +6,7 @@
   const ACTIVITY_ORDER = ["lexicon", "signals", "boundaries", "clearance"];
   const M2_ORDER = ["overview", "sepsis", "tools", "human"];
   const M3_ORDER = ["conflict", "review", "silent", "brief"];
+  const M4_ORDER = ["numbers", "headlines", "limits", "tfng"];
 
   const meta = {
     lexicon: ["Load the Vocabulary", "Decode the ten core terms from the Day 4 worksheet."],
@@ -28,6 +29,15 @@
     review: ["Re-check the AI", "Choose the most source-consistent reason the case needs human review rather than automatic acceptance."],
     silent: ["Silent Letter Check", "Hear each word and identify the letter that is written but not pronounced."],
     brief: ["Override Brief", "Choose cautious English that reports the mismatch without pretending the evidence proves more than it does."]
+  };
+
+
+
+  const m4Meta = {
+    numbers: ["Read the Numbers", "Match each figure to exactly what the Harvard study reported in the supplied article."],
+    headlines: ["Headline Scanner", "Classify each claim as supported, overclaimed or not supported by the article."],
+    limits: ["Find the Limitation", "Identify what the experiment did not test and which cautions the article explicitly raises."],
+    tfng: ["True · False · Not Given", "Use only the supplied article. 'Not Given' means the article does not tell you."]
   };
 
   const vocab = [
@@ -149,15 +159,56 @@
     {caseId:"CASE 08 · OVERRIDE BRIEF",ai:"AI output: dehydration",summary:"Rapid breathing + cough",q:"Which sentence best reflects the source?",a:"The respiratory symptoms may have been underestimated, so pneumonia should remain under consideration.",opts:["The respiratory symptoms may have been underestimated, so pneumonia should remain under consideration.","The patient definitely has pneumonia.","Dehydration and pneumonia can never occur together.","The cough is not relevant because the patient is confused."],ex:"The doctor suspects pneumonia; the worksheet asks which respiratory symptoms may have been underestimated."}
   ];
 
+
+
+  const m4Numbers = [
+    {q:"In the fast-triage experiment, what proportion of cases did the AI identify with the exact or a very close diagnosis?",a:"67%",opts:["67%","50–55%","82%","89%"],ex:"The article reports 67% for the AI in the initial fast-triage experiment."},
+    {q:"What accuracy did the human doctors achieve in that same fast-triage experiment?",a:"50–55%",opts:["50–55%","67%","70–79%","34%"],ex:"The doctors were right 50–55% of the time in the same experiment."},
+    {q:"When more detail was available, what diagnostic accuracy did the AI reach?",a:"82%",opts:["82%","67%","89%","70–79%"],ex:"With more detail, the AI's diagnostic accuracy rose to 82%."},
+    {q:"With more detail, what accuracy range did the expert humans achieve?",a:"70–79%",opts:["70–79%","50–55%","82–89%","34–46%"],ex:"The expert humans achieved 70–79% with the additional information."},
+    {q:"Was the 82% versus 70–79% difference statistically significant?",a:"No — the article says it was not statistically significant.",opts:["No — the article says it was not statistically significant.","Yes — the article says it proved superiority.","The article gives no information about significance.","Only the doctors' result was statistically significant."],ex:"The article explicitly says that this difference was not statistically significant."},
+    {q:"On the five long-term treatment-plan cases, which score pairing is correct?",a:"AI 89% · doctors 34%",opts:["AI 89% · doctors 34%","AI 67% · doctors 50–55%","AI 82% · doctors 70–79%","AI 34% · doctors 89%"],ex:"For long-term treatment plans, the AI scored 89% compared with 34% for the 46 doctors."}
+  ];
+
+  const m4Headlines = [
+    {claim:"AI diagnosed more accurately than the doctors in the fast-triage experiment.",q:"How should the Evidence Scanner classify this claim?",a:"Supported",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"The reported result was 67% for AI versus 50–55% for the doctors in that experiment."},
+    {claim:"The study proves that AI can replace emergency doctors.",q:"How should the Evidence Scanner classify this headline?",a:"Overclaim",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"The authors explicitly say the findings do not mean AI replaces doctors."},
+    {claim:"The AI was tested on the patient's appearance and level of distress.",q:"How should this claim be classified?",a:"Not supported / contradicted",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"Those visual and distress signals were specifically not tested."},
+    {claim:"The 82% versus 70–79% result proves a statistically significant diagnostic advantage.",q:"How should this claim be classified?",a:"Overclaim",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"The article says that difference was not statistically significant, so 'proves' is too strong."},
+    {claim:"The systems may be useful as second-opinion tools for clinicians.",q:"How should this claim be classified?",a:"Supported",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"An independent expert describes them as useful second-opinion tools, especially for considering a wider range of diagnoses."},
+    {claim:"The article says exactly how many hospitals will adopt this AI next year.",q:"How should this claim be classified?",a:"Not supported / contradicted",opts:["Supported","Overclaim","Not supported / contradicted"],ex:"The article gives no exact number of hospitals that will adopt the AI next year."}
+  ];
+
+  const m4Limits = [
+    {q:"What important type of patient information was NOT tested in the study?",a:"Visual appearance and level of distress",opts:["Visual appearance and level of distress","Electronic health records","Vital-sign data","Demographic information"],ex:"The AI only received information that could be communicated via text; appearance and distress were not tested."},
+    {q:"Because of that limitation, how do the researchers describe the AI's role in the experiment?",a:"More like a clinician giving a second opinion based on paperwork",opts:["More like a clinician giving a second opinion based on paperwork","A full replacement for bedside examination","An autonomous emergency department","A tool that only interprets medical images"],ex:"The article says the AI was performing more like a clinician producing a second opinion based on paperwork."},
+    {q:"What accountability concern does Dr Rodman raise?",a:"There is not yet a formal framework for accountability.",opts:["There is not yet a formal framework for accountability.","AI companies already accept all legal responsibility.","Doctors have no liability when AI is used.","The study resolved the liability question."],ex:"The article quotes Rodman saying there is not a formal framework right now for accountability."},
+    {q:"What risk does Dr Wei Xing identify for doctors using AI?",a:"They may unconsciously defer to the AI instead of thinking independently.",opts:["They may unconsciously defer to the AI instead of thinking independently.","They may stop using electronic records.","They may refuse all second opinions.","They may lose the ability to read vital signs immediately."],ex:"Xing warns that clinicians may unconsciously defer to the AI's answer, a tendency that could grow with routine use."},
+    {q:"What subgroup information was missing from the study?",a:"Whether the AI performed worse for groups such as elderly or non-English-speaking patients",opts:["Whether the AI performed worse for groups such as elderly or non-English-speaking patients","Whether every patient owned a smartphone","Whether surgeons preferred robots","Whether all hospitals used the same software"],ex:"The article highlights the lack of information about which patients the AI was worse at diagnosing, including elderly or non-English-speaking patients."},
+    {q:"What does the article say the study does NOT demonstrate?",a:"That AI is safe for routine clinical use or a substitute for medical advice",opts:["That AI is safe for routine clinical use or a substitute for medical advice","That the AI could read text records","That doctors took part in the trials","That AI can generate treatment plans"],ex:"The expert warning is explicit: the study does not demonstrate routine clinical safety or justify using freely available AI as a substitute for medical advice."}
+  ];
+
+  const m4Tfng = [
+    {statement:"A Harvard study found that AI systems diagnosed emergency patients more accurately than human doctors.",q:"True, False or Not Given?",a:"True",opts:["True","False","Not Given"],ex:"True. This is the central result reported in the article."},
+    {statement:"The AI identified the exact or a very close diagnosis in 67% of cases, more often than the human doctors.",q:"True, False or Not Given?",a:"True",opts:["True","False","Not Given"],ex:"True. The AI reached 67%; the doctors reached 50–55%."},
+    {statement:"The study tested the AI on the patient's visual appearance and level of distress.",q:"True, False or Not Given?",a:"False",opts:["True","False","Not Given"],ex:"False. The article says those signals were not tested."},
+    {statement:"The lead authors said their findings mean AI will soon replace doctors.",q:"True, False or Not Given?",a:"False",opts:["True","False","Not Given"],ex:"False. The lead authors explicitly say AI will not replace physicians and describe a doctor–patient–AI model."},
+    {statement:"In one case, the AI noticed the patient's history of lupus, which the human doctors had missed.",q:"True, False or Not Given?",a:"True",opts:["True","False","Not Given"],ex:"True. The article describes a pulmonary-clot case in which the AI noticed the lupus history."},
+    {statement:"The article gives the exact number of hospitals that will adopt the AI next year.",q:"True, False or Not Given?",a:"Not Given",opts:["True","False","Not Given"],ex:"Not Given. The article reports current use figures, but no exact number of hospitals adopting the AI next year."}
+  ];
+
+
   let state = loadState();
   let current = null, index = 0, attempts = 0, sessionScore = 0;
   let m2Current = null, m2Index = 0, m2Attempts = 0, m2SessionScore = 0;
   let m3Current = null, m3Index = 0, m3Attempts = 0, m3SessionScore = 0;
+  let m4Current = null, m4Index = 0, m4Attempts = 0, m4SessionScore = 0;
 
   const $ = id => document.getElementById(id);
   const screen = $("ai4Screen"), feedback = $("ai4Feedback"), workspaceTitle = $("ai4WorkspaceTitle"), workspaceIntro = $("ai4WorkspaceIntro");
   const m2Screen = $("ai4M2Screen"), m2Feedback = $("ai4M2Feedback"), m2WorkspaceTitle = $("ai4M2WorkspaceTitle"), m2WorkspaceIntro = $("ai4M2WorkspaceIntro");
   const m3Screen = $("ai4M3Screen"), m3Feedback = $("ai4M3Feedback"), m3WorkspaceTitle = $("ai4M3WorkspaceTitle"), m3WorkspaceIntro = $("ai4M3WorkspaceIntro");
+  const m4Screen = $("ai4M4Screen"), m4Feedback = $("ai4M4Feedback"), m4WorkspaceTitle = $("ai4M4WorkspaceTitle"), m4WorkspaceIntro = $("ai4M4WorkspaceIntro");
   const music = $("day4Music"), musicToggle = $("day4MusicToggle"), audioStatus = $("day4AudioStatus"), clinicalVideo = $("day4ClinicalVideo");
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
   let videoPausedMusic = false;
@@ -167,12 +218,15 @@
       completed: {lexicon:false, signals:false, boundaries:false, clearance:false},
       mission2Completed: {overview:false, sepsis:false, tools:false, human:false},
       mission3Completed: {conflict:false, review:false, silent:false, brief:false},
+      mission4Completed: {numbers:false, headlines:false, limits:false, tfng:false},
       firstTryScore: 0,
       mission2FirstTryScore: 0,
       mission3FirstTryScore: 0,
+      mission4FirstTryScore: 0,
       started: false,
       mission2Started: false,
       mission3Started: false,
+      mission4Started: false,
       soundOff: false
     };
   }
@@ -186,7 +240,8 @@
         ...saved,
         completed: {...base.completed, ...(saved.completed || {})},
         mission2Completed: {...base.mission2Completed, ...(saved.mission2Completed || {})},
-        mission3Completed: {...base.mission3Completed, ...(saved.mission3Completed || {})}
+        mission3Completed: {...base.mission3Completed, ...(saved.mission3Completed || {})},
+        mission4Completed: {...base.mission4Completed, ...(saved.mission4Completed || {})}
       };
     } catch (e) {
       return base;
@@ -227,6 +282,13 @@
     return bank.map(x => ({...x, opts: shuffle(x.opts)}));
   }
 
+
+
+  function m4ItemsFor(name) {
+    const bank = name === "numbers" ? m4Numbers : name === "headlines" ? m4Headlines : name === "limits" ? m4Limits : m4Tfng;
+    return bank.map(x => ({...x, opts: shuffle(x.opts)}));
+  }
+
   function updateUI() {
     const done = ACTIVITY_ORDER.filter(a=>state.completed[a]).length;
     $("day4ProgressText").textContent = `${done} / 4`;
@@ -249,6 +311,7 @@
     $("day4SoundToggle").setAttribute("aria-pressed",String(!state.soundOff));
     updateMission2UI();
     updateMission3UI();
+    updateMission4UI();
   }
 
   function updateMission2UI() {
@@ -306,6 +369,36 @@
     if(r4){r4.classList.toggle("ready",all);r4s.textContent=all?"04 · READY":"04 · LOCKED";}
     if(m2Cleared && !state.mission3Started && m3Screen){m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review ready</h3><p>Open Spot the Conflict to begin the eight-case audit.</p></div>';m3WorkspaceIntro.textContent="Open Spot the Conflict to begin the eight-case audit.";}
   }
+
+
+
+  function updateMission4UI() {
+    if (!$("day4Mission4")) return;
+    const m3Cleared = M3_ORDER.every(a=>state.mission3Completed[a]);
+    const done = M4_ORDER.filter(a=>state.mission4Completed[a]).length;
+    $("day4Mission4").classList.toggle("is-locked", !m3Cleared);
+    $("day4Mission4ProgressText").textContent = `${done} / 4`;
+    $("day4Mission4ProgressBar").style.width = `${done*25}%`;
+    $("day4Mission4Score").textContent = state.mission4FirstTryScore;
+    const ids={numbers:"ai4M4StatusNumbers",headlines:"ai4M4StatusHeadlines",limits:"ai4M4StatusLimits",tfng:"ai4M4StatusTfng"};
+    M4_ORDER.forEach((a,i)=>{
+      const btn=document.querySelector(`[data-ai4-m4="${a}"]`);
+      const unlocked=m3Cleared && (i===0 || state.mission4Completed[M4_ORDER[i-1]]);
+      btn.disabled=!unlocked;
+      $(ids[a]).textContent=state.mission4Completed[a]?"CLEARED":unlocked?"READY":"LOCKED";
+    });
+    const all=done===4;
+    $("day4Mission4Complete").classList.toggle("is-locked", !all);
+    $("day4M4CompleteTitle").textContent=all?"🔎 Evidence Auditor cleared.":"Evidence Scanner is not cleared yet.";
+    $("day4M4CompleteText").textContent=all?"You separated reported results from hype, checked the study's limitations and verified claims against the supplied article.":"Complete all four evidence-audit activities.";
+    $("day4Mission5Button").disabled=!all;
+    $("day4Mission5Button").textContent=all?"Mission 5 · Certainty Calibration →":"🔒 Mission 5 · Certainty Calibration";
+    const r4=$("ai4RoadmapM4"),r4s=$("ai4RoadmapM4State"),r5=$("ai4RoadmapM5"),r5s=$("ai4RoadmapM5State");
+    if(r4){r4.classList.toggle("ready",m3Cleared&&!all);r4.classList.toggle("cleared",all);r4s.textContent=all?"04 · CLEARED":m3Cleared?"04 · READY":"04 · LOCKED";}
+    if(r5){r5.classList.toggle("ready",all);r5s.textContent=all?"05 · READY":"05 · LOCKED";}
+    if(m3Cleared && !state.mission4Started && m4Screen){m4Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence Scanner ready</h3><p>Open Read the Numbers to begin the evidence audit.</p></div>';m4WorkspaceIntro.textContent="Open Read the Numbers to begin the evidence audit.";}
+  }
+
 
   function start(name) {
     if (musicOn) startMusicPlayback();
@@ -396,19 +489,53 @@
     m3Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m3Meta[m3Current.name][0]} cleared</h3><p>Activity score: ${m3SessionScore}. ${next}</p></div>`; m3Feedback.textContent=""; updateUI();
   }
 
+
+
+  function startM4(name) {
+    if (!M3_ORDER.every(a=>state.mission3Completed[a])) return;
+    if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
+    m4Current={name,items:shuffle(m4ItemsFor(name))};m4Index=0;m4Attempts=0;m4SessionScore=0;state.mission4Started=true;save();
+    m4WorkspaceTitle.textContent=m4Meta[name][0];m4WorkspaceIntro.textContent=m4Meta[name][1];m4Feedback.textContent="";m4Feedback.className="ai4-feedback";renderM4();
+  }
+
+  function renderM4() {
+    const it=m4Current.items[m4Index];if(!it){completeM4Activity();return;}
+    const label=m4Current.name==="numbers"?"DATA CHECK":m4Current.name==="headlines"?"CLAIM CHECK":m4Current.name==="limits"?"LIMITATION CHECK":"SOURCE VERIFICATION";
+    const claim=it.claim?`<div class="ai4-claim-card"><span>CLAIM</span><strong>${it.claim}</strong></div>`:"";
+    const statement=it.statement?`<div class="ai4-claim-card tfng"><span>STATEMENT</span><strong>${it.statement}</strong></div>`:"";
+    const guard=m4Current.name==="tfng"?'<div class="ai4-source-guardrail"><strong>Not Given rule:</strong> choose Not Given only when the supplied article does not tell you — even if the statement might be true in real life.</div>':m4Current.name==="headlines"?'<div class="ai4-source-guardrail"><strong>Evidence rule:</strong> a dramatic headline is not stronger evidence. Match the wording to what the study actually tested.</div>':'<div class="ai4-evidence-rule"><strong>Evidence Scanner:</strong> use the figures and limitations reported in the supplied article only.</div>';
+    m4Screen.innerHTML=`<span class="ai4-feed-label">${label}</span><div class="ai4-question-top"><span>EVIDENCE · CHECKPOINT ${m4Index+1}</span><b>${m4Index+1} / ${m4Current.items.length}</b></div>${claim}${statement}<h3 class="ai4-question">${it.q}</h3><div class="ai4-options">${it.opts.map((o,i)=>`<button class="ai4-option" type="button" data-m4-answer="${encodeURIComponent(o)}"><b>${String.fromCharCode(65+i)}</b> · ${o}</button>`).join("")}</div>${guard}`;
+    m4Screen.querySelectorAll("[data-m4-answer]").forEach(b=>b.addEventListener("click",answerM4));m4Screen.focus();
+  }
+
+  function answerM4(e) {
+    const it=m4Current.items[m4Index],chosen=decodeURIComponent(e.currentTarget.dataset.m4Answer),good=chosen===it.a;m4Attempts++;
+    m4Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m4Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
+    if(good){const pts=m4Attempts===1?10:6;m4SessionScore+=pts;state.mission4FirstTryScore+=pts;m4Feedback.className="ai4-feedback good";m4Feedback.innerHTML=`<strong>Evidence verified.</strong> ${it.ex}`;cue(true);}else{m4Feedback.className="ai4-feedback bad";m4Feedback.innerHTML=`<strong>Re-scan the evidence.</strong> ${it.ex}`;cue(false);}
+    save();const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m4Index===m4Current.items.length-1?"Clear evidence module →":"Next evidence checkpoint →";next.addEventListener("click",()=>{m4Index++;m4Attempts=0;m4Feedback.textContent="";m4Feedback.className="ai4-feedback";renderM4();});m4Feedback.appendChild(document.createElement("br"));m4Feedback.appendChild(next);updateUI();
+  }
+
+  function completeM4Activity() {
+    state.mission4Completed[m4Current.name]=true;save();const i=M4_ORDER.indexOf(m4Current.name);const next=i<M4_ORDER.length-1?`${m4Meta[M4_ORDER[i+1]][0]} is now unlocked.`:"Mission 4 is complete. Certainty Calibration is ready.";
+    m4Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m4Meta[m4Current.name][0]} cleared</h3><p>Activity score: ${m4SessionScore}. ${next}</p></div>`;m4Feedback.textContent="";updateUI();
+  }
+
+
   $("startDay4Mission1").addEventListener("click",()=>start("lexicon"));
   document.querySelectorAll("[data-ai4-activity]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)start(b.dataset.ai4Activity);}));
   document.querySelectorAll("[data-ai4-m2]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM2(b.dataset.ai4M2);}));
   document.querySelectorAll("[data-ai4-m3]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM3(b.dataset.ai4M3);}));
+  document.querySelectorAll("[data-ai4-m4]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM4(b.dataset.ai4M4);}));
 
   $("day4SoundToggle").addEventListener("click",()=>{state.soundOff=!state.soundOff;save();updateUI();audioStatus.textContent=state.soundOff?"Sound effects and UK speech are off. Music is controlled separately.":"Sound effects and UK speech are on. Music is controlled separately.";});
   musicToggle.addEventListener("click",()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");applyMusicState(true);audioStatus.textContent=musicOn?"Music on. AI Clinical Control — Human in the Loop is playing.":"Music off. Sound effects and UK speech remain available.";});
 
-  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;m3Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div>';m3WorkspaceTitle.textContent="Override waiting";m3WorkspaceIntro.textContent="Clear Mission 2, then open Spot the Conflict.";m3Feedback.textContent="";updateUI();}});
+  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;m3Current=null;m4Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div>';m3WorkspaceTitle.textContent="Override waiting";m3WorkspaceIntro.textContent="Clear Mission 2, then open Spot the Conflict.";m3Feedback.textContent="";m4Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div>';m4WorkspaceTitle.textContent="Scanner waiting";m4WorkspaceIntro.textContent="Clear Mission 3, then open Read the Numbers.";m4Feedback.textContent="";updateUI();}});
 
   $("day4Mission2Button").addEventListener("click",()=>{if(!$("day4Mission2Button").disabled){$("day4Mission2").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 2 ready. Watch the supplied video, then open Feed Orientation.";}});
   $("day4Mission3Button").addEventListener("click",()=>{if(!$("day4Mission3Button").disabled){$("day4Mission3").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 3 ready. Open Spot the Conflict to start the human-review audit.";}});
-  $("day4Mission4Button").addEventListener("click",()=>{if(!$("day4Mission4Button").disabled){audioStatus.textContent="Mission 4 · Evidence Scanner is unlocked and will be added in the next update.";}});
+  $("day4Mission4Button").addEventListener("click",()=>{if(!$("day4Mission4Button").disabled){$("day4Mission4").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 4 ready. Open Read the Numbers to begin the evidence audit.";}});
+  $("day4Mission5Button").addEventListener("click",()=>{if(!$("day4Mission5Button").disabled){audioStatus.textContent="Mission 5 · Certainty Calibration is unlocked and will be added in the next update.";}});
 
   if (clinicalVideo) {
     clinicalVideo.addEventListener("play",()=>{
