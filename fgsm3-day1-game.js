@@ -4,6 +4,7 @@
   const AUDIO_KEY = "mrsLecomteFGSM3Day1AudioV1";
   const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabV1";
   const STORAGE_TIMELINE_KEY = "mrsLecomteFGSM3Day1TimelineCheckV1";
+  const STORAGE_PATIENT2_KEY = "mrsLecomteFGSM3Day1Patient2V1";
 
   const checkpoints = [
     {
@@ -222,6 +223,82 @@
     }
   ];
 
+
+  const patient2Items = [
+    {
+      id:"open-injury",
+      title:"Checkpoint 1 · Let the patient tell the story",
+      instruction:"Choose an open question before narrowing down the injury.",
+      patientReply:"I twisted my right ankle while exercising two days ago. It swelled up afterwards and it's still painful.",
+      options:[
+        {text:"Can you tell me what happened to your ankle?", correct:true},
+        {text:"You probably sprained it, didn't you?", correct:false},
+        {text:"Is the ankle broken?", correct:false}
+      ],
+      feedback:"Start broad. The patient can describe the mechanism, timing and main problem without being pushed towards a diagnosis."
+    },
+    {
+      id:"mechanism-weight",
+      title:"Checkpoint 2 · Mechanism and weight-bearing",
+      instruction:"The ankle is swollen. Which follow-up gives you the most useful information next?",
+      patientReply:"I landed awkwardly after a jump. I can walk on it, but it hurts when I put my full weight through that foot.",
+      options:[
+        {text:"How exactly did it happen, and have you been able to put weight on it?", correct:true},
+        {text:"Did you hear a crack? If not, it can't be serious.", correct:false},
+        {text:"Can you walk? Good — then we don't need any more questions.", correct:false}
+      ],
+      feedback:"Mechanism and ability to bear weight help structure the history, but neither replaces a physical examination."
+    },
+    {
+      id:"pain-swelling",
+      title:"Checkpoint 3 · Make the symptom precise",
+      instruction:"Clarify location, severity and how the swelling has changed.",
+      patientReply:"The pain is mostly around the outside of the ankle. It's about six out of ten when I walk. It was more swollen yesterday, and now there's some bruising.",
+      options:[
+        {text:"Where exactly is the pain? How bad is it from zero to ten? Has the swelling changed?", correct:true},
+        {text:"Does it hurt a lot?", correct:false},
+        {text:"Is it better now?", correct:false}
+      ],
+      feedback:"Specific questions about where, severity and change over time turn a vague complaint into a useful clinical description."
+    },
+    {
+      id:"camera",
+      title:"Checkpoint 4 · Use the camera appropriately",
+      instruction:"You now want to inspect the ankle. Choose the clearest and most respectful instruction.",
+      patientReply:"Yes, of course. I'll move the camera down so you can see the swollen area.",
+      options:[
+        {text:"If you're comfortable, could you show me the swollen area and move the camera a little closer?", correct:true},
+        {text:"Point the camera at your ankle now.", correct:false},
+        {text:"Take your sock off and show me everything.", correct:false}
+      ],
+      feedback:"Ask permission, explain what you need to see and give one simple camera instruction at a time."
+    },
+    {
+      id:"limits",
+      title:"Checkpoint 5 · Know what video cannot do",
+      instruction:"The swelling and bruising are visible on camera. What is the safest interpretation?",
+      patientReply:"Okay. I was wondering whether you could tell if it's broken just from the video.",
+      options:[
+        {text:"I can look at swelling and bruising and ask about movement and weight-bearing, but I can't palpate or fully examine the joint over video.", correct:true},
+        {text:"The camera view is enough to rule out a fracture.", correct:false},
+        {text:"If you can move the ankle on camera, no further assessment is needed.", correct:false}
+      ],
+      feedback:"Video can support observation and history-taking, but it does not replace hands-on examination when that examination matters."
+    },
+    {
+      id:"plan",
+      title:"Checkpoint 6 · Make a safe plan",
+      instruction:"The patient asks whether an X-ray is needed. Choose the safest next step for this exercise.",
+      patientReply:"All right. In the meantime, what should I do if the pain or swelling gets worse?",
+      options:[
+        {text:"I can't examine the ankle fully over video, so I'd like to arrange a face-to-face assessment. That assessment can help decide whether further tests such as an X-ray are needed.", correct:true},
+        {text:"You definitely need an X-ray, so go straight to hospital.", correct:false},
+        {text:"You can still walk, so an X-ray is definitely unnecessary.", correct:false}
+      ],
+      feedback:"State the limitation honestly and explain the next step without overclaiming what can be decided from the video call alone."
+    }
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -261,6 +338,16 @@
     timelineProgress: document.getElementById("timelineProgressBar"),
     timelineStart: document.getElementById("startTimeline"),
     patient2Map: document.getElementById("patient2Map"),
+    patient2Area: document.getElementById("patient2Area"),
+    patient2Screen: document.getElementById("patient2Screen"),
+    patient2Feedback: document.getElementById("patient2Feedback"),
+    patient2Instruction: document.getElementById("patient2Instruction"),
+    patient2Checkpoint: document.getElementById("patient2CheckpointNumber"),
+    patient2Progress: document.getElementById("patient2ProgressBar"),
+    patient2Start: document.getElementById("startPatient2"),
+    patientMini1: document.getElementById("patientMini1"),
+    patientMini2: document.getElementById("patientMini2"),
+    onlineMap: document.getElementById("onlineMap"),
     researchMap: document.getElementById("researchMap")
   };
 
@@ -268,6 +355,7 @@
   let clinicalState = readClinicalState();
   let audioLabState = readAudioLabState();
   let timelineState = readTimelineState();
+  let patient2State = readPatient2State();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -317,6 +405,19 @@
 
   function saveTimelineState() {
     try { localStorage.setItem(STORAGE_TIMELINE_KEY, JSON.stringify(timelineState)); } catch (_) {}
+  }
+
+
+  function readPatient2State() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_PATIENT2_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, lastReply: ""};
+  }
+
+  function savePatient2State() {
+    try { localStorage.setItem(STORAGE_PATIENT2_KEY, JSON.stringify(patient2State)); } catch (_) {}
   }
 
   function readAudioPrefs() {
@@ -1194,6 +1295,7 @@
     setTimelineFeedback("<strong>Next:</strong> Patient 02 — ankle injury, camera skills and safe online assessment.", "info");
     document.getElementById("replayTimeline").addEventListener("click", resetTimeline);
     renderTimelineProgress();
+    unlockPatient2();
   }
 
   function startTimeline() {
@@ -1216,6 +1318,223 @@
       ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🕒</div><h3>Patient 01's timeline is ready</h3><p>Specific finished time → Past Simple. Past experience or duration connected to now → Present Perfect.</p></div>`
       : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Timeline monitor locked</h3><p>Complete the pronunciation Training Bay first.</p></div>`;
     setTimelineFeedback();
+  }
+
+
+  function setPatient2Feedback(html = "", type = "") {
+    els.patient2Feedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.patient2Feedback.innerHTML = html;
+  }
+
+  function patient2IsUnlocked() {
+    return timelineState.completed || patient2State.completed;
+  }
+
+  function updatePatientStripForPatient2() {
+    if (!els.patientMini1 || !els.patientMini2) return;
+    if (patient2IsUnlocked()) {
+      els.patientMini1.classList.remove("active-patient");
+      els.patientMini2.classList.add("p2-current");
+      const one = els.patientMini1.querySelector("small");
+      const two = els.patientMini2.querySelector("small");
+      if (one) one.textContent = "Consultation complete";
+      if (two) two.textContent = patient2State.completed ? "Consultation complete" : "Calling now";
+    }
+  }
+
+  function renderPatient2Progress() {
+    const unlocked = patient2IsUnlocked();
+    const done = patient2State.completed ? patient2Items.length : Math.min(patient2State.index, patient2Items.length);
+    if (!unlocked) {
+      els.patient2Area.classList.add("is-locked");
+      els.patient2Start.disabled = true;
+      els.patient2Start.textContent = "Patient 02 locked";
+      els.patient2Checkpoint.textContent = `0 / ${patient2Items.length}`;
+      els.patient2Progress.style.width = "0%";
+      if (els.patient2Map) {
+        els.patient2Map.classList.remove("live", "done", "next-ready", "patient2-ready");
+        els.patient2Map.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.onlineMap) {
+        els.onlineMap.classList.remove("live", "done", "next-ready");
+        els.onlineMap.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.patient2Area.classList.remove("is-locked");
+    els.patient2Start.disabled = false;
+    els.patient2Start.textContent = patient2State.completed ? "View completed Patient 02 →" : patient2State.index > 0 ? "Continue Patient 02 →" : "Answer Patient 02 →";
+    els.patient2Checkpoint.textContent = `${done} / ${patient2Items.length}`;
+    els.patient2Progress.style.width = `${(done / patient2Items.length) * 100}%`;
+
+    if (els.patient2Map) {
+      els.patient2Map.classList.remove("live", "done", "next-ready", "patient2-ready");
+      els.patient2Map.classList.add(patient2State.completed ? "done" : "patient2-ready");
+      els.patient2Map.querySelector("b").textContent = patient2State.completed ? "DONE" : "LIVE";
+    }
+    if (els.onlineMap) {
+      els.onlineMap.classList.remove("live", "done", "next-ready");
+      if (patient2State.completed) els.onlineMap.classList.add("next-ready");
+      els.onlineMap.querySelector("b").textContent = patient2State.completed ? "NEXT" : "LOCKED";
+    }
+    updatePatientStripForPatient2();
+  }
+
+  function unlockPatient2() {
+    renderPatient2Progress();
+    if (!patient2IsUnlocked()) return;
+    if (!patient2State.completed && patient2State.index === 0) {
+      els.patient2Instruction.textContent = "Patient 02 is connected. Explore the injury, use the camera appropriately and stay clear about the limits of video assessment.";
+      els.patient2Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📹</div><h3>Incoming call · Patient 02</h3><p>Twisted ankle two days ago · swelling · pain · still able to walk.</p></div>`;
+    }
+  }
+
+  function patient2VideoPanel(reply = "") {
+    return `<article class="p2-video-card">
+      <div class="p2-image-wrap">
+        <span class="p2-live">● LIVE · PATIENT 02</span>
+        <img src="assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp" alt="Patient 02 at home during a video consultation with an injured ankle visible.">
+      </div>
+      <div class="p2-video-meta">
+        <span>FICTIONAL CASE · VIDEO CONSULTATION</span>
+        <h3>Patient 02 · ankle injury</h3>
+        <small>Twisted ankle · two days ago · swelling + pain</small>
+        ${reply ? `<div class="p2-reply"><div class="p2-reply-head"><strong>Patient reply</strong><button class="p2-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(reply)}”</p></div>` : `<p class="patient-awaiting">The patient is waiting for your first clinical question.</p>`}
+      </div>
+    </article>`;
+  }
+
+  function renderPatient2Item() {
+    renderPatient2Progress();
+    if (!patient2IsUnlocked()) return;
+    if (patient2State.completed || patient2State.index >= patient2Items.length) return renderPatient2Complete();
+
+    const item = patient2Items[patient2State.index];
+    const number = patient2State.index + 1;
+    els.patient2Instruction.textContent = item.instruction;
+    setPatient2Feedback();
+    els.patient2Checkpoint.textContent = `${patient2State.index} / ${patient2Items.length}`;
+    els.patient2Progress.style.width = `${(patient2State.index / patient2Items.length) * 100}%`;
+
+    els.patient2Screen.innerHTML = `<div class="p2-shell">
+      ${patient2VideoPanel(patient2State.lastReply || "")}
+      <article class="p2-decision-card">
+        <span class="p2-round-kicker">CALL CHECK ${number} OF ${patient2Items.length}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="p2-options" role="group" aria-label="Choose the safest consultation response">
+          ${item.options.map((option, idx) => `<button class="p2-choice" type="button" data-p2-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+        </div>
+        <div class="p2-safety-note"><strong>Video-consultation principle:</strong> use what the camera can show, but never pretend it replaces an examination you cannot perform remotely.</div>
+      </article>
+    </div>`;
+
+    const replyButton = els.patient2Screen.querySelector(".p2-listen");
+    if (replyButton && patient2State.lastReply) replyButton.addEventListener("click", () => speak(patient2State.lastReply, replyButton, 0.9));
+
+    els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const chosen = Number(button.dataset.p2Choice);
+        const option = item.options[chosen];
+        els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          patient2State.lastReply = item.patientReply;
+          savePatient2State();
+          beep("ok");
+          setPatient2Feedback(`<strong>✓ Good call.</strong> ${escapeHTML(item.feedback)}`, "correct");
+          const videoMeta = els.patient2Screen.querySelector(".p2-video-meta");
+          if (videoMeta) {
+            const oldAwaiting = videoMeta.querySelector(".patient-awaiting");
+            oldAwaiting?.remove();
+            const existingReply = videoMeta.querySelector(".p2-reply");
+            existingReply?.remove();
+            videoMeta.insertAdjacentHTML("beforeend", `<div class="p2-reply"><div class="p2-reply-head"><strong>Patient reply</strong><button class="p2-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(item.patientReply)}”</p></div>`);
+            const listen = videoMeta.querySelector(".p2-listen");
+            listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
+            if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
+          }
+          advancePatient2Button(number === patient2Items.length ? "Complete Patient 02 →" : "Continue consultation →");
+        } else {
+          button.classList.add("wrong-choice");
+          patient2State.mistakes += 1;
+          savePatient2State();
+          beep("error");
+          setPatient2Feedback("<strong>Try again.</strong> Choose the option that is open, respectful and clinically safe without claiming more than video can establish.", "wrong");
+          window.setTimeout(() => {
+            els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advancePatient2Button(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.patient2Feedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      patient2State.index += 1;
+      patient2State.lastReply = "";
+      if (patient2State.index >= patient2Items.length) patient2State.completed = true;
+      savePatient2State();
+      renderPatient2Item();
+      els.patient2Screen.focus({preventScroll:true});
+    });
+  }
+
+  function renderPatient2Complete() {
+    patient2State.completed = true;
+    patient2State.index = patient2Items.length;
+    patient2State.lastReply = "";
+    savePatient2State();
+    els.patient2Instruction.textContent = "Patient 02 complete: you used the camera appropriately and recognised where remote assessment stops.";
+    els.patient2Checkpoint.textContent = `${patient2Items.length} / ${patient2Items.length}`;
+    els.patient2Progress.style.width = "100%";
+    els.shiftStatus.textContent = "Patient 02 complete · Online vs face-to-face next";
+    const score = Math.max(0, 100 - patient2State.mistakes * 7);
+    const quality = patient2State.mistakes === 0 ? "Remote assessment beautifully controlled" : patient2State.mistakes <= 2 ? "Safe video assessment achieved" : "Safe video assessment achieved after review";
+    els.patient2Screen.innerHTML = `<div class="mission-complete-card">
+      <div class="mission-badge p2-badge" aria-hidden="true">📹</div>
+      <p class="mission-step-label">PATIENT 02 COMPLETE</p>
+      <h3>Camera Confidence badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You explored the mechanism, weight-bearing, pain and swelling; asked permission before using the camera; and stated clearly what could not be examined over video.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>call score</span></div>
+      <div class="p2-summary-grid">
+        <div><span>HISTORY</span><strong>What happened?</strong><small>Mechanism · timing · weight-bearing · pain · swelling.</small></div>
+        <div><span>CAMERA</span><strong>Could you show me…?</strong><small>Ask permission and give simple, respectful instructions.</small></div>
+        <div><span>LIMIT</span><strong>I can't examine you fully…</strong><small>Observation by video is not the same as a hands-on examination.</small></div>
+      </div>
+      <div class="timeline-preview research-preview">
+        <span>NEXT CONTROL-ROOM DECISION</span>
+        <p><strong>Online or Face-to-Face?</strong></p>
+        <small>Different patients will need different next steps. Decide what can continue remotely, what needs an in-person assessment and when the plan must change.</small>
+      </div>
+      <div class="mission-complete-actions"><button id="replayPatient2" class="tcr-secondary-button" type="button">Replay Patient 02</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setPatient2Feedback("<strong>Next:</strong> Online or Face-to-Face? — decide when video is enough and when it is not.", "info");
+    document.getElementById("replayPatient2")?.addEventListener("click", resetPatient2);
+    renderPatient2Progress();
+  }
+
+  function startPatient2() {
+    if (!patient2IsUnlocked()) return;
+    if (patient2State.completed) renderPatient2Complete();
+    else renderPatient2Item();
+    els.patient2Area.scrollIntoView({behavior:"smooth", block:"start"});
+    els.patient2Screen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetPatient2() {
+    patient2State = {index:0, completed:false, mistakes:0, lastReply:""};
+    savePatient2State();
+    renderPatient2Progress();
+    els.patient2Instruction.textContent = patient2IsUnlocked() ? "Patient 02 is connected. Explore the injury, use the camera appropriately and stay clear about the limits of video assessment." : "Complete the Timeline Check to take the next call.";
+    els.patient2Screen.innerHTML = patient2IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📹</div><h3>Incoming call · Patient 02</h3><p>Twisted ankle two days ago · swelling · pain · still able to walk.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 02 is waiting</h3><p>Finish the Timeline Check with Patient 01 first.</p></div>`;
+    setPatient2Feedback();
   }
 
   function feedbackFor(id) {
@@ -1300,10 +1619,12 @@
     clinicalState = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     audioLabState = {index: 0, completed: false, mistakes: 0, bonusDone: false};
     timelineState = {index: 0, completed: false, mistakes: 0};
+    patient2State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     saveState();
     saveClinicalState();
     saveAudioLabState();
     saveTimelineState();
+    savePatient2State();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -1312,6 +1633,7 @@
     els.m2Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div>`;
     resetAudioLab();
     resetTimeline();
+    resetPatient2();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -1327,6 +1649,7 @@
   els.m2Start.addEventListener("click", startClinicalMission);
   els.audioLabStart.addEventListener("click", startAudioLab);
   els.timelineStart.addEventListener("click", startTimeline);
+  els.patient2Start.addEventListener("click", startPatient2);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -1359,11 +1682,13 @@
   renderClinicalProgress();
   renderAudioLabProgress();
   renderTimelineProgress();
+  renderPatient2Progress();
   if (state.completed) {
-    els.shiftStatus.textContent = timelineState.completed ? "Timeline Check complete · Patient 02 next" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = patient2State.completed ? "Patient 02 complete · Online vs face-to-face next" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
     if (audioLabState.completed || timelineState.completed) unlockTimeline();
+    if (timelineState.completed || patient2State.completed) unlockPatient2();
   }
 })();
