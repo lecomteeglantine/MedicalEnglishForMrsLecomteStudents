@@ -819,6 +819,177 @@
     }
   ];
 
+  const dublinItems = [
+    {
+      phase: "ACCESS DECODER",
+      tag: "WHO RUNS IT?",
+      prompt: "Which body runs Ireland's public health services?",
+      options: [
+        { text: "The HSE", correct: true },
+        { text: "The NHS", correct: false },
+        { text: "ACC", correct: false }
+      ],
+      model: "The HSE, or Health Service Executive, runs Ireland's public health services.",
+      explanation: "HSE stands for Health Service Executive."
+    },
+    {
+      phase: "ACCESS DECODER",
+      tag: "REFORM",
+      prompt: "What is Sláintecare?",
+      options: [
+        { text: "A reform plan to move towards universal, single-tier care", correct: true },
+        { text: "A compulsory private insurance company", correct: false },
+        { text: "A university admissions system", correct: false }
+      ],
+      model: "Sláintecare is Ireland's plan to move towards universal, single-tier healthcare.",
+      explanation: "The Day 2 card presents Sláintecare as the major reform direction."
+    },
+    {
+      phase: "ACCESS DECODER",
+      tag: "MEDICAL CARD",
+      prompt: "What does a means-tested medical card provide?",
+      options: [
+        { text: "Free GP and hospital care for eligible lower-income patients", correct: true },
+        { text: "Automatic private insurance for every resident", correct: false },
+        { text: "Free dental and optical care for everyone", correct: false }
+      ],
+      model: "A medical card gives eligible lower-income patients free GP and hospital care.",
+      explanation: "Ireland has universal access, but historically not all care has been free at the point of use."
+    },
+    {
+      phase: "ACCESS DECODER",
+      tag: "TWO-TIER",
+      prompt: "Why is Ireland described as a two-tier system?",
+      options: [
+        { text: "Public and private access operate side by side", correct: true },
+        { text: "Only two hospitals provide all care", correct: false },
+        { text: "Patients must use two different GPs", correct: false }
+      ],
+      model: "Ireland has historically had a two-tier system, with public and private access operating side by side.",
+      explanation: "The fairness debate centres on differences in access and waiting times between public and private routes."
+    },
+    {
+      phase: "ACCESS DECODER",
+      tag: "PRIVATE COVER",
+      prompt: "Why do many people take private insurance in Ireland?",
+      options: [
+        { text: "Mainly to get faster access and avoid waiting lists", correct: true },
+        { text: "Because public hospital care is illegal without it", correct: false },
+        { text: "Because Sláintecare requires it", correct: false }
+      ],
+      model: "Private insurance is often used to get faster access and avoid waiting lists.",
+      explanation: "The country card says around two in five people hold private cover."
+    },
+    {
+      phase: "WORKFORCE DASHBOARD",
+      tag: "TOTAL EXPANSION",
+      prompt: "How many extra annual healthcare education places are being created?",
+      options: [
+        { text: "612", correct: true },
+        { text: "268", correct: false },
+        { text: "275", correct: false }
+      ],
+      model: "Ireland is creating 612 extra annual healthcare education places.",
+      explanation: "The article describes this as the largest expansion of healthcare education places in the State's history."
+    },
+    {
+      phase: "WORKFORCE DASHBOARD",
+      tag: "LARGEST INCREASE",
+      prompt: "Which field receives the largest number of extra places in this package?",
+      options: [
+        { text: "Nursing and midwifery — 268", correct: true },
+        { text: "Medicine — 78", correct: false },
+        { text: "Dentistry — 35", correct: false }
+      ],
+      model: "Nursing and midwifery receive the largest increase, with 268 extra places each year.",
+      explanation: "The workforce dashboard makes the distribution visible rather than treating 612 as one undifferentiated total."
+    },
+    {
+      phase: "WORKFORCE DASHBOARD",
+      tag: "READ THE DATA",
+      prompt: "Which pair is correctly matched to the article's figures?",
+      options: [
+        { text: "Pharmacy 151 · Medicine 78", correct: true },
+        { text: "Pharmacy 78 · Medicine 151", correct: false },
+        { text: "Pharmacy 35 · Medicine 268", correct: false }
+      ],
+      model: "The package includes 151 extra pharmacy places and 78 extra medicine places.",
+      explanation: "The remaining figures are 80 veterinary medicine places and 35 dentistry places."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "WHY EXPAND?",
+      prompt: "What problem is the training expansion designed to address?",
+      options: [
+        { text: "A healthcare workforce gap that is expected to worsen as the population grows and ages", correct: true },
+        { text: "An excess of trained healthcare workers", correct: false },
+        { text: "A fall in demand for healthcare", correct: false }
+      ],
+      model: "The expansion is intended to help close a healthcare workforce gap as demand rises.",
+      explanation: "The article links future workforce need to population growth and ageing."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "PATIENT SAFETY",
+      prompt: "According to staff, unions and representative bodies, what can staffing shortages contribute to?",
+      options: [
+        { text: "Patient-safety risks and staff burnout", correct: true },
+        { text: "Shorter waiting lists and lower workload", correct: false },
+        { text: "Less need for community care", correct: false }
+      ],
+      model: "Staffing shortages can create patient-safety risks and push healthcare workers towards burnout.",
+      explanation: "The article connects staffing deficits with safety concerns, burnout and rising waiting times."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "ACCESS TO TRAINING",
+      prompt: "How will students access the additional places?",
+      options: [
+        { text: "Through the CAO and other pathways into higher education", correct: true },
+        { text: "Only through direct recruitment by hospitals", correct: false },
+        { text: "Only through private medical schools abroad", correct: false }
+      ],
+      model: "The additional places will be available through the CAO and other higher-education pathways.",
+      explanation: "The article says students entering their Leaving Certificate year are among the first to benefit."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "OVER-RELIANCE",
+      prompt: "What does the government want to rebalance by expanding domestic training?",
+      options: [
+        { text: "An over-reliance on recruiting professionals trained abroad", correct: true },
+        { text: "An over-reliance on the HSE medical card", correct: false },
+        { text: "An over-reliance on private hospitals for veterinary training", correct: false }
+      ],
+      model: "The expansion is intended to strengthen domestic supply and reduce over-reliance on professionals trained abroad.",
+      explanation: "This is a workforce-supply argument in the article, not a claim that international recruitment should disappear entirely."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "RETENTION IDEA",
+      prompt: "Which idea is being considered to encourage newly graduated doctors to stay and work for the HSE?",
+      options: [
+        { text: "Funding some or all of their education in return for a period of HSE service", correct: true },
+        { text: "Making private insurance compulsory for graduates", correct: false },
+        { text: "Removing all postgraduate training places", correct: false }
+      ],
+      model: "One idea is to fund part or all of doctors' education in return for a commitment to work for the HSE for a period.",
+      explanation: "The article presents this as an idea under consideration."
+    },
+    {
+      phase: "PIPELINE STRATEGY",
+      tag: "VOCABULARY",
+      prompt: "In this workforce context, what does pipeline mean?",
+      options: [
+        { text: "The flow of people being trained into a profession", correct: true },
+        { text: "A physical hospital supply pipe", correct: false },
+        { text: "A waiting list for private insurance", correct: false }
+      ],
+      model: "A workforce pipeline is the flow of people being trained into a profession.",
+      explanation: "The policy aims to strengthen the future pipeline of skilled health and social-care professionals."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -854,7 +1025,12 @@
     wellingtonIndex: 0,
     wellingtonScore: 0,
     wellingtonMissed: [],
-    wellingtonComplete: false
+    wellingtonComplete: false,
+    dublinStarted: false,
+    dublinIndex: 0,
+    dublinScore: 0,
+    dublinMissed: [],
+    dublinComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -912,6 +1088,13 @@
     wellingtonCheckpoint: $("wellingtonCheckpoint"),
     wellingtonProgressBar: $("wellingtonProgressBar"),
     wellingtonInstruction: $("wellingtonInstruction"),
+    dublinArea: $("dublinArea"),
+    startDublin: $("startDublin"),
+    dublinScreen: $("dublinScreen"),
+    dublinFeedback: $("dublinFeedback"),
+    dublinCheckpoint: $("dublinCheckpoint"),
+    dublinProgressBar: $("dublinProgressBar"),
+    dublinInstruction: $("dublinInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -930,7 +1113,8 @@
     stampCa: $("stampCa"),
     stampAu: $("stampAu"),
     stampFinalS: $("stampFinalS"),
-    stampNz: $("stampNz")
+    stampNz: $("stampNz"),
+    stampIe: $("stampIe")
   };
 
   let state = loadState();
@@ -1059,8 +1243,12 @@
     els.wellingtonCheckpoint.textContent = `${nzDone} / ${wellingtonItems.length}`;
     els.wellingtonProgressBar.style.width = `${(nzDone / wellingtonItems.length) * 100}%`;
 
+    const ieDone = state.dublinComplete ? dublinItems.length : Math.min(state.dublinIndex, dublinItems.length);
+    els.dublinCheckpoint.textContent = `${ieDone} / ${dublinItems.length}`;
+    els.dublinProgressBar.style.width = `${(ieDone / dublinItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -1204,15 +1392,35 @@
       els.routeNz.classList.remove("destination-next", "destination-locked");
       els.routeNz.classList.add("destination-cleared");
       els.routeNzStatus.textContent = "CLEARED";
-      els.routeIe.classList.remove("destination-locked", "destination-cleared");
-      els.routeIe.classList.add("destination-next");
-      els.routeIeStatus.textContent = "NEXT";
+      els.dublinArea.classList.remove("is-locked");
+      els.startDublin.disabled = false;
+      els.startDublin.textContent = state.dublinStarted ? "Resume Dublin →" : "Open Workforce Emergency →";
+      els.dublinInstruction.textContent = state.dublinComplete ? "Dublin completed. Your Workforce Planner stamp has been issued." : "Wellington cleared. Your Irish workforce assignment is ready.";
+      if (!state.dublinComplete) {
+        els.routeIe.classList.remove("destination-locked", "destination-cleared");
+        els.routeIe.classList.add("destination-next");
+        els.routeIeStatus.textContent = state.dublinStarted ? "IN PROGRESS" : "NEXT";
+      }
     } else {
       els.stampNz.classList.remove("stamp-earned");
       els.stampNz.classList.add("stamp-empty");
+      els.dublinArea.classList.add("is-locked");
+      els.startDublin.disabled = true;
+      els.startDublin.textContent = "Dublin locked";
       els.routeIe.classList.remove("destination-next", "destination-cleared");
       els.routeIe.classList.add("destination-locked");
       els.routeIeStatus.textContent = "LOCKED";
+    }
+
+    if (state.dublinComplete) {
+      els.stampIe.classList.remove("stamp-empty");
+      els.stampIe.classList.add("stamp-earned");
+      els.routeIe.classList.remove("destination-next", "destination-locked");
+      els.routeIe.classList.add("destination-cleared");
+      els.routeIeStatus.textContent = "CLEARED";
+    } else {
+      els.stampIe.classList.remove("stamp-earned");
+      els.stampIe.classList.add("stamp-empty");
     }
   }
 
@@ -1577,7 +1785,8 @@
       els.wellingtonScreen.innerHTML = `<div class="passport-complete-card nz-complete"><div class="passport-complete-icon" aria-hidden="true">🇳🇿</div><p class="passport-case-kicker">STOP 05 CLEARED</p><h3>System Crisis Analyst</h3><p>You can explain New Zealand's public system and ACC, verify claims against a news source, use Not Given correctly, and keep political claims attributed.</p><div class="passport-score-line"><strong>${state.wellingtonScore} / ${wellingtonItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“New Zealand has a tax-funded universal public system, with free public hospital care, subsidised GP visits and ACC no-fault injury cover. The RNZ clip reports a leadership crisis against a background of workforce shortages and long waits.”</p><button id="hearNzSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket nz-ticket"><span>WELLINGTON</span><b>System Crisis Analyst</b><span>✈</span><b>Dublin</b><span>WORKFORCE NEXT</span></div><div class="passport-next-route nz-next-card"><strong>Next stop</strong><span>🇮🇪 Dublin · Workforce Emergency.</span></div><button id="goDublinRoute" class="passport-primary" type="button">View Dublin gate →</button></div>`;
       $("hearNzSummary").addEventListener("click", () => speak("New Zealand has a tax-funded universal public system, with free public hospital care, subsidised G P visits and A C C no-fault injury cover. The R N Z clip reports a leadership crisis against a background of workforce shortages and long waits."));
       $("goDublinRoute").addEventListener("click", () => {
-        els.routeIe.scrollIntoView({ behavior: "smooth", block: "center" });
+        els.dublinArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => els.startDublin.focus({ preventScroll: true }), 450);
       });
       updateProgress();
       return;
@@ -1620,6 +1829,61 @@
     window.setTimeout(() => els.wellingtonScreen.focus({ preventScroll: true }), 450);
   }
 
+  function renderDublin() {
+    updateProgress();
+    els.dublinFeedback.innerHTML = "";
+    if (!state.wellingtonComplete) return;
+
+    if (!state.dublinStarted) {
+      els.dublinScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🇮🇪</span><h3>Workforce Emergency ready</h3><p>Decode Ireland's two-tier system first, then use the 612-place dashboard to investigate workforce planning, shortages and retention.</p></div>`;
+      return;
+    }
+
+    if (state.dublinComplete) {
+      const pct = Math.round((state.dublinScore / dublinItems.length) * 100);
+      els.dublinScreen.innerHTML = `<div class="passport-complete-card ie-complete"><div class="passport-complete-icon" aria-hidden="true">🇮🇪</div><p class="passport-case-kicker">STOP 06 CLEARED</p><h3>Workforce Planner</h3><p>You can explain Ireland's HSE and Sláintecare context, interpret the 612-place workforce expansion, and connect training capacity with shortages, burnout, recruitment and retention.</p><div class="passport-score-line"><strong>${state.dublinScore} / ${dublinItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Ireland has a mixed, historically two-tier system run publicly through the HSE. The 2026 training expansion creates 612 extra annual healthcare places to strengthen the domestic workforce pipeline as demand grows.”</p><button id="hearIrelandSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket ie-ticket"><span>DUBLIN</span><b>Workforce Planner</b><span>✓</span><b>Six destinations cleared</b><span>LANGUAGE DESK NEXT</span></div><div class="passport-next-route ie-next-card"><strong>Next checkpoint</strong><span>📐 Passive Control Desk · present, past and present perfect passive.</span></div></div>`;
+      $("hearIrelandSummary").addEventListener("click", () => speak("Ireland has a mixed, historically two-tier system run publicly through the H S E. The 2026 training expansion creates 612 extra annual healthcare places to strengthen the domestic workforce pipeline as demand grows."));
+      updateProgress();
+      return;
+    }
+
+    const item = dublinItems[state.dublinIndex];
+    els.dublinScreen.innerHTML = `<div class="passport-question-card ie-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><div class="sound-chip">Checkpoint ${state.dublinIndex + 1} of ${dublinItems.length}</div><h3>${item.prompt}</h3><div id="dublinOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("dublinOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.dublinMissed.includes(state.dublinIndex)) state.dublinScore += 1;
+        state.dublinIndex += 1;
+        if (state.dublinIndex >= dublinItems.length) state.dublinComplete = true;
+        saveState();
+        playTone("good");
+        els.dublinFeedback.innerHTML = `<div class="feedback-good"><strong>Workforce check cleared.</strong><span>${item.explanation}</span></div><div class="passport-transcript ie-transcript"><span>USEFUL ENGLISH</span><p>${item.model}</p><button id="hearIrelandModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="dublinNext" class="passport-next" type="button">${state.dublinComplete ? "Stamp passport →" : "Continue Dublin assignment →"}</button>`;
+        $("hearIrelandModel").addEventListener("click", () => speak(item.model));
+        $("dublinNext").addEventListener("click", renderDublin);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.dublinMissed.includes(state.dublinIndex)) state.dublinMissed.push(state.dublinIndex);
+        saveState();
+        playTone("bad");
+        const hint = item.phase === "ACCESS DECODER" ? "Use the Ireland system briefing: HSE, Sláintecare, medical card, charges and two-tier access." : item.phase === "WORKFORCE DASHBOARD" ? "Read the 612-place dashboard carefully before choosing." : "Use the article's workforce logic: shortages, future demand, domestic training, recruitment and retention.";
+        els.dublinFeedback.innerHTML = `<div class="feedback-bad"><strong>Re-check the Dublin briefing.</strong><span>${hint}</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startDublin() {
+    if (!state.wellingtonComplete) return;
+    state.dublinStarted = true;
+    saveState();
+    renderDublin();
+    els.dublinArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.dublinScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -1633,6 +1897,7 @@
     renderSydney();
     renderFinalS();
     renderWellington();
+    renderDublin();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1650,6 +1915,7 @@
   els.startSydney.addEventListener("click", startSydney);
   els.startFinalS.addEventListener("click", startFinalS);
   els.startWellington.addEventListener("click", startWellington);
+  els.startDublin.addEventListener("click", startDublin);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -1670,4 +1936,5 @@
   renderSydney();
   renderFinalS();
   renderWellington();
+  renderDublin();
 })();

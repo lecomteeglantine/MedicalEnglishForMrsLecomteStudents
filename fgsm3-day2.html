@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v25.css">
+  <link rel="stylesheet" href="styles-v26.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -463,6 +463,85 @@
       <div id="wellingtonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="dublinArea" class="passport-mission passport-dublin is-locked" aria-labelledby="dublinTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">STOP 06 · DUBLIN</p>
+          <h2 id="dublinTitle">Workforce Emergency</h2>
+          <p id="dublinInstruction">Clear Wellington to unlock Ireland's health-system and workforce-planning assignment.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>DUBLIN CHECK</span>
+          <strong id="dublinCheckpoint">0 / 14</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="dublinProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="ie-brief">
+        <div class="ie-pass-card" aria-hidden="true">
+          <span>GLOBAL HEALTH PASSPORT</span>
+          <strong>🇮🇪 DUBLIN</strong>
+          <small>WORKFORCE ASSIGNMENT · STOP 06</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">IRELAND · HSE · SLÁINTECARE</span>
+          <strong>Decode a mixed two-tier system, then investigate Ireland's plan to expand the healthcare workforce.</strong>
+          <p>First understand access, the medical card, private insurance and Sláintecare. Then move to the workforce dashboard: 612 extra annual healthcare-training places, designed to strengthen the domestic pipeline and address staffing shortages.</p>
+        </div>
+        <button id="startDublin" class="passport-primary" type="button" disabled>Dublin locked</button>
+      </div>
+
+      <div class="ie-facts" aria-label="Ireland healthcare briefing categories">
+        <span><small>MODEL</small><strong>Mixed · two-tier</strong></span>
+        <span><small>RUN BY</small><strong>HSE</strong></span>
+        <span><small>ACCESS</small><strong>Universal · some charges</strong></span>
+        <span><small>REFORM</small><strong>Sláintecare</strong></span>
+      </div>
+
+      <div class="ie-system-grid">
+        <article>
+          <span class="ie-card-tag">ACCESS DECODER</span>
+          <h3>What does “two-tier” mean?</h3>
+          <p>Public and private access exist side by side. Many people pay to see a GP; a means-tested medical card gives free GP and hospital care to lower-income patients.</p>
+        </article>
+        <article>
+          <span class="ie-card-tag">REFORM TRACK</span>
+          <h3>Sláintecare</h3>
+          <p>The reform plan aims to move Ireland towards universal, single-tier care and reduce inequalities between public and private access.</p>
+        </article>
+      </div>
+
+      <div class="ie-workforce-board" aria-labelledby="workforceBoardTitle">
+        <div class="ie-board-head">
+          <div>
+            <span class="nz-source-chip">📰 IRISH TIMES · 21 AUGUST 2026</span>
+            <h3 id="workforceBoardTitle">612 extra annual healthcare places</h3>
+            <p>Practice reading the policy announcement as a workforce dashboard rather than a list of numbers.</p>
+          </div>
+          <div class="ie-total"><strong>612</strong><span>extra places / year</span></div>
+        </div>
+        <div class="ie-bars" aria-label="Extra annual healthcare education places by field">
+          <div class="ie-bar-row"><span>Nursing &amp; midwifery</span><div><i style="--w:100%"></i></div><strong>268</strong></div>
+          <div class="ie-bar-row"><span>Pharmacy</span><div><i style="--w:56.3%"></i></div><strong>151</strong></div>
+          <div class="ie-bar-row"><span>Veterinary medicine</span><div><i style="--w:29.9%"></i></div><strong>80</strong></div>
+          <div class="ie-bar-row"><span>Medicine</span><div><i style="--w:29.1%"></i></div><strong>78</strong></div>
+          <div class="ie-bar-row"><span>Dentistry</span><div><i style="--w:13.1%"></i></div><strong>35</strong></div>
+        </div>
+        <p class="passport-small-note">The article describes this as the largest expansion of healthcare education places in the State's history.</p>
+      </div>
+
+      <div class="ie-mission-strip" aria-label="Dublin mission phases">
+        <article><span>PHASE 1</span><strong>Access Decoder</strong><p>HSE, Sláintecare, medical card, two-tier access and private cover.</p></article>
+        <article><span>PHASE 2</span><strong>Workforce Dashboard</strong><p>Read the 612-place expansion and interpret the distribution.</p></article>
+        <article><span>PHASE 3</span><strong>Pipeline Strategy</strong><p>Workforce gap, burnout, domestic training, recruitment abroad and retention.</p></article>
+      </div>
+
+      <div id="dublinScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Dublin assignment locked</h3><p>Clear Wellington first.</p></div>
+      </div>
+      <div id="dublinFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -476,7 +555,7 @@
         <div id="stampAu" class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
         <div id="stampFinalS" class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
         <div id="stampNz" class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
-        <div class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
+        <div id="stampIe" class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
         <div class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control</strong><small>Language Desk</small></div>
       </div>
     </section>
@@ -484,10 +563,10 @@
     <section class="passport-coming" aria-labelledby="comingTitle">
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
-        <h2 id="comingTitle">Your international rotation has only just begun.</h2>
-        <p>Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <h2 id="comingTitle">Next after Dublin: Language Control.</h2>
+        <p>The Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
       </div>
-      <div class="passport-coming-icons" aria-hidden="true">🇮🇪 · 📐 · ⭐</div>
+      <div class="passport-coming-icons" aria-hidden="true">📐 · ⭐</div>
     </section>
   </main>
 
