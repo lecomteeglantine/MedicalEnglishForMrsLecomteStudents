@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v31-day3-field-briefing-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v31b-day3-suno-music-20260823";
 
 const APP_SHELL = [
   "./",
@@ -66,7 +66,7 @@ const APP_SHELL = [
   "./assets/fgsm3/day3/images/day3-humanitarian-archive.webp",
   "./assets/fgsm3/day3/images/day3-displacement-context.webp",
   "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
-  "./assets/fgsm3/day3/music/day3-field-briefing-ambient.mp3",
+  "./assets/fgsm3/day3/music/day3-field-briefing-suno.mp3",
   "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
   "./app.js",
   "./home.js",
