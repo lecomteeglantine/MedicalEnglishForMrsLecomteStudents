@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v17.css">
+  <link rel="stylesheet" href="styles-v18.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -407,6 +407,42 @@
       <div id="researchFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+    <section id="closeSafelyArea" class="tcr-mission close-section is-locked" aria-labelledby="closeSafelyTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 8 · CLOSE SAFELY</p>
+          <h2 id="closeSafelyTitle">Finish the call as professionally as you started it</h2>
+          <p id="closeSafelyInstruction">Complete the Research Comms Terminal to unlock Close Safely.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>CLOSING CHECK</span>
+          <strong id="closeSafelyCheckpointNumber">0 / 6</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="closeSafelyProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="close-brief">
+        <div class="close-brief-icon" aria-hidden="true">✅</div>
+        <div>
+          <span class="case-brief-kicker">SUMMARISE · PLAN · CHECK · SAFETY-NET · CLOSE</span>
+          <strong>A consultation is not finished when you stop asking questions.</strong>
+          <p>The patient should leave knowing what you understood, what happens next and what to do if symptoms worsen. Finish with one final opportunity for questions.</p>
+        </div>
+        <button id="startCloseSafely" class="tcr-primary" type="button" disabled>Close Safely locked</button>
+      </div>
+
+      <div id="closeSafelyScreen" class="mission-screen close-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Close Safely locked</h3>
+          <p>Finish the Research Comms Terminal first.</p>
+        </div>
+      </div>
+
+      <div id="closeSafelyFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
       <div class="mission-map-heading">
         <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
@@ -424,7 +460,7 @@
         <article id="patient4Map" class="mission-map-card"><span>07</span><div><strong>Patient 04 · Medication</strong><small>New medication · nausea · side effects · review plan</small></div><b>LOCKED</b></article>
         <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
         <article id="closeSafelyMap" class="mission-map-card"><span>08</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
-        <article class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
+        <article id="finalShiftMap" class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
       </div>
     </section>
 

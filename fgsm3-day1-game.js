@@ -9,6 +9,7 @@
   const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3V1";
   const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4V1";
   const STORAGE_RESEARCH_KEY = "mrsLecomteFGSM3Day1ResearchCommsV1";
+  const STORAGE_CLOSE_KEY = "mrsLecomteFGSM3Day1CloseSafelyV1";
 
   const checkpoints = [
     {
@@ -689,6 +690,112 @@
     {id:"urgent", label:"Urgent assessment", icon:"🚨", sub:"Do not manage this as a routine video-only case."}
   ];
 
+
+  const closeItems = [
+    {
+      id:"summary",
+      icon:"🧾",
+      patient:"PATIENT 01 · HEADACHE + DIZZINESS",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
+      alt:"Patient 01 during a home video consultation.",
+      title:"Checkpoint 1 · Summarise before you close",
+      instruction:"Choose the summary that checks your understanding without adding a diagnosis.",
+      options:[
+        {text:"So, to summarise, your headaches started four days ago, they've become more frequent, and you've sometimes felt dizzy. Have I understood that correctly?", correct:true},
+        {text:"So, you definitely have a migraine and the dizziness is part of it.", correct:false},
+        {text:"Right, headaches and dizziness. That's enough information for today.", correct:false}
+      ],
+      feedback:"A good summary brings the key facts together and checks that you understood the patient correctly. It should not invent certainty.",
+      model:"So, to summarise, your headaches started four days ago, they've become more frequent, and you've sometimes felt dizzy. Have I understood that correctly?",
+      patientReply:"Yes, that's right. That's exactly what's been happening."
+    },
+    {
+      id:"plan",
+      icon:"🧪",
+      patient:"PATIENT 03 · FATIGUE + WEIGHT LOSS",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp",
+      alt:"Patient 03 during a home video consultation.",
+      title:"Checkpoint 2 · Explain the next step",
+      instruction:"The history needs further assessment. Which closing sentence gives a clear plan without overpromising?",
+      options:[
+        {text:"Based on what you've told me, I'd like to arrange some further tests and examine you in person.", correct:true},
+        {text:"I'm sure the blood tests will tell us exactly what is wrong.", correct:false},
+        {text:"There's probably nothing serious, so just wait and see.", correct:false}
+      ],
+      feedback:"Explain what happens next and keep uncertainty honest. Further tests or an in-person examination may be the next step without guaranteeing a diagnosis.",
+      model:"Based on what you've told me, I'd like to arrange some further tests and examine you in person.",
+      patientReply:"Okay. I'm glad there is a clear next step."
+    },
+    {
+      id:"video-limit",
+      icon:"📹",
+      patient:"PATIENT 02 · ANKLE INJURY",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp",
+      alt:"Patient 02 during a home video consultation about an ankle injury.",
+      title:"Checkpoint 3 · State the limit of video",
+      instruction:"You have seen the swollen ankle on camera, but you cannot examine it fully. Choose the safest explanation.",
+      options:[
+        {text:"I can't examine your ankle fully over video, so I'd like to arrange a face-to-face assessment.", correct:true},
+        {text:"The camera gives me everything I need, so an examination isn't necessary.", correct:false},
+        {text:"It looks swollen, so you definitely need an X-ray.", correct:false}
+      ],
+      feedback:"Video can support assessment, but it does not replace a physical examination when that examination matters. Say the limitation clearly.",
+      model:"I can't examine your ankle fully over video, so I'd like to arrange a face-to-face assessment.",
+      patientReply:"All right. I understand why you need to examine it properly."
+    },
+    {
+      id:"understanding",
+      icon:"✅",
+      patient:"PATIENT 04 · MEDICATION REVIEW",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp",
+      alt:"Patient 04 during a home video consultation about medication and nausea.",
+      title:"Checkpoint 4 · Check understanding",
+      instruction:"You have explained the medication-review plan. What should happen before you move on?",
+      options:[
+        {text:"Does that plan make sense? Is there anything you'd like me to go over again?", correct:true},
+        {text:"I've explained the plan, so we can finish now.", correct:false},
+        {text:"You understood all of that, didn't you?", correct:false}
+      ],
+      feedback:"Do not assume that a plan was understood just because you explained it. Give the patient a genuine opportunity to clarify it.",
+      model:"Does that plan make sense? Is there anything you'd like me to go over again?",
+      patientReply:"Yes, that makes sense. I know what the next step is."
+    },
+    {
+      id:"safety-net",
+      icon:"⚠️",
+      patient:"SAFETY-NETTING · ANY CONSULTATION",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
+      alt:"A patient listening during a home video consultation.",
+      title:"Checkpoint 5 · Give a usable safety-net",
+      instruction:"Choose the sentence that tells the patient what to do if the situation gets significantly worse.",
+      options:[
+        {text:"If your symptoms get significantly worse, seek urgent medical advice.", correct:true},
+        {text:"Everything should be fine, so there is no need to contact anyone again.", correct:false},
+        {text:"If anything changes at all, go straight to hospital.", correct:false}
+      ],
+      feedback:"Safety-netting should give the patient a clear action if symptoms worsen, without offering false reassurance or making every change an emergency.",
+      model:"If your symptoms get significantly worse, seek urgent medical advice.",
+      patientReply:"Okay. I'll get urgent advice if things get significantly worse."
+    },
+    {
+      id:"final-question",
+      icon:"👋",
+      patient:"END OF CALL",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp",
+      alt:"A patient at the end of a home video consultation.",
+      title:"Checkpoint 6 · Give the patient the last word",
+      instruction:"The problem, plan and safety-net are clear. Choose the best final check before saying goodbye.",
+      options:[
+        {text:"Is there anything else you'd like to ask before we finish?", correct:true},
+        {text:"That's all from me. Goodbye.", correct:false},
+        {text:"We are out of time, so keep any other questions for next time.", correct:false}
+      ],
+      feedback:"A professional close gives the patient one final opportunity to raise a question before the call ends.",
+      model:"Is there anything else you'd like to ask before we finish?",
+      patientReply:"No, thank you. That's everything I wanted to ask."
+    }
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -771,7 +878,15 @@
     researchCheckpoint: document.getElementById("researchCheckpointNumber"),
     researchProgress: document.getElementById("researchProgressBar"),
     researchStart: document.getElementById("startResearch"),
-    closeSafelyMap: document.getElementById("closeSafelyMap")
+    closeSafelyMap: document.getElementById("closeSafelyMap"),
+    closeArea: document.getElementById("closeSafelyArea"),
+    closeScreen: document.getElementById("closeSafelyScreen"),
+    closeFeedback: document.getElementById("closeSafelyFeedback"),
+    closeInstruction: document.getElementById("closeSafelyInstruction"),
+    closeCheckpoint: document.getElementById("closeSafelyCheckpointNumber"),
+    closeProgress: document.getElementById("closeSafelyProgressBar"),
+    closeStart: document.getElementById("startCloseSafely"),
+    finalShiftMap: document.getElementById("finalShiftMap")
   };
 
   let state = readState();
@@ -783,6 +898,7 @@
   let patient3State = readPatient3State();
   let patient4State = readPatient4State();
   let researchState = readResearchState();
+  let closeState = readCloseState();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -894,6 +1010,18 @@
 
   function saveResearchState() {
     try { localStorage.setItem(STORAGE_RESEARCH_KEY, JSON.stringify(researchState)); } catch (_) {}
+  }
+
+  function readCloseState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_CLOSE_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, lastModel: "", lastReply: ""};
+  }
+
+  function saveCloseState() {
+    try { localStorage.setItem(STORAGE_CLOSE_KEY, JSON.stringify(closeState)); } catch (_) {}
   }
 
 
@@ -2683,9 +2811,10 @@
     }
     if (els.closeSafelyMap) {
       els.closeSafelyMap.classList.remove("live", "done", "next-ready");
-      if (researchState.completed) els.closeSafelyMap.classList.add("next-ready");
-      els.closeSafelyMap.querySelector("b").textContent = researchState.completed ? "NEXT" : "LOCKED";
+      if (researchState.completed && !closeState.completed) els.closeSafelyMap.classList.add("next-ready");
+      els.closeSafelyMap.querySelector("b").textContent = closeState.completed ? "DONE" : researchState.completed ? "NEXT" : "LOCKED";
     }
+    renderCloseProgress();
   }
 
   function unlockResearch() {
@@ -2809,6 +2938,7 @@
     setResearchFeedback("<strong>Next:</strong> Close Safely — summarise the problem and plan, check understanding, arrange follow-up and give clear safety-netting advice.", "info");
     document.getElementById("replayResearch")?.addEventListener("click", resetResearch);
     renderResearchProgress();
+    unlockCloseSafely();
   }
 
   function startResearch() {
@@ -2827,6 +2957,214 @@
     els.researchInstruction.textContent = researchIsUnlocked() ? "The research terminal is online. Move from methods language to precise comparison of results." : "Complete Patient 04 to unlock the research terminal.";
     els.researchScreen.innerHTML = researchIsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📊</div><h3>Research Comms Terminal online</h3><p>Methods Log → Research Verb Bank → Results Dashboard.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Research terminal locked</h3><p>Finish Patient 04 first.</p></div>`;
     setResearchFeedback();
+  }
+
+
+  function setCloseFeedback(html = "", type = "") {
+    if (!els.closeFeedback) return;
+    els.closeFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.closeFeedback.innerHTML = html;
+  }
+
+  function closeIsUnlocked() {
+    return researchState.completed || closeState.completed;
+  }
+
+  function renderCloseProgress() {
+    if (!els.closeArea) return;
+    const unlocked = closeIsUnlocked();
+    const total = closeItems.length;
+    const done = closeState.completed ? total : Math.min(closeState.index, total);
+
+    if (!unlocked) {
+      els.closeArea.classList.add("is-locked");
+      els.closeStart.disabled = true;
+      els.closeStart.textContent = "Close Safely locked";
+      els.closeCheckpoint.textContent = `0 / ${total}`;
+      els.closeProgress.style.width = "0%";
+      if (els.closeSafelyMap) {
+        els.closeSafelyMap.classList.remove("live", "done", "next-ready");
+        els.closeSafelyMap.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.finalShiftMap) {
+        els.finalShiftMap.classList.remove("live", "done", "next-ready", "final-ready");
+        els.finalShiftMap.querySelector("b").textContent = "FINAL";
+      }
+      return;
+    }
+
+    els.closeArea.classList.remove("is-locked");
+    els.closeStart.disabled = false;
+    els.closeStart.textContent = closeState.completed ? "View completed Close Safely →" : closeState.index > 0 ? "Continue Close Safely →" : "Start Close Safely →";
+    els.closeCheckpoint.textContent = `${done} / ${total}`;
+    els.closeProgress.style.width = `${(done / total) * 100}%`;
+
+    if (els.closeSafelyMap) {
+      els.closeSafelyMap.classList.remove("live", "done", "next-ready");
+      els.closeSafelyMap.classList.add(closeState.completed ? "done" : "live");
+      els.closeSafelyMap.querySelector("b").textContent = closeState.completed ? "DONE" : "LIVE";
+    }
+    if (els.finalShiftMap) {
+      els.finalShiftMap.classList.remove("live", "done", "next-ready", "final-ready");
+      if (closeState.completed) els.finalShiftMap.classList.add("final-ready");
+      els.finalShiftMap.querySelector("b").textContent = closeState.completed ? "NEXT" : "FINAL";
+    }
+  }
+
+  function unlockCloseSafely() {
+    renderCloseProgress();
+    if (!closeIsUnlocked()) return;
+    if (!closeState.completed && closeState.index === 0) {
+      els.closeInstruction.textContent = "The final minutes matter: summarise, explain the plan, check understanding and safety-net before you disconnect.";
+      els.closeScreen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">✅</div><h3>Close Safely ready</h3><p>Six closing checks stand between you and the Final Live Shift.</p></div>`;
+    }
+  }
+
+  function closePatientPanel(item) {
+    const reply = closeState.lastReply;
+    return `<article class="close-patient-card">
+      <div class="close-image-wrap">
+        <span class="close-live">● VIDEO CALL</span>
+        <img src="${escapeHTML(item.image)}" alt="${escapeHTML(item.alt)}">
+      </div>
+      <div class="close-patient-meta">
+        <span>${escapeHTML(item.patient)}</span>
+        <h3>${escapeHTML(item.title.replace(/^Checkpoint \d+ · /, ""))}</h3>
+        ${reply ? `<div class="close-reply"><div class="close-reply-head"><strong>Patient reply</strong><button class="close-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(reply)}”</p><small>Transcript</small></div>` : `<p class="close-awaiting">The patient is waiting for you to finish the consultation clearly.</p>`}
+      </div>
+    </article>`;
+  }
+
+  function renderCloseItem() {
+    renderCloseProgress();
+    if (!closeIsUnlocked()) return;
+    if (closeState.completed || closeState.index >= closeItems.length) return renderCloseComplete();
+
+    const item = closeItems[closeState.index];
+    const number = closeState.index + 1;
+    els.closeInstruction.textContent = item.instruction;
+    setCloseFeedback();
+    els.closeCheckpoint.textContent = `${closeState.index} / ${closeItems.length}`;
+    els.closeProgress.style.width = `${(closeState.index / closeItems.length) * 100}%`;
+
+    els.closeScreen.innerHTML = `<div class="close-shell">
+      ${closePatientPanel(item)}
+      <article class="close-decision-card">
+        <span class="close-round-kicker">SAFE CLOSING · ${number} / ${closeItems.length}</span>
+        <div class="close-icon" aria-hidden="true">${item.icon}</div>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="close-options">${item.options.map((option,index) => `<button class="close-choice" type="button" data-close-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
+        <div class="close-rule-note"><strong>Close ≠ rush.</strong> The patient should leave knowing what you understood, what happens next and what to do if things change.</div>
+      </article>
+    </div>`;
+
+    if (closeState.lastReply) {
+      const listen = els.closeScreen.querySelector(".close-listen");
+      listen?.addEventListener("click", () => speak(closeState.lastReply, listen, 0.9));
+    }
+
+    els.closeScreen.querySelectorAll("[data-close-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const option = item.options[Number(button.dataset.closeChoice)];
+        els.closeScreen.querySelectorAll("[data-close-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          closeState.lastModel = item.model;
+          closeState.lastReply = item.patientReply;
+          saveCloseState();
+          setCloseFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="close-hear-model" type="button">🔊 Hear doctor line</button>`, "success");
+          const hear = els.closeFeedback.querySelector(".close-hear-model");
+          hear?.addEventListener("click", () => speak(item.model, hear, 0.9));
+          renderClosePatientReply(item);
+          advanceCloseButton(number === closeItems.length ? "Complete Close Safely →" : "Continue →");
+        } else {
+          button.classList.add("wrong-choice");
+          beep("warn");
+          closeState.mistakes += 1;
+          saveCloseState();
+          setCloseFeedback(`<strong>Not quite.</strong> ${escapeHTML(item.feedback)}`, "warning");
+          setTimeout(() => {
+            els.closeScreen.querySelectorAll("[data-close-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function renderClosePatientReply(item) {
+    const card = els.closeScreen.querySelector(".close-patient-card");
+    if (!card) return;
+    const previous = card.querySelector(".close-patient-meta");
+    if (!previous) return;
+    const old = previous.querySelector(".close-awaiting, .close-reply");
+    old?.remove();
+    previous.insertAdjacentHTML("beforeend", `<div class="close-reply"><div class="close-reply-head"><strong>Patient reply</strong><button class="close-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(item.patientReply)}”</p><small>Transcript</small></div>`);
+    const listen = previous.querySelector(".close-listen");
+    listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
+  }
+
+  function advanceCloseButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.closeFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      closeState.index += 1;
+      closeState.lastModel = "";
+      closeState.lastReply = "";
+      if (closeState.index >= closeItems.length) closeState.completed = true;
+      saveCloseState();
+      renderCloseItem();
+      els.closeScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderCloseComplete() {
+    closeState.completed = true;
+    closeState.index = closeItems.length;
+    saveCloseState();
+    els.closeInstruction.textContent = "Close Safely complete: the patient leaves with a shared understanding, a clear plan, follow-up and safety-netting.";
+    els.closeCheckpoint.textContent = `${closeItems.length} / ${closeItems.length}`;
+    els.closeProgress.style.width = "100%";
+    const score = Math.max(0, 100 - closeState.mistakes * 7);
+    const quality = closeState.mistakes === 0 ? "Exceptionally clear close" : closeState.mistakes <= 2 ? "Safe professional close" : "Safe close achieved after revision";
+    els.closeScreen.innerHTML = `<div class="mission-complete-card close-complete-card">
+      <div class="mission-badge close-badge" aria-hidden="true">✅</div>
+      <p class="mission-step-label">MISSION 8 COMPLETE</p>
+      <h3>Safe Closer badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You summarised without overclaiming, explained next steps and video limits, checked understanding, safety-netted and gave the patient a final opportunity to ask questions.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>closing score</span></div>
+      <div class="close-summary-grid">
+        <div><span>1 · SUMMARISE</span><strong>Check what you heard</strong><small>Bring the key facts together without inventing a diagnosis.</small></div>
+        <div><span>2 · PLAN</span><strong>Make next steps explicit</strong><small>Tests, in-person assessment or follow-up should be easy to understand.</small></div>
+        <div><span>3 · SAFETY-NET</span><strong>Say what happens if things change</strong><small>Then invite one last question before ending the call.</small></div>
+      </div>
+      <div class="timeline-preview final-preview"><span>NEXT · FINAL LIVE SHIFT</span><p><strong>One complete teleconsultation. No training wheels.</strong></p><small>Opening · history · communication · online safety · plan · close.</small></div>
+      <div class="mission-complete-actions"><button id="replayClose" class="tcr-secondary-button" type="button">Replay Close Safely</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setCloseFeedback("<strong>Next:</strong> Final Live Shift — bring the whole Day 1 consultation together from connection to safe closing.", "info");
+    document.getElementById("replayClose")?.addEventListener("click", resetCloseSafely);
+    renderCloseProgress();
+  }
+
+  function startCloseSafely() {
+    if (!closeIsUnlocked()) return;
+    if (closeState.completed) renderCloseComplete();
+    else renderCloseItem();
+    els.closeArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.closeScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetCloseSafely() {
+    closeState = {index:0, completed:false, mistakes:0, lastModel:"", lastReply:""};
+    saveCloseState();
+    renderCloseProgress();
+    els.closeInstruction.textContent = closeIsUnlocked() ? "The final minutes matter: summarise, explain the plan, check understanding and safety-net before you disconnect." : "Complete the Research Comms Terminal to unlock Close Safely.";
+    els.closeScreen.innerHTML = closeIsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">✅</div><h3>Close Safely ready</h3><p>Six closing checks stand between you and the Final Live Shift.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Close Safely locked</h3><p>Finish the Research Comms Terminal first.</p></div>`;
+    setCloseFeedback();
   }
 
 
@@ -2917,6 +3255,7 @@
     patient3State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     patient4State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     researchState = {index: 0, completed: false, mistakes: 0, lastModel: ""};
+    closeState = {index: 0, completed: false, mistakes: 0, lastModel: "", lastReply: ""};
     saveState();
     saveClinicalState();
     saveAudioLabState();
@@ -2926,6 +3265,7 @@
     savePatient3State();
     savePatient4State();
     saveResearchState();
+    saveCloseState();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -2939,6 +3279,7 @@
     resetPatient3();
     resetPatient4();
     resetResearch();
+    resetCloseSafely();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -2959,6 +3300,7 @@
   els.patient3Start?.addEventListener("click", startPatient3);
   els.patient4Start?.addEventListener("click", startPatient4);
   els.researchStart?.addEventListener("click", startResearch);
+  els.closeStart?.addEventListener("click", startCloseSafely);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -2996,8 +3338,9 @@
   renderPatient3Progress();
   renderPatient4Progress();
   renderResearchProgress();
+  renderCloseProgress();
   if (state.completed) {
-    els.shiftStatus.textContent = researchState.completed ? "Research Comms complete · Close Safely next" : patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = closeState.completed ? "Close Safely complete · Final Live Shift next" : researchState.completed ? "Research Comms complete · Close Safely next" : patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
@@ -3007,5 +3350,6 @@
     if (onlineDecisionState.completed || patient3State.completed) unlockPatient3();
     if (patient3State.completed || patient4State.completed) unlockPatient4();
     if (patient4State.completed || researchState.completed) unlockResearch();
+    if (researchState.completed || closeState.completed) unlockCloseSafely();
   }
 })();
