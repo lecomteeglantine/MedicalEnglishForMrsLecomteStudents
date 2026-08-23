@@ -10,6 +10,7 @@
   const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4V1";
   const STORAGE_RESEARCH_KEY = "mrsLecomteFGSM3Day1ResearchCommsV1";
   const STORAGE_CLOSE_KEY = "mrsLecomteFGSM3Day1CloseSafelyV1";
+  const STORAGE_FINAL_KEY = "mrsLecomteFGSM3Day1FinalLiveShiftV1";
 
   const checkpoints = [
     {
@@ -796,6 +797,78 @@
     }
   ];
 
+
+  const finalCases = [
+    {
+      id:"headache", label:"FINAL CASE · HEADACHE + DIZZINESS", name:"Eleanor Reed", dob:"14 May 1984",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp", alt:"A fictional patient during a home video consultation, looking concerned.",
+      brief:"Headaches for four days · daily since onset · occasional dizziness · worried it may be serious",
+      items:[
+        {skill:"opening",title:"Open safely",instruction:"The call connects. Choose the best opening before discussing symptoms.",options:[{text:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",correct:true},{text:"Hello. I have your notes, so tell me about the headaches straight away.",correct:false},{text:"Hi Eleanor. The connection looks fine, so we can skip the formalities.",correct:false}],model:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",patientReply:"Yes, I can hear you. I'm Eleanor Reed, born on the fourteenth of May nineteen eighty-four. I'm alone, and I'm happy to continue by video.",feedback:"A safe start covers connection, identity, privacy and verbal consent before clinical information is discussed."},
+        {skill:"clinical",title:"Invite the story",instruction:"Now invite the patient to explain the main problem without suggesting a diagnosis.",options:[{text:"What brings you in today?",correct:true},{text:"So this is probably a migraine — how long have you had migraines?",correct:false},{text:"Are the headaches caused by stress?",correct:false}],model:"What brings you in today?",patientReply:"I've been having headaches for the past few days.",feedback:"Start broad. The patient should be able to describe the main problem in their own words."},
+        {skill:"clinical",title:"Build the timeline",instruction:"Choose the follow-up that best distinguishes onset from an ongoing problem.",options:[{text:"When did the headaches start, and how often have you had them since then?",correct:true},{text:"Did the headaches start recently?",correct:false},{text:"Have you always had headaches every day?",correct:false}],model:"When did the headaches start, and how often have you had them since then?",patientReply:"They started four days ago. I've had one every day since then.",feedback:"The Past Simple locates the start; the Present Perfect links the continuing experience to now."},
+        {skill:"clinical",title:"Explore safely",instruction:"You need associated symptoms, severity and useful warning information. Choose the strongest next move.",options:[{text:"Have you noticed any other symptoms? How severe is the pain from 0 to 10? Have you fainted or noticed weakness or trouble speaking?",correct:true},{text:"The headaches are frequent, so let's move straight to treatment.",correct:false},{text:"You can still speak normally, so there can't be any warning signs.",correct:false}],model:"Have you noticed any other symptoms? How severe is the pain from 0 to 10? Have you fainted or noticed weakness or trouble speaking?",patientReply:"Sometimes I feel dizzy, especially when I stand up quickly. The pain is about six out of ten. I haven't fainted, and I haven't noticed weakness or trouble speaking.",feedback:"Clarify associated symptoms and severity rather than jumping from one symptom to a conclusion."},
+        {skill:"communication",title:"Hear the concern",instruction:"The patient says she is worried this may be serious. Choose the response that acknowledges the concern without overpromising.",options:[{text:"I can see why you're worried. I'd like to understand this properly before we decide what should happen next.",correct:true},{text:"Don't worry — it doesn't sound serious.",correct:false},{text:"We can't discuss worries until we have a diagnosis.",correct:false}],model:"I can see why you're worried. I'd like to understand this properly before we decide what should happen next.",patientReply:"Thank you. I just want to know whether I need to be checked in person.",feedback:"Empathy means acknowledging the concern while keeping the level of certainty appropriate to the information available."},
+        {skill:"safety",title:"State the video limit",instruction:"The pattern is different from the patient's usual headaches. Choose the safest explanation of what video cannot do.",options:[{text:"I can't examine you fully over video, so I think it would be best to assess you in person and consider further tests.",correct:true},{text:"The video picture is clear, so an in-person examination won't add anything.",correct:false},{text:"Because the pattern is different, I can tell you exactly what the cause is.",correct:false}],model:"I can't examine you fully over video, so I think it would be best to assess you in person and consider further tests.",patientReply:"All right. That makes sense.",feedback:"Be explicit about the limitation of remote assessment and avoid claiming a diagnosis from the video call."},
+        {skill:"safety",title:"Agree the plan",instruction:"Choose the clearest next-step language.",options:[{text:"Based on what you've told me, I'd like to arrange a face-to-face assessment. We can then decide whether any further tests are needed.",correct:true},{text:"I'm ordering every possible test now because we need to rule out everything.",correct:false},{text:"Let's wait indefinitely and see what happens.",correct:false}],model:"Based on what you've told me, I'd like to arrange a face-to-face assessment. We can then decide whether any further tests are needed.",patientReply:"Okay. I'd prefer to have it checked properly.",feedback:"A good plan is concrete but does not pretend that tests or a diagnosis have already been decided."},
+        {skill:"communication",title:"Summarise what you heard",instruction:"Before closing, choose the summary that checks the key facts without adding a diagnosis.",options:[{text:"So, the headaches started four days ago, you've had one every day since then, and you've also had some dizziness. They're different from your usual headaches, and you're worried about what they might mean. Have I got that right?",correct:true},{text:"So, you definitely have a serious neurological problem and need tests.",correct:false},{text:"So, you've had a headache. That's all we need to record.",correct:false}],model:"So, the headaches started four days ago, you've had one every day since then, and you've also had some dizziness. They're different from your usual headaches, and you're worried about what they might mean. Have I got that right?",patientReply:"Yes, that's exactly it.",feedback:"A summary shows the patient you listened and gives them a chance to correct the record."},
+        {skill:"closing",title:"Check understanding",instruction:"You have explained the face-to-face plan. What should you ask next?",options:[{text:"Does that plan make sense? Is there anything you'd like me to go over again?",correct:true},{text:"I've explained it, so I know you understand.",correct:false},{text:"You understood that, didn't you?",correct:false}],model:"Does that plan make sense? Is there anything you'd like me to go over again?",patientReply:"Yes, it makes sense. I know what happens next.",feedback:"Checking understanding should be a genuine invitation, not a leading question."},
+        {skill:"closing",title:"Safety-net and close",instruction:"Choose the safest final line.",options:[{text:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",correct:true},{text:"Everything should be fine, so there is no need to contact anyone again.",correct:false},{text:"We're done now. Goodbye.",correct:false}],model:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",patientReply:"No, thank you. That's everything.",feedback:"A safe close gives an action if symptoms worsen and one final opportunity for questions."}
+      ]
+    },
+    {
+      id:"ankle", label:"FINAL CASE · ANKLE INJURY", name:"Daniel Brooks", dob:"9 September 1999",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp", alt:"A fictional patient during a home video consultation about an ankle injury.",
+      brief:"Twisted ankle while exercising two days ago · swollen and painful · can still walk · unsure whether an X-ray is needed",
+      items:[
+        {skill:"opening",title:"Open safely",instruction:"The call connects. Choose the opening that covers the essentials before the injury history.",options:[{text:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",correct:true},{text:"Hi Daniel. Show me the ankle straight away.",correct:false},{text:"I can see you, so let's skip the identity and privacy checks.",correct:false}],model:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",patientReply:"Yes, I can hear you. I'm Daniel Brooks, born on the ninth of September nineteen ninety-nine. I'm alone, and video is fine.",feedback:"Connection, identity, privacy and consent still matter when the problem looks straightforward."},
+        {skill:"clinical",title:"Invite the story",instruction:"Choose an open question that lets the patient describe the injury.",options:[{text:"Tell me what happened to your ankle.",correct:true},{text:"You sprained it while running, didn't you?",correct:false},{text:"Is it broken?",correct:false}],model:"Tell me what happened to your ankle.",patientReply:"I twisted it while I was exercising two days ago.",feedback:"Let the patient describe the mechanism before narrowing the questions."},
+        {skill:"clinical",title:"Clarify function and timeline",instruction:"Which follow-up gives the most useful information next?",options:[{text:"Where is the pain, how swollen is it, and are you able to put weight on the foot and walk?",correct:true},{text:"Does it hurt, yes or no?",correct:false},{text:"If you can walk, the injury can't be important, can it?",correct:false}],model:"Where is the pain, how swollen is it, and are you able to put weight on the foot and walk?",patientReply:"It's swollen around the outside of the ankle. I can walk, but it's painful, especially when I put weight on it.",feedback:"Pain location, swelling and function are more useful than a yes/no question."},
+        {skill:"clinical",title:"Use the camera appropriately",instruction:"You want to look at the swelling. Choose the most respectful video-specific request.",options:[{text:"If you're comfortable, could you show me the swollen area on camera?",correct:true},{text:"Take your sock off and hold your foot right up to the camera.",correct:false},{text:"I don't need to see it because video isn't useful for injuries.",correct:false}],model:"If you're comfortable, could you show me the swollen area on camera?",patientReply:"Yes, of course. You should be able to see the swelling here.",feedback:"The camera can add information, but requests should be clear, respectful and conditional on the patient's comfort."},
+        {skill:"communication",title:"Address the patient's question",instruction:"The patient asks, “Do I need an X-ray?” Choose the response that is clear without overclaiming.",options:[{text:"I understand why you're asking. I can't decide that safely from the video alone; the next step is to examine the ankle in person.",correct:true},{text:"Yes, definitely — I can tell from the swelling on camera.",correct:false},{text:"No. If you can walk, an X-ray is never needed.",correct:false}],model:"I understand why you're asking. I can't decide that safely from the video alone; the next step is to examine the ankle in person.",patientReply:"Okay. I was worried you might not be able to tell properly on video.",feedback:"Acknowledge the question, state the limitation and explain what needs to happen next."},
+        {skill:"safety",title:"State the examination limit",instruction:"Choose the safest explanation of the role of video here.",options:[{text:"I can see the swelling, but I can't examine your ankle fully over video, so I'd like to arrange a face-to-face assessment.",correct:true},{text:"The camera gives me everything a physical examination would give me.",correct:false},{text:"Because I can see swelling, I know exactly which structure is injured.",correct:false}],model:"I can see the swelling, but I can't examine your ankle fully over video, so I'd like to arrange a face-to-face assessment.",patientReply:"All right. I understand.",feedback:"Visible swelling does not turn a video view into a full physical examination."},
+        {skill:"safety",title:"Explain the next step",instruction:"Choose the clearest plan.",options:[{text:"I'd like to arrange an in-person assessment. After examining the ankle properly, we can decide what further assessment is needed.",correct:true},{text:"I'll promise an X-ray before anyone examines you.",correct:false},{text:"There is nothing else to do because you can still walk.",correct:false}],model:"I'd like to arrange an in-person assessment. After examining the ankle properly, we can decide what further assessment is needed.",patientReply:"That sounds sensible.",feedback:"Do not promise a specific investigation when the point of the in-person assessment is to decide what is needed."},
+        {skill:"communication",title:"Summarise",instruction:"Choose the summary that checks the important facts.",options:[{text:"So, you twisted the ankle two days ago, it is swollen and painful, and you can still walk although weight-bearing hurts. You're mainly worried about whether it needs further assessment. Have I understood correctly?",correct:true},{text:"So, it's definitely a simple sprain.",correct:false},{text:"So, your ankle hurts. Let's finish there.",correct:false}],model:"So, you twisted the ankle two days ago, it is swollen and painful, and you can still walk although weight-bearing hurts. You're mainly worried about whether it needs further assessment. Have I understood correctly?",patientReply:"Yes, that's right.",feedback:"A concise summary checks the mechanism, current function and patient's concern without inventing a diagnosis."},
+        {skill:"closing",title:"Check understanding",instruction:"You have arranged an in-person assessment. What should you ask?",options:[{text:"Does that plan make sense? Is there anything you'd like me to explain again?",correct:true},{text:"You know what to do now, don't you?",correct:false},{text:"No need to check — the appointment is the only important part.",correct:false}],model:"Does that plan make sense? Is there anything you'd like me to explain again?",patientReply:"Yes, I understand the plan.",feedback:"A clear plan still needs an understanding check."},
+        {skill:"closing",title:"Safety-net and close",instruction:"Choose the best final line.",options:[{text:"If your symptoms get significantly worse before you're seen, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",correct:true},{text:"Nothing can change before the appointment, so just wait.",correct:false},{text:"Okay, that's it. Bye.",correct:false}],model:"If your symptoms get significantly worse before you're seen, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",patientReply:"No, that's all. Thank you.",feedback:"Safety-netting remains important while the patient is waiting for the next step."}
+      ]
+    },
+    {
+      id:"fatigue", label:"FINAL CASE · FATIGUE + WEIGHT LOSS", name:"Maya Foster", dob:"22 January 1993",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp", alt:"A fictional patient during a home video consultation, appearing tired and concerned.",
+      brief:"Unusually tired for several weeks · unintentional weight loss · occasional dizziness · anxious about investigations",
+      items:[
+        {skill:"opening",title:"Open safely",instruction:"Begin the final call professionally before moving to symptoms.",options:[{text:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",correct:true},{text:"Hi Maya. You look exhausted — how much weight have you lost?",correct:false},{text:"I have your file open, so we don't need an identity check.",correct:false}],model:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",patientReply:"Yes. I'm Maya Foster, born on the twenty-second of January nineteen ninety-three. I'm alone and happy to continue by video.",feedback:"Do the same safe opening even when the patient has already described the problem when booking."},
+        {skill:"clinical",title:"Start broad",instruction:"Choose the best invitation to hear the patient's main problem.",options:[{text:"How can I help you today?",correct:true},{text:"So the problem is anaemia, is that right?",correct:false},{text:"How many blood tests do you think you need?",correct:false}],model:"How can I help you today?",patientReply:"I've been unusually tired for several weeks, and it doesn't seem to be improving.",feedback:"Do not turn a symptom into a diagnosis before taking the history."},
+        {skill:"clinical",title:"Explore associated changes",instruction:"Which follow-up best develops the history?",options:[{text:"Have you noticed any changes in your appetite or weight, or any other symptoms such as dizziness?",correct:true},{text:"You're tired because you don't sleep enough, aren't you?",correct:false},{text:"Let's just focus on the tiredness and ignore anything else.",correct:false}],model:"Have you noticed any changes in your appetite or weight, or any other symptoms such as dizziness?",patientReply:"I've lost some weight without trying, and I sometimes feel dizzy as well.",feedback:"Associated symptoms and changes such as appetite or weight are part of a fuller history."},
+        {skill:"clinical",title:"Check the background",instruction:"Choose the broadest useful background check without sounding like a diagnosis checklist.",options:[{text:"I'd also like to ask about your sleep, appetite, any medical conditions, medication and whether you've been ill recently.",correct:true},{text:"You probably have an infection. Have you had one recently?",correct:false},{text:"Medication isn't relevant to tiredness, so we can skip that.",correct:false}],model:"I'd also like to ask about your sleep, appetite, any medical conditions, medication and whether you've been ill recently.",patientReply:"My sleep hasn't been great, my appetite is lower than usual, and I'm not taking any new medication. I haven't had a recent illness that I know of.",feedback:"A structured background check supports safe reasoning without anchoring on one explanation."},
+        {skill:"communication",title:"Explore the concern",instruction:"The patient says the weight loss is worrying. Choose the most appropriate response.",options:[{text:"I can see why you're worried. What were you hoping we could do today?",correct:true},{text:"Don't worry — weight loss is often nothing serious.",correct:false},{text:"There's no point discussing worries until the tests are done.",correct:false}],model:"I can see why you're worried. What were you hoping we could do today?",patientReply:"I was hoping you could tell me whether I need blood tests or to be examined.",feedback:"Explore the patient's concern and expectation rather than dismissing either."},
+        {skill:"safety",title:"Recognise the limit of video",instruction:"Choose the safest way to explain why the call cannot be the whole assessment.",options:[{text:"There are several possible explanations, and I can't assess everything safely over video, so I'd like to arrange further assessment.",correct:true},{text:"I can diagnose the cause from the symptoms you've described.",correct:false},{text:"Because you don't look very ill on camera, no further assessment is needed.",correct:false}],model:"There are several possible explanations, and I can't assess everything safely over video, so I'd like to arrange further assessment.",patientReply:"Okay. I'd rather have it checked properly.",feedback:"Explain uncertainty honestly and make the strength of the plan match the information available."},
+        {skill:"safety",title:"Make the plan clear",instruction:"Choose the clearest next step without promising a diagnosis.",options:[{text:"Based on what you've told me, I'd like to arrange a face-to-face assessment and some further tests, including blood tests, so we can understand this better.",correct:true},{text:"The blood tests will definitely tell us exactly what is wrong.",correct:false},{text:"Let's do nothing unless the tiredness becomes unbearable.",correct:false}],model:"Based on what you've told me, I'd like to arrange a face-to-face assessment and some further tests, including blood tests, so we can understand this better.",patientReply:"All right. That sounds like a sensible next step.",feedback:"The plan can mention further assessment and tests while keeping uncertainty explicit."},
+        {skill:"communication",title:"Summarise",instruction:"Choose the summary that shows what you heard and what matters to the patient.",options:[{text:"So, you've felt unusually tired for several weeks, you've lost weight without trying and sometimes feel dizzy. Your appetite is lower, and you're worried about why this is happening. Have I understood that correctly?",correct:true},{text:"So, you have a serious underlying condition causing weight loss.",correct:false},{text:"So, you're tired and dizzy. That's enough information.",correct:false}],model:"So, you've felt unusually tired for several weeks, you've lost weight without trying and sometimes feel dizzy. Your appetite is lower, and you're worried about why this is happening. Have I understood that correctly?",patientReply:"Yes, that's right.",feedback:"Summarise the evidence and concern, not an unconfirmed explanation."},
+        {skill:"closing",title:"Check understanding",instruction:"After explaining assessment and blood tests, choose the best check.",options:[{text:"Does that plan make sense? Is there anything you'd like me to go over again?",correct:true},{text:"You understand what blood tests are, don't you?",correct:false},{text:"The plan is straightforward, so there is no need to check.",correct:false}],model:"Does that plan make sense? Is there anything you'd like me to go over again?",patientReply:"Yes, I understand. I know what the next steps are.",feedback:"Checking understanding is part of shared planning."},
+        {skill:"closing",title:"Safety-net and close",instruction:"Choose the best final line.",options:[{text:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",correct:true},{text:"The tests are booked, so you don't need to seek help even if things change.",correct:false},{text:"We'll know everything after the blood test. Goodbye.",correct:false}],model:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",patientReply:"No, thank you. That's everything for now.",feedback:"A plan for tests does not replace safety-netting while the patient is waiting."}
+      ]
+    },
+    {
+      id:"medication", label:"FINAL CASE · MEDICATION + NAUSEA", name:"Hannah Cole", dob:"3 March 1988",
+      image:"assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp", alt:"A fictional patient during a home video consultation about medication and nausea.",
+      brief:"New medication started five days ago · nausea and upset stomach · considering stopping it without advice",
+      items:[
+        {skill:"opening",title:"Open safely",instruction:"Start the call before discussing the new medication.",options:[{text:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",correct:true},{text:"Hi Hannah. Which tablet is making you sick?",correct:false},{text:"I know who you are from the appointment list, so let's get straight to the medication.",correct:false}],model:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name and date of birth, check that you're somewhere private, and ask if you're happy to continue by video?",patientReply:"Yes. I'm Hannah Cole, born on the third of March nineteen eighty-eight. I'm on my own, and video is fine.",feedback:"Medication reviews still require the same identity, privacy and consent checks as any other video consultation."},
+        {skill:"clinical",title:"Invite the problem",instruction:"Choose the opening clinical question.",options:[{text:"Tell me a little more about what's been happening since you started the new medication.",correct:true},{text:"The medication is causing nausea, isn't it?",correct:false},{text:"Why did you stop tolerating the medicine?",correct:false}],model:"Tell me a little more about what's been happening since you started the new medication.",patientReply:"I started it five days ago, and since then I've been feeling nauseous with an upset stomach.",feedback:"Let the patient describe the timing and symptoms before assuming causation."},
+        {skill:"clinical",title:"Clarify medication and timing",instruction:"Which follow-up best checks the practical details?",options:[{text:"Do you have the medication or box with you? Could you read the name and dose to me, and tell me when you usually take it?",correct:true},{text:"You're taking the standard dose, aren't you?",correct:false},{text:"The exact medication doesn't matter if you feel nauseous.",correct:false}],model:"Do you have the medication or box with you? Could you read the name and dose to me, and tell me when you usually take it?",patientReply:"Yes, I have the box here. I can read the name and dose to you. I take it once a day, usually in the morning.",feedback:"Medication name, dose and timing are core facts before discussing possible side effects or changes."},
+        {skill:"clinical",title:"Explore severity and warning information",instruction:"Choose the safest symptom follow-up.",options:[{text:"How severe is the nausea? Have you been vomiting, and have you noticed any other symptoms that concern you?",correct:true},{text:"Nausea is common, so we don't need any more details.",correct:false},{text:"If you haven't vomited, the symptoms can't matter.",correct:false}],model:"How severe is the nausea? Have you been vomiting, and have you noticed any other symptoms that concern you?",patientReply:"It's uncomfortable but not severe. I haven't been vomiting, and I haven't noticed anything else worrying.",feedback:"Characterise the symptom and check for additional concerning features rather than assuming it is minor."},
+        {skill:"communication",title:"Respond to the wish to stop",instruction:"The patient says, “I'm thinking of just stopping it.” Choose the best response.",options:[{text:"I understand why you're considering that. Before you change the medication, let's review what you're taking and agree the safest next step.",correct:true},{text:"Yes, stop it immediately — nausea means the drug is unsuitable.",correct:false},{text:"No. You must keep taking it whatever happens.",correct:false}],model:"I understand why you're considering that. Before you change the medication, let's review what you're taking and agree the safest next step.",patientReply:"Okay. I didn't want to make the wrong decision on my own.",feedback:"Acknowledge the patient's concern and avoid giving an unsupported blanket instruction to stop or continue an unspecified medicine."},
+        {skill:"safety",title:"Handle uncertainty",instruction:"Choose the statement that avoids claiming the medicine is definitely the cause.",options:[{text:"The timing means the medication could be relevant, but I don't want to assume it is the only explanation without reviewing the situation properly.",correct:true},{text:"Because the nausea started afterwards, the medication is definitely the cause.",correct:false},{text:"The timing is irrelevant, so the medicine cannot be involved.",correct:false}],model:"The timing means the medication could be relevant, but I don't want to assume it is the only explanation without reviewing the situation properly.",patientReply:"That makes sense.",feedback:"Temporal association can guide questions, but it does not prove causation."},
+        {skill:"safety",title:"Agree a safe review plan",instruction:"Choose the clearest plan for this fictional case.",options:[{text:"I'd like to review the medication and your symptoms before any change is made, and arrange follow-up so we can reassess how you're doing.",correct:true},{text:"Just reduce the dose yourself and see what happens.",correct:false},{text:"There is no need for follow-up because the symptoms are not severe today.",correct:false}],model:"I'd like to review the medication and your symptoms before any change is made, and arrange follow-up so we can reassess how you're doing.",patientReply:"Okay. I'll wait for the review rather than changing it myself.",feedback:"The plan is clear, avoids unsupervised medication changes and includes reassessment."},
+        {skill:"communication",title:"Summarise",instruction:"Choose the summary that checks the timeline and concern.",options:[{text:"So, you started the new medication five days ago and have had nausea and an upset stomach since then. The symptoms are uncomfortable but not severe, and you were considering stopping the medicine because you were worried about the side effects. Have I got that right?",correct:true},{text:"So, the medicine is definitely causing a dangerous reaction.",correct:false},{text:"So, you feel sick after a tablet. That's enough.",correct:false}],model:"So, you started the new medication five days ago and have had nausea and an upset stomach since then. The symptoms are uncomfortable but not severe, and you were considering stopping the medicine because you were worried about the side effects. Have I got that right?",patientReply:"Yes, that's right.",feedback:"A good summary checks facts, severity and the patient's concern without overclaiming causation."},
+        {skill:"closing",title:"Check understanding",instruction:"After explaining the review and follow-up, choose the best understanding check.",options:[{text:"Does that plan make sense? Is there anything you'd like me to go over again?",correct:true},{text:"You know not to change it yourself now, right?",correct:false},{text:"There's no need to check because we agreed a plan.",correct:false}],model:"Does that plan make sense? Is there anything you'd like me to go over again?",patientReply:"Yes, I understand what to do next.",feedback:"Give the patient room to clarify rather than testing them with a leading question."},
+        {skill:"closing",title:"Safety-net and close",instruction:"Choose the strongest final line.",options:[{text:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",correct:true},{text:"If it gets worse, just stop the medication yourself.",correct:false},{text:"That's everything. Goodbye.",correct:false}],model:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",patientReply:"No, thank you. That's everything.",feedback:"Close with a clear safety-net and a final invitation for questions."}
+      ]
+    }
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -886,7 +959,14 @@
     closeCheckpoint: document.getElementById("closeSafelyCheckpointNumber"),
     closeProgress: document.getElementById("closeSafelyProgressBar"),
     closeStart: document.getElementById("startCloseSafely"),
-    finalShiftMap: document.getElementById("finalShiftMap")
+    finalShiftMap: document.getElementById("finalShiftMap"),
+    finalArea: document.getElementById("finalShiftArea"),
+    finalScreen: document.getElementById("finalShiftScreen"),
+    finalFeedback: document.getElementById("finalShiftFeedback"),
+    finalInstruction: document.getElementById("finalShiftInstruction"),
+    finalCheckpoint: document.getElementById("finalShiftCheckpointNumber"),
+    finalProgress: document.getElementById("finalShiftProgressBar"),
+    finalStart: document.getElementById("startFinalShift")
   };
 
   let state = readState();
@@ -899,6 +979,7 @@
   let patient4State = readPatient4State();
   let researchState = readResearchState();
   let closeState = readCloseState();
+  let finalState = readFinalState();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -1022,6 +1103,23 @@
 
   function saveCloseState() {
     try { localStorage.setItem(STORAGE_CLOSE_KEY, JSON.stringify(closeState)); } catch (_) {}
+  }
+
+  function readFinalState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_FINAL_KEY));
+      if (value && Number.isInteger(value.index)) return {
+        index:0, completed:false, mistakes:0, caseId:"", points:0, currentMissed:false,
+        skillPoints:{opening:0,clinical:0,communication:0,safety:0,closing:0},
+        ...value,
+        skillPoints:{opening:0,clinical:0,communication:0,safety:0,closing:0,...(value.skillPoints||{})}
+      };
+    } catch (_) {}
+    return {index:0, completed:false, mistakes:0, caseId:"", points:0, currentMissed:false, skillPoints:{opening:0,clinical:0,communication:0,safety:0,closing:0}};
+  }
+
+  function saveFinalState() {
+    try { localStorage.setItem(STORAGE_FINAL_KEY, JSON.stringify(finalState)); } catch (_) {}
   }
 
 
@@ -3142,11 +3240,13 @@
         <div><span>3 · SAFETY-NET</span><strong>Say what happens if things change</strong><small>Then invite one last question before ending the call.</small></div>
       </div>
       <div class="timeline-preview final-preview"><span>NEXT · FINAL LIVE SHIFT</span><p><strong>One complete teleconsultation. No training wheels.</strong></p><small>Opening · history · communication · online safety · plan · close.</small></div>
-      <div class="mission-complete-actions"><button id="replayClose" class="tcr-secondary-button" type="button">Replay Close Safely</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+      <div class="mission-complete-actions"><button id="startFinalFromClose" class="tcr-primary" type="button">Start Final Live Shift →</button><button id="replayClose" class="tcr-secondary-button" type="button">Replay Close Safely</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
     </div>`;
     setCloseFeedback("<strong>Next:</strong> Final Live Shift — bring the whole Day 1 consultation together from connection to safe closing.", "info");
     document.getElementById("replayClose")?.addEventListener("click", resetCloseSafely);
+    document.getElementById("startFinalFromClose")?.addEventListener("click", startFinalShift);
     renderCloseProgress();
+    renderFinalProgress();
   }
 
   function startCloseSafely() {
@@ -3165,6 +3265,230 @@
     els.closeInstruction.textContent = closeIsUnlocked() ? "The final minutes matter: summarise, explain the plan, check understanding and safety-net before you disconnect." : "Complete the Research Comms Terminal to unlock Close Safely.";
     els.closeScreen.innerHTML = closeIsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">✅</div><h3>Close Safely ready</h3><p>Six closing checks stand between you and the Final Live Shift.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Close Safely locked</h3><p>Finish the Research Comms Terminal first.</p></div>`;
     setCloseFeedback();
+    renderFinalProgress();
+  }
+
+
+  function finalIsUnlocked() {
+    return closeState.completed || finalState.completed;
+  }
+
+  function currentFinalCase() {
+    return finalCases.find(item => item.id === finalState.caseId) || null;
+  }
+
+  function allocateFinalCase(forceDifferent = false) {
+    const old = finalState.caseId;
+    let pool = finalCases;
+    if (forceDifferent && finalCases.length > 1 && old) pool = finalCases.filter(item => item.id !== old);
+    const selected = pool[Math.floor(Math.random() * pool.length)];
+    finalState.caseId = selected.id;
+    saveFinalState();
+    return selected;
+  }
+
+  function finalSkillLabel(skill) {
+    return ({opening:"Opening",clinical:"Clinical questioning",communication:"Communication",safety:"Online safety",closing:"Closing"})[skill] || skill;
+  }
+
+  function finalSkillMax(caseData, skill) {
+    return caseData.items.filter(item => item.skill === skill).length * 10;
+  }
+
+  function finalSkillPercent(caseData, skill) {
+    const max = finalSkillMax(caseData, skill);
+    return max ? Math.round(((finalState.skillPoints?.[skill] || 0) / max) * 100) : 0;
+  }
+
+  function setFinalFeedback(html = "", type = "") {
+    if (!els.finalFeedback) return;
+    els.finalFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.finalFeedback.innerHTML = html;
+  }
+
+  function renderFinalProgress() {
+    if (!els.finalArea) return;
+    const total = 10;
+    const done = finalState.completed ? total : Math.min(finalState.index, total);
+    els.finalCheckpoint.textContent = finalState.completed ? `${total} / ${total}` : `${done} / ${total}`;
+    els.finalProgress.style.width = `${(done / total) * 100}%`;
+
+    if (!finalIsUnlocked()) {
+      els.finalArea.classList.add("is-locked");
+      els.finalStart.disabled = true;
+      els.finalStart.textContent = "Final Live Shift locked";
+      els.finalInstruction.textContent = "Complete Close Safely to unlock your final shift.";
+      if (els.finalShiftMap) {
+        els.finalShiftMap.classList.remove("final-ready","done");
+        els.finalShiftMap.querySelector("b").textContent = "FINAL";
+      }
+      return;
+    }
+
+    els.finalArea.classList.remove("is-locked");
+    els.finalStart.disabled = false;
+    els.finalStart.textContent = finalState.completed ? "View completed Final Shift →" : finalState.index > 0 ? "Continue Final Live Shift →" : "Start Final Live Shift →";
+    els.finalInstruction.textContent = finalState.completed ? "Day 1 complete. Review your final competency report or run a new case." : finalState.caseId ? "Your live patient is allocated. Continue the consultation from opening to safety-netting." : "Final shift unlocked. Start when you are ready and the Control Room will allocate one of today's patients.";
+    if (els.finalShiftMap) {
+      els.finalShiftMap.classList.toggle("final-ready", !finalState.completed);
+      els.finalShiftMap.classList.toggle("done", finalState.completed);
+      els.finalShiftMap.querySelector("b").textContent = finalState.completed ? "DONE" : "NEXT";
+    }
+  }
+
+  function finalPatientPanel(caseData, reply = "") {
+    return `<article class="final-patient-card">
+      <div class="final-patient-image"><span class="final-live-badge">● FINAL LIVE CALL</span><img src="${escapeHTML(caseData.image)}" alt="${escapeHTML(caseData.alt)}"></div>
+      <div class="final-patient-meta">
+        <span>${escapeHTML(caseData.label)}</span>
+        <h3>${escapeHTML(caseData.name)}</h3>
+        <p class="final-case-line">DOB: ${escapeHTML(caseData.dob)}</p>
+        <p class="final-case-line">${escapeHTML(caseData.brief)}</p>
+        ${reply ? `<div class="final-reply"><div class="final-reply-head"><strong>Patient reply</strong><button class="final-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(reply)}”</p><small>Transcript</small></div>` : `<p class="final-awaiting">The patient is waiting. Manage the consultation from start to finish.</p>`}
+      </div>
+    </article>`;
+  }
+
+  function renderFinalItem() {
+    renderFinalProgress();
+    if (!finalIsUnlocked()) return;
+    let caseData = currentFinalCase();
+    if (!caseData) caseData = allocateFinalCase();
+    if (finalState.completed || finalState.index >= caseData.items.length) return renderFinalComplete();
+
+    const item = caseData.items[finalState.index];
+    const number = finalState.index + 1;
+    els.finalInstruction.textContent = item.instruction;
+    els.finalCheckpoint.textContent = `${finalState.index} / ${caseData.items.length}`;
+    els.finalProgress.style.width = `${(finalState.index / caseData.items.length) * 100}%`;
+    setFinalFeedback();
+
+    const displayOptions = [...item.options].sort(() => Math.random() - 0.5);
+    els.finalScreen.innerHTML = `<div class="final-live-shell">
+      ${finalPatientPanel(caseData)}
+      <article class="final-decision-card">
+        <span class="final-round-kicker">FINAL LIVE SHIFT · ${number} / ${caseData.items.length}</span>
+        <span class="final-skill-pill">${escapeHTML(finalSkillLabel(item.skill))}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="final-options">${displayOptions.map((option,index) => `<button class="final-choice" type="button" data-final-choice="${index}"><span>${String.fromCharCode(65+index)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}</div>
+        <div class="final-context-note"><strong>Live-shift rule:</strong> clear, safe and professional beats sounding certain. Use the information you actually have.</div>
+      </article>
+    </div>`;
+
+    els.finalScreen.querySelectorAll("[data-final-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const option = displayOptions[Number(button.dataset.finalChoice)];
+        els.finalScreen.querySelectorAll("[data-final-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          const earned = finalState.currentMissed ? 6 : 10;
+          finalState.points += earned;
+          finalState.skillPoints[item.skill] = (finalState.skillPoints[item.skill] || 0) + earned;
+          saveFinalState();
+          setFinalFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="final-hear-model" type="button">🔊 Hear doctor line</button>`, "success");
+          const hear = els.finalFeedback.querySelector(".final-hear-model");
+          hear?.addEventListener("click", () => speak(item.model, hear, 0.9));
+          const patientCard = els.finalScreen.querySelector(".final-patient-card");
+          if (patientCard) patientCard.outerHTML = finalPatientPanel(caseData, item.patientReply);
+          const listen = els.finalScreen.querySelector(".final-listen");
+          listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
+          advanceFinalButton(number === caseData.items.length ? "Complete the Live Shift →" : "Continue the call →");
+        } else {
+          button.classList.add("wrong-choice");
+          beep("warn");
+          finalState.mistakes += 1;
+          finalState.currentMissed = true;
+          saveFinalState();
+          setFinalFeedback(`<strong>Not quite.</strong> ${escapeHTML(item.feedback)}`, "warning");
+          setTimeout(() => {
+            els.finalScreen.querySelectorAll("[data-final-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advanceFinalButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.finalFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      const caseData = currentFinalCase();
+      finalState.index += 1;
+      finalState.currentMissed = false;
+      if (caseData && finalState.index >= caseData.items.length) finalState.completed = true;
+      saveFinalState();
+      renderFinalItem();
+      els.finalScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderFinalComplete() {
+    const caseData = currentFinalCase() || allocateFinalCase();
+    finalState.completed = true;
+    finalState.index = caseData.items.length;
+    saveFinalState();
+    renderFinalProgress();
+    const score = Math.round((finalState.points / (caseData.items.length * 10)) * 100);
+    const level = score >= 90 ? "Teleconsultation Pro" : score >= 75 ? "Reliable Video Doctor" : "Developing Clinician";
+    const levelIcon = score >= 90 ? "★" : score >= 75 ? "✓" : "↗";
+    const skills = ["opening","clinical","communication","safety","closing"];
+    els.finalInstruction.textContent = "Final Live Shift complete: your Day 1 competency report is ready.";
+    els.finalCheckpoint.textContent = `${caseData.items.length} / ${caseData.items.length}`;
+    els.finalProgress.style.width = "100%";
+    els.shiftStatus.textContent = `Day 1 complete · ${level}`;
+    els.finalScreen.innerHTML = `<div class="mission-complete-card final-scoreboard">
+      <div class="mission-badge final-badge" aria-hidden="true">${levelIcon}</div>
+      <p class="mission-step-label">FINAL LIVE SHIFT COMPLETE</p>
+      <h3>Teleconsultation Ready badge unlocked</h3>
+      <p>You managed ${escapeHTML(caseData.name)} from safe opening to a clear plan and closing. Your score rewards correct first choices while still allowing you to revise an unsafe option.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>final shift score</span></div>
+      <p><span class="final-level-chip">${levelIcon} ${escapeHTML(level)}</span></p>
+      <div class="final-skills">${skills.map(skill => { const pct=finalSkillPercent(caseData,skill); return `<div class="final-skill-card"><span>${escapeHTML(finalSkillLabel(skill))}</span><strong>${pct}%</strong><div class="final-skill-track"><i style="width:${pct}%"></i></div><small>${pct===100 ? "Strong first-choice performance" : pct>=70 ? "Reliable — keep practising" : "Worth another run"}</small></div>`; }).join("")}</div>
+      <div class="day1-complete-banner"><span>FGSM3 · DAY 1 COMPLETE</span><strong>From face-to-face skills to safe online consultation</strong><p>You have revised safe video setup, history-taking, Past Simple vs Present Perfect, -ed pronunciation, limits of remote assessment, medication communication, research-presentation language and safe closing.</p></div>
+      <div class="mission-complete-actions"><button id="newFinalCase" class="tcr-primary" type="button">Run a different final case →</button><button id="replaySameFinal" class="tcr-secondary-button" type="button">Replay this case</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setFinalFeedback(`<strong>Shift complete.</strong> ${escapeHTML(level)} · ${score}%. Progress is saved locally on this device.`, "success");
+    document.getElementById("newFinalCase")?.addEventListener("click", () => { resetFinalShift(true); startFinalShift(); });
+    document.getElementById("replaySameFinal")?.addEventListener("click", () => { resetFinalShift(false); startFinalShift(); });
+    renderFinalProgress();
+  }
+
+  function startFinalShift() {
+    if (!finalIsUnlocked()) return;
+    if (!finalState.caseId) allocateFinalCase();
+    if (finalState.completed) renderFinalComplete();
+    else renderFinalItem();
+    els.finalArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.finalScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetFinalShift(different = false) {
+    const previous = finalState.caseId;
+    finalState = {index:0, completed:false, mistakes:0, caseId:previous, points:0, currentMissed:false, skillPoints:{opening:0,clinical:0,communication:0,safety:0,closing:0}};
+    if (different || !previous) {
+      finalState.caseId = previous;
+      allocateFinalCase(true);
+    }
+    saveFinalState();
+    renderFinalProgress();
+    setFinalFeedback();
+    if (!finalIsUnlocked()) {
+      finalState.caseId = "";
+      saveFinalState();
+      els.finalInstruction.textContent = "Complete Close Safely to unlock your final shift.";
+      els.finalScreen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Final Live Shift locked</h3><p>Finish Close Safely first. Your final patient will then be allocated automatically.</p></div>`;
+      return;
+    }
+    const caseData = currentFinalCase();
+    els.finalInstruction.textContent = "Final shift ready. Manage the consultation from opening to safety-netting.";
+    els.finalScreen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">★</div><h3>${caseData ? escapeHTML(caseData.label.replace("FINAL CASE · ","")) : "Final case ready"}</h3><p>${caseData ? escapeHTML(caseData.brief) : "Press Start Final Live Shift when you are ready."}</p></div>`;
+    els.shiftStatus.textContent = "Final Live Shift ready";
+    els.finalStart.focus();
   }
 
 
@@ -3256,6 +3580,7 @@
     patient4State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     researchState = {index: 0, completed: false, mistakes: 0, lastModel: ""};
     closeState = {index: 0, completed: false, mistakes: 0, lastModel: "", lastReply: ""};
+    finalState = {index:0, completed:false, mistakes:0, caseId:"", points:0, currentMissed:false, skillPoints:{opening:0,clinical:0,communication:0,safety:0,closing:0}};
     saveState();
     saveClinicalState();
     saveAudioLabState();
@@ -3266,6 +3591,7 @@
     savePatient4State();
     saveResearchState();
     saveCloseState();
+    saveFinalState();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -3280,6 +3606,8 @@
     resetPatient4();
     resetResearch();
     resetCloseSafely();
+    resetFinalShift(false);
+    finalState.caseId = ""; saveFinalState(); renderFinalProgress();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -3301,6 +3629,7 @@
   els.patient4Start?.addEventListener("click", startPatient4);
   els.researchStart?.addEventListener("click", startResearch);
   els.closeStart?.addEventListener("click", startCloseSafely);
+  els.finalStart?.addEventListener("click", startFinalShift);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -3339,8 +3668,9 @@
   renderPatient4Progress();
   renderResearchProgress();
   renderCloseProgress();
+  renderFinalProgress();
   if (state.completed) {
-    els.shiftStatus.textContent = closeState.completed ? "Close Safely complete · Final Live Shift next" : researchState.completed ? "Research Comms complete · Close Safely next" : patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = finalState.completed ? "Day 1 complete · Final Live Shift complete" : closeState.completed ? "Close Safely complete · Final Live Shift next" : researchState.completed ? "Research Comms complete · Close Safely next" : patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
@@ -3351,5 +3681,6 @@
     if (patient3State.completed || patient4State.completed) unlockPatient4();
     if (patient4State.completed || researchState.completed) unlockResearch();
     if (researchState.completed || closeState.completed) unlockCloseSafely();
+    if (closeState.completed || finalState.completed) renderFinalProgress();
   }
 })();

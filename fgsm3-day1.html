@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v18.css">
+  <link rel="stylesheet" href="styles-v19.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -441,6 +441,42 @@
       </div>
 
       <div id="closeSafelyFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+
+    <section id="finalShiftArea" class="tcr-mission final-shift-section is-locked" aria-labelledby="finalShiftTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">FINAL · LIVE SHIFT</p>
+          <h2 id="finalShiftTitle">One complete teleconsultation</h2>
+          <p id="finalShiftInstruction">Complete Close Safely to unlock your final shift.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>LIVE CALL</span>
+          <strong id="finalShiftCheckpointNumber">0 / 10</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="finalShiftProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="final-shift-brief">
+        <div class="final-shift-brief-icon" aria-hidden="true">★</div>
+        <div>
+          <span class="case-brief-kicker">FINAL CASE · RANDOM ALLOCATION</span>
+          <strong>No isolated drill: manage the call from connection to closing.</strong>
+          <p>The Control Room will assign one of today's four fictional patients. Your final report scores five areas: opening, clinical questioning, communication, online safety and closing. No timer. Audio remains optional.</p>
+        </div>
+        <button id="startFinalShift" class="tcr-primary" type="button" disabled>Final Live Shift locked</button>
+      </div>
+
+      <div id="finalShiftScreen" class="mission-screen final-shift-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Final Live Shift locked</h3>
+          <p>Finish Close Safely first. Your final patient will then be allocated automatically.</p>
+        </div>
+      </div>
+
+      <div id="finalShiftFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
