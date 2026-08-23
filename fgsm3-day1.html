@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v10.css">
+  <link rel="stylesheet" href="styles-v12.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -191,6 +191,41 @@
       <div id="audioLabFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="timelineArea" class="tcr-mission timeline-section is-locked" aria-labelledby="timelineTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">LANGUAGE BAY · TIMELINE CHECK</p>
+          <h2 id="timelineTitle">Past event or experience up to now?</h2>
+          <p id="timelineInstruction">Complete the -ed Audio Lab to unlock the timeline monitor.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>TIMELINE CHECK</span>
+          <strong id="timelineCheckpointNumber">0 / 8</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="timelineProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="timeline-brief">
+        <div class="timeline-brief-icon" aria-hidden="true">🕒</div>
+        <div>
+          <span class="case-brief-kicker">PATIENT 01 · HEADACHE HISTORY</span>
+          <strong>Keep the clinical timeline clear.</strong>
+          <p>Use the Past Simple for a finished event or specific past time. Use the Present Perfect when the past situation is connected to now.</p>
+        </div>
+        <button id="startTimeline" class="tcr-primary" type="button" disabled>Timeline Check locked</button>
+      </div>
+
+      <div id="timelineScreen" class="mission-screen timeline-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Timeline monitor locked</h3>
+          <p>Complete the pronunciation Training Bay first. Patient 01's history will then reopen for a grammar check.</p>
+        </div>
+      </div>
+
+      <div id="timelineFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
       <div class="mission-map-heading">
         <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
@@ -202,9 +237,10 @@
         <article id="missionMap2" class="mission-map-card"><span>02</span><div><strong>Ask the Right Questions</strong><small>Open questions · symptom exploration · concerns</small></div><b>LOCKED</b></article>
         <article id="audioLabMap" class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>LOCKED</b></article>
         <article id="timelineMap" class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>LOCKED</b></article>
-        <article class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>NEXT</b></article>
-        <article class="mission-map-card"><span>04</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>NEXT</b></article>
-        <article class="mission-map-card"><span>05</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>NEXT</b></article>
+        <article id="patient2Map" class="mission-map-card"><span>04</span><div><strong>Patient 02 · Ankle Injury</strong><small>Camera skills · injury questions · visible swelling</small></div><b>LOCKED</b></article>
+        <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
+        <article class="mission-map-card"><span>05</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>LOCKED</b></article>
+        <article class="mission-map-card"><span>06</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
         <article class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
       </div>
     </section>

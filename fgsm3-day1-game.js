@@ -3,6 +3,7 @@
   const STORAGE_M2_KEY = "mrsLecomteFGSM3Day1Mission2V1";
   const AUDIO_KEY = "mrsLecomteFGSM3Day1AudioV1";
   const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabV1";
+  const STORAGE_TIMELINE_KEY = "mrsLecomteFGSM3Day1TimelineCheckV1";
 
   const checkpoints = [
     {
@@ -151,6 +152,76 @@
     {word:"measured", extra:false}
   ];
 
+  const timelineItems = [
+    {
+      cue:"FOUR DAYS AGO",
+      prompt:"The headaches ___ four days ago.",
+      voiceText:"The headaches started four days ago.",
+      options:["started", "have started"], correct:0,
+      tense:"Past Simple",
+      explanation:"‘Four days ago’ locates a finished event at a specific point in the past."
+    },
+    {
+      cue:"SINCE THEN",
+      prompt:"I ___ one every day since then.",
+      voiceText:"I've had one every day since then.",
+      options:["had", "have had"], correct:1,
+      tense:"Present Perfect",
+      explanation:"‘Since then’ connects the past to the present: the repeated experience continues up to now."
+    },
+    {
+      cue:"EXACT START",
+      prompt:"Which question asks for the specific moment the problem began?",
+      voiceText:"When did the headaches start?",
+      options:["When did the headaches start?", "When have the headaches started?"], correct:0,
+      tense:"Past Simple",
+      explanation:"When you ask about a specific past starting point, use the Past Simple: ‘When did it start?’"
+    },
+    {
+      cue:"DURATION TO NOW",
+      prompt:"The headaches are still happening. Which question fits?",
+      voiceText:"How long have you had the headaches?",
+      options:["How long did you have the headaches?", "How long have you had the headaches?"], correct:1,
+      tense:"Present Perfect",
+      explanation:"‘How long have you had…?’ asks about a situation that began in the past and is still relevant now."
+    },
+    {
+      cue:"YESTERDAY",
+      prompt:"Yesterday, I ___ dizzy when I stood up.",
+      voiceText:"Yesterday, I felt dizzy when I stood up.",
+      options:["felt", "have felt"], correct:0,
+      tense:"Past Simple",
+      explanation:"‘Yesterday’ is a finished past time, so use the Past Simple."
+    },
+    {
+      cue:"THIS WEEK",
+      prompt:"I ___ dizzy several times this week.",
+      voiceText:"I've felt dizzy several times this week.",
+      options:["felt", "have felt"], correct:1,
+      tense:"Present Perfect",
+      explanation:"‘This week’ is an unfinished time period here, so the experience is connected to now."
+    },
+    {
+      cue:"SINCE MONDAY",
+      prompt:"The headaches ___ more frequent since Monday.",
+      voiceText:"The headaches have become more frequent since Monday.",
+      options:["became", "have become"], correct:1,
+      tense:"Present Perfect",
+      explanation:"‘Since Monday’ gives the starting point of a change that continues up to the present."
+    },
+    {
+      cue:"BUILD THE TIMELINE",
+      prompt:"Choose the clearest clinical timeline.",
+      voiceText:"I first noticed the headaches on Thursday, and they've happened every day since then.",
+      options:[
+        "I first noticed the headaches on Thursday, and they've happened every day since then.",
+        "I've first noticed the headaches on Thursday, and they happened every day since then."
+      ], correct:0,
+      tense:"Past Simple + Present Perfect",
+      explanation:"Use Past Simple for the dated starting event, then Present Perfect for what has continued from that point to now."
+    }
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -181,12 +252,22 @@
     audioLabProgress: document.getElementById("audioLabProgressBar"),
     audioLabStart: document.getElementById("startAudioLab"),
     audioLabMap: document.getElementById("audioLabMap"),
-    timelineMap: document.getElementById("timelineMap")
+    timelineMap: document.getElementById("timelineMap"),
+    timelineArea: document.getElementById("timelineArea"),
+    timelineScreen: document.getElementById("timelineScreen"),
+    timelineFeedback: document.getElementById("timelineFeedback"),
+    timelineInstruction: document.getElementById("timelineInstruction"),
+    timelineCheckpoint: document.getElementById("timelineCheckpointNumber"),
+    timelineProgress: document.getElementById("timelineProgressBar"),
+    timelineStart: document.getElementById("startTimeline"),
+    patient2Map: document.getElementById("patient2Map"),
+    researchMap: document.getElementById("researchMap")
   };
 
   let state = readState();
   let clinicalState = readClinicalState();
   let audioLabState = readAudioLabState();
+  let timelineState = readTimelineState();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -224,6 +305,18 @@
 
   function saveAudioLabState() {
     try { localStorage.setItem(STORAGE_AUDIO_LAB_KEY, JSON.stringify(audioLabState)); } catch (_) {}
+  }
+
+  function readTimelineState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_TIMELINE_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0};
+  }
+
+  function saveTimelineState() {
+    try { localStorage.setItem(STORAGE_TIMELINE_KEY, JSON.stringify(timelineState)); } catch (_) {}
   }
 
   function readAudioPrefs() {
@@ -707,10 +800,7 @@
       els.audioLabMap.classList.add(audioLabState.completed ? "done" : "live");
       els.audioLabMap.querySelector("b").textContent = audioLabState.completed ? "DONE" : "LIVE";
     }
-    if (els.timelineMap) {
-      els.timelineMap.classList.toggle("next-ready", audioLabState.completed);
-      els.timelineMap.querySelector("b").textContent = audioLabState.completed ? "NEXT" : "LOCKED";
-    }
+    renderTimelineProgress();
   }
 
   function unlockAudioLab() {
@@ -877,13 +967,15 @@
           <small>Next stop: choose between Past Simple and Present Perfect while the consultation timeline develops.</small>
         </div>
         <div class="mission-complete-actions">
-          <button id="replayAudioLab" class="tcr-primary" type="button">Replay Audio Lab</button>
-          <a class="tcr-secondary-link dark" href="#mission-map">See what comes next ↓</a>
+          <button id="startTimelineFromAudio" class="tcr-primary" type="button">Enter Timeline Check →</button>
+          <button id="replayAudioLab" class="tcr-secondary-button" type="button">Replay Audio Lab</button>
         </div>
       </div>`;
     setAudioLabFeedback("<strong>Next:</strong> Timeline Check — Past Simple vs Present Perfect in Patient 01's history.", "info");
     document.getElementById("replayAudioLab").addEventListener("click", resetAudioLab);
+    document.getElementById("startTimelineFromAudio").addEventListener("click", startTimeline);
     renderAudioLabProgress();
+    unlockTimeline();
   }
 
   function startAudioLab() {
@@ -906,6 +998,224 @@
       ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🎧</div><h3>Pronunciation training ready</h3><p>Start with verbs from <em>Being a Doctor</em>, then switch to the language of your scientific article presentation.</p></div>`
       : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Training Bay locked</h3><p>Finish the clinical history with Patient 01 first. The pronunciation lab will unlock automatically.</p></div>`;
     setAudioLabFeedback();
+  }
+
+  function setTimelineFeedback(html = "", type = "") {
+    els.timelineFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.timelineFeedback.innerHTML = html;
+  }
+
+  function timelineIsUnlocked() {
+    return audioLabState.completed || timelineState.completed;
+  }
+
+  function renderTimelineProgress() {
+    const unlocked = timelineIsUnlocked();
+    if (!unlocked) {
+      els.timelineArea.classList.add("is-locked");
+      els.timelineStart.disabled = true;
+      els.timelineStart.textContent = "Timeline Check locked";
+      els.timelineCheckpoint.textContent = `0 / ${timelineItems.length}`;
+      els.timelineProgress.style.width = "0%";
+      if (els.timelineMap) {
+        els.timelineMap.classList.remove("live", "done", "next-ready");
+        els.timelineMap.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.patient2Map) {
+        els.patient2Map.classList.remove("live", "done", "next-ready");
+        els.patient2Map.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.researchMap) {
+        els.researchMap.classList.remove("live", "done", "next-ready");
+        els.researchMap.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.timelineArea.classList.remove("is-locked");
+    els.timelineStart.disabled = false;
+    els.timelineStart.textContent = timelineState.completed ? "View completed Timeline Check →" : timelineState.index > 0 ? "Continue Timeline Check →" : "Open Timeline Monitor →";
+    const done = timelineState.completed ? timelineItems.length : Math.min(timelineState.index, timelineItems.length);
+    els.timelineCheckpoint.textContent = timelineState.completed ? `${timelineItems.length} / ${timelineItems.length}` : `${done} / ${timelineItems.length}`;
+    els.timelineProgress.style.width = `${(done / timelineItems.length) * 100}%`;
+
+    if (els.timelineMap) {
+      els.timelineMap.classList.remove("live", "done", "next-ready");
+      els.timelineMap.classList.add(timelineState.completed ? "done" : "live");
+      els.timelineMap.querySelector("b").textContent = timelineState.completed ? "DONE" : "LIVE";
+    }
+    if (els.patient2Map) {
+      els.patient2Map.classList.remove("live", "done", "next-ready");
+      if (timelineState.completed) els.patient2Map.classList.add("next-ready");
+      els.patient2Map.querySelector("b").textContent = timelineState.completed ? "NEXT" : "LOCKED";
+    }
+    if (els.researchMap) {
+      els.researchMap.classList.remove("live", "done", "next-ready");
+      els.researchMap.querySelector("b").textContent = "LOCKED";
+    }
+  }
+
+  function unlockTimeline() {
+    renderTimelineProgress();
+    if (!timelineIsUnlocked()) return;
+    if (!timelineState.completed && timelineState.index === 0) {
+      els.timelineInstruction.textContent = "Timeline monitor unlocked. Decide whether each line describes a finished past event or a situation connected to now.";
+      els.timelineScreen.innerHTML = `
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🕒</div>
+          <h3>Patient 01's timeline is ready</h3>
+          <p>Specific finished time → Past Simple. Past experience or duration connected to now → Present Perfect.</p>
+        </div>`;
+    }
+  }
+
+  function timelineVisual(item) {
+    const presentPerfect = /Present Perfect/.test(item.tense);
+    return `
+      <div class="timeline-axis" aria-hidden="true">
+        <span class="timeline-past-label">PAST</span>
+        <div class="timeline-line"><i class="timeline-event-dot"></i><i class="timeline-now-dot"></i></div>
+        <span class="timeline-now-label">NOW</span>
+      </div>
+      <div class="timeline-cue-chip ${presentPerfect ? "linked-now" : "finished-past"}">${escapeHTML(item.cue)}</div>`;
+  }
+
+  function renderTimelineItem() {
+    renderTimelineProgress();
+    if (!timelineIsUnlocked()) return;
+    if (timelineState.completed || timelineState.index >= timelineItems.length) return renderTimelineComplete();
+
+    const item = timelineItems[timelineState.index];
+    const number = timelineState.index + 1;
+    els.timelineInstruction.textContent = `Timeline check ${number}: choose the tense that matches the clinical time reference.`;
+    setTimelineFeedback();
+
+    els.timelineScreen.innerHTML = `
+      <div class="timeline-shell">
+        <article class="timeline-patient-card">
+          <div class="timeline-patient-head">
+            <img src="assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp" alt="Patient 01 during her home video consultation.">
+            <div><span>PATIENT 01 · ELEANOR REED</span><strong>Headache timeline</strong><small>Grammar monitor · no timer</small></div>
+          </div>
+          ${timelineVisual(item)}
+          <div class="timeline-transcript">
+            <span>Clinical line</span>
+            <p>${escapeHTML(item.prompt)}</p>
+          </div>
+          <button id="listenTimelineLine" class="timeline-listen" type="button">🔊 Hear the completed line</button>
+        </article>
+        <article class="timeline-choice-card">
+          <span class="timeline-round-kicker">CHECK ${number} OF ${timelineItems.length}</span>
+          <h3>${escapeHTML(item.prompt)}</h3>
+          <p>Choose the form or question that keeps the patient's timeline accurate.</p>
+          <div class="timeline-options" role="group" aria-label="Choose the correct tense or question">
+            ${item.options.map((option, idx) => `<button class="timeline-choice" type="button" data-timeline-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option)}</b></button>`).join("")}
+          </div>
+          <div class="timeline-rule-box"><strong>Quick rule</strong><span><em>yesterday / ago / last… / exact past time</em> → Past Simple</span><span><em>since / for / recently / up to now</em> → Present Perfect</span></div>
+        </article>
+      </div>`;
+
+    const listen = document.getElementById("listenTimelineLine");
+    listen.addEventListener("click", () => speak(item.voiceText, listen, 0.88));
+
+    els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const chosen = Number(button.dataset.timelineChoice);
+        els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(btn => { btn.disabled = true; });
+        if (chosen === item.correct) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          setTimelineFeedback(`<strong>✓ ${escapeHTML(item.tense)}.</strong> ${escapeHTML(item.explanation)} <button class="inline-listen-correct" type="button">🔊 Hear it</button>`, "correct");
+          const inlineListen = els.timelineFeedback.querySelector(".inline-listen-correct");
+          inlineListen?.addEventListener("click", () => speak(item.voiceText, inlineListen, 0.88));
+          advanceTimelineButton(number === timelineItems.length ? "Complete Timeline Check →" : "Next timeline clue →");
+        } else {
+          button.classList.add("wrong-choice");
+          timelineState.mistakes += 1;
+          saveTimelineState();
+          beep("error");
+          setTimelineFeedback(`<strong>Try again.</strong> Look at the time clue: <em>${escapeHTML(item.cue)}</em>. Decide whether the time is finished, or whether it reaches the present.`, "wrong");
+          window.setTimeout(() => {
+            els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(btn => {
+              btn.disabled = false;
+              btn.classList.remove("wrong-choice");
+            });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advanceTimelineButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.timelineFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      timelineState.index += 1;
+      if (timelineState.index >= timelineItems.length) timelineState.completed = true;
+      saveTimelineState();
+      renderTimelineItem();
+      els.timelineScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderTimelineComplete() {
+    timelineState.completed = true;
+    timelineState.index = timelineItems.length;
+    saveTimelineState();
+    els.timelineInstruction.textContent = "Timeline Check complete: you can separate finished past events from experiences and situations connected to now.";
+    els.timelineCheckpoint.textContent = `${timelineItems.length} / ${timelineItems.length}`;
+    els.timelineProgress.style.width = "100%";
+    els.shiftStatus.textContent = "Timeline Check complete · Patient 02 next";
+    const score = Math.max(0, 100 - timelineState.mistakes * 7);
+    const quality = timelineState.mistakes === 0 ? "Timeline perfectly controlled" : timelineState.mistakes <= 2 ? "Clinical timeline secure" : "Timeline secured after review";
+    els.timelineScreen.innerHTML = `
+      <div class="mission-complete-card">
+        <div class="mission-badge timeline-badge" aria-hidden="true">🕒</div>
+        <p class="mission-step-label">LANGUAGE BAY COMPLETE</p>
+        <h3>Timeline Navigator badge unlocked</h3>
+        <p>${escapeHTML(quality)}. You used the Past Simple for finished events and specific past times, and the Present Perfect for experiences, duration and change connected to now.</p>
+        <div class="mission-complete-score"><strong>${score}%</strong><span>timeline score</span></div>
+        <div class="timeline-summary-grid">
+          <div><span>PAST SIMPLE</span><strong>When did it start?</strong><small>The headaches started four days ago.</small></div>
+          <div><span>PRESENT PERFECT</span><strong>How long have you had it?</strong><small>I've had one every day since then.</small></div>
+        </div>
+        <div class="timeline-preview research-preview">
+          <span>NEXT CALL · PATIENT 02</span>
+          <p><strong>Twisted ankle · swelling · pain</strong></p>
+          <small>Return to the Control Room: use the camera appropriately, explore the injury and decide what can — and cannot — be assessed safely by video.</small>
+        </div>
+        <div class="mission-complete-actions">
+          <button id="replayTimeline" class="tcr-secondary-button" type="button">Replay Timeline Check</button>
+          <a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a>
+        </div>
+      </div>`;
+    setTimelineFeedback("<strong>Next:</strong> Patient 02 — ankle injury, camera skills and safe online assessment.", "info");
+    document.getElementById("replayTimeline").addEventListener("click", resetTimeline);
+    renderTimelineProgress();
+  }
+
+  function startTimeline() {
+    if (!timelineIsUnlocked()) return;
+    if (timelineState.completed) renderTimelineComplete();
+    else renderTimelineItem();
+    els.timelineArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.timelineScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetTimeline() {
+    timelineState = {index: 0, completed: false, mistakes: 0};
+    saveTimelineState();
+    renderTimelineProgress();
+    els.timelineInstruction.textContent = timelineIsUnlocked()
+      ? "Timeline monitor unlocked. Decide whether each line describes a finished past event or a situation connected to now."
+      : "Complete the -ed Audio Lab to unlock the timeline monitor.";
+    els.timelineScreen.innerHTML = timelineIsUnlocked()
+      ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🕒</div><h3>Patient 01's timeline is ready</h3><p>Specific finished time → Past Simple. Past experience or duration connected to now → Present Perfect.</p></div>`
+      : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Timeline monitor locked</h3><p>Complete the pronunciation Training Bay first.</p></div>`;
+    setTimelineFeedback();
   }
 
   function feedbackFor(id) {
@@ -989,9 +1299,11 @@
     state = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     clinicalState = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     audioLabState = {index: 0, completed: false, mistakes: 0, bonusDone: false};
+    timelineState = {index: 0, completed: false, mistakes: 0};
     saveState();
     saveClinicalState();
     saveAudioLabState();
+    saveTimelineState();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -999,6 +1311,7 @@
     els.m2Instruction.textContent = "Complete Mission 1 to unlock the clinical history.";
     els.m2Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div>`;
     resetAudioLab();
+    resetTimeline();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -1013,6 +1326,7 @@
 
   els.m2Start.addEventListener("click", startClinicalMission);
   els.audioLabStart.addEventListener("click", startAudioLab);
+  els.timelineStart.addEventListener("click", startTimeline);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -1044,10 +1358,12 @@
   renderProgress();
   renderClinicalProgress();
   renderAudioLabProgress();
+  renderTimelineProgress();
   if (state.completed) {
-    els.shiftStatus.textContent = audioLabState.completed ? "Missions 1–2 + Audio Lab complete" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = timelineState.completed ? "Timeline Check complete · Patient 02 next" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
+    if (audioLabState.completed || timelineState.completed) unlockTimeline();
   }
 })();
