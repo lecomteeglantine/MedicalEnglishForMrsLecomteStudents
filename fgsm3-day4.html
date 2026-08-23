@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v46.css">
+  <link rel="stylesheet" href="styles-v47.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -275,9 +275,37 @@
       <p id="day4StanceStatus" class="ai4-stance-status">Choose any position. Your viewpoint is not scored.</p>
     </section>
 
-    <section id="day4FinalTeaser" class="ai4-final-teaser is-locked" aria-labelledby="day4FinalTeaserTitle">
-      <div><span>FINAL CLEARANCE</span><h2 id="day4FinalTeaserTitle">Human-in-the-Loop Test</h2><p>One new fictional case. Ten mixed checkpoints. Vocabulary, video, AI limits, silent letters, evidence, calibration and accountability.</p></div>
-      <b>FINAL · READY FOR NEXT UPDATE</b>
+    <section id="day4Final" class="ai4-final is-locked" aria-labelledby="day4FinalTitle">
+      <div class="ai4-final-hero">
+        <div class="ai4-final-copy">
+          <p class="ai4-kicker">FINAL DAY 4 CLEARANCE</p>
+          <h2 id="day4FinalTitle">The Human-in-the-Loop Test</h2>
+          <p class="ai4-final-lead">One fictional AI-control case. Ten mixed checkpoints. Your job is not to prove that AI is good or bad — it is to use the Day 4 evidence accurately and keep human judgement in the loop.</p>
+          <div class="ai4-final-actions"><button id="startDay4Final" class="ai4-primary" type="button" disabled>🔒 Complete Mission 6 first</button><button id="hearDay4FinalBrief" class="ai4-secondary" type="button" disabled>🔊 Hear case briefing</button></div>
+        </div>
+        <div class="ai4-final-score"><span>FINAL SCORE</span><strong id="day4FinalScore">0 / 100</strong><small>10 first try · 6 after correction</small></div>
+      </div>
+
+      <div class="ai4-final-case" aria-live="polite">
+        <div id="day4FinalCaseIcon" class="ai4-final-case-icon" aria-hidden="true">🧠</div>
+        <div><span>CONTROL-ROOM CASE</span><h3 id="day4FinalCaseTitle">Locked</h3><p id="day4FinalCaseBrief">Complete Mission 6 to receive your final case.</p></div>
+      </div>
+
+      <div class="ai4-final-skills" aria-label="Skills assessed"><span>Vocabulary</span><span>Video</span><span>Human oversight</span><span>Silent letters</span><span>Evidence</span><span>Limitations</span><span>Modals</span><span>Overclaiming</span><span>Accountability</span><span>Integrated judgement</span></div>
+
+      <div class="ai4-final-progress"><div><span>FINAL CHECKPOINTS</span><strong id="day4FinalProgressText">0 / 10</strong></div><div class="ai4-progress-track"><i id="day4FinalProgressBar"></i></div></div>
+
+      <div class="ai4-workspace ai4-final-workspace" aria-labelledby="day4FinalWorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">FINAL · CONTROL DESK</p><h2 id="day4FinalWorkspaceTitle">Final test locked</h2><p id="day4FinalWorkspaceIntro">Clear the Accountability Board first.</p></div><div class="ai4-score-box"><span>CHECKPOINT</span><strong id="day4FinalCheckpoint">—</strong></div></div>
+        <div id="day4FinalScreen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>Final case locked</h3><p>Complete Mission 6 to enter the Human-in-the-Loop Test.</p></div></div>
+        <div id="day4FinalFeedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+
+      <section id="day4FinalResult" class="ai4-final-result is-locked" aria-labelledby="day4FinalResultTitle">
+        <div class="ai4-final-result-badge" id="day4FinalResultBadge" aria-hidden="true">✓</div>
+        <div class="ai4-final-result-copy"><p class="ai4-kicker dark">DAY 4 COMPLETE</p><h2 id="day4FinalResultTitle">Human-in-the-Loop Test complete</h2><p id="day4FinalResultText">Your final report will appear here.</p><div id="day4FinalSkillBreakdown" class="ai4-final-breakdown"></div><p class="ai4-final-disclaimer"><strong>Training note:</strong> this score assesses English, evidence reading and communication choices. It is not a clinical qualification and the fictional cases are not medical advice.</p></div>
+        <div class="ai4-final-result-actions"><button id="replayDay4Final" class="ai4-secondary" type="button">↻ Draw another case</button><a class="ai4-primary ai4-final-link" href="fgsm3.html">Back to FGSM3 →</a></div>
+      </section>
     </section>
 
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">

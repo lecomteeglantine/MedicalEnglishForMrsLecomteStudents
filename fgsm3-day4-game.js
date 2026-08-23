@@ -300,6 +300,7 @@
   let m4Current = null, m4Index = 0, m4Attempts = 0, m4SessionScore = 0;
   let m5Current = null, m5Index = 0, m5Attempts = 0, m5SessionScore = 0;
   let m6Current = null, m6Index = 0, m6Attempts = 0, m6SessionScore = 0;
+  let finalAttempts = 0;
 
   const $ = id => document.getElementById(id);
   const screen = $("ai4Screen"), feedback = $("ai4Feedback"), workspaceTitle = $("ai4WorkspaceTitle"), workspaceIntro = $("ai4WorkspaceIntro");
@@ -308,9 +309,82 @@
   const m4Screen = $("ai4M4Screen"), m4Feedback = $("ai4M4Feedback"), m4WorkspaceTitle = $("ai4M4WorkspaceTitle"), m4WorkspaceIntro = $("ai4M4WorkspaceIntro");
   const m5Screen = $("ai4M5Screen"), m5Feedback = $("ai4M5Feedback"), m5WorkspaceTitle = $("ai4M5WorkspaceTitle"), m5WorkspaceIntro = $("ai4M5WorkspaceIntro");
   const m6Screen = $("ai4M6Screen"), m6Feedback = $("ai4M6Feedback"), m6WorkspaceTitle = $("ai4M6WorkspaceTitle"), m6WorkspaceIntro = $("ai4M6WorkspaceIntro");
+  const finalScreen = $("day4FinalScreen"), finalFeedback = $("day4FinalFeedback"), finalWorkspaceTitle = $("day4FinalWorkspaceTitle"), finalWorkspaceIntro = $("day4FinalWorkspaceIntro");
   const music = $("day4Music"), musicToggle = $("day4MusicToggle"), audioStatus = $("day4AudioStatus"), clinicalVideo = $("day4ClinicalVideo");
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
   let videoPausedMusic = false;
+
+
+  const finalScenarios = [
+    {
+      icon:"❤️", title:"Sepsis Alert Review", code:"HIL-01",
+      brief:"An AI background-monitoring system flags a possible sepsis pattern while the clinician is focused on another urgent problem. Your task is to audit the language, evidence and human-review boundary — not to diagnose the fictional patient.",
+      speak:"Final case H I L zero one. Sepsis Alert Review. An AI background monitoring system flags a possible sepsis pattern while the clinician is focused on another urgent problem. Audit the evidence and keep the human in the loop.",
+      items:[
+        {skill:"Vocabulary",q:"The system continuously checks heart rate, temperature and oxygen. Which Day 4 verb fits?",a:"to monitor",opts:["to monitor","to complement","to diagnose","to replace"],ex:"To monitor means to watch or check continuously.",model:"The system monitors vital signs in the background."},
+        {skill:"Video",q:"In the supplied report, what is the sepsis AI mainly presented as?",a:"An early-warning system that supports the clinical team",opts:["An early-warning system that supports the clinical team","An autonomous doctor that makes the final diagnosis","A device that automatically prescribes antibiotics","A replacement for bedside assessment"],ex:"The report presents background monitoring and early warning, not autonomous clinical decision-making.",model:"The AI can flag a pattern, but the clinical team remains responsible for interpretation and action."},
+        {skill:"Human oversight",q:"The AI alert appears while the doctor is focused on another possible emergency. What best matches the report?",a:"The alert can draw attention to a developing pattern that might otherwise be missed.",opts:["The alert can draw attention to a developing pattern that might otherwise be missed.","The alert proves the diagnosis and ends the need for review.","The AI should take over the consultation immediately.","The doctor should ignore all other information once the alert appears."],ex:"The answer key describes the AI as a background safety system that can alert the team early.",model:"The alert may help the team notice a developing pattern earlier."},
+        {skill:"Silent letters",q:"Which letter is silent in subtle?",a:"b",opts:["b","t","l","s"],ex:"The worksheet marks su(b)tle: the b is written but not pronounced.",model:"subtle /ˈsʌtl/"},
+        {skill:"Evidence",q:"Which figures does the supplied report give for Cleveland Clinic sepsis?",a:"About 30,000 cases a year and roughly 2,000 deaths",opts:["About 30,000 cases a year and roughly 2,000 deaths","About 2,000 cases and 30,000 deaths","67 cases and 55 deaths","89 cases and 34 deaths"],ex:"Those are the figures given in the teacher answer key for the video.",model:"The report cites about 30,000 cases and roughly 2,000 deaths a year."},
+        {skill:"Limitations",q:"Which statement keeps the AI alert in its proper role?",a:"It is a support signal that still needs human clinical judgement.",opts:["It is a support signal that still needs human clinical judgement.","An alert from AI is automatically a confirmed diagnosis.","Once an AI system is approved, human judgement becomes optional.","A faster alert means the system cannot be wrong."],ex:"Day 4 repeatedly frames AI as complementary to clinicians, not a replacement.",model:"The alert should complement human judgement, not replace it."},
+        {skill:"Modals",q:"The alert raises a possible explanation but does not prove it. Which sentence is best calibrated?",a:"The pattern may indicate sepsis and should be reviewed by the clinical team.",opts:["The pattern may indicate sepsis and should be reviewed by the clinical team.","The pattern must prove sepsis in every case.","The pattern will always be correct.","The pattern cannot require human review."],ex:"May expresses possibility without overclaiming.",model:"The pattern may indicate sepsis and should be reviewed by the clinical team."},
+        {skill:"Overclaiming",q:"Which headline goes too far beyond the supplied report?",a:"AI eliminates the need for doctors in sepsis care",opts:["AI eliminates the need for doctors in sepsis care","AI monitoring may help teams identify sepsis earlier","AI can support clinicians by monitoring vital signs","The report argues for AI to complement human intelligence"],ex:"The report explicitly rejects replacement of doctors.",model:"Earlier warning is not the same claim as replacing clinicians."},
+        {skill:"Accountability",q:"Which statement is most source-disciplined about responsibility?",a:"The Day 4 material keeps the final decision human and also notes that AI accountability frameworks remain unresolved.",opts:["The Day 4 material keeps the final decision human and also notes that AI accountability frameworks remain unresolved.","The article proves that the AI company is always legally responsible.","The article proves that the doctor is always legally responsible.","The study shows that accountability no longer matters when AI is accurate."],ex:"The article says there is not a formal framework right now for accountability; it does not settle universal liability.",model:"Human oversight remains central, while the wider accountability framework is unresolved."},
+        {skill:"Integrated judgement",q:"Which final control-room message best reflects Day 4?",a:"Use the alert as additional evidence, state uncertainty clearly, and keep the clinician responsible for the final decision.",opts:["Use the alert as additional evidence, state uncertainty clearly, and keep the clinician responsible for the final decision.","Treat the AI output as a diagnosis because it is faster.","Ignore AI completely because it can make errors.","Tell the patient the system is infallible if it has regulatory approval."],ex:"This combines the Day 4 themes: useful AI support, careful claims and human final judgement.",model:"AI can support the decision, but it should not replace human judgement."}
+      ]
+    },
+    {
+      icon:"📄", title:"Text-Only Triage Audit", code:"HIL-02",
+      brief:"An AI reviews an electronic health record and produces a triage opinion. It has access to text data, but not the patient's appearance or level of distress. Audit what can and cannot be claimed from that evidence.",
+      speak:"Final case H I L zero two. Text Only Triage Audit. The AI has text records but cannot assess appearance or distress. Audit what the evidence supports.",
+      items:[
+        {skill:"Vocabulary",q:"A sign that is difficult to notice is described as…",a:"subtle",opts:["subtle","life-threatening","FDA-approved","cyberchondria"],ex:"Subtle means hard to notice or not obvious.",model:"A subtle clinical sign may be easy to miss."},
+        {skill:"Video",q:"What overall principle does the supplied video emphasise?",a:"AI should complement human intelligence; humans make the final decision.",opts:["AI should complement human intelligence; humans make the final decision.","AI should replace doctors in emergency departments.","AI should only be used for research.","Patients should diagnose themselves with AI."],ex:"That is the central message in the worksheet and answer key.",model:"AI should complement doctors rather than replace them."},
+        {skill:"Human oversight",q:"Why is a human review especially important in this final case?",a:"The AI cannot assess visual appearance or level of distress from the text record alone.",opts:["The AI cannot assess visual appearance or level of distress from the text record alone.","Text records contain no medical information at all.","Human clinicians never use written records.","The study proved visual assessment is unnecessary."],ex:"The article explicitly identifies appearance and distress as untested inputs.",model:"The AI is closer to a second opinion based on paperwork than a complete clinical assessment."},
+        {skill:"Silent letters",q:"Which letter is silent in receipt?",a:"p",opts:["p","c","t","r"],ex:"The Presentation Check-in lists recei(p)t.",model:"receipt"},
+        {skill:"Evidence",q:"With minimal information, what diagnostic accuracy did the article report?",a:"AI 67% versus doctors 50–55%",opts:["AI 67% versus doctors 50–55%","AI 89% versus doctors 34%","AI 82% versus doctors 70–79%, statistically significant","Doctors 67% versus AI 50–55%"],ex:"The 67% versus 50–55% result comes from the fast triage experiment.",model:"In that text-record experiment, the AI reached 67% against 50–55% for the doctors."},
+        {skill:"Limitations",q:"Which conclusion is NOT supported by the study design described in the article?",a:"The AI has proved it can perform every part of a real bedside assessment better than doctors.",opts:["The AI has proved it can perform every part of a real bedside assessment better than doctors.","The AI performed strongly on the text information it was given.","The study did not test the AI's reading of appearance or distress.","The researchers described the system as more like a second opinion based on paperwork."],ex:"The study did not test all parts of real clinical assessment.",model:"Strong performance on text records does not establish superiority across every part of bedside medicine."},
+        {skill:"Modals",q:"Which sentence best reports a limitation?",a:"The results may not generalise to situations where visual assessment is essential.",opts:["The results may not generalise to situations where visual assessment is essential.","The results must apply to every emergency department.","The study will prove all future AI systems safe.","The limitation cannot matter because the score was high."],ex:"May not generalise is appropriately cautious.",model:"The results may not generalise to every clinical situation."},
+        {skill:"Overclaiming",q:"The AI rose to 82% with more detail, versus 70–79% for humans, but the difference was not statistically significant. Which claim is calibrated?",a:"The AI scored higher in this comparison, but the reported difference was not statistically significant.",opts:["The AI scored higher in this comparison, but the reported difference was not statistically significant.","The study proved beyond doubt that AI is superior to doctors.","The doctors performed exactly the same as the AI.","Statistical significance is irrelevant when the percentage is larger."],ex:"The article explicitly includes the non-significance caveat.",model:"A higher observed percentage is not the same as a statistically significant difference."},
+        {skill:"Accountability",q:"What concern does Dr Wei Xing raise in the article?",a:"Doctors may unconsciously defer to the AI instead of thinking independently.",opts:["Doctors may unconsciously defer to the AI instead of thinking independently.","Patients will refuse every AI-assisted consultation.","All AI errors are caused by non-English-speaking patients.","The article says doctors should never see the AI output."],ex:"The source warns about unconscious deference as AI becomes routine.",model:"Human oversight also means resisting automatic deference to the system."},
+        {skill:"Integrated judgement",q:"What is the strongest final audit conclusion?",a:"The text-only result is promising, but the limits of the input and the need for independent human judgement must stay visible.",opts:["The text-only result is promising, but the limits of the input and the need for independent human judgement must stay visible.","The score proves bedside assessment is obsolete.","Because the study has limitations, none of its findings are useful.","The AI result should be accepted without review whenever it exceeds 50%."],ex:"This preserves both the positive result and the study limitation.",model:"Promising evidence should be reported with its limitations, not turned into a universal claim."}
+      ]
+    },
+    {
+      icon:"🧠", title:"Neuro Signal Review", code:"HIL-03",
+      brief:"A neurological AI reviews EEG recordings and flags a possible seizure pattern within seconds. Your task is to explain what the system does, pronounce the key language accurately and keep the output within the limits described in the report.",
+      speak:"Final case H I L zero three. Neuro Signal Review. An AI reviews E E G recordings and flags a possible seizure pattern. Explain the system carefully and keep the human in the loop.",
+      items:[
+        {skill:"Vocabulary",q:"What are brainwaves in the Day 4 vocabulary?",a:"The electrical patterns of activity in the brain",opts:["The electrical patterns of activity in the brain","Measurements such as temperature and oxygen","A sudden infection response","Anxiety caused by symptom searches"],ex:"That is the worksheet definition of brainwaves.",model:"The model is trained on brainwaves recorded by EEG."},
+        {skill:"Video",q:"What does the report say the epilepsy AI can do?",a:"Spot the electrical pattern of a seizure very early, within seconds",opts:["Spot the electrical pattern of a seizure very early, within seconds","Replace the neurologist and prescribe treatment automatically","Diagnose every neurological condition from a photograph","Prevent every seizure before it begins"],ex:"The answer key says it detects the electrical pattern within seconds.",model:"The system can flag seizure patterns rapidly from EEG data."},
+        {skill:"Human oversight",q:"Which statement keeps the system's role accurate?",a:"Rapid pattern detection can support clinicians, but it does not remove the need for human interpretation and care decisions.",opts:["Rapid pattern detection can support clinicians, but it does not remove the need for human interpretation and care decisions.","A faster algorithm makes clinical review unnecessary.","The system can infer everything about the patient from brainwaves alone.","An AI alert should automatically become a treatment order."],ex:"The overall Day 4 principle remains human-in-the-loop.",model:"Fast pattern detection is a support function, not the whole clinical encounter."},
+        {skill:"Silent letters",q:"Which initial letter is silent in psychology?",a:"p",opts:["p","s","c","y"],ex:"The Presentation Check-in lists (p)sychology and (p)psychiatry patterns.",model:"psychology"},
+        {skill:"Evidence",q:"Which description of the epilepsy system is supported by the supplied video material?",a:"It is trained on brainwaves and reviews recordings sent from around the world.",opts:["It is trained on brainwaves and reviews recordings sent from around the world.","It is trained only on patient photographs.","It measures blood sugar continuously.","It is described as replacing all EEG specialists."],ex:"Those details are in the teacher answer key.",model:"The model is trained on EEG brainwaves and can review recordings from many locations."},
+        {skill:"Limitations",q:"What would be an overreach from the information supplied?",a:"Claiming that detecting an EEG seizure pattern means the AI understands every aspect of the patient's condition.",opts:["Claiming that detecting an EEG seizure pattern means the AI understands every aspect of the patient's condition.","Saying the system analyses electrical brain activity.","Saying it can flag a pattern quickly.","Saying human doctors still matter in the care process."],ex:"The source describes a specific detection task, not complete clinical understanding.",model:"A narrow successful task should not be described as complete clinical reasoning."},
+        {skill:"Modals",q:"The EEG pattern is compatible with a seizure, but the final clinical interpretation remains human. Which sentence is best?",a:"The pattern may indicate a seizure and should be reviewed in clinical context.",opts:["The pattern may indicate a seizure and should be reviewed in clinical context.","The pattern must prove a seizure with no further review.","The AI will always identify every seizure correctly.","The pattern can't need clinical context."],ex:"May indicate keeps the claim appropriately cautious.",model:"The pattern may indicate a seizure; clinical context still matters."},
+        {skill:"Overclaiming",q:"Which sentence best avoids the 'AI replaces doctors' narrative?",a:"The system can review large volumes of EEG data quickly and complement specialist judgement.",opts:["The system can review large volumes of EEG data quickly and complement specialist judgement.","The system makes neurologists unnecessary.","The system is more human than a human doctor.","The system proves that every AI is safe for routine use."],ex:"Complement is the source-aligned verb.",model:"AI can complement specialist judgement without replacing the clinician."},
+        {skill:"Accountability",q:"Which broader Day 4 caution still applies even when an AI performs a narrow task well?",a:"Humans may over-rely on the output, so independent judgement and accountability remain important.",opts:["Humans may over-rely on the output, so independent judgement and accountability remain important.","Narrow-task accuracy removes every accountability question.","If the system is fast, patients do not need human guidance.","The article says regulatory approval makes errors impossible."],ex:"The article explicitly raises deference and accountability concerns.",model:"Good performance does not eliminate the need for independent human judgement."},
+        {skill:"Integrated judgement",q:"Which final message best summarises this case?",a:"Use rapid EEG pattern detection as a clinical support tool, describe uncertainty carefully and keep treatment decisions human-led.",opts:["Use rapid EEG pattern detection as a clinical support tool, describe uncertainty carefully and keep treatment decisions human-led.","Turn every AI flag into an automatic treatment decision.","Reject the technology because it is not a human clinician.","Describe the algorithm as a complete neurological examination."],ex:"This combines the specific benefit with the Day 4 human-in-the-loop boundary.",model:"Fast detection can help; human clinical judgement remains essential."}
+      ]
+    },
+    {
+      icon:"🦴", title:"Spine Navigation Control", code:"HIL-04",
+      brief:"A surgical team uses a live 3-D navigation system during a spine operation. Audit how the technology should be described, what benefits the report attributes to it, and what still belongs to the human surgical team.",
+      speak:"Final case H I L zero four. Spine Navigation Control. A surgical team uses a live three D navigation system. Audit what the tool does and what still belongs to the human team.",
+      items:[
+        {skill:"Vocabulary",q:"Which verb means 'to work alongside something and add to it'?",a:"to complement",opts:["to complement","to monitor","to replace","to diagnose"],ex:"To complement is one of the core Day 4 terms.",model:"The navigation system is designed to complement the surgical team."},
+        {skill:"Video",q:"What comparison does the spine surgeon make for the Proprio tool?",a:"A GPS in your car",opts:["A GPS in your car","A security system","A microscope","A textbook"],ex:"The first-viewing answer is 'a GPS in your car'.",model:"The tool gives the surgeon a live 3-D GPS-style view of the spine."},
+        {skill:"Human oversight",q:"Which description avoids turning navigation support into autonomous surgery?",a:"The tool gives the surgeon real-time spatial information; the surgeon still performs and directs the operation.",opts:["The tool gives the surgeon real-time spatial information; the surgeon still performs and directs the operation.","The AI independently performs the operation without a surgeon.","The tool makes surgical training unnecessary.","The navigation display decides every treatment choice automatically."],ex:"The report describes navigation support, not an autonomous surgeon.",model:"The technology supports the surgeon with real-time information."},
+        {skill:"Silent letters",q:"Which letter is silent in muscle?",a:"c",opts:["c","s","l","m"],ex:"The Presentation Check-in lists mus(c)le.",model:"muscle /ˈmʌsl/"},
+        {skill:"Evidence",q:"What patient benefits does the answer key associate with the 3-D navigation tool?",a:"A shorter operation, less time under anaesthetic and less bleeding",opts:["A shorter operation, less time under anaesthetic and less bleeding","Guaranteed pain-free recovery and no complications","No need for anaesthetic","Automatic discharge immediately after surgery"],ex:"Those are the specific benefits stated in the teacher answer key.",model:"The report links faster navigation with less time under anaesthetic and less bleeding."},
+        {skill:"Limitations",q:"Which statement would go beyond what the supplied report says?",a:"The navigation system has proved it can replace the surgeon in spine operations.",opts:["The navigation system has proved it can replace the surgeon in spine operations.","The tool provides a live 3-D view.","The surgeon compares it to GPS.","The report describes benefits linked to shorter operating time."],ex:"Replacement is not supported; the source presents a tool used by the surgeon.",model:"A support technology should not be described as an autonomous surgeon without evidence."},
+        {skill:"Modals",q:"You want to describe a plausible benefit without claiming it is guaranteed in every operation. Which sentence is best?",a:"The navigation system may help shorten operating time.",opts:["The navigation system may help shorten operating time.","The navigation system will always eliminate surgical risk.","The navigation system must make every operation successful.","The navigation system can't require a surgeon."],ex:"May help keeps the claim appropriately limited.",model:"The navigation system may help shorten operating time."},
+        {skill:"Overclaiming",q:"Which statement is WELL CALIBRATED?",a:"The report presents the system as a useful navigation aid, not as evidence that AI can replace surgeons.",opts:["The report presents the system as a useful navigation aid, not as evidence that AI can replace surgeons.","The report proves AI surgery is better in every hospital.","A live 3-D image means human expertise is obsolete.","Because the operation can be shorter, every patient outcome is guaranteed to improve."],ex:"This distinguishes the observed function from claims the source does not make.",model:"Specific task benefit does not equal proof of wholesale replacement."},
+        {skill:"Accountability",q:"Which Day 4 principle is most relevant if the navigation output and the surgeon's judgement differ?",a:"The technology should complement human judgement; the final clinical decision remains human.",opts:["The technology should complement human judgement; the final clinical decision remains human.","The algorithm should automatically overrule the surgeon.","The surgeon should never look at algorithmic output.","The article establishes a universal legal rule for every disagreement."],ex:"The human-in-the-loop principle is the central boundary of the supplied material.",model:"Decision support can inform the surgeon without replacing responsibility for the final decision."},
+        {skill:"Integrated judgement",q:"Which final briefing is strongest?",a:"Describe the tool's specific navigation benefit, avoid universal claims and keep the surgical team visibly responsible for the operation.",opts:["Describe the tool's specific navigation benefit, avoid universal claims and keep the surgical team visibly responsible for the operation.","Call the system an autonomous surgeon because it uses AI.","Ignore the reported benefits because AI has limitations.","Present the tool as proof that all AI systems are safe."],ex:"This is the Day 4 skill in one sentence: specific evidence, calibrated language, human responsibility.",model:"Be precise about what the tool does, what the source shows and what remains a human decision."}
+      ]
+    }
+  ];
 
   function freshState() {
     return {
@@ -332,6 +406,13 @@
       mission4Started: false,
       mission5Started: false,
       mission6Started: false,
+      finalStarted: false,
+      finalComplete: false,
+      finalScenario: -1,
+      finalIndex: 0,
+      finalScore: 0,
+      finalSkillScores: {},
+      finalSkillMax: {},
       boardPrompt: 0,
       boardStance: "",
       soundOff: false
@@ -433,6 +514,7 @@
     updateMission4UI();
     updateMission5UI();
     updateMission6UI();
+    updateFinalUI();
   }
 
   function updateMission2UI() {
@@ -583,7 +665,7 @@
     $("day4M6CompleteText").textContent=all?"You framed contested questions, used the source carefully, represented counterarguments fairly and reached calibrated verdicts without turning an opinion into an answer key.":"Complete all four argument stages.";
     $("day4FinalButton").disabled=!all;
     $("day4FinalButton").textContent=all?"FINAL · Human-in-the-Loop Test →":"🔒 FINAL · Human-in-the-Loop Test";
-    $("day4FinalTeaser").classList.toggle("is-locked",!all);
+    $("day4Final").classList.toggle("is-locked",!all);
     const r6=$("ai4RoadmapM6"),r6s=$("ai4RoadmapM6State"),rf=$("ai4RoadmapFinal"),rfs=$("ai4RoadmapFinalState");
     if(r6){r6.classList.toggle("ready",m5Cleared&&!all);r6.classList.toggle("cleared",all);r6s.textContent=all?"06 · CLEARED":m5Cleared?"06 · READY":"06 · LOCKED";}
     if(rf){rf.classList.toggle("ready",all);if(rfs)rfs.textContent=all?"FINAL · READY":"FINAL · LOCKED";}
@@ -591,6 +673,97 @@
     updateBoardBrief();
   }
 
+
+
+  function getFinalScenario() {
+    const i=Number(state.finalScenario);
+    return Number.isInteger(i)&&i>=0&&i<finalScenarios.length?finalScenarios[i]:null;
+  }
+
+  function chooseFinalScenario(previous=-1) {
+    const pool=finalScenarios.map((_,i)=>i).filter(i=>i!==previous);
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
+
+  function initFinalSkills(scenario) {
+    const max={},scores={};
+    scenario.items.forEach(it=>{max[it.skill]=(max[it.skill]||0)+10;});
+    Object.keys(max).forEach(k=>scores[k]=0);
+    state.finalSkillMax=max;state.finalSkillScores=scores;
+  }
+
+  function finalRank(score) {
+    if(score>=90) return {icon:"🧠",title:"Human-in-the-Loop Ready",text:"Excellent control of evidence, uncertainty and human oversight across the Day 4 material."};
+    if(score>=75) return {icon:"✅",title:"Clinical AI Reviewer",text:"Strong performance. You kept most claims calibrated and the human-review boundary visible."};
+    return {icon:"🔁",title:"AI Control Trainee",text:"Final completed. Draw another case to reinforce evidence reading, cautious language and accountability."};
+  }
+
+  function updateFinalUI() {
+    if(!$("day4Final")) return;
+    const unlocked=M6_ORDER.every(a=>state.mission6Completed[a]);
+    $("day4Final").classList.toggle("is-locked",!unlocked);
+    $("startDay4Final").disabled=!unlocked;
+    const s=getFinalScenario();
+    $("day4FinalScore").textContent=`${Number(state.finalScore)||0} / 100`;
+    $("day4FinalProgressText").textContent=`${Math.min(Number(state.finalIndex)||0,10)} / 10`;
+    $("day4FinalProgressBar").style.width=`${Math.min(Number(state.finalIndex)||0,10)*10}%`;
+    if(!unlocked){
+      $("startDay4Final").textContent="🔒 Complete Mission 6 first";$("hearDay4FinalBrief").disabled=true;$("day4FinalCaseIcon").textContent="🧠";$("day4FinalCaseTitle").textContent="Locked";$("day4FinalCaseBrief").textContent="Complete Mission 6 to receive your final case.";$("day4FinalResult").classList.add("is-locked");return;
+    }
+    $("startDay4Final").textContent=state.finalStarted?(state.finalComplete?"Draw another case →":"Resume final test →"):"Draw final case →";
+    if(s){$("day4FinalCaseIcon").textContent=s.icon;$("day4FinalCaseTitle").textContent=`${s.title} · ${s.code}`;$("day4FinalCaseBrief").textContent=s.brief;$("hearDay4FinalBrief").disabled=false;}
+    else{$("day4FinalCaseIcon").textContent="🎯";$("day4FinalCaseTitle").textContent="Final case ready to draw";$("day4FinalCaseBrief").textContent="Start the test to receive one of four fictional AI-control cases.";$("hearDay4FinalBrief").disabled=true;}
+    $("day4FinalResult").classList.toggle("is-locked",!state.finalComplete);
+    const rf=$("ai4RoadmapFinal"),rfs=$("ai4RoadmapFinalState");
+    if(rf){rf.classList.toggle("ready",unlocked&&!state.finalComplete);rf.classList.toggle("final-cleared",!!state.finalComplete);}
+    if(rfs) rfs.textContent=state.finalComplete?"FINAL · CLEARED":unlocked?"FINAL · READY":"FINAL · LOCKED";
+  }
+
+  function startFinal(forceNew=false) {
+    if(!M6_ORDER.every(a=>state.mission6Completed[a])) return;
+    if(musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
+    if(forceNew || !state.finalStarted || state.finalComplete){
+      const previous=Number(state.finalScenario);
+      state.finalStarted=true;state.finalComplete=false;state.finalScenario=chooseFinalScenario(previous);state.finalIndex=0;state.finalScore=0;state.finalSkillScores={};state.finalSkillMax={};
+      initFinalSkills(getFinalScenario());
+    }
+    finalAttempts=0;save();updateFinalUI();renderFinal();
+    $("day4Final").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function renderFinal() {
+    const s=getFinalScenario();if(!s||state.finalComplete)return;
+    const i=Number(state.finalIndex)||0,it=s.items[i];if(!it){completeFinal();return;}
+    finalWorkspaceTitle.textContent=`${s.title} · Checkpoint ${i+1}`;
+    finalWorkspaceIntro.textContent="Use only the supplied Day 4 evidence and the information in this fictional control-room case.";
+    $("day4FinalCheckpoint").textContent=`${i+1} / 10`;
+    const opts=shuffle(it.opts);
+    finalScreen.innerHTML=`<span class="ai4-final-skill-chip">${it.skill.toUpperCase()}</span><div class="ai4-final-case-card"><span>${s.code} · CONTROL NOTE</span><strong>${s.brief}</strong></div><div class="ai4-question-top"><span>FINAL · CHECKPOINT ${i+1}</span><b>${i+1} / 10</b></div><h3 class="ai4-question">${it.q}</h3><div class="ai4-options">${opts.map((o,n)=>`<button class="ai4-option" type="button" data-final-answer="${encodeURIComponent(o)}"><b>${String.fromCharCode(65+n)}</b> · ${o}</button>`).join("")}</div><div class="ai4-source-guardrail"><strong>Human-in-the-loop rule:</strong> score the English and evidence discipline, not a diagnosis or personal opinion.</div>`;
+    finalScreen.querySelectorAll("[data-final-answer]").forEach(b=>b.addEventListener("click",answerFinal));
+    finalFeedback.textContent="";finalFeedback.className="ai4-feedback";finalScreen.focus();
+  }
+
+  function answerFinal(e) {
+    const s=getFinalScenario(),it=s.items[Number(state.finalIndex)||0],chosen=decodeURIComponent(e.currentTarget.dataset.finalAnswer),good=chosen===it.a;finalAttempts++;
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");
+      finalFeedback.className="ai4-feedback bad";finalFeedback.innerHTML=`<strong>Re-check the evidence and try again.</strong> ${it.ex}`;cue(false);save();return;
+    }
+    finalScreen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.finalAnswer);if(v===it.a)btn.classList.add("correct");});
+    const pts=finalAttempts===1?10:6;
+    state.finalScore=(Number(state.finalScore)||0)+pts;state.finalSkillScores[it.skill]=(Number(state.finalSkillScores[it.skill])||0)+pts;
+    finalFeedback.className="ai4-feedback good";finalFeedback.innerHTML=`<strong>Control check passed · +${pts}</strong> ${it.ex}<div class="ai4-final-model"><strong>MODEL LINE</strong><br>${it.model}</div>`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=(Number(state.finalIndex)||0)===9?"Finish Day 4 →":"Next final checkpoint →";next.addEventListener("click",()=>{state.finalIndex=(Number(state.finalIndex)||0)+1;finalAttempts=0;save();updateFinalUI();if(state.finalIndex>=10)completeFinal();else renderFinal();});finalFeedback.appendChild(document.createElement("br"));finalFeedback.appendChild(next);updateFinalUI();
+  }
+
+  function completeFinal() {
+    state.finalComplete=true;state.finalIndex=10;save();updateFinalUI();
+    const score=Number(state.finalScore)||0,rank=finalRank(score),s=getFinalScenario();
+    $("day4FinalResultBadge").textContent=rank.icon;$("day4FinalResultTitle").textContent=rank.title;$("day4FinalResultText").textContent=`${s.title} complete · ${score}/100. ${rank.text}`;
+    const skills=Object.keys(state.finalSkillMax||{});
+    $("day4FinalSkillBreakdown").innerHTML=skills.map(k=>{const got=Number(state.finalSkillScores[k])||0,max=Number(state.finalSkillMax[k])||10,pct=Math.round((got/max)*100);return `<article><div><b>${k}</b><span>${got}/${max}</span></div><div class="ai4-final-mini-meter"><i style="width:${pct}%"></i></div></article>`;}).join("");
+    finalScreen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">${rank.icon}</span><h3>Day 4 final complete</h3><p>${score}/100 · ${rank.title}</p></div>`;finalFeedback.textContent="";$("day4FinalResult").classList.remove("is-locked");$("ai4RoadmapFinal").classList.add("final-cleared");$("ai4RoadmapFinalState").textContent="FINAL · CLEARED";audioStatus.textContent="Day 4 complete. Human-in-the-Loop Test cleared.";cue(true);save();
+  }
 
   function start(name) {
     if (musicOn) startMusicPlayback();
@@ -798,7 +971,10 @@
   $("day4Mission4Button").addEventListener("click",()=>{if(!$("day4Mission4Button").disabled){$("day4Mission4").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 4 ready. Open Read the Numbers to begin the evidence audit.";}});
   $("day4Mission5Button").addEventListener("click",()=>{if(!$("day4Mission5Button").disabled){$("day4Mission5").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 5 ready. Open Set the Certainty Level to begin calibration.";}});
   $("day4Mission6Button").addEventListener("click",()=>{if(!$("day4Mission6Button").disabled){$("day4Mission6").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 6 ready. Open Frame the Issue to enter the Accountability Board.";}});
-  $("day4FinalButton").addEventListener("click",()=>{if(!$("day4FinalButton").disabled){$("day4FinalTeaser").scrollIntoView({behavior:"smooth",block:"center"});audioStatus.textContent="Final Day 4 clearance granted. Human-in-the-Loop Test is the next mission.";}});
+  $("day4FinalButton").addEventListener("click",()=>{if(!$("day4FinalButton").disabled){$("day4Final").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Final Day 4 clearance granted. Draw your Human-in-the-Loop case.";}});
+  $("startDay4Final").addEventListener("click",()=>startFinal(false));
+  $("replayDay4Final").addEventListener("click",()=>startFinal(true));
+  $("hearDay4FinalBrief").addEventListener("click",()=>{const s=getFinalScenario();if(s)speak(s.speak);});
   $("newDay4BoardPrompt").addEventListener("click",()=>{if(!M6_ORDER.every(a=>state.mission6Completed[a]))return;state.boardPrompt=(Number(state.boardPrompt||0)+1)%boardPrompts.length;state.boardStance="";save();updateBoardBrief();cue(true);});
   document.querySelectorAll("[data-ai4-stance]").forEach(b=>b.addEventListener("click",()=>{if(!M6_ORDER.every(a=>state.mission6Completed[a]))return;state.boardStance=b.dataset.ai4Stance;save();updateBoardBrief();cue(true);}));
 
