@@ -291,6 +291,141 @@
     }
   ];
 
+  const torontoItems = [
+    {
+      phase: "ARRIVAL CHECK",
+      tag: "MEDICARE ≠ MEDICARE",
+      prompt: "You saw Medicare in the United States. Does 'Medicare' mean the same thing in Canada?",
+      options: [
+        { text: "No — in Canada it refers to the public system covering hospital and physician care", correct: true },
+        { text: "Yes — it is only for people aged 65 and over in both countries", correct: false },
+        { text: "Yes — it is a private insurance company in both countries", correct: false }
+      ],
+      model: "In Canada, Medicare refers to public health insurance for hospital and physician care, not the US programme for people aged sixty-five and over.",
+      explanation: "The same word labels two very different systems. This is the key arrival trap for Toronto."
+    },
+    {
+      phase: "COVERAGE DESK",
+      tag: "HOSPITAL + DOCTOR",
+      prompt: "Which care is described as universally covered and free at the point of use?",
+      options: [
+        { text: "Hospital and physician care", correct: true },
+        { text: "All prescriptions, dental care and glasses", correct: false },
+        { text: "Only emergency care", correct: false }
+      ],
+      model: "Hospital and physician care are universally covered under Canada's public system.",
+      explanation: "The country card is specific: universality applies to covered hospital and doctor services."
+    },
+    {
+      phase: "COVERAGE DESK",
+      tag: "WHAT MAY BE MISSING?",
+      prompt: "Which group of services is NOT necessarily covered by Canadian Medicare outside hospital?",
+      options: [
+        { text: "Prescription drugs, dental care and vision", correct: true },
+        { text: "Medically necessary hospital and physician care", correct: false },
+        { text: "Every GP consultation and hospital admission", correct: false }
+      ],
+      model: "Prescription drugs, dental care and vision are not necessarily covered by Canadian Medicare.",
+      explanation: "This is why 'universal' does not mean that every health service is automatically free."
+    },
+    {
+      phase: "PROVINCE DESK",
+      tag: "WHO RUNS IT?",
+      prompt: "Who administers public health insurance in Canada under national rules?",
+      options: [
+        { text: "The provinces", correct: true },
+        { text: "One single federal NHS", correct: false },
+        { text: "Private employers", correct: false }
+      ],
+      model: "Each province administers its own public health insurance plan under national rules.",
+      explanation: "The Canada Health Act sets national rules, while provinces administer the system."
+    },
+    {
+      phase: "SYSTEM MODEL",
+      tag: "SINGLE-PAYER",
+      prompt: "What does single-payer mean in the Canadian country card?",
+      options: [
+        { text: "There is one public insurer per province", correct: true },
+        { text: "Every patient must pay the full bill alone", correct: false },
+        { text: "Only one private insurer is allowed nationally", correct: false }
+      ],
+      model: "Single-payer means that each province has one public insurer for covered care.",
+      explanation: "Single-payer describes the insurance structure, not the number of hospitals or doctors."
+    },
+    {
+      phase: "PRIVATE COVER",
+      tag: "SUPPLEMENTARY",
+      prompt: "What role does private insurance mainly play in Canada?",
+      options: [
+        { text: "It supplements public Medicare for services such as drugs, dental and vision", correct: true },
+        { text: "It is the main route to hospital and physician care for most Canadians", correct: false },
+        { text: "It replaces provincial public insurance after age 65", correct: false }
+      ],
+      model: "Private insurance is mainly supplementary, covering services that public Medicare may not include.",
+      explanation: "This is a major contrast with the private-led US system."
+    },
+    {
+      phase: "VOCABULARY CONTROL",
+      tag: "MEDICALLY NECESSARY",
+      prompt: "In the Canadian system, what does medically necessary refer to?",
+      options: [
+        { text: "Care that must be publicly covered", correct: true },
+        { text: "Any treatment a patient personally wants", correct: false },
+        { text: "Only care delivered in an emergency department", correct: false }
+      ],
+      model: "Medically necessary care is care that must be publicly covered under the system.",
+      explanation: "The term helps explain the boundary of the public coverage obligation."
+    },
+    {
+      phase: "VOCABULARY CONTROL",
+      tag: "PHARMACARE",
+      prompt: "What does pharmacare refer to on the Canada card?",
+      options: [
+        { text: "Proposed national drug coverage", correct: true },
+        { text: "A private hospital network", correct: false },
+        { text: "A ban on prescription medicine outside hospitals", correct: false }
+      ],
+      model: "Pharmacare refers to proposed national coverage for prescription drugs.",
+      explanation: "It connects directly to the current gap in universal coverage for medicines outside hospital."
+    },
+    {
+      phase: "REALITY CHECK",
+      tag: "CURRENT PRESSURES",
+      prompt: "Which challenge is highlighted on the Canadian country card?",
+      options: [
+        { text: "Wait times for specialists and elective care, plus uneven rural access", correct: true },
+        { text: "No universal coverage for hospital care", correct: false },
+        { text: "Compulsory private insurance for all residents", correct: false }
+      ],
+      model: "Canada faces specialist and elective-care waits as well as uneven access in rural and remote areas.",
+      explanation: "The card also notes the lack of universal drug and dental coverage."
+    },
+    {
+      phase: "COMPARE WITH NEW YORK",
+      tag: "UNIVERSALITY + INSURANCE",
+      prompt: "Which comparison between Canada and the United States matches the two country cards?",
+      options: [
+        { text: "Canada has universal public cover for hospital and doctor care, while US coverage is not universal and private insurance is central", correct: true },
+        { text: "Both countries rely mainly on employer insurance and have the same Medicare programme", correct: false },
+        { text: "Canada spends a larger share of GDP and has no public insurance", correct: false }
+      ],
+      model: "Canada guarantees public coverage for hospital and physician care, whereas US coverage is not universal and relies much more heavily on private insurance.",
+      explanation: "The spending figures also differ: roughly 11–12% of GDP in Canada versus about 17% in the US card."
+    },
+    {
+      phase: "BOARDING CHECK",
+      tag: "SYSTEM SUMMARY",
+      prompt: "Choose the best one-sentence summary of the Canadian system.",
+      options: [
+        { text: "A tax-funded, provincial single-payer system with universal hospital and physician cover, plus supplementary private insurance for some services", correct: true },
+        { text: "A private-led system where coverage mainly depends on employment", correct: false },
+        { text: "A national NHS that directly provides every health service for free", correct: false }
+      ],
+      model: "Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services.",
+      explanation: "You now have the core profile needed to compare Canada with the next destination."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -306,7 +441,12 @@
     newYorkIndex: 0,
     newYorkScore: 0,
     newYorkMissed: [],
-    newYorkComplete: false
+    newYorkComplete: false,
+    torontoStarted: false,
+    torontoIndex: 0,
+    torontoScore: 0,
+    torontoMissed: [],
+    torontoComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -336,12 +476,21 @@
     newYorkCheckpoint: $("newYorkCheckpoint"),
     newYorkProgressBar: $("newYorkProgressBar"),
     newYorkInstruction: $("newYorkInstruction"),
+    torontoArea: $("torontoArea"),
+    startToronto: $("startToronto"),
+    torontoScreen: $("torontoScreen"),
+    torontoFeedback: $("torontoFeedback"),
+    torontoCheckpoint: $("torontoCheckpoint"),
+    torontoProgressBar: $("torontoProgressBar"),
+    torontoInstruction: $("torontoInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
     routeUsStatus: $("routeUsStatus"),
     routeCa: $("routeCa"),
     routeCaStatus: $("routeCaStatus"),
+    routeAu: $("routeAu"),
+    routeAuStatus: $("routeAuStatus"),
     stampDeparture: $("stampDeparture"),
     stampUk: $("stampUk"),
     stampUs: $("stampUs"),
@@ -458,8 +607,12 @@
     els.newYorkCheckpoint.textContent = `${nyDone} / ${newYorkItems.length}`;
     els.newYorkProgressBar.style.width = `${(nyDone / newYorkItems.length) * 100}%`;
 
+    const torDone = state.torontoComplete ? torontoItems.length : Math.min(state.torontoIndex, torontoItems.length);
+    els.torontoCheckpoint.textContent = `${torDone} / ${torontoItems.length}`;
+    els.torontoProgressBar.style.width = `${(torDone / torontoItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -510,15 +663,41 @@
       els.routeUs.classList.remove("destination-next", "destination-locked");
       els.routeUs.classList.add("destination-cleared");
       els.routeUsStatus.textContent = "CLEARED";
-      els.routeCa.classList.remove("destination-locked");
-      els.routeCa.classList.add("destination-next");
-      els.routeCaStatus.textContent = "NEXT";
+      els.torontoArea.classList.remove("is-locked");
+      els.startToronto.disabled = false;
+      els.startToronto.textContent = state.torontoStarted ? "Resume Toronto →" : "Enter Canadian Medicare →";
+      els.torontoInstruction.textContent = state.torontoComplete ? "Toronto completed. Your Medicare Specialist stamp has been issued." : "New York cleared. Your Canadian Medicare assignment is ready.";
+      if (!state.torontoComplete) {
+        els.routeCa.classList.remove("destination-locked", "destination-cleared");
+        els.routeCa.classList.add("destination-next");
+        els.routeCaStatus.textContent = state.torontoStarted ? "IN PROGRESS" : "NEXT";
+      }
     } else {
       els.stampUs.classList.remove("stamp-earned");
       els.stampUs.classList.add("stamp-empty");
+      els.torontoArea.classList.add("is-locked");
+      els.startToronto.disabled = true;
+      els.startToronto.textContent = "Toronto locked";
       els.routeCa.classList.remove("destination-next", "destination-cleared");
       els.routeCa.classList.add("destination-locked");
       els.routeCaStatus.textContent = "LOCKED";
+    }
+
+    if (state.torontoComplete) {
+      els.stampCa.classList.remove("stamp-empty");
+      els.stampCa.classList.add("stamp-earned");
+      els.routeCa.classList.remove("destination-next", "destination-locked");
+      els.routeCa.classList.add("destination-cleared");
+      els.routeCaStatus.textContent = "CLEARED";
+      els.routeAu.classList.remove("destination-locked", "destination-cleared");
+      els.routeAu.classList.add("destination-next");
+      els.routeAuStatus.textContent = "NEXT";
+    } else {
+      els.stampCa.classList.remove("stamp-earned");
+      els.stampCa.classList.add("stamp-empty");
+      els.routeAu.classList.remove("destination-next", "destination-cleared");
+      els.routeAu.classList.add("destination-locked");
+      els.routeAuStatus.textContent = "LOCKED";
     }
   }
 
@@ -645,8 +824,12 @@
 
     if (state.newYorkComplete) {
       const pct = Math.round((state.newYorkScore / newYorkItems.length) * 100);
-      els.newYorkScreen.innerHTML = `<div class="passport-complete-card us-complete"><div class="passport-complete-icon" aria-hidden="true">🇺🇸</div><p class="passport-case-kicker">STOP 02 CLEARED</p><h3>Insurance Decoder</h3><p>You can distinguish premium, deductible, co-pay and out-of-network costs, identify the roles of employer insurance, Medicare and Medicaid, and explain why the US system is not universal.</p><div class="passport-score-line"><strong>${state.newYorkScore} / ${newYorkItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“The US has a mixed, private-led system in which employer insurance is central, public programmes cover specific groups, and coverage is not universal.”</p><button id="hearUsSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket"><span>🇬🇧 LONDON</span><b>Private insurance: supplementary</b><span>↔</span><b>Private insurance: central</b><span>🇺🇸 NEW YORK</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇨🇦 Toronto · Medicare — ready for the next build.</span></div></div>`;
+      els.newYorkScreen.innerHTML = `<div class="passport-complete-card us-complete"><div class="passport-complete-icon" aria-hidden="true">🇺🇸</div><p class="passport-case-kicker">STOP 02 CLEARED</p><h3>Insurance Decoder</h3><p>You can distinguish premium, deductible, co-pay and out-of-network costs, identify the roles of employer insurance, Medicare and Medicaid, and explain why the US system is not universal.</p><div class="passport-score-line"><strong>${state.newYorkScore} / ${newYorkItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“The US has a mixed, private-led system in which employer insurance is central, public programmes cover specific groups, and coverage is not universal.”</p><button id="hearUsSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket"><span>🇬🇧 LONDON</span><b>Private insurance: supplementary</b><span>↔</span><b>Private insurance: central</b><span>🇺🇸 NEW YORK</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇨🇦 Toronto · Medicare — but not THAT Medicare.</span></div><button id="goToronto" class="passport-primary" type="button">Fly to Toronto →</button></div>`;
       $("hearUsSummary").addEventListener("click", () => speak("The US has a mixed, private-led system in which employer insurance is central, public programmes cover specific groups, and coverage is not universal."));
+      $("goToronto").addEventListener("click", () => {
+        els.torontoArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => els.startToronto.focus({ preventScroll: true }), 450);
+      });
       updateProgress();
       return;
     }
@@ -687,6 +870,60 @@
     window.setTimeout(() => els.newYorkScreen.focus({ preventScroll: true }), 450);
   }
 
+  function renderToronto() {
+    updateProgress();
+    els.torontoFeedback.innerHTML = "";
+    if (!state.newYorkComplete) return;
+
+    if (!state.torontoStarted) {
+      els.torontoScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🇨🇦</span><h3>Welcome to Toronto</h3><p>Your Canadian Medicare assignment is ready. Watch for the trap: the word Medicare does not mean the same thing here as it did in New York.</p></div>`;
+      return;
+    }
+
+    if (state.torontoComplete) {
+      const pct = Math.round((state.torontoScore / torontoItems.length) * 100);
+      els.torontoScreen.innerHTML = `<div class="passport-complete-card canada-complete"><div class="passport-complete-icon" aria-hidden="true">🇨🇦</div><p class="passport-case-kicker">STOP 03 CLEARED</p><h3>Medicare Specialist</h3><p>You can explain Canada's provincial single-payer structure, distinguish universal hospital and physician coverage from services that may fall outside Medicare, and compare Canadian Medicare with the US system.</p><div class="passport-score-line"><strong>${state.torontoScore} / ${torontoItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services.”</p><button id="hearCanadaSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket canada-ticket"><span>🇺🇸 NEW YORK</span><b>Medicare: 65+ public programme</b><span>≠</span><b>Medicare: public hospital + physician cover</b><span>🇨🇦 TORONTO</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇦🇺 Sydney · Bulk Billing — ready for the next build.</span></div></div>`;
+      $("hearCanadaSummary").addEventListener("click", () => speak("Canada has a tax-funded, provincial single-payer system with universal hospital and physician coverage and supplementary private insurance for some services."));
+      updateProgress();
+      return;
+    }
+
+    const item = torontoItems[state.torontoIndex];
+    els.torontoScreen.innerHTML = `<div class="passport-question-card canada-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><h3>${item.prompt}</h3><div id="torontoOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("torontoOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.torontoMissed.includes(state.torontoIndex)) state.torontoScore += 1;
+        state.torontoIndex += 1;
+        if (state.torontoIndex >= torontoItems.length) state.torontoComplete = true;
+        saveState();
+        playTone("good");
+        els.torontoFeedback.innerHTML = `<div class="feedback-good"><strong>Entry cleared.</strong><span>${item.explanation}</span></div><div class="passport-transcript canada-transcript"><span>USEFUL ENGLISH</span><p>${item.model}</p><button id="hearCanadaModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="torontoNext" class="passport-next" type="button">${state.torontoComplete ? "Stamp passport →" : "Continue Canadian assignment →"}</button>`;
+        $("hearCanadaModel").addEventListener("click", () => speak(item.model));
+        $("torontoNext").addEventListener("click", renderToronto);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.torontoMissed.includes(state.torontoIndex)) state.torontoMissed.push(state.torontoIndex);
+        saveState();
+        playTone("bad");
+        els.torontoFeedback.innerHTML = `<div class="feedback-bad"><strong>Border check failed.</strong><span>Use the Canadian briefing carefully: universal does not mean every health service is covered, and Canadian Medicare is not US Medicare.</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startToronto() {
+    if (!state.newYorkComplete) return;
+    state.torontoStarted = true;
+    saveState();
+    renderToronto();
+    els.torontoArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.torontoScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -696,6 +933,7 @@
     renderDeparture();
     renderLondon();
     renderNewYork();
+    renderToronto();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -709,6 +947,7 @@
   els.startPassport.addEventListener("click", startDeparture);
   els.startLondon.addEventListener("click", startLondon);
   els.startNewYork.addEventListener("click", startNewYork);
+  els.startToronto.addEventListener("click", startToronto);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -725,4 +964,5 @@
   renderDeparture();
   renderLondon();
   renderNewYork();
+  renderToronto();
 })();

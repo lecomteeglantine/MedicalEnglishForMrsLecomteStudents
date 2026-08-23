@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v21-day2-new-york-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v22-day2-toronto-20260823";
 
 const APP_SHELL = [
   "./",
@@ -35,6 +35,7 @@ const APP_SHELL = [
   "./styles-v19.css",
   "./styles-v20.css",
   "./styles-v21.css",
+  "./styles-v22.css",
   "./fgsm3-day1-game.js",
   "./fgsm3-day2-game.js",
   "./assets/fgsm3/day1/images/fgsm3-day1-control-room.webp",
