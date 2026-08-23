@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v38-random-answer-order-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v39-scientific-publications-20260823";
 
 const APP_SHELL = [
   "./",

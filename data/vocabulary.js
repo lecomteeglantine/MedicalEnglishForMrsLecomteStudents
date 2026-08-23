@@ -2590,5 +2590,637 @@ window.MEDICAL_VOCABULARY = [
     "fr": "consignes de surveillance",
     "category": "Medical communication",
     "illustration": "💬"
+  },
+  {
+    "word": "paper",
+    "ipa": "/ˈpeɪpə/",
+    "definition": "A scientific article that reports or discusses research.",
+    "fr": "article scientifique",
+    "category": "Scientific publications",
+    "illustration": "📄"
+  },
+  {
+    "word": "abstract",
+    "ipa": "/ˈæbstrækt/",
+    "definition": "A short summary of a scientific paper, usually presenting its purpose, methods, main results and conclusion.",
+    "fr": "résumé (d’un article)",
+    "category": "Scientific publications",
+    "illustration": "📄"
+  },
+  {
+    "word": "introduction",
+    "ipa": "/ˌɪntrəˈdʌkʃən/",
+    "definition": "The section that introduces the topic, context and research question.",
+    "fr": "introduction",
+    "category": "Scientific publications",
+    "illustration": "📄"
+  },
+  {
+    "word": "methods",
+    "ipa": "/ˈmeθədz/",
+    "definition": "The section explaining how a study was designed and carried out.",
+    "fr": "méthodes",
+    "category": "Scientific publications",
+    "illustration": "🧪"
+  },
+  {
+    "word": "methodology",
+    "ipa": "/ˌmeθəˈdɒlədʒi/",
+    "definition": "The system of methods and principles used to conduct research.",
+    "fr": "méthodologie",
+    "category": "Scientific publications",
+    "illustration": "🧪"
+  },
+  {
+    "word": "results",
+    "ipa": "/rɪˈzʌlts/",
+    "definition": "The section presenting the data and findings produced by the study.",
+    "fr": "résultats",
+    "category": "Scientific publications",
+    "illustration": "📊"
+  },
+  {
+    "word": "discussion",
+    "ipa": "/dɪˈskʌʃən/",
+    "definition": "The section that interprets the results and relates them to existing knowledge.",
+    "fr": "discussion",
+    "category": "Scientific publications",
+    "illustration": "💬"
+  },
+  {
+    "word": "conclusion",
+    "ipa": "/kənˈkluːʒən/",
+    "definition": "The final section summarising the main message or implications of the study.",
+    "fr": "conclusion",
+    "category": "Scientific publications",
+    "illustration": "📄"
+  },
+  {
+    "word": "limitations",
+    "ipa": "/ˌlɪmɪˈteɪʃənz/",
+    "definition": "Weaknesses or constraints that may affect how a study should be interpreted.",
+    "fr": "limites de l’étude",
+    "category": "Scientific publications",
+    "illustration": "⚠️"
+  },
+  {
+    "word": "implications",
+    "ipa": "/ˌɪmplɪˈkeɪʃənz/",
+    "definition": "The possible consequences or significance of research findings for practice, policy or future research.",
+    "fr": "implications",
+    "category": "Scientific publications",
+    "illustration": "💡"
+  },
+  {
+    "word": "references",
+    "ipa": "/ˈrefrənsɪz/",
+    "definition": "The list of sources cited in a scientific paper.",
+    "fr": "références bibliographiques",
+    "category": "Scientific publications",
+    "illustration": "📚"
+  },
+  {
+    "word": "supplementary material",
+    "ipa": "/ˌsʌplɪˈmentri məˈtɪəriəl/",
+    "definition": "Additional data, methods, figures or files published alongside the main paper.",
+    "fr": "matériel supplémentaire / annexes en ligne",
+    "category": "Scientific publications",
+    "illustration": "📎"
+  },
+  {
+    "word": "figure",
+    "ipa": "/ˈfɪɡə/",
+    "definition": "A graph, diagram, image or other visual element used to present information in a paper.",
+    "fr": "figure",
+    "category": "Scientific publications",
+    "illustration": "📈"
+  },
+  {
+    "word": "table",
+    "ipa": "/ˈteɪbəl/",
+    "definition": "Information organised in rows and columns in a scientific paper.",
+    "fr": "tableau",
+    "category": "Scientific publications",
+    "illustration": "📊"
+  },
+  {
+    "word": "caption",
+    "ipa": "/ˈkæpʃən/",
+    "definition": "The explanatory text placed with a figure or table.",
+    "fr": "légende",
+    "category": "Scientific publications",
+    "illustration": "🏷️"
+  },
+  {
+    "word": "keywords",
+    "ipa": "/ˈkiːwɜːdz/",
+    "definition": "Important terms used to describe and index the main topics of a paper.",
+    "fr": "mots-clés",
+    "category": "Scientific publications",
+    "illustration": "🔑"
+  },
+  {
+    "word": "manuscript",
+    "ipa": "/ˈmænjʊskrɪpt/",
+    "definition": "The version of a scientific paper prepared and submitted for publication.",
+    "fr": "manuscrit",
+    "category": "Scientific publications",
+    "illustration": "📝"
+  },
+  {
+    "word": "journal",
+    "ipa": "/ˈdʒɜːnəl/",
+    "definition": "A periodical publication that publishes academic or scientific articles.",
+    "fr": "revue scientifique",
+    "category": "Scientific publications",
+    "illustration": "📘"
+  },
+  {
+    "word": "peer-reviewed",
+    "ipa": "/ˌpɪə rɪˈvjuːd/",
+    "definition": "Evaluated by independent experts in the same field before publication.",
+    "fr": "évalué par les pairs",
+    "category": "Scientific publications",
+    "illustration": "👥"
+  },
+  {
+    "word": "peer review",
+    "ipa": "/ˌpɪə rɪˈvjuː/",
+    "definition": "The process in which experts evaluate a manuscript before publication.",
+    "fr": "évaluation par les pairs",
+    "category": "Scientific publications",
+    "illustration": "👥"
+  },
+  {
+    "word": "reviewer",
+    "ipa": "/rɪˈvjuːə/",
+    "definition": "An expert who evaluates a manuscript during peer review.",
+    "fr": "relecteur / évaluateur",
+    "category": "Scientific publications",
+    "illustration": "🧐"
+  },
+  {
+    "word": "editor",
+    "ipa": "/ˈedɪtə/",
+    "definition": "A person responsible for managing the evaluation and publication of papers in a journal.",
+    "fr": "éditeur scientifique / rédacteur",
+    "category": "Scientific publications",
+    "illustration": "✏️"
+  },
+  {
+    "word": "submission",
+    "ipa": "/səbˈmɪʃən/",
+    "definition": "The act or process of sending a manuscript to a journal for consideration.",
+    "fr": "soumission d’un article",
+    "category": "Scientific publications",
+    "illustration": "📤"
+  },
+  {
+    "word": "revision",
+    "ipa": "/rɪˈvɪʒən/",
+    "definition": "A modified version of a manuscript produced in response to feedback or review.",
+    "fr": "révision",
+    "category": "Scientific publications",
+    "illustration": "✍️"
+  },
+  {
+    "word": "acceptance",
+    "ipa": "/əkˈseptəns/",
+    "definition": "A journal decision confirming that a manuscript will be published.",
+    "fr": "acceptation",
+    "category": "Scientific publications",
+    "illustration": "✅"
+  },
+  {
+    "word": "rejection",
+    "ipa": "/rɪˈdʒekʃən/",
+    "definition": "A journal decision not to publish a submitted manuscript.",
+    "fr": "rejet",
+    "category": "Scientific publications",
+    "illustration": "❌"
+  },
+  {
+    "word": "preprint",
+    "ipa": "/ˈpriːprɪnt/",
+    "definition": "A version of a scientific paper made publicly available before formal peer review.",
+    "fr": "prépublication / preprint",
+    "category": "Scientific publications",
+    "illustration": "🗂️"
+  },
+  {
+    "word": "DOI",
+    "ipa": "/ˌdiː əʊ ˈaɪ/",
+    "definition": "A permanent digital identifier used to locate a scholarly publication online.",
+    "fr": "DOI / identifiant numérique d’objet",
+    "category": "Scientific publications",
+    "illustration": "🔗"
+  },
+  {
+    "word": "citation",
+    "ipa": "/saɪˈteɪʃən/",
+    "definition": "A reference to another source or publication used in academic writing.",
+    "fr": "citation / référence à une source",
+    "category": "Scientific publications",
+    "illustration": "🔖"
+  },
+  {
+    "word": "corresponding author",
+    "ipa": "/ˌkɒrɪˈspɒndɪŋ ˈɔːθə/",
+    "definition": "The author responsible for communication with the journal and readers about a paper.",
+    "fr": "auteur correspondant",
+    "category": "Scientific publications",
+    "illustration": "✉️"
+  },
+  {
+    "word": "affiliation",
+    "ipa": "/əˌfɪliˈeɪʃən/",
+    "definition": "The institution or organisation an author is associated with.",
+    "fr": "affiliation institutionnelle",
+    "category": "Scientific publications",
+    "illustration": "🏛️"
+  },
+  {
+    "word": "conflict of interest",
+    "ipa": "/ˌkɒnflɪkt əv ˈɪntrəst/",
+    "definition": "A personal or financial interest that could influence, or appear to influence, research or its reporting.",
+    "fr": "conflit d’intérêts",
+    "category": "Scientific publications",
+    "illustration": "⚖️"
+  },
+  {
+    "word": "funding",
+    "ipa": "/ˈfʌndɪŋ/",
+    "definition": "Money or financial support provided for a research project.",
+    "fr": "financement",
+    "category": "Scientific publications",
+    "illustration": "💷"
+  },
+  {
+    "word": "research question",
+    "ipa": "/rɪˈsɜːtʃ ˌkwestʃən/",
+    "definition": "The specific question that a study is designed to answer.",
+    "fr": "question de recherche",
+    "category": "Scientific publications",
+    "illustration": "❓"
+  },
+  {
+    "word": "hypothesis",
+    "ipa": "/haɪˈpɒθəsɪs/",
+    "definition": "A testable proposed explanation or prediction examined in a study.",
+    "fr": "hypothèse",
+    "category": "Scientific publications",
+    "illustration": "💭"
+  },
+  {
+    "word": "aim",
+    "ipa": "/eɪm/",
+    "definition": "The overall purpose of a study.",
+    "fr": "but / objectif général",
+    "category": "Scientific publications",
+    "illustration": "🎯"
+  },
+  {
+    "word": "objective",
+    "ipa": "/əbˈdʒektɪv/",
+    "definition": "A specific goal that a study intends to achieve.",
+    "fr": "objectif",
+    "category": "Scientific publications",
+    "illustration": "🎯"
+  },
+  {
+    "word": "study design",
+    "ipa": "/ˈstʌdi dɪˌzaɪn/",
+    "definition": "The overall plan used to answer a research question.",
+    "fr": "plan / schéma d’étude",
+    "category": "Scientific publications",
+    "illustration": "🧭"
+  },
+  {
+    "word": "cohort study",
+    "ipa": "/ˈkəʊhɔːt ˌstʌdi/",
+    "definition": "A study that follows or compares a defined group of people over time or using existing records.",
+    "fr": "étude de cohorte",
+    "category": "Scientific publications",
+    "illustration": "👥"
+  },
+  {
+    "word": "case-control study",
+    "ipa": "/ˌkeɪs kənˈtrəʊl ˌstʌdi/",
+    "definition": "A study comparing people with a condition or outcome with people who do not have it.",
+    "fr": "étude cas-témoins",
+    "category": "Scientific publications",
+    "illustration": "⚖️"
+  },
+  {
+    "word": "cross-sectional study",
+    "ipa": "/ˌkrɒs ˈsekʃənəl ˌstʌdi/",
+    "definition": "A study examining a population or sample at a particular point in time.",
+    "fr": "étude transversale",
+    "category": "Scientific publications",
+    "illustration": "📸"
+  },
+  {
+    "word": "randomised controlled trial",
+    "ipa": "/ˌrændəmaɪzd kənˌtrəʊld ˈtraɪəl/",
+    "definition": "An experimental study in which participants are randomly assigned to different groups, usually including a control group.",
+    "fr": "essai contrôlé randomisé",
+    "category": "Scientific publications",
+    "illustration": "🎲"
+  },
+  {
+    "word": "systematic review",
+    "ipa": "/ˌsɪstəˈmætɪk rɪˈvjuː/",
+    "definition": "A structured review that uses predefined methods to identify and evaluate relevant studies on a question.",
+    "fr": "revue systématique",
+    "category": "Scientific publications",
+    "illustration": "🔎"
+  },
+  {
+    "word": "meta-analysis",
+    "ipa": "/ˌmetə əˈnæləsɪs/",
+    "definition": "A statistical method that combines results from multiple studies.",
+    "fr": "méta-analyse",
+    "category": "Scientific publications",
+    "illustration": "📊"
+  },
+  {
+    "word": "prospective study",
+    "ipa": "/prəˈspektɪv ˌstʌdi/",
+    "definition": "A study that follows participants forward in time from a defined starting point.",
+    "fr": "étude prospective",
+    "category": "Scientific publications",
+    "illustration": "➡️"
+  },
+  {
+    "word": "retrospective study",
+    "ipa": "/ˌretrəˈspektɪv ˌstʌdi/",
+    "definition": "A study that examines data or events that have already occurred.",
+    "fr": "étude rétrospective",
+    "category": "Scientific publications",
+    "illustration": "⬅️"
+  },
+  {
+    "word": "observational study",
+    "ipa": "/ˌɒbzəˈveɪʃənəl ˌstʌdi/",
+    "definition": "A study in which researchers observe participants or exposures without assigning an intervention.",
+    "fr": "étude observationnelle",
+    "category": "Scientific publications",
+    "illustration": "👁️"
+  },
+  {
+    "word": "sample",
+    "ipa": "/ˈsɑːmpəl/",
+    "definition": "The group of participants, observations or specimens selected for a study.",
+    "fr": "échantillon",
+    "category": "Scientific publications",
+    "illustration": "🧩"
+  },
+  {
+    "word": "sample size",
+    "ipa": "/ˈsɑːmpəl saɪz/",
+    "definition": "The number of participants or observations included in a study.",
+    "fr": "taille de l’échantillon",
+    "category": "Scientific publications",
+    "illustration": "🔢"
+  },
+  {
+    "word": "study population",
+    "ipa": "/ˈstʌdi ˌpɒpjʊˈleɪʃən/",
+    "definition": "The larger group of people or cases that a study is intended to describe or investigate.",
+    "fr": "population étudiée",
+    "category": "Scientific publications",
+    "illustration": "👥"
+  },
+  {
+    "word": "inclusion criteria",
+    "ipa": "/ɪnˈkluːʒən kraɪˈtɪəriə/",
+    "definition": "Characteristics that participants must have to be eligible for a study.",
+    "fr": "critères d’inclusion",
+    "category": "Scientific publications",
+    "illustration": "✅"
+  },
+  {
+    "word": "exclusion criteria",
+    "ipa": "/ɪkˈskluːʒən kraɪˈtɪəriə/",
+    "definition": "Characteristics that prevent a person from being eligible for a study.",
+    "fr": "critères d’exclusion",
+    "category": "Scientific publications",
+    "illustration": "🚫"
+  },
+  {
+    "word": "control group",
+    "ipa": "/kənˈtrəʊl ɡruːp/",
+    "definition": "A comparison group that does not receive the intervention being tested, or receives standard care or a placebo.",
+    "fr": "groupe témoin / groupe contrôle",
+    "category": "Scientific publications",
+    "illustration": "⚖️"
+  },
+  {
+    "word": "intervention group",
+    "ipa": "/ˌɪntəˈvenʃən ɡruːp/",
+    "definition": "The group that receives the treatment or intervention being studied.",
+    "fr": "groupe intervention",
+    "category": "Scientific publications",
+    "illustration": "💊"
+  },
+  {
+    "word": "randomisation",
+    "ipa": "/ˌrændəmaɪˈzeɪʃən/",
+    "definition": "The process of assigning participants to study groups by chance.",
+    "fr": "randomisation",
+    "category": "Scientific publications",
+    "illustration": "🎲"
+  },
+  {
+    "word": "blinding",
+    "ipa": "/ˈblaɪndɪŋ/",
+    "definition": "A method in which participants, researchers or assessors do not know which treatment was assigned.",
+    "fr": "mise en aveugle",
+    "category": "Scientific publications",
+    "illustration": "🙈"
+  },
+  {
+    "word": "placebo",
+    "ipa": "/pləˈsiːbəʊ/",
+    "definition": "An inactive treatment designed to resemble the intervention being tested.",
+    "fr": "placebo",
+    "category": "Scientific publications",
+    "illustration": "💊"
+  },
+  {
+    "word": "baseline",
+    "ipa": "/ˈbeɪslaɪn/",
+    "definition": "Measurements or characteristics recorded at the beginning of a study before an intervention or follow-up.",
+    "fr": "valeur initiale / données de référence",
+    "category": "Scientific publications",
+    "illustration": "📍"
+  },
+  {
+    "word": "follow-up period",
+    "ipa": "/ˈfɒləʊ ʌp ˌpɪəriəd/",
+    "definition": "The length of time during which participants are monitored after enrolment or an intervention.",
+    "fr": "période de suivi",
+    "category": "Scientific publications",
+    "illustration": "🗓️"
+  },
+  {
+    "word": "outcome",
+    "ipa": "/ˈaʊtkʌm/",
+    "definition": "A result or event measured in a study to evaluate an intervention, exposure or condition.",
+    "fr": "critère de jugement / résultat mesuré",
+    "category": "Scientific publications",
+    "illustration": "🎯"
+  },
+  {
+    "word": "primary outcome",
+    "ipa": "/ˌpraɪməri ˈaʊtkʌm/",
+    "definition": "The main outcome a study is designed to evaluate.",
+    "fr": "critère de jugement principal",
+    "category": "Scientific publications",
+    "illustration": "🥇"
+  },
+  {
+    "word": "secondary outcome",
+    "ipa": "/ˌsekəndri ˈaʊtkʌm/",
+    "definition": "An additional outcome measured alongside the primary outcome.",
+    "fr": "critère de jugement secondaire",
+    "category": "Scientific publications",
+    "illustration": "🥈"
+  },
+  {
+    "word": "endpoint",
+    "ipa": "/ˈendpɔɪnt/",
+    "definition": "A predefined event or measurement used to judge the effect of an intervention or exposure.",
+    "fr": "critère d’évaluation / endpoint",
+    "category": "Scientific publications",
+    "illustration": "🏁"
+  },
+  {
+    "word": "variable",
+    "ipa": "/ˈveəriəbəl/",
+    "definition": "A characteristic or measurement that can take different values in a study.",
+    "fr": "variable",
+    "category": "Scientific publications",
+    "illustration": "🔣"
+  },
+  {
+    "word": "confounder",
+    "ipa": "/kənˈfaʊndə/",
+    "definition": "A factor associated with both an exposure and an outcome that can distort the apparent relationship between them.",
+    "fr": "facteur de confusion",
+    "category": "Scientific publications",
+    "illustration": "🧩"
+  },
+  {
+    "word": "bias",
+    "ipa": "/ˈbaɪəs/",
+    "definition": "A systematic error that can distort the design, results or interpretation of a study.",
+    "fr": "biais",
+    "category": "Scientific publications",
+    "illustration": "⚠️"
+  },
+  {
+    "word": "selection bias",
+    "ipa": "/sɪˈlekʃən ˌbaɪəs/",
+    "definition": "Bias caused by systematic differences in how participants are selected or remain in a study.",
+    "fr": "biais de sélection",
+    "category": "Scientific publications",
+    "illustration": "⚠️"
+  },
+  {
+    "word": "statistical significance",
+    "ipa": "/stəˌtɪstɪkəl sɪɡˈnɪfɪkəns/",
+    "definition": "A statistical assessment of whether an observed result is unlikely under a specified null hypothesis; it does not by itself show clinical importance.",
+    "fr": "significativité statistique",
+    "category": "Scientific publications",
+    "illustration": "📊"
+  },
+  {
+    "word": "p-value",
+    "ipa": "/ˈpiː ˌvæljuː/",
+    "definition": "A probability measure used in hypothesis testing to assess how compatible the observed data are with a statistical model under the null hypothesis.",
+    "fr": "valeur p / p-value",
+    "category": "Scientific publications",
+    "illustration": "📉"
+  },
+  {
+    "word": "confidence interval",
+    "ipa": "/ˈkɒnfɪdəns ˌɪntəvəl/",
+    "definition": "A range of values used to express uncertainty around an estimated effect or measurement.",
+    "fr": "intervalle de confiance",
+    "category": "Scientific publications",
+    "illustration": "↔️"
+  },
+  {
+    "word": "effect size",
+    "ipa": "/ɪˈfekt saɪz/",
+    "definition": "A measure of the magnitude of a difference, association or treatment effect.",
+    "fr": "taille d’effet",
+    "category": "Scientific publications",
+    "illustration": "📏"
+  },
+  {
+    "word": "odds ratio",
+    "ipa": "/ˈɒdz ˌreɪʃiəʊ/",
+    "definition": "A measure comparing the odds of an outcome between two groups.",
+    "fr": "odds ratio / rapport des cotes",
+    "category": "Scientific publications",
+    "illustration": "⚖️"
+  },
+  {
+    "word": "relative risk",
+    "ipa": "/ˌrelətɪv ˈrɪsk/",
+    "definition": "A measure comparing the probability of an outcome in one group with the probability in another group.",
+    "fr": "risque relatif",
+    "category": "Scientific publications",
+    "illustration": "📊"
+  },
+  {
+    "word": "correlation",
+    "ipa": "/ˌkɒrəˈleɪʃən/",
+    "definition": "A statistical relationship showing that two variables change together to some degree.",
+    "fr": "corrélation",
+    "category": "Scientific publications",
+    "illustration": "🔗"
+  },
+  {
+    "word": "causation",
+    "ipa": "/kɔːˈzeɪʃən/",
+    "definition": "A relationship in which one factor produces or contributes to a change in another.",
+    "fr": "causalité",
+    "category": "Scientific publications",
+    "illustration": "➡️"
+  },
+  {
+    "word": "validity",
+    "ipa": "/vəˈlɪdəti/",
+    "definition": "The extent to which a study or measurement accurately measures or supports what it is intended to.",
+    "fr": "validité",
+    "category": "Scientific publications",
+    "illustration": "✅"
+  },
+  {
+    "word": "reliability",
+    "ipa": "/rɪˌlaɪəˈbɪləti/",
+    "definition": "The extent to which a measurement or method produces consistent results.",
+    "fr": "fiabilité",
+    "category": "Scientific publications",
+    "illustration": "🔁"
+  },
+  {
+    "word": "generalisability",
+    "ipa": "/ˌdʒenərəlaɪzəˈbɪləti/",
+    "definition": "The extent to which study findings may apply to people, settings or situations beyond the study sample.",
+    "fr": "généralisabilité",
+    "category": "Scientific publications",
+    "illustration": "🌍"
+  },
+  {
+    "word": "reproducibility",
+    "ipa": "/rɪˌprɒdjuːsəˈbɪləti/",
+    "definition": "The ability to obtain consistent results when an analysis or study is repeated using the same or comparable methods and data.",
+    "fr": "reproductibilité",
+    "category": "Scientific publications",
+    "illustration": "🔁"
   }
 ];
