@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v31.css">
+  <link rel="stylesheet" href="styles-v32.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -79,8 +79,70 @@
       <button id="mission2Button" class="field-primary" type="button" disabled>🔒 Mission 2 · Triage Under Pressure</button>
     </section>
 
-    <section id="mission2Teaser" class="field-next-mission is-locked" aria-labelledby="mission2Title">
-      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission2Title">Mission 2 · Triage Under Pressure</h2><p>The clinic is receiving more patients than the team can see at once. You will need to make safe, explicit priorities using the information available — without inventing diagnoses.</p></div><span class="field-next-icon" aria-hidden="true">🩺</span>
+
+    <section id="mission2Area" class="triage-mission is-locked" aria-labelledby="mission2Title">
+      <div class="triage-hero">
+        <img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Clinician assessing a patient in a humanitarian field healthcare setting.">
+        <div class="triage-hero-shade" aria-hidden="true"></div>
+        <div class="triage-hero-copy">
+          <p class="field-kicker">MISSION 02 · FIELD CLINIC</p>
+          <h2 id="mission2Title">Triage Under Pressure</h2>
+          <p class="triage-tagline">Identify what matters. Prioritise carefully. Communicate clearly.</p>
+          <p>Patients are arriving while access and supplies are under pressure. These fictional training scenarios practise <strong>English for prioritisation and contingency planning</strong>; they do not replace local clinical triage protocols.</p>
+          <button id="startMission2" class="field-primary" type="button" disabled>🔒 Complete Mission 1 first</button>
+        </div>
+        <div class="triage-hero-score"><span>MISSION 2 SCORE</span><strong id="mission2Score">0 / 20</strong><small>first-attempt points</small></div>
+      </div>
+
+      <div class="triage-objectives" aria-label="Mission 2 objectives">
+        <div><span>01</span><strong>Extract</strong><p>Pick out the information a field handover really needs.</p></div>
+        <div><span>02</span><strong>Prioritise</strong><p>Choose the clearest immediate priority from the information given.</p></div>
+        <div><span>03</span><strong>Plan</strong><p>Respond to growing demand, access problems and delayed supplies.</p></div>
+        <div><span>04</span><strong>Communicate</strong><p>Use zero, first and <em>even if</em> conditionals accurately.</p></div>
+      </div>
+
+      <div class="triage-progress-card" aria-live="polite">
+        <span>MISSION 2 PROGRESS</span><strong id="mission2ProgressText">0 / 4</strong>
+        <div class="field-progress-track"><i id="mission2ProgressBar"></i></div>
+      </div>
+
+      <div class="triage-activity-grid">
+        <button class="triage-activity-card" data-m2-activity="incoming" type="button" disabled>
+          <span class="triage-card-number">01</span><img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Field clinician speaking with a patient.">
+          <div><small>FIELD HANDOVER</small><strong>Incoming Patients</strong><p>Extract the key information from short fictional arrival reports.</p><b id="m2StatusIncoming">LOCKED</b></div>
+        </button>
+        <button class="triage-activity-card" data-m2-activity="priority" type="button" disabled>
+          <span class="triage-card-number">02</span><img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian healthcare setting with staff and patients.">
+          <div><small>PRIORITY BOARD</small><strong>What Comes First?</strong><p>Choose the most defensible immediate priority from limited information.</p><b id="m2StatusPriority">LOCKED</b></div>
+        </button>
+        <button class="triage-activity-card" data-m2-activity="resources" type="button" disabled>
+          <span class="triage-card-number">03</span><img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Emergency response in a damaged urban environment.">
+          <div><small>CONTINGENCY DESK</small><strong>Resources Running Low</strong><p>Plan around increasing demand, difficult access and delayed supplies.</p><b id="m2StatusResources">LOCKED</b></div>
+        </button>
+        <button class="triage-activity-card" data-m2-activity="conditionals" type="button" disabled>
+          <span class="triage-card-number">04</span><img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="News interview frame used in the Day 3 humanitarian medicine lesson.">
+          <div><small>RADIO LANGUAGE</small><strong>Conditional Comms</strong><p>Build clear operational messages with zero, first and <em>even if</em>.</p><b id="m2StatusConditionals">LOCKED</b></div>
+        </button>
+      </div>
+
+      <div id="mission2Workspace" class="triage-workspace" aria-labelledby="mission2WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">MISSION 02 · ACTIVE DESK</p><h2 id="mission2WorkspaceTitle">Triage desk locked</h2><p id="mission2WorkspaceIntro">Complete Mission 1 to open this assignment.</p></div>
+          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission2ActivityScore">0</strong></div>
+        </div>
+        <div id="mission2Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🔒</span><h3>Mission 2 locked</h3><p>Complete Field Briefing first.</p></div></div>
+        <div id="mission2Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mission2Complete" class="field-completion triage-completion is-locked" aria-labelledby="mission2CompleteTitle">
+      <div class="field-completion-badge" aria-hidden="true">🩺</div>
+      <div><p class="field-kicker dark">MISSION 02 CLEARANCE</p><h2 id="mission2CompleteTitle">Triage Under Pressure is not cleared yet.</h2><p id="mission2CompleteText">Complete all four Mission 2 activities.</p></div>
+      <button id="mission3Button" class="field-primary" type="button" disabled>🔒 Mission 3 · Access Restricted</button>
+    </section>
+
+    <section id="mission3Teaser" class="field-next-mission is-locked" aria-labelledby="mission3Title">
+      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission3Title">Mission 3 · Access Restricted</h2><p>Roads, security and distance can all block healthcare access. Your next mission will focus on reaching people safely, communicating limits and adapting the response when the route changes.</p></div><span class="field-next-icon" aria-hidden="true">📍</span>
     </section>
   </main>
 
