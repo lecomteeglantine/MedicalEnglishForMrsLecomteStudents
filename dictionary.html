@@ -89,21 +89,55 @@
       </div>
     </section>
 
+    <section class="vocab-browse-hub" aria-labelledby="browseHeading">
+      <div class="browse-heading">
+        <div>
+          <p class="section-kicker">BROWSE VOCABULARY</p>
+          <h2 id="browseHeading">Choose a field</h2>
+          <p>Jump straight to the vocabulary you need. You can return to all 403 terms at any time.</p>
+        </div>
+        <button id="showAllCategories" class="secondary-btn browse-reset" type="button">Show all vocabulary</button>
+      </div>
+      <div id="categoryFilters" class="category-browser" aria-label="Vocabulary categories"></div>
+    </section>
+
+    <section id="categoryStudyPanel" class="category-study-panel" hidden aria-live="polite">
+      <div class="category-study-copy">
+        <span id="selectedCategoryIcon" class="category-study-icon" aria-hidden="true">📚</span>
+        <div>
+          <p class="section-kicker">CURRENT VOCABULARY SET</p>
+          <h2 id="selectedCategoryName">Category</h2>
+          <p><strong id="selectedCategoryCount">0</strong> terms ready to explore, revise or practise.</p>
+        </div>
+      </div>
+      <div class="category-study-actions">
+        <a id="categoryFlashcardsLink" class="primary-study-link" href="flashcards.html">🃏 Learn this category</a>
+        <a id="categoryGamesLink" class="secondary-study-link" href="games.html">🎮 Play with these words</a>
+        <button id="clearCategoryFilter" class="secondary-btn" type="button">Show all</button>
+      </div>
+    </section>
+
+    <section id="researchFocusPanel" class="research-focus-panel" hidden aria-labelledby="researchFocusHeading">
+      <div class="research-focus-head">
+        <div>
+          <p class="section-kicker">SCIENTIFIC PUBLICATIONS</p>
+          <h2 id="researchFocusHeading">Navigate a paper without drowning in vocabulary</h2>
+          <p>Start with the essentials or focus on the part of research English you need right now.</p>
+        </div>
+        <div class="research-count"><strong>79</strong><span>research terms</span></div>
+      </div>
+      <div id="researchFocusFilters" class="research-focus-filters" aria-label="Scientific publication subtopics"></div>
+      <p id="researchFocusStatus" class="research-focus-status" aria-live="polite"></p>
+    </section>
+
     <section class="tool-panel dictionary-tools" aria-label="Vocabulary tools">
-      <div class="tool-actions">
+      <div class="tool-actions dictionary-tool-actions">
         <a class="secondary-btn tool-link-btn" href="flashcards.html">🃏 Flashcards</a>
         <a class="secondary-btn tool-link-btn" href="notebook.html">📓 My notebook <span id="notebookCountBadge" class="count-badge">0</span></a>
         <button id="randomBtn" class="secondary-btn" type="button">🎲 Surprise me</button>
         <button id="toggleFrench" class="secondary-btn" type="button" aria-pressed="false">🇫🇷 Hide French</button>
         <button id="toggleDefinitions" class="secondary-btn" type="button" aria-pressed="false">💡 Hide definitions</button>
-      </div>
-
-      <div class="filter-row">
-        <div>
-          <span class="filter-label">Browse by category</span>
-          <div id="categoryFilters" class="category-filters" aria-label="Categories"></div>
-        </div>
-        <label class="sort-control">
+        <label class="sort-control dictionary-sort">
           <span>Sort</span>
           <select id="sortSelect">
             <option value="az">A → Z</option>

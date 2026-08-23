@@ -31,7 +31,9 @@
   let index = 0;
   let flipped = false;
 
-  const source = new URLSearchParams(location.search).get("source");
+  const queryParams = new URLSearchParams(location.search);
+  const source = queryParams.get("source");
+  const requestedCategory = queryParams.get("category");
   if (source === "notebook") els.deck.value = "notebook";
 
   function baseDeck() {
@@ -188,5 +190,8 @@
   });
 
   buildCategories();
+  if (requestedCategory && [...els.category.options].some(option => option.value === requestedCategory)) {
+    els.category.value = requestedCategory;
+  }
   buildDeck();
 })();

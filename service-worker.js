@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v39-scientific-publications-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v40-dictionary-learning-hub-20260823";
 
 const APP_SHELL = [
   "./",

@@ -63,6 +63,8 @@
 
   let currentGame = null;
   let state = null;
+  const queryParams = new URLSearchParams(location.search);
+  const requestedCategory = queryParams.get("category");
 
   function escapeHTML(value) {
     return String(value ?? "")
@@ -918,5 +920,9 @@
   });
 
   updateCategories();
+  if (requestedCategory && [...el.category.options].some(option => option.value === requestedCategory)) {
+    el.category.value = requestedCategory;
+    updatePoolStatus();
+  }
   renderBestScores();
 })();

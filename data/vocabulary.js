@@ -2597,7 +2597,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A scientific article that reports or discusses research.",
     "fr": "article scientifique",
     "category": "Scientific publications",
-    "illustration": "📄"
+    "illustration": "📄",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The paper reports the results of a multicentre clinical study."
   },
   {
     "word": "abstract",
@@ -2605,7 +2608,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A short summary of a scientific paper, usually presenting its purpose, methods, main results and conclusion.",
     "fr": "résumé (d’un article)",
     "category": "Scientific publications",
-    "illustration": "📄"
+    "illustration": "📄",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "The abstract summarises the aim, methods, main results and conclusion."
   },
   {
     "word": "introduction",
@@ -2613,7 +2619,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The section that introduces the topic, context and research question.",
     "fr": "introduction",
     "category": "Scientific publications",
-    "illustration": "📄"
+    "illustration": "📄",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The introduction explains why the research question matters."
   },
   {
     "word": "methods",
@@ -2621,7 +2630,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The section explaining how a study was designed and carried out.",
     "fr": "méthodes",
     "category": "Scientific publications",
-    "illustration": "🧪"
+    "illustration": "🧪",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "The methods describe how participants were recruited and assessed."
   },
   {
     "word": "methodology",
@@ -2629,7 +2641,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The system of methods and principles used to conduct research.",
     "fr": "méthodologie",
     "category": "Scientific publications",
-    "illustration": "🧪"
+    "illustration": "🧪",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The methodology was designed to reduce measurement bias."
   },
   {
     "word": "results",
@@ -2637,7 +2652,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The section presenting the data and findings produced by the study.",
     "fr": "résultats",
     "category": "Scientific publications",
-    "illustration": "📊"
+    "illustration": "📊",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "The results show a lower complication rate in the intervention group."
   },
   {
     "word": "discussion",
@@ -2645,7 +2663,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The section that interprets the results and relates them to existing knowledge.",
     "fr": "discussion",
     "category": "Scientific publications",
-    "illustration": "💬"
+    "illustration": "💬",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "The discussion compares these findings with previous research."
   },
   {
     "word": "conclusion",
@@ -2653,7 +2674,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The final section summarising the main message or implications of the study.",
     "fr": "conclusion",
     "category": "Scientific publications",
-    "illustration": "📄"
+    "illustration": "📄",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "The conclusion highlights the main implication of the study."
   },
   {
     "word": "limitations",
@@ -2661,7 +2685,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Weaknesses or constraints that may affect how a study should be interpreted.",
     "fr": "limites de l’étude",
     "category": "Scientific publications",
-    "illustration": "⚠️"
+    "illustration": "⚠️",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": true,
+    "example": "One limitation of the study is its small sample size."
   },
   {
     "word": "implications",
@@ -2669,7 +2696,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The possible consequences or significance of research findings for practice, policy or future research.",
     "fr": "implications",
     "category": "Scientific publications",
-    "illustration": "💡"
+    "illustration": "💡",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "These findings may have implications for clinical practice."
   },
   {
     "word": "references",
@@ -2677,7 +2707,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The list of sources cited in a scientific paper.",
     "fr": "références bibliographiques",
     "category": "Scientific publications",
-    "illustration": "📚"
+    "illustration": "📚",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The references list the sources cited in the paper."
   },
   {
     "word": "supplementary material",
@@ -2685,7 +2718,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Additional data, methods, figures or files published alongside the main paper.",
     "fr": "matériel supplémentaire / annexes en ligne",
     "category": "Scientific publications",
-    "illustration": "📎"
+    "illustration": "📎",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "Additional tables are available in the supplementary material."
   },
   {
     "word": "figure",
@@ -2693,7 +2729,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A graph, diagram, image or other visual element used to present information in a paper.",
     "fr": "figure",
     "category": "Scientific publications",
-    "illustration": "📈"
+    "illustration": "📈",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "Figure 2 shows the change in symptoms over twelve weeks."
   },
   {
     "word": "table",
@@ -2701,7 +2740,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Information organised in rows and columns in a scientific paper.",
     "fr": "tableau",
     "category": "Scientific publications",
-    "illustration": "📊"
+    "illustration": "📊",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "Table 1 summarises the participants’ baseline characteristics."
   },
   {
     "word": "caption",
@@ -2709,7 +2751,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The explanatory text placed with a figure or table.",
     "fr": "légende",
     "category": "Scientific publications",
-    "illustration": "🏷️"
+    "illustration": "🏷️",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The caption explains the symbols used in the figure."
   },
   {
     "word": "keywords",
@@ -2717,7 +2762,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Important terms used to describe and index the main topics of a paper.",
     "fr": "mots-clés",
     "category": "Scientific publications",
-    "illustration": "🔑"
+    "illustration": "🔑",
+    "researchArea": "Anatomy of a paper",
+    "researchEssential": false,
+    "example": "The authors selected keywords to improve the paper’s discoverability."
   },
   {
     "word": "manuscript",
@@ -2725,7 +2773,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The version of a scientific paper prepared and submitted for publication.",
     "fr": "manuscrit",
     "category": "Scientific publications",
-    "illustration": "📝"
+    "illustration": "📝",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The authors revised the manuscript before resubmitting it."
   },
   {
     "word": "journal",
@@ -2733,7 +2784,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A periodical publication that publishes academic or scientific articles.",
     "fr": "revue scientifique",
     "category": "Scientific publications",
-    "illustration": "📘"
+    "illustration": "📘",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The study was published in a peer-reviewed medical journal."
   },
   {
     "word": "peer-reviewed",
@@ -2741,7 +2795,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Evaluated by independent experts in the same field before publication.",
     "fr": "évalué par les pairs",
     "category": "Scientific publications",
-    "illustration": "👥"
+    "illustration": "👥",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The article appeared in a peer-reviewed journal."
   },
   {
     "word": "peer review",
@@ -2749,7 +2806,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The process in which experts evaluate a manuscript before publication.",
     "fr": "évaluation par les pairs",
     "category": "Scientific publications",
-    "illustration": "👥"
+    "illustration": "👥",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The manuscript was revised following peer review."
   },
   {
     "word": "reviewer",
@@ -2757,7 +2817,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "An expert who evaluates a manuscript during peer review.",
     "fr": "relecteur / évaluateur",
     "category": "Scientific publications",
-    "illustration": "🧐"
+    "illustration": "🧐",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "One reviewer asked the authors to clarify the inclusion criteria."
   },
   {
     "word": "editor",
@@ -2765,7 +2828,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A person responsible for managing the evaluation and publication of papers in a journal.",
     "fr": "éditeur scientifique / rédacteur",
     "category": "Scientific publications",
-    "illustration": "✏️"
+    "illustration": "✏️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The editor invited the authors to submit a revised manuscript."
   },
   {
     "word": "submission",
@@ -2773,7 +2839,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The act or process of sending a manuscript to a journal for consideration.",
     "fr": "soumission d’un article",
     "category": "Scientific publications",
-    "illustration": "📤"
+    "illustration": "📤",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The journal confirmed receipt of the submission."
   },
   {
     "word": "revision",
@@ -2781,7 +2850,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A modified version of a manuscript produced in response to feedback or review.",
     "fr": "révision",
     "category": "Scientific publications",
-    "illustration": "✍️"
+    "illustration": "✍️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The revision addressed the reviewers’ main concerns."
   },
   {
     "word": "acceptance",
@@ -2789,7 +2861,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A journal decision confirming that a manuscript will be published.",
     "fr": "acceptation",
     "category": "Scientific publications",
-    "illustration": "✅"
+    "illustration": "✅",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The authors received an acceptance letter from the journal."
   },
   {
     "word": "rejection",
@@ -2797,7 +2872,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A journal decision not to publish a submitted manuscript.",
     "fr": "rejet",
     "category": "Scientific publications",
-    "illustration": "❌"
+    "illustration": "❌",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The manuscript was revised after rejection by the first journal."
   },
   {
     "word": "preprint",
@@ -2805,7 +2883,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A version of a scientific paper made publicly available before formal peer review.",
     "fr": "prépublication / preprint",
     "category": "Scientific publications",
-    "illustration": "🗂️"
+    "illustration": "🗂️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The findings first appeared online as a preprint."
   },
   {
     "word": "DOI",
@@ -2813,7 +2894,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A permanent digital identifier used to locate a scholarly publication online.",
     "fr": "DOI / identifiant numérique d’objet",
     "category": "Scientific publications",
-    "illustration": "🔗"
+    "illustration": "🔗",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "Use the DOI to locate the published article reliably."
   },
   {
     "word": "citation",
@@ -2821,7 +2905,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A reference to another source or publication used in academic writing.",
     "fr": "citation / référence à une source",
     "category": "Scientific publications",
-    "illustration": "🔖"
+    "illustration": "🔖",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The statement should be supported by an appropriate citation."
   },
   {
     "word": "corresponding author",
@@ -2829,7 +2916,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The author responsible for communication with the journal and readers about a paper.",
     "fr": "auteur correspondant",
     "category": "Scientific publications",
-    "illustration": "✉️"
+    "illustration": "✉️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "Questions about the study can be sent to the corresponding author."
   },
   {
     "word": "affiliation",
@@ -2837,7 +2927,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The institution or organisation an author is associated with.",
     "fr": "affiliation institutionnelle",
     "category": "Scientific publications",
-    "illustration": "🏛️"
+    "illustration": "🏛️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "Each author lists their institutional affiliation."
   },
   {
     "word": "conflict of interest",
@@ -2845,7 +2938,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A personal or financial interest that could influence, or appear to influence, research or its reporting.",
     "fr": "conflit d’intérêts",
     "category": "Scientific publications",
-    "illustration": "⚖️"
+    "illustration": "⚖️",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The authors declared no conflict of interest."
   },
   {
     "word": "funding",
@@ -2853,7 +2949,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Money or financial support provided for a research project.",
     "fr": "financement",
     "category": "Scientific publications",
-    "illustration": "💷"
+    "illustration": "💷",
+    "researchArea": "Publishing & peer review",
+    "researchEssential": false,
+    "example": "The funding source is reported at the end of the article."
   },
   {
     "word": "research question",
@@ -2861,7 +2960,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The specific question that a study is designed to answer.",
     "fr": "question de recherche",
     "category": "Scientific publications",
-    "illustration": "❓"
+    "illustration": "❓",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The research question asks whether early rehabilitation improves recovery."
   },
   {
     "word": "hypothesis",
@@ -2869,7 +2971,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A testable proposed explanation or prediction examined in a study.",
     "fr": "hypothèse",
     "category": "Scientific publications",
-    "illustration": "💭"
+    "illustration": "💭",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The hypothesis was that the intervention would reduce pain scores."
   },
   {
     "word": "aim",
@@ -2877,7 +2982,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The overall purpose of a study.",
     "fr": "but / objectif général",
     "category": "Scientific publications",
-    "illustration": "🎯"
+    "illustration": "🎯",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The aim of the study was to compare two rehabilitation programmes."
   },
   {
     "word": "objective",
@@ -2885,7 +2993,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A specific goal that a study intends to achieve.",
     "fr": "objectif",
     "category": "Scientific publications",
-    "illustration": "🎯"
+    "illustration": "🎯",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The primary objective was to assess treatment safety."
   },
   {
     "word": "study design",
@@ -2893,7 +3004,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The overall plan used to answer a research question.",
     "fr": "plan / schéma d’étude",
     "category": "Scientific publications",
-    "illustration": "🧭"
+    "illustration": "🧭",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The study design was a prospective cohort study."
   },
   {
     "word": "cohort study",
@@ -2901,7 +3015,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study that follows or compares a defined group of people over time or using existing records.",
     "fr": "étude de cohorte",
     "category": "Scientific publications",
-    "illustration": "👥"
+    "illustration": "👥",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The cohort study followed patients for five years."
   },
   {
     "word": "case-control study",
@@ -2909,7 +3026,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study comparing people with a condition or outcome with people who do not have it.",
     "fr": "étude cas-témoins",
     "category": "Scientific publications",
-    "illustration": "⚖️"
+    "illustration": "⚖️",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The case-control study compared patients with and without the condition."
   },
   {
     "word": "cross-sectional study",
@@ -2917,7 +3037,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study examining a population or sample at a particular point in time.",
     "fr": "étude transversale",
     "category": "Scientific publications",
-    "illustration": "📸"
+    "illustration": "📸",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The cross-sectional study measured prevalence at one point in time."
   },
   {
     "word": "randomised controlled trial",
@@ -2925,7 +3048,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "An experimental study in which participants are randomly assigned to different groups, usually including a control group.",
     "fr": "essai contrôlé randomisé",
     "category": "Scientific publications",
-    "illustration": "🎲"
+    "illustration": "🎲",
+    "researchArea": "Research questions & design",
+    "researchEssential": true,
+    "example": "The treatment was evaluated in a randomised controlled trial."
   },
   {
     "word": "systematic review",
@@ -2933,7 +3059,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A structured review that uses predefined methods to identify and evaluate relevant studies on a question.",
     "fr": "revue systématique",
     "category": "Scientific publications",
-    "illustration": "🔎"
+    "illustration": "🔎",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The systematic review identified twelve eligible studies."
   },
   {
     "word": "meta-analysis",
@@ -2941,7 +3070,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A statistical method that combines results from multiple studies.",
     "fr": "méta-analyse",
     "category": "Scientific publications",
-    "illustration": "📊"
+    "illustration": "📊",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The meta-analysis combined effect estimates from eight trials."
   },
   {
     "word": "prospective study",
@@ -2949,7 +3081,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study that follows participants forward in time from a defined starting point.",
     "fr": "étude prospective",
     "category": "Scientific publications",
-    "illustration": "➡️"
+    "illustration": "➡️",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The prospective study followed participants from enrolment onwards."
   },
   {
     "word": "retrospective study",
@@ -2957,7 +3092,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study that examines data or events that have already occurred.",
     "fr": "étude rétrospective",
     "category": "Scientific publications",
-    "illustration": "⬅️"
+    "illustration": "⬅️",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The retrospective study analysed existing hospital records."
   },
   {
     "word": "observational study",
@@ -2965,7 +3103,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A study in which researchers observe participants or exposures without assigning an intervention.",
     "fr": "étude observationnelle",
     "category": "Scientific publications",
-    "illustration": "👁️"
+    "illustration": "👁️",
+    "researchArea": "Research questions & design",
+    "researchEssential": false,
+    "example": "The observational study did not assign participants to treatment groups."
   },
   {
     "word": "sample",
@@ -2973,7 +3114,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The group of participants, observations or specimens selected for a study.",
     "fr": "échantillon",
     "category": "Scientific publications",
-    "illustration": "🧩"
+    "illustration": "🧩",
+    "researchArea": "Participants & methods",
+    "researchEssential": true,
+    "example": "The final sample included 240 participants."
   },
   {
     "word": "sample size",
@@ -2981,7 +3125,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The number of participants or observations included in a study.",
     "fr": "taille de l’échantillon",
     "category": "Scientific publications",
-    "illustration": "🔢"
+    "illustration": "🔢",
+    "researchArea": "Participants & methods",
+    "researchEssential": true,
+    "example": "The sample size was calculated before recruitment began."
   },
   {
     "word": "study population",
@@ -2989,7 +3136,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The larger group of people or cases that a study is intended to describe or investigate.",
     "fr": "population étudiée",
     "category": "Scientific publications",
-    "illustration": "👥"
+    "illustration": "👥",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "The study population consisted of adults aged over 65."
   },
   {
     "word": "inclusion criteria",
@@ -2997,7 +3147,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Characteristics that participants must have to be eligible for a study.",
     "fr": "critères d’inclusion",
     "category": "Scientific publications",
-    "illustration": "✅"
+    "illustration": "✅",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Participants had to meet all inclusion criteria before enrolment."
   },
   {
     "word": "exclusion criteria",
@@ -3005,7 +3158,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Characteristics that prevent a person from being eligible for a study.",
     "fr": "critères d’exclusion",
     "category": "Scientific publications",
-    "illustration": "🚫"
+    "illustration": "🚫",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Severe renal disease was one of the exclusion criteria."
   },
   {
     "word": "control group",
@@ -3013,7 +3169,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A comparison group that does not receive the intervention being tested, or receives standard care or a placebo.",
     "fr": "groupe témoin / groupe contrôle",
     "category": "Scientific publications",
-    "illustration": "⚖️"
+    "illustration": "⚖️",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "The control group received standard care."
   },
   {
     "word": "intervention group",
@@ -3021,7 +3180,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The group that receives the treatment or intervention being studied.",
     "fr": "groupe intervention",
     "category": "Scientific publications",
-    "illustration": "💊"
+    "illustration": "💊",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "The intervention group received the new programme."
   },
   {
     "word": "randomisation",
@@ -3029,7 +3191,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The process of assigning participants to study groups by chance.",
     "fr": "randomisation",
     "category": "Scientific publications",
-    "illustration": "🎲"
+    "illustration": "🎲",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Randomisation was performed using a computer-generated sequence."
   },
   {
     "word": "blinding",
@@ -3037,7 +3202,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A method in which participants, researchers or assessors do not know which treatment was assigned.",
     "fr": "mise en aveugle",
     "category": "Scientific publications",
-    "illustration": "🙈"
+    "illustration": "🙈",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Blinding reduced the risk of assessment bias."
   },
   {
     "word": "placebo",
@@ -3045,7 +3213,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "An inactive treatment designed to resemble the intervention being tested.",
     "fr": "placebo",
     "category": "Scientific publications",
-    "illustration": "💊"
+    "illustration": "💊",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Participants in the control arm received a placebo."
   },
   {
     "word": "baseline",
@@ -3053,7 +3224,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Measurements or characteristics recorded at the beginning of a study before an intervention or follow-up.",
     "fr": "valeur initiale / données de référence",
     "category": "Scientific publications",
-    "illustration": "📍"
+    "illustration": "📍",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Blood pressure was recorded at baseline and after treatment."
   },
   {
     "word": "follow-up period",
@@ -3061,7 +3235,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The length of time during which participants are monitored after enrolment or an intervention.",
     "fr": "période de suivi",
     "category": "Scientific publications",
-    "illustration": "🗓️"
+    "illustration": "🗓️",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "The follow-up period lasted twelve months."
   },
   {
     "word": "outcome",
@@ -3069,7 +3246,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A result or event measured in a study to evaluate an intervention, exposure or condition.",
     "fr": "critère de jugement / résultat mesuré",
     "category": "Scientific publications",
-    "illustration": "🎯"
+    "illustration": "🎯",
+    "researchArea": "Participants & methods",
+    "researchEssential": true,
+    "example": "Hospital readmission was an important outcome in the study."
   },
   {
     "word": "primary outcome",
@@ -3077,7 +3257,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The main outcome a study is designed to evaluate.",
     "fr": "critère de jugement principal",
     "category": "Scientific publications",
-    "illustration": "🥇"
+    "illustration": "🥇",
+    "researchArea": "Participants & methods",
+    "researchEssential": true,
+    "example": "The primary outcome was change in pain intensity at six weeks."
   },
   {
     "word": "secondary outcome",
@@ -3085,7 +3268,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "An additional outcome measured alongside the primary outcome.",
     "fr": "critère de jugement secondaire",
     "category": "Scientific publications",
-    "illustration": "🥈"
+    "illustration": "🥈",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Quality of life was assessed as a secondary outcome."
   },
   {
     "word": "endpoint",
@@ -3093,7 +3279,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A predefined event or measurement used to judge the effect of an intervention or exposure.",
     "fr": "critère d’évaluation / endpoint",
     "category": "Scientific publications",
-    "illustration": "🏁"
+    "illustration": "🏁",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Mortality at 30 days was a predefined endpoint."
   },
   {
     "word": "variable",
@@ -3101,7 +3290,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A characteristic or measurement that can take different values in a study.",
     "fr": "variable",
     "category": "Scientific publications",
-    "illustration": "🔣"
+    "illustration": "🔣",
+    "researchArea": "Participants & methods",
+    "researchEssential": false,
+    "example": "Age was included as a continuous variable in the analysis."
   },
   {
     "word": "confounder",
@@ -3109,7 +3301,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A factor associated with both an exposure and an outcome that can distort the apparent relationship between them.",
     "fr": "facteur de confusion",
     "category": "Scientific publications",
-    "illustration": "🧩"
+    "illustration": "🧩",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "Smoking may act as a confounder in this association."
   },
   {
     "word": "bias",
@@ -3117,7 +3312,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A systematic error that can distort the design, results or interpretation of a study.",
     "fr": "biais",
     "category": "Scientific publications",
-    "illustration": "⚠️"
+    "illustration": "⚠️",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": true,
+    "example": "The authors discuss the risk of bias in participant selection."
   },
   {
     "word": "selection bias",
@@ -3125,7 +3323,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "Bias caused by systematic differences in how participants are selected or remain in a study.",
     "fr": "biais de sélection",
     "category": "Scientific publications",
-    "illustration": "⚠️"
+    "illustration": "⚠️",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "Loss to follow-up may have introduced selection bias."
   },
   {
     "word": "statistical significance",
@@ -3133,7 +3334,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A statistical assessment of whether an observed result is unlikely under a specified null hypothesis; it does not by itself show clinical importance.",
     "fr": "significativité statistique",
     "category": "Scientific publications",
-    "illustration": "📊"
+    "illustration": "📊",
+    "researchArea": "Statistics",
+    "researchEssential": true,
+    "example": "The difference reached statistical significance, but its clinical importance was modest."
   },
   {
     "word": "p-value",
@@ -3141,7 +3345,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A probability measure used in hypothesis testing to assess how compatible the observed data are with a statistical model under the null hypothesis.",
     "fr": "valeur p / p-value",
     "category": "Scientific publications",
-    "illustration": "📉"
+    "illustration": "📉",
+    "researchArea": "Statistics",
+    "researchEssential": true,
+    "example": "The reported p-value was below the prespecified significance threshold."
   },
   {
     "word": "confidence interval",
@@ -3149,7 +3356,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A range of values used to express uncertainty around an estimated effect or measurement.",
     "fr": "intervalle de confiance",
     "category": "Scientific publications",
-    "illustration": "↔️"
+    "illustration": "↔️",
+    "researchArea": "Statistics",
+    "researchEssential": true,
+    "example": "The confidence interval shows the uncertainty around the estimated effect."
   },
   {
     "word": "effect size",
@@ -3157,7 +3367,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A measure of the magnitude of a difference, association or treatment effect.",
     "fr": "taille d’effet",
     "category": "Scientific publications",
-    "illustration": "📏"
+    "illustration": "📏",
+    "researchArea": "Statistics",
+    "researchEssential": false,
+    "example": "The effect size was small despite statistical significance."
   },
   {
     "word": "odds ratio",
@@ -3165,7 +3378,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A measure comparing the odds of an outcome between two groups.",
     "fr": "odds ratio / rapport des cotes",
     "category": "Scientific publications",
-    "illustration": "⚖️"
+    "illustration": "⚖️",
+    "researchArea": "Statistics",
+    "researchEssential": false,
+    "example": "The odds ratio compares the odds of the outcome between the two groups."
   },
   {
     "word": "relative risk",
@@ -3173,7 +3389,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A measure comparing the probability of an outcome in one group with the probability in another group.",
     "fr": "risque relatif",
     "category": "Scientific publications",
-    "illustration": "📊"
+    "illustration": "📊",
+    "researchArea": "Statistics",
+    "researchEssential": false,
+    "example": "The relative risk was lower in the intervention group."
   },
   {
     "word": "correlation",
@@ -3181,7 +3400,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A statistical relationship showing that two variables change together to some degree.",
     "fr": "corrélation",
     "category": "Scientific publications",
-    "illustration": "🔗"
+    "illustration": "🔗",
+    "researchArea": "Statistics",
+    "researchEssential": false,
+    "example": "The analysis found a correlation between age and recovery time."
   },
   {
     "word": "causation",
@@ -3189,7 +3411,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "A relationship in which one factor produces or contributes to a change in another.",
     "fr": "causalité",
     "category": "Scientific publications",
-    "illustration": "➡️"
+    "illustration": "➡️",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "A correlation alone does not demonstrate causation."
   },
   {
     "word": "validity",
@@ -3197,7 +3422,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The extent to which a study or measurement accurately measures or supports what it is intended to.",
     "fr": "validité",
     "category": "Scientific publications",
-    "illustration": "✅"
+    "illustration": "✅",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "The authors discuss whether the measurement tool has adequate validity."
   },
   {
     "word": "reliability",
@@ -3205,7 +3433,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The extent to which a measurement or method produces consistent results.",
     "fr": "fiabilité",
     "category": "Scientific publications",
-    "illustration": "🔁"
+    "illustration": "🔁",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "The questionnaire showed good reliability across repeated measurements."
   },
   {
     "word": "generalisability",
@@ -3213,7 +3444,10 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The extent to which study findings may apply to people, settings or situations beyond the study sample.",
     "fr": "généralisabilité",
     "category": "Scientific publications",
-    "illustration": "🌍"
+    "illustration": "🌍",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "The small specialist sample may limit generalisability."
   },
   {
     "word": "reproducibility",
@@ -3221,6 +3455,9 @@ window.MEDICAL_VOCABULARY = [
     "definition": "The ability to obtain consistent results when an analysis or study is repeated using the same or comparable methods and data.",
     "fr": "reproductibilité",
     "category": "Scientific publications",
-    "illustration": "🔁"
+    "illustration": "🔁",
+    "researchArea": "Interpreting evidence",
+    "researchEssential": false,
+    "example": "The authors shared their code to improve reproducibility."
   }
 ];
