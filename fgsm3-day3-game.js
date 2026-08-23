@@ -101,6 +101,51 @@
     }
   };
 
+  const mission3Activities = {
+    roads: {
+      title: "Road Access Alert",
+      intro: "Use the source carefully. Identify what is actually reported about access, and reject explanations that are not given.",
+      items: [
+        {q:"Why are some people in the south described as impossible to reach?", a:"Continuous strikes make the area too dangerous to access", wrong:["The people have refused all assistance","There are no roads anywhere in the south"], model:"Some people cannot be reached because continuous strikes make access too dangerous."},
+        {q:"Which statement stays closest to the source?", a:"Access is unsafe in some areas, so teams cannot simply reach everyone", wrong:["All humanitarian access in Lebanon has stopped","Every road to the south is physically destroyed"], model:"Access is unsafe in some areas, so teams cannot simply reach everyone."},
+        {q:"A field briefing says, ‘We will reach every displaced person today.’ What is the problem?", a:"It promises something the source shows may be impossible because some areas are too dangerous to reach", wrong:["It is too cautious","It gives too much detail about water and food"], model:"We should not promise access where the security situation may prevent it."},
+        {q:"What does the report about a refugee camp add to the access picture?", a:"A place meant to offer safety may still be affected by violence, so location alone does not guarantee safe access", wrong:["Every refugee camp has received an evacuation order","Refugee camps are always outside conflict areas"], model:"A place intended as shelter is not automatically safe from the effects of conflict."},
+        {q:"Which sentence reports an access limitation without inventing a solution?", a:"Some people remain unreachable because the route is currently too dangerous", wrong:["The team can definitely reopen the route within an hour","No one in the south can ever be reached again"], model:"Some people remain unreachable because the route is currently too dangerous."}
+      ]
+    },
+    vulnerable: {
+      title: "Who Gets Left Behind?",
+      intro: "The source names groups for whom evacuation may be especially difficult. Keep the wording inclusive and source-based.",
+      items: [
+        {q:"Which group list matches the interview summary?", a:"Older people, pregnant women, disabled people and people whose health condition limits movement", wrong:["Only children and international staff","Only people with visible injuries"], model:"Evacuation may be especially difficult for older people, pregnant women, disabled people and people whose health limits movement."},
+        {q:"Why can fleeing be especially difficult for these groups?", a:"They may not be able to move quickly or independently and may need assistance", wrong:["They are not allowed to use shelters","They always refuse evacuation orders"], model:"Some people cannot move quickly or independently and may need help to evacuate."},
+        {q:"Which briefing sentence avoids stereotyping?", a:"Some people may need additional assistance because mobility, pregnancy, disability or illness can make evacuation harder", wrong:["Older and disabled people are always unable to evacuate","Pregnant women cannot travel in emergencies"], model:"Some people may need additional assistance because evacuation is harder for them."},
+        {q:"What is the practical communication lesson?", a:"Do not describe evacuation as equally easy for everyone", wrong:["Assume anyone left behind chose to stay","Focus only on people who can reach the clinic independently"], model:"Evacuation planning must recognise that people do not all have the same ability to move."}
+      ]
+    },
+    supplies: {
+      title: "Supply Route",
+      intro: "The Day 3 materials describe pressure on shelter, food, water and medical care. Choose responses that acknowledge limited capacity and uncertain access.",
+      items: [
+        {q:"A shelter is already overcrowded. Which statement fits the source best?", a:"Additional arrivals may increase pressure on shelter, sanitation and medical needs", wrong:["The shelter can absorb unlimited arrivals","Only hospital capacity matters in this situation"], model:"If more people arrive, pressure on shelter, sanitation and medical care may increase."},
+        {q:"Food, water and medical care are described as scarce. What should a field update say?", a:"Basic commodities and healthcare capacity are under pressure", wrong:["Every supply has completely run out","Only medicines matter now"], model:"Basic commodities and healthcare capacity are under pressure."},
+        {q:"Supplies are delayed and access is becoming harder. Which contingency statement is appropriately cautious?", a:"If supplies are delayed, the team will need to adapt the plan and prioritise available resources", wrong:["If supplies are delayed, the team will definitely have everything it needs","Delayed supplies mean the mission must automatically end"], model:"If supplies are delayed, the team will need to adapt the plan and prioritise available resources."},
+        {q:"What does ‘no system can cope with such a big amount of displaced people’ mean in the worksheet context?", a:"The scale of displacement can exceed available shelter, food, water and care capacity", wrong:["Humanitarian organisations should stop responding","The entire national health system has permanently collapsed"], model:"The scale of displacement can exceed the available capacity for shelter, food, water and care."}
+      ]
+    },
+    evenif: {
+      title: "Even If…",
+      intro: "Use zero conditional for general relationships, first conditional for realistic future consequences, and even if to express a limit that may remain despite action.",
+      items: [
+        {q:"Choose the sentence that matches the worksheet model about access.", a:"Even if aid arrives, some people in the south may not be reached.", wrong:["Even if aid will arrive, some people may not be reached.","Even if aid arrives, everyone will definitely be reached."], model:"Even if aid arrives, some people in the south may not be reached."},
+        {q:"Choose the correct first conditional for a full shelter.", a:"If a shelter is full, people will have to find another one.", wrong:["If a shelter will be full, people have to find another one.","If a shelter is full, people will had to find another one."], model:"If a shelter is full, people will have to find another one."},
+        {q:"Which sentence expresses a general safety relationship?", a:"If medical teams are targeted, they cannot work safely.", wrong:["If medical teams will be targeted, they cannot work safely.","If medical teams are targeted, they cannot works safely."], model:"If medical teams are targeted, they cannot work safely."},
+        {q:"Choose the sentence that communicates a limit without giving up on the response.", a:"Even if conditions deteriorate, the team will continue to reassess what can be done safely.", wrong:["Even if conditions deteriorate, the team will definitely reach everyone.","Even if conditions will deteriorate, the team continues all activities unchanged."], model:"Even if conditions deteriorate, the team will continue to reassess what can be done safely."},
+        {q:"Which sentence uses the first conditional correctly for access?", a:"If access becomes more difficult, the team will need to adapt the response.", wrong:["If access will become more difficult, the team will need to adapt the response.","If access becomes more difficult, the team need adapted the response."], model:"If access becomes more difficult, the team will need to adapt the response."}
+      ]
+    }
+  };
+
   const defaults = {
     started:false,current:"vocab",
     indices:{vocab:0,situation:0,video:0,signals:0},
@@ -115,6 +160,14 @@
       missed:{incoming:[],priority:[],resources:[],conditionals:[]},
       complete:{incoming:false,priority:false,resources:false,conditionals:false},
       completeAll:false
+    },
+    mission3:{
+      started:false,current:"roads",
+      indices:{roads:0,vulnerable:0,supplies:0,evenif:0},
+      scores:{roads:0,vulnerable:0,supplies:0,evenif:0},
+      missed:{roads:[],vulnerable:[],supplies:[],evenif:[]},
+      complete:{roads:false,vulnerable:false,supplies:false,evenif:false},
+      completeAll:false
     }
   };
   let state = load();
@@ -124,7 +177,8 @@
   const els = {
     start:$("startFieldMission"),sound:$("day3SoundToggle"),musicToggle:$("day3MusicToggle"),music:$("day3Music"),reset:$("resetDay3"),status:$("day3AudioStatus"),
     screen:$("fieldScreen"),feedback:$("fieldFeedback"),workspaceTitle:$("workspaceTitle"),workspaceIntro:$("workspaceIntro"),score:$("fieldScore"),progressText:$("missionProgressText"),progressBar:$("missionProgressBar"),clearance:$("fieldClearance"),complete:$("missionComplete"),completeTitle:$("missionCompleteTitle"),completeText:$("missionCompleteText"),mission2Button:$("mission2Button"),
-    mission2Area:$("mission2Area"),startMission2:$("startMission2"),mission2Score:$("mission2Score"),mission2ProgressText:$("mission2ProgressText"),mission2ProgressBar:$("mission2ProgressBar"),mission2Workspace:$("mission2Workspace"),mission2WorkspaceTitle:$("mission2WorkspaceTitle"),mission2WorkspaceIntro:$("mission2WorkspaceIntro"),mission2ActivityScore:$("mission2ActivityScore"),mission2Screen:$("mission2Screen"),mission2Feedback:$("mission2Feedback"),mission2Complete:$("mission2Complete"),mission2CompleteTitle:$("mission2CompleteTitle"),mission2CompleteText:$("mission2CompleteText"),mission3Button:$("mission3Button"),mission3Teaser:$("mission3Teaser")
+    mission2Area:$("mission2Area"),startMission2:$("startMission2"),mission2Score:$("mission2Score"),mission2ProgressText:$("mission2ProgressText"),mission2ProgressBar:$("mission2ProgressBar"),mission2Workspace:$("mission2Workspace"),mission2WorkspaceTitle:$("mission2WorkspaceTitle"),mission2WorkspaceIntro:$("mission2WorkspaceIntro"),mission2ActivityScore:$("mission2ActivityScore"),mission2Screen:$("mission2Screen"),mission2Feedback:$("mission2Feedback"),mission2Complete:$("mission2Complete"),mission2CompleteTitle:$("mission2CompleteTitle"),mission2CompleteText:$("mission2CompleteText"),mission3Button:$("mission3Button"),
+    mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),mission4Teaser:$("mission4Teaser")
   };
 
   function load(){
@@ -142,6 +196,12 @@
       merged.mission2.scores={...base.mission2.scores,...(s2.scores||{})};
       merged.mission2.missed={...base.mission2.missed,...(s2.missed||{})};
       merged.mission2.complete={...base.mission2.complete,...(s2.complete||{})};
+      const s3=saved.mission3||{};
+      merged.mission3={...base.mission3,...s3};
+      merged.mission3.indices={...base.mission3.indices,...(s3.indices||{})};
+      merged.mission3.scores={...base.mission3.scores,...(s3.scores||{})};
+      merged.mission3.missed={...base.mission3.missed,...(s3.missed||{})};
+      merged.mission3.complete={...base.mission3.complete,...(s3.complete||{})};
       return merged;
     }catch{return structuredClone(defaults);}
   }
@@ -242,11 +302,13 @@
       els.mission2CompleteTitle.textContent="Field Triage Ready";
       els.mission2CompleteText.textContent="You extracted key handover information, prioritised carefully, planned around limited resources and used conditional language for field decisions.";
       els.mission3Button.disabled=false;els.mission3Button.textContent="Mission 3 · Access Restricted →";
-      els.mission3Teaser.classList.remove("is-locked");
+      els.mission3Area.classList.remove("is-locked");
+      els.startMission3.disabled=false;els.startMission3.textContent=state.mission3.started?"Resume Mission 3 →":"Start Mission 3 →";
       els.startMission2.textContent="Replay Mission 2 →";
     }else{
-      els.mission2Complete.classList.add("is-locked");els.mission3Button.disabled=true;els.mission3Teaser.classList.add("is-locked");
+      els.mission2Complete.classList.add("is-locked");els.mission3Button.disabled=true;els.mission3Area.classList.add("is-locked");els.startMission3.disabled=true;els.startMission3.textContent="🔒 Complete Mission 2 first";
     }
+    updateMission3UI();
     save();
   }
 
@@ -287,6 +349,86 @@
     $("continueMission2").onclick=()=>{if(next){state.mission2.current=next;save();renderMission2();}else{state.mission2.completeAll=true;cue("unlock");save();updateMission2UI();els.mission2Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
   }
 
+  function mission3Order(){return ["roads","vulnerable","supplies","evenif"];}
+  function mission3Unlocked(key){const order=mission3Order(),i=order.indexOf(key);return state.mission2.completeAll&&(i===0||state.mission3.complete[order[i-1]]);}
+  function mission3CompletedCount(){return Object.values(state.mission3.complete).filter(Boolean).length;}
+  function mission3TotalScore(){return Object.values(state.mission3.scores).reduce((a,b)=>a+b,0);}
+  function mission3MaxScore(){return mission3Order().reduce((n,k)=>n+mission3Activities[k].items.length,0);}
+
+  function updateMission3UI(){
+    if(!els.mission3Area)return;
+    const count=mission3CompletedCount();
+    state.mission3.completeAll=count===4;
+    els.mission3ProgressText.textContent=`${count} / 4`;
+    els.mission3ProgressBar.style.width=`${count*25}%`;
+    els.mission3Score.textContent=`${mission3TotalScore()} / ${mission3MaxScore()}`;
+    const labels={roads:"m3StatusRoads",vulnerable:"m3StatusVulnerable",supplies:"m3StatusSupplies",evenif:"m3StatusEvenIf"};
+    mission3Order().forEach(k=>{
+      const label=$(labels[k]),card=document.querySelector(`[data-m3-activity="${k}"]`);
+      if(!label||!card)return;
+      if(state.mission3.complete[k]){label.textContent="CLEARED";card.disabled=false;card.classList.add("is-cleared");card.classList.remove("is-locked");}
+      else if(mission3Unlocked(k)){label.textContent=state.mission3.started&&state.mission3.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
+      else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
+    });
+    if(state.mission3.completeAll){
+      els.clearance.textContent="Mission 3 cleared";
+      els.mission3Complete.classList.remove("is-locked");
+      els.mission3CompleteTitle.textContent="Access Coordinator";
+      els.mission3CompleteText.textContent="You reported access limitations without overclaiming, recognised who may need extra evacuation support, adapted supply planning and used conditional language to communicate remaining limits.";
+      els.mission4Button.disabled=false;els.mission4Button.textContent="Mission 4 · Radio Stress Check →";
+      els.mission4Teaser.classList.remove("is-locked");
+      els.startMission3.textContent="Replay Mission 3 →";
+    }else{
+      els.mission3Complete.classList.add("is-locked");els.mission4Button.disabled=true;els.mission4Teaser.classList.add("is-locked");
+    }
+    save();
+  }
+
+  function renderMission3(){
+    updateMission3UI();
+    els.mission3Feedback.innerHTML="";
+    if(!state.mission2.completeAll){els.mission3WorkspaceTitle.textContent="Access desk locked";els.mission3WorkspaceIntro.textContent="Complete Mission 2 to open this assignment.";return;}
+    if(!state.mission3.started){els.mission3WorkspaceTitle.textContent="Mission 3 ready";els.mission3WorkspaceIntro.textContent="Start with Road Access Alert, then work through the four access and logistics activities in order.";els.mission3Screen.innerHTML=`<div class="field-waiting"><span aria-hidden="true">🚧</span><h3>Access desk ready</h3><p>Use only what the Day 3 materials support. The aim is to communicate limits and consequences clearly, not to invent operational facts.</p></div>`;return;}
+    let key=state.mission3.current;
+    if(!mission3Unlocked(key)){key=mission3Order().find(k=>mission3Unlocked(k)&&!state.mission3.complete[k])||"roads";state.mission3.current=key;save();}
+    const act=mission3Activities[key],idx=state.mission3.indices[key]||0;
+    els.mission3WorkspaceTitle.textContent=act.title;els.mission3WorkspaceIntro.textContent=act.intro;els.mission3ActivityScore.textContent=`${state.mission3.scores[key]} / ${act.items.length}`;
+    if(state.mission3.complete[key])return renderMission3CompleteActivity(key);
+    const item=act.items[idx];
+    els.mission3Screen.innerHTML=`<div class="field-question access-question"><div class="field-question-meta"><span>${act.title.toUpperCase()}</span><b>${idx+1} / ${act.items.length}</b></div><h3>${item.q}</h3><div id="mission3Options" class="field-options"></div><p class="access-source-note">Source rule: choose the wording supported by the Day 3 documents; avoid absolute claims that are not stated.</p></div>`;
+    const wrap=$("mission3Options");
+    shuffled([item.a,...item.wrong]).forEach(text=>{const b=document.createElement("button");b.className="field-option";b.type="button";b.textContent=text;b.onclick=()=>answerMission3(key,idx,text===item.a,b,wrap,item);wrap.appendChild(b);});
+  }
+
+  function answerMission3(key,idx,isCorrect,button,wrap,item){
+    if(isCorrect){
+      wrap.querySelectorAll("button").forEach(b=>b.disabled=true);button.classList.add("is-correct");
+      if(!state.mission3.missed[key].includes(idx))state.mission3.scores[key]+=1;
+      state.mission3.indices[key]+=1;cue("good");save();
+      els.mission3Feedback.innerHTML=`<div class="field-good"><strong>Cleared.</strong><span>${item.a}</span></div><div class="access-model-line"><span>MODEL LINE</span><p>${item.model}</p><button id="hearM3Model" class="field-hear" type="button">🔊 Hear it</button></div><button id="mission3Next" class="field-next" type="button">${state.mission3.indices[key]>=mission3Activities[key].items.length?"Complete activity →":"Next checkpoint →"}</button>`;
+      $("hearM3Model").onclick=()=>speak(item.model);
+      $("mission3Next").onclick=()=>{if(state.mission3.indices[key]>=mission3Activities[key].items.length){state.mission3.complete[key]=true;const order=mission3Order(),i=order.indexOf(key);if(i<order.length-1)state.mission3.current=order[i+1];cue("unlock");save();}renderMission3();};
+      updateMission3UI();
+    }else{
+      button.disabled=true;button.classList.add("is-wrong");if(!state.mission3.missed[key].includes(idx))state.mission3.missed[key].push(idx);cue("bad");save();
+      els.mission3Feedback.innerHTML=`<div class="field-bad"><strong>Not this one.</strong><span>Return to the source wording. Distinguish a reported access problem from an assumption, and avoid promising outcomes the source cannot guarantee.</span></div>`;
+    }
+  }
+
+  function renderMission3CompleteActivity(key){
+    const order=mission3Order(),i=order.indexOf(key),next=order[i+1],act=mission3Activities[key];
+    els.mission3Screen.innerHTML=`<div class="field-cleared-card access-cleared-card"><span aria-hidden="true">✓</span><p class="field-kicker dark">MISSION 3 ACTIVITY CLEARED</p><h3>${act.title}</h3><p>First-try score: <strong>${state.mission3.scores[key]} / ${act.items.length}</strong>.</p>${next?`<button id="continueMission3" class="field-primary" type="button">Open ${mission3Activities[next].title} →</button>`:`<button id="continueMission3" class="field-primary" type="button">Complete Mission 3 →</button>`}</div>`;
+    $("continueMission3").onclick=()=>{if(next){state.mission3.current=next;save();renderMission3();}else{state.mission3.completeAll=true;cue("unlock");save();updateMission3UI();els.mission3Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
+  }
+
+  function startMission3(){
+    if(!state.mission2.completeAll)return;
+    if(state.mission3.completeAll){state.mission3={...structuredClone(defaults.mission3),started:true};}
+    else state.mission3.started=true;
+    state.mission3.current=mission3Order().find(k=>mission3Unlocked(k)&&!state.mission3.complete[k])||"roads";
+    save();cue("start");if(musicOn)startMusic();renderMission3();els.mission3Workspace.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>els.mission3Screen.focus({preventScroll:true}),450);
+  }
+
   function startMission2(){
     if(!state.missionComplete)return;
     if(state.mission2.completeAll){
@@ -301,11 +443,14 @@
   els.start.onclick=start;
   els.sound.onclick=()=>{soundOn=!soundOn;localStorage.setItem(SOUND_KEY,soundOn?"on":"off");if(!soundOn&&"speechSynthesis" in window)speechSynthesis.cancel();syncControls();status(soundOn?"Sound on.":"Sound off. All audio-dependent content also appears as text.");};
   els.musicToggle.onclick=()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");syncControls();if(musicOn)startMusic();else stopMusic();status(musicOn?"Music on. Field briefing ambience is playing.":"Music off.");};
-  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
+  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
   els.mission2Button.onclick=()=>{els.mission2Area.scrollIntoView({behavior:"smooth",block:"start"});};
   els.startMission2.onclick=startMission2;
   document.querySelectorAll(".triage-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m2Activity;if(!mission2Unlocked(key))return;state.mission2.started=true;state.mission2.current=key;save();renderMission2();els.mission2Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
-  els.mission3Button.onclick=()=>els.mission3Teaser.scrollIntoView({behavior:"smooth",block:"center"});
+  els.mission3Button.onclick=()=>els.mission3Area.scrollIntoView({behavior:"smooth",block:"start"});
+  els.startMission3.onclick=startMission3;
+  document.querySelectorAll(".access-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m3Activity;if(!mission3Unlocked(key))return;state.mission3.started=true;state.mission3.current=key;save();renderMission3();els.mission3Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
+  els.mission4Button.onclick=()=>els.mission4Teaser.scrollIntoView({behavior:"smooth",block:"center"});
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();
+  syncControls();updateUI();render();renderMission2();renderMission3();
 })();

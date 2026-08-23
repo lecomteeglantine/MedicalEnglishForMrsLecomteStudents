@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v32.css">
+  <link rel="stylesheet" href="styles-v33.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -141,8 +141,69 @@
       <button id="mission3Button" class="field-primary" type="button" disabled>🔒 Mission 3 · Access Restricted</button>
     </section>
 
-    <section id="mission3Teaser" class="field-next-mission is-locked" aria-labelledby="mission3Title">
-      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission3Title">Mission 3 · Access Restricted</h2><p>Roads, security and distance can all block healthcare access. Your next mission will focus on reaching people safely, communicating limits and adapting the response when the route changes.</p></div><span class="field-next-icon" aria-hidden="true">📍</span>
+    <section id="mission3Area" class="access-mission is-locked" aria-labelledby="mission3Title">
+      <div class="access-hero">
+        <img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Emergency response in a damaged urban setting where access is difficult.">
+        <div class="access-hero-shade" aria-hidden="true"></div>
+        <div class="access-hero-copy">
+          <p class="field-kicker">MISSION 03 · ACCESS &amp; LOGISTICS</p>
+          <h2 id="mission3Title">Access Restricted</h2>
+          <p class="access-tagline">When the route changes, the response has to change too.</p>
+          <p>The Day 3 source describes people who cannot be reached because the situation is too dangerous, and vulnerable people for whom evacuation is especially difficult. Your task is to describe access limits accurately, recognise who may be left behind, adapt basic supplies planning and use <em>even if</em> to communicate limits without overpromising.</p>
+          <button id="startMission3" class="field-primary" type="button" disabled>🔒 Complete Mission 2 first</button>
+        </div>
+        <div class="access-hero-score"><span>MISSION 3 SCORE</span><strong id="mission3Score">0 / 18</strong><small>first-attempt points</small></div>
+      </div>
+
+      <div class="access-objectives" aria-label="Mission 3 objectives">
+        <div><span>01</span><strong>Report access</strong><p>State clearly what can and cannot be reached from the information available.</p></div>
+        <div><span>02</span><strong>Protect inclusion</strong><p>Recognise people whose mobility or health makes evacuation harder.</p></div>
+        <div><span>03</span><strong>Adapt supplies</strong><p>Plan around blocked routes, overcrowding and delayed commodities.</p></div>
+        <div><span>04</span><strong>Communicate limits</strong><p>Use first conditional and <em>even if</em> without making impossible promises.</p></div>
+      </div>
+
+      <div class="access-progress-card" aria-live="polite">
+        <span>MISSION 3 PROGRESS</span><strong id="mission3ProgressText">0 / 4</strong>
+        <div class="field-progress-track"><i id="mission3ProgressBar"></i></div>
+      </div>
+
+      <div class="access-activity-grid">
+        <button class="access-activity-card" data-m3-activity="roads" type="button" disabled>
+          <span class="access-card-number">01</span><img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Damaged urban environment affecting humanitarian access.">
+          <div><small>ACCESS DESK</small><strong>Road Access Alert</strong><p>Separate a real access limit from assumptions the source does not support.</p><b id="m3StatusRoads">LOCKED</b></div>
+        </button>
+        <button class="access-activity-card" data-m3-activity="vulnerable" type="button" disabled>
+          <span class="access-card-number">02</span><img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Field clinician speaking with a patient in a humanitarian healthcare setting.">
+          <div><small>INCLUSION CHECK</small><strong>Who Gets Left Behind?</strong><p>Identify the groups the source says may find evacuation especially difficult.</p><b id="m3StatusVulnerable">LOCKED</b></div>
+        </button>
+        <button class="access-activity-card" data-m3-activity="supplies" type="button" disabled>
+          <span class="access-card-number">03</span><img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian healthcare setting with supplies and field staff.">
+          <div><small>LOGISTICS ROUTE</small><strong>Supply Route</strong><p>Respond carefully when shelter, water, food, medicines or access are under pressure.</p><b id="m3StatusSupplies">LOCKED</b></div>
+        </button>
+        <button class="access-activity-card" data-m3-activity="evenif" type="button" disabled>
+          <span class="access-card-number">04</span><img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="MSF interview frame from the Day 3 source video.">
+          <div><small>LIMITS &amp; CAUTION</small><strong>Even If…</strong><p>Use conditional language to explain what may remain difficult despite a response.</p><b id="m3StatusEvenIf">LOCKED</b></div>
+        </button>
+      </div>
+
+      <div id="mission3Workspace" class="access-workspace" aria-labelledby="mission3WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">MISSION 03 · ACTIVE DESK</p><h2 id="mission3WorkspaceTitle">Access desk locked</h2><p id="mission3WorkspaceIntro">Complete Mission 2 to open this assignment.</p></div>
+          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission3ActivityScore">0</strong></div>
+        </div>
+        <div id="mission3Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🚧</span><h3>Mission 3 locked</h3><p>Complete Triage Under Pressure first.</p></div></div>
+        <div id="mission3Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="mission3Complete" class="field-completion access-completion is-locked" aria-labelledby="mission3CompleteTitle">
+      <div class="field-completion-badge" aria-hidden="true">🚧</div>
+      <div><p class="field-kicker dark">MISSION 03 CLEARANCE</p><h2 id="mission3CompleteTitle">Access Restricted is not cleared yet.</h2><p id="mission3CompleteText">Complete all four Mission 3 activities.</p></div>
+      <button id="mission4Button" class="field-primary" type="button" disabled>🔒 Mission 4 · Radio Stress Check</button>
+    </section>
+
+    <section id="mission4Teaser" class="field-next-mission is-locked" aria-labelledby="mission4Title">
+      <div><p class="field-kicker">NEXT ASSIGNMENT</p><h2 id="mission4Title">Mission 4 · Radio Stress Check</h2><p>Field communication has to be understandable under pressure. Next, you will work on word stress in long humanitarian and scientific words such as <em>humanitarian, evacuation, catastrophic, population, commodities</em> and <em>coordination</em>.</p></div><span class="field-next-icon" aria-hidden="true">📻</span>
     </section>
   </main>
 
