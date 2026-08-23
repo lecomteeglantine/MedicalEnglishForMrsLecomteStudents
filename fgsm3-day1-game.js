@@ -7,6 +7,7 @@
   const STORAGE_PATIENT2_KEY = "mrsLecomteFGSM3Day1Patient2V1";
   const STORAGE_ONLINE_DECISION_KEY = "mrsLecomteFGSM3Day1OnlineDecisionV1";
   const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3V1";
+  const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4V1";
 
   const checkpoints = [
     {
@@ -390,6 +391,94 @@
   ];
 
 
+  const patient4Items = [
+    {
+      id:"open-medication",
+      title:"Checkpoint 1 · Start with the story",
+      instruction:"Patient 04 says she has felt nauseous since starting a new medicine. Choose the best opening question.",
+      patientReply:"I started a new tablet five days ago, and since the next day I've felt nauseous and had an upset stomach.",
+      options:[
+        {text:"Can you tell me what has been happening since you started the new medication?", correct:true},
+        {text:"So the new medication is definitely causing this?", correct:false},
+        {text:"If it makes you feel sick, why are you still taking it?", correct:false}
+      ],
+      feedback:"Start with the sequence of events. A symptom appearing after a new medicine is relevant, but timing alone does not prove causation."
+    },
+    {
+      id:"medicine-dose-timing",
+      title:"Checkpoint 2 · Clarify the medication",
+      instruction:"Before discussing side effects, what information do you need?",
+      patientReply:"It was prescribed for my blood pressure. I take one tablet every morning. I haven't changed the dose, and the nausea usually starts not long after I take it.",
+      options:[
+        {text:"What is the medication for, what dose are you taking, when did you start it, and when do the symptoms occur in relation to each dose?", correct:true},
+        {text:"The exact medication and dose do not matter if the stomach symptoms are mild.", correct:false},
+        {text:"Just tell me whether you take it in the morning or evening.", correct:false}
+      ],
+      feedback:"Medication name or purpose, dose, start date and symptom timing are basic safety information before you advise about treatment."
+    },
+    {
+      id:"symptoms-warning-signs",
+      title:"Checkpoint 3 · Characterise the symptoms",
+      instruction:"The patient reports nausea and an upset stomach. Screen sensibly for severity and warning signs.",
+      patientReply:"I feel queasy and get some mild stomach cramps, but I haven't been vomiting. I can eat and drink, and I haven't had a rash, swelling or any trouble breathing.",
+      options:[
+        {text:"Have you been vomiting or had severe pain? Can you keep food and fluids down? Any rash, swelling or trouble breathing?", correct:true},
+        {text:"Nausea is common, so we can assume there are no warning signs.", correct:false},
+        {text:"Only ask how many times a day you feel nauseous.", correct:false}
+      ],
+      feedback:"Do not treat every stomach symptom as an emergency, but do check severity, hydration and features that could require more urgent assessment."
+    },
+    {
+      id:"stopping-medication",
+      title:"Checkpoint 4 · Respond to the wish to stop",
+      instruction:"The patient says she is thinking about skipping tomorrow's dose. Choose the safest response for this fictional scenario.",
+      patientReply:"I was thinking of just stopping it because I don't want to feel sick every morning. I wasn't sure whether I should.",
+      options:[
+        {text:"Before you change or stop it, let's review the medication properly and make sure you get advice that is appropriate for that specific medicine.", correct:true},
+        {text:"Yes, stop it immediately. Any nausea means the medication is unsuitable.", correct:false},
+        {text:"Keep taking it no matter what happens; side effects are never a reason to review treatment.", correct:false}
+      ],
+      feedback:"Avoid blanket instructions about an unspecified medicine. The safe communication move is to arrange a medication-specific review rather than guess."
+    },
+    {
+      id:"concern-side-effect",
+      title:"Checkpoint 5 · Answer the patient's concern",
+      instruction:"The patient asks: “Do you think this is a side effect?”",
+      patientReply:"That makes sense. I mainly wanted to know whether the medicine could be causing it and whether there is anything we can do about it.",
+      options:[
+        {text:"It could be related, especially because of the timing, but I can't confirm that from timing alone. We need to review the medicine and the symptoms together.", correct:true},
+        {text:"Yes. Because it started afterwards, the medicine must be the cause.", correct:false},
+        {text:"No. Medicines do not usually cause stomach symptoms.", correct:false}
+      ],
+      feedback:"Use cautious language: possible association is not the same as a confirmed cause. Explain what information is still needed."
+    },
+    {
+      id:"review-plan",
+      title:"Checkpoint 6 · Agree a practical plan",
+      instruction:"No immediate warning signs have emerged in this training case. What is the clearest next step?",
+      patientReply:"Okay. I'd be happy to have the medication reviewed rather than change it on my own.",
+      options:[
+        {text:"I'd like to arrange a medication review so we can check the specific drug, dose and your symptoms, and decide safely whether anything needs to change.", correct:true},
+        {text:"There are no warning signs, so there is no need to review the medication.", correct:false},
+        {text:"Try a different dose yourself for a few days and see what happens.", correct:false}
+      ],
+      feedback:"A clear review plan addresses the patient's concern without asking them to alter an unspecified treatment on their own."
+    },
+    {
+      id:"safety-net",
+      title:"Checkpoint 7 · Safety-net clearly",
+      instruction:"Close the medication discussion with clear advice about when the situation would need more urgent help.",
+      patientReply:"All right. I'll get help sooner if anything becomes severe or I develop any of those warning signs.",
+      options:[
+        {text:"If the symptoms become severe, you cannot keep fluids down, you faint, or you develop breathing difficulty or swelling, seek urgent medical advice rather than waiting for the routine review.", correct:true},
+        {text:"Wait for the review even if you develop severe symptoms.", correct:false},
+        {text:"If you still feel nauseous tomorrow, go straight to hospital regardless of severity.", correct:false}
+      ],
+      feedback:"Safety-netting should be specific enough to act on, without making every mild symptom sound like an emergency."
+    }
+  ];
+
+
   const onlineDecisionCases = [
     {
       id:"medication-followup",
@@ -527,6 +616,13 @@
     patient3Checkpoint: document.getElementById("patient3CheckpointNumber"),
     patient3Progress: document.getElementById("patient3ProgressBar"),
     patient3Start: document.getElementById("startPatient3"),
+    patient4Area: document.getElementById("patient4Area"),
+    patient4Screen: document.getElementById("patient4Screen"),
+    patient4Feedback: document.getElementById("patient4Feedback"),
+    patient4Instruction: document.getElementById("patient4Instruction"),
+    patient4Checkpoint: document.getElementById("patient4CheckpointNumber"),
+    patient4Progress: document.getElementById("patient4ProgressBar"),
+    patient4Start: document.getElementById("startPatient4"),
     researchMap: document.getElementById("researchMap")
   };
 
@@ -537,6 +633,7 @@
   let patient2State = readPatient2State();
   let onlineDecisionState = readOnlineDecisionState();
   let patient3State = readPatient3State();
+  let patient4State = readPatient4State();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -624,6 +721,18 @@
 
   function savePatient3State() {
     try { localStorage.setItem(STORAGE_PATIENT3_KEY, JSON.stringify(patient3State)); } catch (_) {}
+  }
+
+  function readPatient4State() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_PATIENT4_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, lastReply: ""};
+  }
+
+  function savePatient4State() {
+    try { localStorage.setItem(STORAGE_PATIENT4_KEY, JSON.stringify(patient4State)); } catch (_) {}
   }
 
   function readAudioPrefs() {
@@ -2123,11 +2232,13 @@
         <div><span>PLAN</span><strong>Explain uncertainty</strong><small>Further assessment and tests can be planned without pretending the video call gives a diagnosis.</small></div>
       </div>
       <div class="timeline-preview patient4-preview"><span>NEXT CALL · PATIENT 04</span><p><strong>New medication + nausea / upset stomach</strong></p><small>Clarify the medicine, dose and timing; explore side effects and warning signs; then discuss a safe review plan.</small></div>
-      <div class="mission-complete-actions"><button id="replayPatient3" class="tcr-secondary-button" type="button">Replay Patient 03</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+      <div class="mission-complete-actions"><button id="startPatient4FromP3" class="tcr-primary" type="button">Answer Patient 04 →</button><button id="replayPatient3" class="tcr-secondary-button" type="button">Replay Patient 03</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
     </div>`;
     setPatient3Feedback("<strong>Next:</strong> Patient 04 — new medication with nausea and an upset stomach.", "info");
     document.getElementById("replayPatient3")?.addEventListener("click", resetPatient3);
+    document.getElementById("startPatient4FromP3")?.addEventListener("click", startPatient4);
     renderPatient3Progress();
+    unlockPatient4();
   }
 
   function startPatient3() {
@@ -2146,6 +2257,221 @@
     els.patient3Instruction.textContent = patient3IsUnlocked() ? "Patient 03 is connected. Take a fuller history, explore concern and explain the need for further assessment without jumping to a diagnosis." : "Complete the Online or Face-to-Face decision desk to take Patient 03's call.";
     els.patient3Screen.innerHTML = patient3IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🧪</div><h3>Incoming call · Patient 03</h3><p>Unusual fatigue for several weeks · unintentional weight loss · occasional dizziness.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 03 is waiting</h3><p>Finish the decision desk first.</p></div>`;
     setPatient3Feedback();
+  }
+
+
+  function setPatient4Feedback(html = "", type = "") {
+    if (!els.patient4Feedback) return;
+    els.patient4Feedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.patient4Feedback.innerHTML = html;
+  }
+
+  function patient4IsUnlocked() {
+    return patient3State.completed || patient4State.completed;
+  }
+
+  function renderPatient4Progress() {
+    if (!els.patient4Area) return;
+    const unlocked = patient4IsUnlocked();
+    const total = patient4Items.length;
+    const done = patient4State.completed ? total : Math.min(patient4State.index, total);
+
+    if (!unlocked) {
+      els.patient4Area.classList.add("is-locked");
+      els.patient4Start.disabled = true;
+      els.patient4Start.textContent = "Patient 04 locked";
+      els.patient4Checkpoint.textContent = `0 / ${total}`;
+      els.patient4Progress.style.width = "0%";
+      if (els.patient4Map) {
+        els.patient4Map.classList.remove("live", "done", "next-ready", "patient4-ready");
+        els.patient4Map.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.researchMap) {
+        els.researchMap.classList.remove("live", "done", "next-ready", "research-ready");
+        els.researchMap.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.patient4Area.classList.remove("is-locked");
+    els.patient4Start.disabled = false;
+    els.patient4Start.textContent = patient4State.completed ? "View completed Patient 04 →" : patient4State.index > 0 ? "Continue Patient 04 →" : "Answer Patient 04 →";
+    els.patient4Checkpoint.textContent = `${done} / ${total}`;
+    els.patient4Progress.style.width = `${(done / total) * 100}%`;
+
+    if (els.patient4Map) {
+      els.patient4Map.classList.remove("live", "done", "next-ready", "patient4-ready");
+      els.patient4Map.classList.add(patient4State.completed ? "done" : "patient4-ready");
+      els.patient4Map.querySelector("b").textContent = patient4State.completed ? "DONE" : "LIVE";
+    }
+    if (els.researchMap) {
+      els.researchMap.classList.remove("live", "done", "next-ready", "research-ready");
+      if (patient4State.completed) els.researchMap.classList.add("research-ready");
+      els.researchMap.querySelector("b").textContent = patient4State.completed ? "NEXT" : "LOCKED";
+    }
+
+    if (els.patientMini3 && patient3State.completed) {
+      els.patientMini3.classList.remove("p3-current", "next-patient");
+      els.patientMini3.classList.add("consult-complete");
+      const three = els.patientMini3.querySelector("small");
+      if (three) three.textContent = "Consultation complete";
+    }
+    if (els.patientMini4) {
+      els.patientMini4.classList.remove("next-patient", "p4-current", "consult-complete");
+      els.patientMini4.classList.add(patient4State.completed ? "consult-complete" : "p4-current");
+      const four = els.patientMini4.querySelector("small");
+      if (four) four.textContent = patient4State.completed ? "Consultation complete" : "Calling now";
+    }
+  }
+
+  function unlockPatient4() {
+    renderPatient4Progress();
+    if (!patient4IsUnlocked()) return;
+    if (!patient4State.completed && patient4State.index === 0) {
+      els.patient4Instruction.textContent = "Patient 04 is connected. Clarify the medication and symptoms, screen for warning signs, address the wish to stop treatment and agree a safe review plan.";
+      els.patient4Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">💊</div><h3>Incoming call · Patient 04</h3><p>New medication five days ago · nausea · upset stomach · considering stopping it.</p></div>`;
+    }
+  }
+
+  function patient4VideoPanel(reply = "") {
+    return `<article class="p4-video-card">
+      <div class="p4-image-wrap">
+        <span class="p4-live">● LIVE · PATIENT 04</span>
+        <img src="assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp" alt="Patient 04 at home during a video consultation, resting a hand on her abdomen and looking concerned.">
+      </div>
+      <div class="p4-video-meta">
+        <span>FICTIONAL CASE · VIDEO CONSULTATION</span>
+        <h3>Patient 04 · medication review</h3>
+        <small>New medication · nausea · upset stomach · no diagnosis assumed</small>
+        ${reply ? `<div class="p4-reply"><div class="p4-reply-head"><strong>Patient reply</strong><button class="p4-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(reply)}”</p></div>` : `<p class="patient-awaiting">The patient is waiting for your first question.</p>`}
+      </div>
+    </article>`;
+  }
+
+  function renderPatient4Item() {
+    renderPatient4Progress();
+    if (!patient4IsUnlocked()) return;
+    if (patient4State.completed || patient4State.index >= patient4Items.length) return renderPatient4Complete();
+
+    const item = patient4Items[patient4State.index];
+    const number = patient4State.index + 1;
+    els.patient4Instruction.textContent = item.instruction;
+    setPatient4Feedback();
+    els.patient4Checkpoint.textContent = `${patient4State.index} / ${patient4Items.length}`;
+    els.patient4Progress.style.width = `${(patient4State.index / patient4Items.length) * 100}%`;
+
+    els.patient4Screen.innerHTML = `<div class="p4-shell">
+      ${patient4VideoPanel(patient4State.lastReply || "")}
+      <article class="p4-decision-card">
+        <span class="p4-round-kicker">MEDICATION CHECK ${number} OF ${patient4Items.length}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="p4-options" role="group" aria-label="Choose the best medication-review response">
+          ${item.options.map((option, idx) => `<button class="p4-choice" type="button" data-p4-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+        </div>
+        <div class="p4-clinical-note"><strong>Medication-safety principle:</strong> establish what was taken, when and what happened before advising. Do not turn a temporal association into a certain diagnosis.</div>
+      </article>
+    </div>`;
+
+    const replyButton = els.patient4Screen.querySelector(".p4-listen");
+    if (replyButton && patient4State.lastReply) replyButton.addEventListener("click", () => speak(patient4State.lastReply, replyButton, 0.9));
+
+    els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const chosen = Number(button.dataset.p4Choice);
+        const option = item.options[chosen];
+        els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          patient4State.lastReply = item.patientReply;
+          savePatient4State();
+          beep("ok");
+          setPatient4Feedback(`<strong>✓ Safe medication communication.</strong> ${escapeHTML(item.feedback)}`, "correct");
+          const videoMeta = els.patient4Screen.querySelector(".p4-video-meta");
+          if (videoMeta) {
+            videoMeta.querySelector(".patient-awaiting")?.remove();
+            videoMeta.querySelector(".p4-reply")?.remove();
+            videoMeta.insertAdjacentHTML("beforeend", `<div class="p4-reply"><div class="p4-reply-head"><strong>Patient reply</strong><button class="p4-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(item.patientReply)}”</p></div>`);
+            const listen = videoMeta.querySelector(".p4-listen");
+            listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
+            if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
+          }
+          advancePatient4Button(number === patient4Items.length ? "Complete Patient 04 →" : "Continue medication review →");
+        } else {
+          button.classList.add("wrong-choice");
+          patient4State.mistakes += 1;
+          savePatient4State();
+          beep("error");
+          setPatient4Feedback("<strong>Try again.</strong> Clarify the medicine and symptom pattern, avoid certainty from timing alone, and do not give blanket stop/continue advice about an unspecified treatment.", "wrong");
+          window.setTimeout(() => {
+            els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advancePatient4Button(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.patient4Feedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      patient4State.index += 1;
+      patient4State.lastReply = "";
+      if (patient4State.index >= patient4Items.length) patient4State.completed = true;
+      savePatient4State();
+      renderPatient4Item();
+      els.patient4Screen.focus({preventScroll:true});
+    });
+  }
+
+  function renderPatient4Complete() {
+    patient4State.completed = true;
+    patient4State.index = patient4Items.length;
+    savePatient4State();
+    els.patient4Instruction.textContent = "Patient 04 complete: you clarified the medicine and timing, screened for warning signs, handled uncertainty and agreed a safe medication-review plan.";
+    els.patient4Checkpoint.textContent = `${patient4Items.length} / ${patient4Items.length}`;
+    els.patient4Progress.style.width = "100%";
+    els.shiftStatus.textContent = "Patient 04 complete · Research Comms Terminal next";
+    const score = Math.max(0, 100 - patient4State.mistakes * 7);
+    const quality = patient4State.mistakes === 0 ? "Excellent medication-safety communication" : patient4State.mistakes <= 2 ? "Safe medication review achieved" : "Safe medication review achieved after revision";
+
+    els.patient4Screen.innerHTML = `<div class="mission-complete-card">
+      <div class="mission-badge p4-badge" aria-hidden="true">💊</div>
+      <p class="mission-step-label">PATIENT 04 COMPLETE</p>
+      <h3>Medication Safety badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You clarified what changed, checked dose and timing, screened for concerning symptoms, avoided guessing about causation and gave the patient a clear review and safety-netting plan.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>call score</span></div>
+      <div class="p4-summary-grid">
+        <div><span>CLARIFY</span><strong>Medicine + timing</strong><small>Know what changed before interpreting what followed.</small></div>
+        <div><span>CAUTION</span><strong>Possible ≠ certain</strong><small>Temporal association can support a question, not prove a side effect.</small></div>
+        <div><span>PLAN</span><strong>Review + safety-net</strong><small>Give a specific next step and clear triggers for more urgent help.</small></div>
+      </div>
+      <div class="timeline-preview research-preview"><span>NEXT MODULE · RESEARCH COMMS TERMINAL</span><p><strong>Past passive · research verbs · comparisons</strong></p><small>Move from patient communication to the language needed for the scientific article presentation.</small></div>
+      <div class="mission-complete-actions"><button id="replayPatient4" class="tcr-secondary-button" type="button">Replay Patient 04</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setPatient4Feedback("<strong>Next:</strong> Research Comms Terminal — past passive, research verbs and comparison language from the scientific article presentation.", "info");
+    document.getElementById("replayPatient4")?.addEventListener("click", resetPatient4);
+    renderPatient4Progress();
+  }
+
+  function startPatient4() {
+    if (!patient4IsUnlocked()) return;
+    if (patient4State.completed) renderPatient4Complete();
+    else renderPatient4Item();
+    els.patient4Area.scrollIntoView({behavior:"smooth", block:"start"});
+    els.patient4Screen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetPatient4() {
+    patient4State = {index:0, completed:false, mistakes:0, lastReply:""};
+    savePatient4State();
+    renderPatient4Progress();
+    els.patient4Instruction.textContent = patient4IsUnlocked() ? "Patient 04 is connected. Clarify the medication and symptoms, screen for warning signs, address the wish to stop treatment and agree a safe review plan." : "Complete Patient 03 to take Patient 04's call.";
+    els.patient4Screen.innerHTML = patient4IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">💊</div><h3>Incoming call · Patient 04</h3><p>New medication five days ago · nausea · upset stomach · considering stopping it.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 04 is waiting</h3><p>Finish Patient 03 first.</p></div>`;
+    setPatient4Feedback();
   }
 
   function feedbackFor(id) {
@@ -2233,6 +2559,7 @@
     patient2State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     onlineDecisionState = {index: 0, completed: false, mistakes: 0};
     patient3State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
+    patient4State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     saveState();
     saveClinicalState();
     saveAudioLabState();
@@ -2240,6 +2567,7 @@
     savePatient2State();
     saveOnlineDecisionState();
     savePatient3State();
+    savePatient4State();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -2251,6 +2579,7 @@
     resetPatient2();
     resetOnlineDecision();
     resetPatient3();
+    resetPatient4();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -2269,6 +2598,7 @@
   els.patient2Start.addEventListener("click", startPatient2);
   els.onlineDecisionStart?.addEventListener("click", startOnlineDecision);
   els.patient3Start?.addEventListener("click", startPatient3);
+  els.patient4Start?.addEventListener("click", startPatient4);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -2304,8 +2634,9 @@
   renderPatient2Progress();
   renderOnlineDecisionProgress();
   renderPatient3Progress();
+  renderPatient4Progress();
   if (state.completed) {
-    els.shiftStatus.textContent = patient3State.completed ? "Patient 03 complete · Patient 04 next" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = patient4State.completed ? "Patient 04 complete · Research Comms Terminal next" : patient3State.completed ? "Patient 03 complete · Patient 04 unlocked" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
@@ -2313,5 +2644,6 @@
     if (timelineState.completed || patient2State.completed) unlockPatient2();
     if (patient2State.completed || onlineDecisionState.completed) unlockOnlineDecision();
     if (onlineDecisionState.completed || patient3State.completed) unlockPatient3();
+    if (patient3State.completed || patient4State.completed) unlockPatient4();
   }
 })();

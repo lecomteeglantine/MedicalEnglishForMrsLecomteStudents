@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v15.css">
+  <link rel="stylesheet" href="styles-v16.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -332,6 +332,43 @@
       </div>
 
       <div id="patient3Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+
+
+    <section id="patient4Area" class="tcr-mission patient4-section is-locked" aria-labelledby="patient4Title">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 7 · PATIENT 04</p>
+          <h2 id="patient4Title">Medication side effects: clarify before you advise</h2>
+          <p id="patient4Instruction">Complete Patient 03 to take Patient 04's call.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>MEDICATION CHECK</span>
+          <strong id="patient4CheckpointNumber">0 / 7</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="patient4ProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="patient4-brief">
+        <div class="patient4-brief-icon" aria-hidden="true">💊</div>
+        <div>
+          <span class="case-brief-kicker">PATIENT 04 · NEW MEDICATION + NAUSEA / UPSET STOMACH</span>
+          <strong>Do not jump from “new medicine” to “definite side effect”.</strong>
+          <p>The patient started a new medicine a few days ago and has developed nausea and an upset stomach. Clarify the medication, dose and timing, screen for warning signs, address the patient's wish to stop it and agree a safe review plan.</p>
+        </div>
+        <button id="startPatient4" class="tcr-primary" type="button" disabled>Patient 04 locked</button>
+      </div>
+
+      <div id="patient4Screen" class="mission-screen patient4-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Patient 04 is waiting</h3>
+          <p>Finish Patient 03 first. The medication review will unlock automatically.</p>
+        </div>
+      </div>
+
+      <div id="patient4Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
