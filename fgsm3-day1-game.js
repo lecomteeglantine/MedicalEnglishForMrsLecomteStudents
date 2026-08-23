@@ -2,6 +2,7 @@
   const STORAGE_KEY = "mrsLecomteFGSM3Day1ControlRoomV1";
   const STORAGE_M2_KEY = "mrsLecomteFGSM3Day1Mission2V1";
   const AUDIO_KEY = "mrsLecomteFGSM3Day1AudioV1";
+  const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabV1";
 
   const checkpoints = [
     {
@@ -126,6 +127,30 @@
     }
   ];
 
+  const edAudioItems = [
+    {word:"stimulated", sound:"/ɪd/", source:"Being a Doctor", sentence:"Emergency medicine kept the doctor stimulated.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
+    {word:"pushed", sound:"/t/", source:"Being a Doctor", sentence:"Junior doctors were pushed forward in the regional hospital.", reason:"The base word ends in the voiceless /ʃ/ sound, so -ed is pronounced /t/."},
+    {word:"trained", sound:"/d/", source:"Being a Doctor", sentence:"She trained as a kidney specialist.", reason:"The base word ends in the voiced /n/ sound, so -ed is pronounced /d/."},
+    {word:"provided", sound:"/ɪd/", source:"Being a Doctor", sentence:"The patient was provided with clear follow-up advice.", reason:"The base word ends in a /d/ sound, so -ed adds an extra syllable: /ɪd/."},
+    {word:"worked", sound:"/t/", source:"Being a Doctor", sentence:"He worked in a regional hospital.", reason:"The base word ends in the voiceless /k/ sound, so -ed is pronounced /t/."},
+    {word:"surprised", sound:"/d/", source:"Being a Doctor", sentence:"She was surprised by the variety of medicine.", reason:"The base word ends in a voiced sound, so -ed is pronounced /d/."},
+    {word:"appreciated", sound:"/ɪd/", source:"Being a Doctor", sentence:"The patients appreciated the doctor's support.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
+    {word:"finished", sound:"/t/", source:"Being a Doctor", sentence:"She finished medical school before starting work.", reason:"The base word ends in the voiceless /ʃ/ sound, so -ed is pronounced /t/."},
+    {word:"loved", sound:"/d/", source:"Being a Doctor", sentence:"The doctor loved the breadth of general medicine.", reason:"The base word ends in the voiced /v/ sound, so -ed is pronounced /d/."},
+    {word:"recruited", sound:"/ɪd/", source:"Research talk", sentence:"Two hundred and forty patients were recruited.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
+    {word:"assessed", sound:"/t/", source:"Research talk", sentence:"The patients were assessed at follow-up.", reason:"The base word ends in the voiceless /s/ sound, so -ed is pronounced /t/."},
+    {word:"measured", sound:"/d/", source:"Research talk", sentence:"Blood pressure was measured weekly.", reason:"The base word ends in a voiced sound, so -ed is pronounced /d/."}
+  ];
+
+  const edBonusWords = [
+    {word:"stimulated", extra:true},
+    {word:"worked", extra:false},
+    {word:"trained", extra:false},
+    {word:"recruited", extra:true},
+    {word:"assessed", extra:false},
+    {word:"measured", extra:false}
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -147,11 +172,21 @@
     m2Checkpoint: document.getElementById("mission2CheckpointNumber"),
     m2Progress: document.getElementById("mission2ProgressBar"),
     m2Start: document.getElementById("startMission2"),
-    missionMap2: document.getElementById("missionMap2")
+    missionMap2: document.getElementById("missionMap2"),
+    audioLabArea: document.getElementById("audioLabArea"),
+    audioLabScreen: document.getElementById("audioLabScreen"),
+    audioLabFeedback: document.getElementById("audioLabFeedback"),
+    audioLabInstruction: document.getElementById("audioLabInstruction"),
+    audioLabCheckpoint: document.getElementById("audioLabCheckpointNumber"),
+    audioLabProgress: document.getElementById("audioLabProgressBar"),
+    audioLabStart: document.getElementById("startAudioLab"),
+    audioLabMap: document.getElementById("audioLabMap"),
+    timelineMap: document.getElementById("timelineMap")
   };
 
   let state = readState();
   let clinicalState = readClinicalState();
+  let audioLabState = readAudioLabState();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -177,6 +212,18 @@
 
   function saveClinicalState() {
     try { localStorage.setItem(STORAGE_M2_KEY, JSON.stringify(clinicalState)); } catch (_) {}
+  }
+
+  function readAudioLabState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_AUDIO_LAB_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, bonusDone: false};
+  }
+
+  function saveAudioLabState() {
+    try { localStorage.setItem(STORAGE_AUDIO_LAB_KEY, JSON.stringify(audioLabState)); } catch (_) {}
   }
 
   function readAudioPrefs() {
@@ -225,7 +272,7 @@
       voices.find(v => /^en/i.test(v.lang)) || null;
   }
 
-  function speak(text, button) {
+  function speak(text, button, rate = 0.9) {
     if (!audioPrefs.sound) {
       showAudioStatus("Sound is OFF. The transcript remains available below.");
       return;
@@ -239,7 +286,7 @@
     utterance.lang = "en-GB";
     const voice = getUKVoice();
     if (voice) utterance.voice = voice;
-    utterance.rate = 0.9;
+    utterance.rate = rate;
     utterance.pitch = 1.02;
     button?.classList.add("speaking");
     utterance.onend = () => button?.classList.remove("speaking");
@@ -575,7 +622,7 @@
   }
 
   function renderClinicalComplete() {
-    els.shiftStatus.textContent = "Missions 1–2 complete";
+    els.shiftStatus.textContent = audioLabState.completed ? "Missions 1–2 + Audio Lab complete" : "Missions 1–2 complete · Audio Lab unlocked";
     els.m2Instruction.textContent = "Mission 2 complete: you moved from an open question to a focused, patient-centred clinical history.";
     els.m2Checkpoint.textContent = "5 / 5";
     els.m2Progress.style.width = "100%";
@@ -593,13 +640,15 @@
           <small>Keep this sentence in mind: it will return in the Past Simple vs Present Perfect Timeline Check.</small>
         </div>
         <div class="mission-complete-actions">
-          <button id="replayMission2" class="tcr-primary" type="button">Replay Mission 2</button>
-          <a class="tcr-secondary-link dark" href="#mission-map">See the next lab ↓</a>
+          <button id="startAudioLabFromM2" class="tcr-primary" type="button">Enter -ed Audio Lab →</button>
+          <button id="replayMission2" class="tcr-secondary-button" type="button">Replay Mission 2</button>
         </div>
       </div>`;
     setClinicalFeedback("<strong>Next:</strong> the -ed Audio Lab will move from consultation skills to pronunciation before the Timeline Check.", "info");
     document.getElementById("replayMission2").addEventListener("click", resetClinicalMission);
+    document.getElementById("startAudioLabFromM2").addEventListener("click", startAudioLab);
     renderClinicalProgress();
+    unlockAudioLab();
   }
 
   function startClinicalMission() {
@@ -622,6 +671,241 @@
       ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🩺</div><h3>Patient 01 is still connected</h3><p>The safe start is complete. Now find out what is happening without jumping to a diagnosis.</p></div>`
       : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div>`;
     setClinicalFeedback();
+    renderAudioLabProgress();
+  }
+
+  function setAudioLabFeedback(html = "", type = "") {
+    els.audioLabFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.audioLabFeedback.innerHTML = html;
+  }
+
+  function renderAudioLabProgress() {
+    const total = edAudioItems.length + 1;
+    if (!clinicalState.completed) {
+      els.audioLabArea.classList.add("is-locked");
+      els.audioLabStart.disabled = true;
+      els.audioLabStart.textContent = "Audio Lab locked";
+      els.audioLabCheckpoint.textContent = `0 / ${total}`;
+      els.audioLabProgress.style.width = "0%";
+      if (els.audioLabMap) {
+        els.audioLabMap.classList.remove("live", "done", "next-ready");
+        els.audioLabMap.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.audioLabArea.classList.remove("is-locked");
+    els.audioLabStart.disabled = false;
+    els.audioLabStart.textContent = audioLabState.completed ? "View completed Audio Lab →" : audioLabState.index > 0 ? "Continue Audio Lab →" : "Enter Training Bay →";
+
+    const completedChecks = audioLabState.completed ? total : Math.min(audioLabState.index, edAudioItems.length) + (audioLabState.bonusDone ? 1 : 0);
+    els.audioLabCheckpoint.textContent = audioLabState.completed ? `${total} / ${total}` : `${completedChecks} / ${total}`;
+    els.audioLabProgress.style.width = `${(completedChecks / total) * 100}%`;
+
+    if (els.audioLabMap) {
+      els.audioLabMap.classList.remove("live", "done", "next-ready");
+      els.audioLabMap.classList.add(audioLabState.completed ? "done" : "live");
+      els.audioLabMap.querySelector("b").textContent = audioLabState.completed ? "DONE" : "LIVE";
+    }
+    if (els.timelineMap) {
+      els.timelineMap.classList.toggle("next-ready", audioLabState.completed);
+      els.timelineMap.querySelector("b").textContent = audioLabState.completed ? "NEXT" : "LOCKED";
+    }
+  }
+
+  function unlockAudioLab() {
+    renderAudioLabProgress();
+    if (!audioLabState.completed && audioLabState.index === 0) {
+      els.audioLabInstruction.textContent = "Training Bay unlocked. Listen, classify the -ed ending and notice when an extra syllable appears.";
+      els.audioLabScreen.innerHTML = `
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🎧</div>
+          <h3>Pronunciation training ready</h3>
+          <p>Start with verbs from <em>Being a Doctor</em>, then switch to the language of your scientific article presentation.</p>
+        </div>`;
+    }
+  }
+
+  function suffixMarkup(word) {
+    const safe = escapeHTML(word);
+    if (!/ed$/i.test(word)) return safe;
+    return safe.slice(0, -2) + '<span class="ed-word-suffix">ed</span>';
+  }
+
+  function renderAudioLabItem() {
+    renderAudioLabProgress();
+    if (!clinicalState.completed) return;
+    if (audioLabState.completed) return renderAudioLabComplete();
+    if (audioLabState.index >= edAudioItems.length) return renderExtraSyllableBonus();
+
+    const item = edAudioItems[audioLabState.index];
+    const number = audioLabState.index + 1;
+    const round = audioLabState.index < 9 ? "ROUND 1 · CLINICAL CAREERS" : "ROUND 2 · RESEARCH COMMS";
+    els.audioLabInstruction.textContent = `Training check ${number}: listen or read, then choose the final -ed sound.`;
+    setAudioLabFeedback();
+
+    els.audioLabScreen.innerHTML = `
+      <div class="audio-lab-shell">
+        <article class="ed-word-card">
+          <span class="training-bay-label">${round}</span>
+          <span class="ed-source-chip">${escapeHTML(item.source)}</span>
+          <div class="ed-word" aria-label="${escapeHTML(item.word)}">${suffixMarkup(item.word)}</div>
+          <div class="ed-transcript">
+            <span>Sentence transcript</span>
+            <p>${escapeHTML(item.sentence)}</p>
+          </div>
+          <div class="ed-audio-actions">
+            <button id="listenEdWord" class="ed-listen" type="button">🔊 Hear the word</button>
+            <button id="listenEdSentence" class="ed-listen" type="button">🔊 Hear the sentence</button>
+          </div>
+        </article>
+        <article class="ed-answer-card">
+          <span class="ed-round-kicker">TRAINING CHECK ${number} OF ${edAudioItems.length}</span>
+          <h3>How does <em>-ed</em> sound?</h3>
+          <p>Choose the sound you hear — or work it out from the final sound of the base verb.</p>
+          <div class="ed-sound-options" role="group" aria-label="Choose the -ed ending sound">
+            <button class="ed-sound-choice" type="button" data-ed-sound="/ɪd/"><span>/ɪd/</span><small>extra syllable</small></button>
+            <button class="ed-sound-choice" type="button" data-ed-sound="/t/"><span>/t/</span><small>voiceless ending</small></button>
+            <button class="ed-sound-choice" type="button" data-ed-sound="/d/"><span>/d/</span><small>voiced ending</small></button>
+          </div>
+          <div class="ed-rule-strip"><strong>Rule:</strong> after <code>/t/</code> or <code>/d/</code> → <code>/ɪd/</code>; after a voiceless sound → <code>/t/</code>; after a voiced sound → <code>/d/</code>.</div>
+        </article>
+      </div>`;
+
+    const wordBtn = document.getElementById("listenEdWord");
+    const sentenceBtn = document.getElementById("listenEdSentence");
+    wordBtn.addEventListener("click", () => speak(item.word, wordBtn, 0.76));
+    sentenceBtn.addEventListener("click", () => speak(item.sentence, sentenceBtn, 0.88));
+
+    els.audioLabScreen.querySelectorAll("[data-ed-sound]").forEach(button => {
+      button.addEventListener("click", () => {
+        const chosen = button.dataset.edSound;
+        els.audioLabScreen.querySelectorAll("[data-ed-sound]").forEach(btn => { btn.disabled = true; });
+        if (chosen === item.sound) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          setAudioLabFeedback(`<strong>✓ ${escapeHTML(item.word)} → ${escapeHTML(item.sound)}</strong> ${escapeHTML(item.reason)}`, "correct");
+          advanceAudioLabButton(audioLabState.index === edAudioItems.length - 1 ? "Extra-syllable check →" : "Next word →");
+        } else {
+          button.classList.add("wrong-choice");
+          audioLabState.mistakes += 1;
+          saveAudioLabState();
+          beep("error");
+          setAudioLabFeedback(`<strong>Try again.</strong> Listen to the final sound of the base verb, not the spelling. The letters <em>-ed</em> do not automatically create an extra syllable.`, "wrong");
+          window.setTimeout(() => {
+            els.audioLabScreen.querySelectorAll("[data-ed-sound]").forEach(btn => {
+              btn.disabled = false;
+              btn.classList.remove("wrong-choice");
+            });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advanceAudioLabButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.audioLabFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      audioLabState.index += 1;
+      saveAudioLabState();
+      renderAudioLabItem();
+      els.audioLabScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderExtraSyllableBonus() {
+    const total = edAudioItems.length + 1;
+    els.audioLabInstruction.textContent = "Final training check: select every word where -ed creates an extra syllable /ɪd/.";
+    els.audioLabCheckpoint.textContent = `${edAudioItems.length} / ${total}`;
+    els.audioLabProgress.style.width = `${(edAudioItems.length / total) * 100}%`;
+    setAudioLabFeedback();
+    els.audioLabScreen.innerHTML = `
+      <div class="ed-bonus">
+        <span class="ed-round-kicker">FINAL CHECK · EXTRA SYLLABLE</span>
+        <h3>Which words gain an extra syllable?</h3>
+        <p>Select <strong>all</strong> the words whose <em>-ed</em> ending is pronounced <strong>/ɪd/</strong>.</p>
+        <form id="edBonusForm">
+          <div class="ed-bonus-grid">
+            ${edBonusWords.map(item => `<label class="ed-bonus-option"><input type="checkbox" value="${escapeHTML(item.word)}"><span>${escapeHTML(item.word)}</span></label>`).join("")}
+          </div>
+          <div class="ed-bonus-note"><strong>Think sound, not spelling:</strong> the extra syllable appears only after a final /t/ or /d/ sound.</div>
+          <button class="tcr-primary mission-submit" type="submit">Check my selection</button>
+        </form>
+      </div>`;
+
+    document.getElementById("edBonusForm").addEventListener("submit", event => {
+      event.preventDefault();
+      const selected = new Set([...event.currentTarget.querySelectorAll('input:checked')].map(i => i.value));
+      const correct = new Set(edBonusWords.filter(w => w.extra).map(w => w.word));
+      const exact = selected.size === correct.size && [...correct].every(word => selected.has(word));
+      if (exact) {
+        audioLabState.bonusDone = true;
+        audioLabState.completed = true;
+        saveAudioLabState();
+        beep("ok");
+        renderAudioLabComplete();
+      } else {
+        audioLabState.mistakes += 1;
+        saveAudioLabState();
+        beep("error");
+        setAudioLabFeedback("<strong>Not quite.</strong> Find the words whose base verbs end in a /t/ or /d/ sound. Those are the ones that need the extra /ɪd/ syllable.", "wrong");
+      }
+    });
+  }
+
+  function renderAudioLabComplete() {
+    const total = edAudioItems.length + 1;
+    els.audioLabInstruction.textContent = "Audio Lab complete: you can distinguish /ɪd/, /t/ and /d/ in clinical and research English.";
+    els.audioLabCheckpoint.textContent = `${total} / ${total}`;
+    els.audioLabProgress.style.width = "100%";
+    els.shiftStatus.textContent = "Missions 1–2 + Audio Lab complete";
+    const score = Math.max(0, 100 - audioLabState.mistakes * 4);
+    const quality = audioLabState.mistakes === 0 ? "Clean sweep" : audioLabState.mistakes <= 3 ? "Strong sound awareness" : "Sound patterns secured after review";
+    els.audioLabScreen.innerHTML = `
+      <div class="mission-complete-card">
+        <div class="mission-badge pronunciation-badge" aria-hidden="true">🎧</div>
+        <p class="mission-step-label">TRAINING BAY COMPLETE</p>
+        <h3>Pronunciation Specialist badge unlocked</h3>
+        <p>${escapeHTML(quality)}. You classified <em>-ed</em> endings from clinical-career vocabulary and research presentation language, then identified when /ɪd/ adds an extra syllable.</p>
+        <div class="mission-complete-score"><strong>${score}%</strong><span>audio lab score</span></div>
+        <div class="timeline-preview">
+          <span>NEXT · TIMELINE CHECK</span>
+          <p>“The headaches <strong>started</strong> four days ago. I'<strong>ve had</strong> one every day since then.”</p>
+          <small>Next stop: choose between Past Simple and Present Perfect while the consultation timeline develops.</small>
+        </div>
+        <div class="mission-complete-actions">
+          <button id="replayAudioLab" class="tcr-primary" type="button">Replay Audio Lab</button>
+          <a class="tcr-secondary-link dark" href="#mission-map">See what comes next ↓</a>
+        </div>
+      </div>`;
+    setAudioLabFeedback("<strong>Next:</strong> Timeline Check — Past Simple vs Present Perfect in Patient 01's history.", "info");
+    document.getElementById("replayAudioLab").addEventListener("click", resetAudioLab);
+    renderAudioLabProgress();
+  }
+
+  function startAudioLab() {
+    if (!clinicalState.completed) return;
+    if (audioLabState.completed) renderAudioLabComplete();
+    else renderAudioLabItem();
+    els.audioLabArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.audioLabScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetAudioLab() {
+    audioLabState = {index: 0, completed: false, mistakes: 0, bonusDone: false};
+    saveAudioLabState();
+    renderAudioLabProgress();
+    els.audioLabInstruction.textContent = clinicalState.completed
+      ? "Training Bay unlocked. Listen, classify the -ed ending and notice when an extra syllable appears."
+      : "Complete Mission 2 to unlock pronunciation training.";
+    els.audioLabScreen.innerHTML = clinicalState.completed
+      ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🎧</div><h3>Pronunciation training ready</h3><p>Start with verbs from <em>Being a Doctor</em>, then switch to the language of your scientific article presentation.</p></div>`
+      : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Training Bay locked</h3><p>Finish the clinical history with Patient 01 first. The pronunciation lab will unlock automatically.</p></div>`;
+    setAudioLabFeedback();
   }
 
   function feedbackFor(id) {
@@ -704,14 +988,17 @@
   function resetMission() {
     state = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     clinicalState = {index: 0, completed: false, mistakes: 0, lastReply: ""};
+    audioLabState = {index: 0, completed: false, mistakes: 0, bonusDone: false};
     saveState();
     saveClinicalState();
+    saveAudioLabState();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
     els.screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📞</div><h3>Incoming video consultation</h3><p>Patient 01 is waiting. Prepare your station before connecting.</p></div>`;
     els.m2Instruction.textContent = "Complete Mission 1 to unlock the clinical history.";
     els.m2Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div>`;
+    resetAudioLab();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -725,6 +1012,7 @@
   });
 
   els.m2Start.addEventListener("click", startClinicalMission);
+  els.audioLabStart.addEventListener("click", startAudioLab);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -755,9 +1043,11 @@
   updateAudioButtons();
   renderProgress();
   renderClinicalProgress();
+  renderAudioLabProgress();
   if (state.completed) {
-    els.shiftStatus.textContent = clinicalState.completed ? "Missions 1–2 complete" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = audioLabState.completed ? "Missions 1–2 + Audio Lab complete" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
+    if (clinicalState.completed) unlockAudioLab();
   }
 })();

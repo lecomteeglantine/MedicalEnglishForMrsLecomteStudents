@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v9.css">
+  <link rel="stylesheet" href="styles-v10.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -155,6 +155,42 @@
       <div id="mission2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+    <section id="audioLabArea" class="tcr-mission audio-lab-section is-locked" aria-labelledby="audioLabTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">TRAINING BAY · -ED AUDIO LAB</p>
+          <h2 id="audioLabTitle">Hear the ending. Choose the sound.</h2>
+          <p id="audioLabInstruction">Complete Mission 2 to unlock pronunciation training.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>TRAINING CHECK</span>
+          <strong id="audioLabCheckpointNumber">0 / 13</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="audioLabProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="audio-lab-brief">
+        <div class="audio-lab-brief-icon" aria-hidden="true">🎧</div>
+        <div>
+          <span class="case-brief-kicker">PRONUNCIATION · /ɪd/ · /t/ · /d/</span>
+          <strong>Clinical English first. Research English next.</strong>
+          <p>Listen if you want to, read the transcript, then classify the <em>-ed</em> ending. There is no timer and audio is never required to complete the lab.</p>
+        </div>
+        <button id="startAudioLab" class="tcr-primary" type="button" disabled>Audio Lab locked</button>
+      </div>
+
+      <div id="audioLabScreen" class="mission-screen audio-lab-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Training Bay locked</h3>
+          <p>Finish the clinical history with Patient 01 first. The pronunciation lab will unlock automatically.</p>
+        </div>
+      </div>
+
+      <div id="audioLabFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
       <div class="mission-map-heading">
         <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
@@ -164,8 +200,8 @@
       <div class="mission-map-grid">
         <article class="mission-map-card live"><span>01</span><div><strong>Safe Start</strong><small>Connection · identity · privacy · verbal consent</small></div><b>LIVE</b></article>
         <article id="missionMap2" class="mission-map-card"><span>02</span><div><strong>Ask the Right Questions</strong><small>Open questions · symptom exploration · concerns</small></div><b>LOCKED</b></article>
-        <article class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>NEXT</b></article>
-        <article class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>NEXT</b></article>
+        <article id="audioLabMap" class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>LOCKED</b></article>
+        <article id="timelineMap" class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>LOCKED</b></article>
         <article class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>NEXT</b></article>
         <article class="mission-map-card"><span>04</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>NEXT</b></article>
         <article class="mission-map-card"><span>05</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>NEXT</b></article>
