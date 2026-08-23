@@ -5,6 +5,8 @@
   const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabV1";
   const STORAGE_TIMELINE_KEY = "mrsLecomteFGSM3Day1TimelineCheckV1";
   const STORAGE_PATIENT2_KEY = "mrsLecomteFGSM3Day1Patient2V1";
+  const STORAGE_ONLINE_DECISION_KEY = "mrsLecomteFGSM3Day1OnlineDecisionV1";
+  const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3V1";
 
   const checkpoints = [
     {
@@ -299,6 +301,165 @@
     }
   ];
 
+
+  const patient3Items = [
+    {
+      id:"open-fatigue",
+      title:"Checkpoint 1 · Start broad",
+      instruction:"Patient 03 says she has not felt like herself recently. Choose the best opening question.",
+      patientReply:"I've been unusually tired for about six weeks. I keep expecting it to improve, but it hasn't.",
+      options:[
+        {text:"Can you tell me a little more about how you've been feeling?", correct:true},
+        {text:"You're probably just run down, aren't you?", correct:false},
+        {text:"Is the tiredness because you aren't sleeping enough?", correct:false}
+      ],
+      feedback:"Start broad and let the patient describe the problem before you suggest an explanation."
+    },
+    {
+      id:"weight-appetite",
+      title:"Checkpoint 2 · Look for important changes",
+      instruction:"The fatigue has lasted several weeks. What should you explore next?",
+      patientReply:"Yes. I've lost about five kilos without trying. My appetite has been a bit lower too.",
+      options:[
+        {text:"Have you noticed any change in your weight or appetite?", correct:true},
+        {text:"Have you been dieting recently?", correct:false},
+        {text:"If you're eating less, that probably explains the tiredness.", correct:false}
+      ],
+      feedback:"Unintentional weight loss and appetite change are relevant details. Ask rather than assume why they have happened."
+    },
+    {
+      id:"associated-dizziness",
+      title:"Checkpoint 3 · Ask about associated symptoms",
+      instruction:"The patient has described fatigue and unintentional weight loss. Continue the history without turning it into a diagnosis quiz.",
+      patientReply:"Sometimes I feel dizzy as well, especially when I stand up quickly. I haven't actually fainted.",
+      options:[
+        {text:"Have you noticed any other symptoms?", correct:true},
+        {text:"You aren't getting dizzy as well, are you?", correct:false},
+        {text:"Does this mean you have low blood pressure?", correct:false}
+      ],
+      feedback:"An open follow-up allows the patient to add associated symptoms without being led towards a particular diagnosis."
+    },
+    {
+      id:"background",
+      title:"Checkpoint 4 · Check the background",
+      instruction:"Before drawing conclusions, gather relevant background information.",
+      patientReply:"I haven't started any new medication and I haven't been ill recently. I've actually been sleeping more than usual, but I still feel exhausted.",
+      options:[
+        {text:"Do you have any medical conditions? Are you taking any medication? Have you been ill recently, and how has your sleep been?", correct:true},
+        {text:"You sleep enough, so the fatigue must have a medical cause.", correct:false},
+        {text:"Let's skip your medication and recent history for now.", correct:false}
+      ],
+      feedback:"Medication, medical history, recent illness and sleep are useful parts of the history. They give context without proving a cause."
+    },
+    {
+      id:"impact-concern",
+      title:"Checkpoint 5 · Understand the patient",
+      instruction:"Now explore impact, concern and expectation — not just symptoms.",
+      patientReply:"I'm struggling to concentrate at work, and I'm worried there might be something seriously wrong. Do you think I need blood tests?",
+      options:[
+        {text:"How is this affecting your day-to-day life, and is there anything in particular you're worried about?", correct:true},
+        {text:"Try not to worry. I'm sure it's nothing serious.", correct:false},
+        {text:"We only need the physical symptoms, not what you're worried about.", correct:false}
+      ],
+      feedback:"Exploring impact and concern helps the patient feel heard and shows what needs to be addressed in the plan."
+    },
+    {
+      id:"empathy-uncertainty",
+      title:"Checkpoint 6 · Respond without overpromising",
+      instruction:"The patient is anxious about the weight loss and asks whether something serious is wrong.",
+      patientReply:"Okay. I'd rather have it checked properly than just assume it's nothing.",
+      options:[
+        {text:"I can see why you're worried. I can't tell you the cause from this video call alone, but I do think these symptoms need further assessment.", correct:true},
+        {text:"Don't worry — there is definitely nothing serious going on.", correct:false},
+        {text:"Yes, unexplained weight loss usually means something serious.", correct:false}
+      ],
+      feedback:"Acknowledge the concern, explain uncertainty honestly and avoid both false reassurance and alarmist conclusions."
+    },
+    {
+      id:"plan-safety-net",
+      title:"Checkpoint 7 · Explain the next step",
+      instruction:"Close this stage of the consultation with a clear plan and safety-netting.",
+      patientReply:"All right. That makes sense. Thank you for explaining what happens next.",
+      options:[
+        {text:"Based on what you've told me, I'd like to arrange further assessment and some blood tests. If your symptoms get significantly worse, seek urgent medical advice.", correct:true},
+        {text:"I'll order some tests, but there is no need for any further assessment.", correct:false},
+        {text:"Wait another month and see if the symptoms disappear on their own.", correct:false}
+      ],
+      feedback:"Give a concrete next step, make clear that the video call is not the end of the assessment, and include safety-netting."
+    }
+  ];
+
+
+  const onlineDecisionCases = [
+    {
+      id:"medication-followup",
+      label:"CASE 01 · MEDICATION FOLLOW-UP",
+      icon:"💊",
+      title:"New medication, mild nausea",
+      caseText:"The patient started a new medication recently. They report mild nausea and an upset stomach, but no new alarming symptoms in this fictional case. They want to know whether they should stop the medication.",
+      correct:"online",
+      explanation:"For this training scenario, the discussion can continue by video: clarify the medicine, dose, timing and symptoms, then agree a clear review plan. Do not tell the patient to change prescribed treatment without appropriate clinical review.",
+      phrase:"For now, we can continue this consultation by video and agree what to monitor and when to review you."
+    },
+    {
+      id:"ankle",
+      label:"CASE 02 · INJURY",
+      icon:"🦶",
+      title:"Twisted ankle with swelling",
+      caseText:"The patient twisted an ankle two days ago. It is swollen and bruised. They can still walk, but putting full weight through the foot is painful.",
+      correct:"face",
+      explanation:"The camera can show swelling and bruising, but it cannot provide the hands-on examination needed in this scenario. Arrange an in-person assessment rather than overclaiming what video can establish.",
+      phrase:"I can't examine the ankle fully over video, so I'd like to arrange a face-to-face assessment."
+    },
+    {
+      id:"fatigue",
+      label:"CASE 03 · GENERAL SYMPTOMS",
+      icon:"🧪",
+      title:"Fatigue, weight loss and dizziness",
+      caseText:"The patient has felt unusually tired for several weeks, has lost weight without trying and sometimes feels dizzy. They ask whether blood tests or other investigations may be needed.",
+      correct:"tests",
+      explanation:"In this training scenario, history-taking can begin remotely, but the next step needs further assessment and investigations rather than a video-only conclusion.",
+      phrase:"I'd like to arrange further assessment and some tests so we can investigate these symptoms properly."
+    },
+    {
+      id:"chest",
+      label:"CASE 04 · SAFETY ALERT",
+      icon:"⚠️",
+      title:"Chest discomfort and breathlessness",
+      caseText:"The patient reports chest discomfort and shortness of breath. Their partner says the symptoms have become more frequent over the last few days and is much more worried than the patient.",
+      correct:"urgent",
+      explanation:"For this fictional training case, this should not be managed as a routine video-only consultation. The safe communication move is to escalate for urgent in-person assessment rather than minimise the symptoms remotely.",
+      phrase:"Because of the symptoms you've described, I don't think it would be safe to assess this fully by video. You need urgent in-person assessment."
+    },
+    {
+      id:"headache",
+      label:"CASE 05 · HEADACHE REVIEW",
+      icon:"🧠",
+      title:"More frequent headaches with dizziness",
+      caseText:"The patient has had recurrent headaches for four days and sometimes feels dizzy. During the video history in this fictional case, they report no fainting, weakness or trouble speaking, but they are worried because the pattern is different from usual.",
+      correct:"tests",
+      explanation:"The video history is useful, but a changed pattern with ongoing concern should not end with reassurance alone in this exercise. Plan further assessment and explain what would make the situation more urgent.",
+      phrase:"I'd like to arrange further assessment, and I'll also explain what changes would mean you should seek help sooner."
+    },
+    {
+      id:"stable-review",
+      label:"CASE 06 · ROUTINE REVIEW",
+      icon:"📋",
+      title:"Stable follow-up, no new symptoms",
+      caseText:"This is a planned follow-up. The patient feels well, has no new symptoms and mainly wants to review progress and discuss recent results that are already available to the clinician.",
+      correct:"online",
+      explanation:"A stable follow-up can be suitable for video in this training scenario when no hands-on examination is required and the clinician remains ready to change the plan if new information emerges.",
+      phrase:"This follow-up is suitable to continue by video today. If anything new comes up, we can change the plan."
+    }
+  ];
+
+  const onlineDecisionOptions = [
+    {id:"online", label:"Continue online", icon:"💻", sub:"Video remains suitable for this stage."},
+    {id:"face", label:"Arrange face-to-face", icon:"🏥", sub:"A hands-on assessment is needed."},
+    {id:"tests", label:"Further tests / follow-up", icon:"🧪", sub:"Remote history is not the end of the pathway."},
+    {id:"urgent", label:"Urgent assessment", icon:"🚨", sub:"Do not manage this as a routine video-only case."}
+  ];
+
   const els = {
     start: document.getElementById("startMission"),
     missionArea: document.getElementById("missionArea"),
@@ -345,9 +506,27 @@
     patient2Checkpoint: document.getElementById("patient2CheckpointNumber"),
     patient2Progress: document.getElementById("patient2ProgressBar"),
     patient2Start: document.getElementById("startPatient2"),
+    onlineDecisionArea: document.getElementById("onlineDecisionArea"),
+    onlineDecisionScreen: document.getElementById("onlineDecisionScreen"),
+    onlineDecisionFeedback: document.getElementById("onlineDecisionFeedback"),
+    onlineDecisionInstruction: document.getElementById("onlineDecisionInstruction"),
+    onlineDecisionCheckpoint: document.getElementById("onlineDecisionCheckpointNumber"),
+    onlineDecisionProgress: document.getElementById("onlineDecisionProgressBar"),
+    onlineDecisionStart: document.getElementById("startOnlineDecision"),
     patientMini1: document.getElementById("patientMini1"),
     patientMini2: document.getElementById("patientMini2"),
+    patientMini3: document.getElementById("patientMini3"),
+    patientMini4: document.getElementById("patientMini4"),
     onlineMap: document.getElementById("onlineMap"),
+    patient3Map: document.getElementById("patient3Map"),
+    patient4Map: document.getElementById("patient4Map"),
+    patient3Area: document.getElementById("patient3Area"),
+    patient3Screen: document.getElementById("patient3Screen"),
+    patient3Feedback: document.getElementById("patient3Feedback"),
+    patient3Instruction: document.getElementById("patient3Instruction"),
+    patient3Checkpoint: document.getElementById("patient3CheckpointNumber"),
+    patient3Progress: document.getElementById("patient3ProgressBar"),
+    patient3Start: document.getElementById("startPatient3"),
     researchMap: document.getElementById("researchMap")
   };
 
@@ -356,6 +535,8 @@
   let audioLabState = readAudioLabState();
   let timelineState = readTimelineState();
   let patient2State = readPatient2State();
+  let onlineDecisionState = readOnlineDecisionState();
+  let patient3State = readPatient3State();
   let audioPrefs = readAudioPrefs();
   let audioContext = null;
 
@@ -418,6 +599,31 @@
 
   function savePatient2State() {
     try { localStorage.setItem(STORAGE_PATIENT2_KEY, JSON.stringify(patient2State)); } catch (_) {}
+  }
+
+
+  function readOnlineDecisionState() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_ONLINE_DECISION_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0};
+  }
+
+  function saveOnlineDecisionState() {
+    try { localStorage.setItem(STORAGE_ONLINE_DECISION_KEY, JSON.stringify(onlineDecisionState)); } catch (_) {}
+  }
+
+  function readPatient3State() {
+    try {
+      const value = JSON.parse(localStorage.getItem(STORAGE_PATIENT3_KEY));
+      if (value && Number.isInteger(value.index)) return value;
+    } catch (_) {}
+    return {index: 0, completed: false, mistakes: 0, lastReply: ""};
+  }
+
+  function savePatient3State() {
+    try { localStorage.setItem(STORAGE_PATIENT3_KEY, JSON.stringify(patient3State)); } catch (_) {}
   }
 
   function readAudioPrefs() {
@@ -1373,7 +1579,7 @@
       els.patient2Map.classList.add(patient2State.completed ? "done" : "patient2-ready");
       els.patient2Map.querySelector("b").textContent = patient2State.completed ? "DONE" : "LIVE";
     }
-    if (els.onlineMap) {
+    if (els.onlineMap && !onlineDecisionState.completed) {
       els.onlineMap.classList.remove("live", "done", "next-ready");
       if (patient2State.completed) els.onlineMap.classList.add("next-ready");
       els.onlineMap.querySelector("b").textContent = patient2State.completed ? "NEXT" : "LOCKED";
@@ -1517,6 +1723,7 @@
     setPatient2Feedback("<strong>Next:</strong> Online or Face-to-Face? — decide when video is enough and when it is not.", "info");
     document.getElementById("replayPatient2")?.addEventListener("click", resetPatient2);
     renderPatient2Progress();
+    unlockOnlineDecision();
   }
 
   function startPatient2() {
@@ -1535,6 +1742,410 @@
     els.patient2Instruction.textContent = patient2IsUnlocked() ? "Patient 02 is connected. Explore the injury, use the camera appropriately and stay clear about the limits of video assessment." : "Complete the Timeline Check to take the next call.";
     els.patient2Screen.innerHTML = patient2IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📹</div><h3>Incoming call · Patient 02</h3><p>Twisted ankle two days ago · swelling · pain · still able to walk.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 02 is waiting</h3><p>Finish the Timeline Check with Patient 01 first.</p></div>`;
     setPatient2Feedback();
+  }
+
+
+  function setOnlineDecisionFeedback(html = "", type = "") {
+    if (!els.onlineDecisionFeedback) return;
+    els.onlineDecisionFeedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.onlineDecisionFeedback.innerHTML = html;
+  }
+
+  function onlineDecisionIsUnlocked() {
+    return patient2State.completed || onlineDecisionState.completed;
+  }
+
+  function renderOnlineDecisionProgress() {
+    if (!els.onlineDecisionArea) return;
+    const unlocked = onlineDecisionIsUnlocked();
+    const total = onlineDecisionCases.length;
+    const done = onlineDecisionState.completed ? total : Math.min(onlineDecisionState.index, total);
+
+    if (!unlocked) {
+      els.onlineDecisionArea.classList.add("is-locked");
+      els.onlineDecisionStart.disabled = true;
+      els.onlineDecisionStart.textContent = "Decision desk locked";
+      els.onlineDecisionCheckpoint.textContent = `0 / ${total}`;
+      els.onlineDecisionProgress.style.width = "0%";
+      if (els.onlineMap) {
+        els.onlineMap.classList.remove("live", "done", "next-ready");
+        els.onlineMap.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.patient3Map) {
+        els.patient3Map.classList.remove("live", "done", "next-ready");
+        els.patient3Map.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.onlineDecisionArea.classList.remove("is-locked");
+    els.onlineDecisionStart.disabled = false;
+    els.onlineDecisionStart.textContent = onlineDecisionState.completed ? "View completed decision desk →" : onlineDecisionState.index > 0 ? "Continue decision desk →" : "Open decision desk →";
+    els.onlineDecisionCheckpoint.textContent = `${done} / ${total}`;
+    els.onlineDecisionProgress.style.width = `${(done / total) * 100}%`;
+
+    if (els.onlineMap) {
+      els.onlineMap.classList.remove("live", "done", "next-ready");
+      els.onlineMap.classList.add(onlineDecisionState.completed ? "done" : "live");
+      els.onlineMap.querySelector("b").textContent = onlineDecisionState.completed ? "DONE" : "LIVE";
+    }
+    if (els.patient3Map && !patient3State.completed && patient3State.index === 0) {
+      els.patient3Map.classList.remove("live", "done", "next-ready");
+      if (onlineDecisionState.completed) els.patient3Map.classList.add("next-ready");
+      els.patient3Map.querySelector("b").textContent = onlineDecisionState.completed ? "NEXT" : "LOCKED";
+    }
+
+    if (onlineDecisionState.completed && els.patientMini3 && !patient3State.completed && patient3State.index === 0) {
+      els.patientMini2?.classList.remove("p2-current");
+      els.patientMini3.classList.add("next-patient");
+      const two = els.patientMini2?.querySelector("small");
+      const three = els.patientMini3.querySelector("small");
+      if (two) two.textContent = "Consultation complete";
+      if (three) three.textContent = "Next call";
+    }
+  }
+
+  function unlockOnlineDecision() {
+    renderOnlineDecisionProgress();
+    if (!onlineDecisionIsUnlocked()) return;
+    if (!onlineDecisionState.completed && onlineDecisionState.index === 0) {
+      els.onlineDecisionInstruction.textContent = "Decision desk unlocked. Choose the safest next step for each fictional video-consultation case.";
+      els.onlineDecisionScreen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🖥️</div><h3>Six cases are waiting</h3><p>Continue online, arrange face-to-face assessment, plan further tests / follow-up, or escalate for urgent assessment.</p></div>`;
+    }
+  }
+
+  function renderOnlineDecisionCase() {
+    renderOnlineDecisionProgress();
+    if (!onlineDecisionIsUnlocked()) return;
+    if (onlineDecisionState.completed || onlineDecisionState.index >= onlineDecisionCases.length) return renderOnlineDecisionComplete();
+
+    const item = onlineDecisionCases[onlineDecisionState.index];
+    const number = onlineDecisionState.index + 1;
+    els.onlineDecisionInstruction.textContent = `Case ${number}: decide the safest next step for this training scenario.`;
+    els.onlineDecisionCheckpoint.textContent = `${onlineDecisionState.index} / ${onlineDecisionCases.length}`;
+    els.onlineDecisionProgress.style.width = `${(onlineDecisionState.index / onlineDecisionCases.length) * 100}%`;
+    setOnlineDecisionFeedback();
+
+    els.onlineDecisionScreen.innerHTML = `<div class="online-decision-shell">
+      <article class="online-case-card">
+        <div class="online-case-top"><span class="online-case-icon" aria-hidden="true">${item.icon}</span><div><span>${escapeHTML(item.label)}</span><h3>${escapeHTML(item.title)}</h3></div></div>
+        <p>${escapeHTML(item.caseText)}</p>
+        <div class="online-training-note"><strong>Training focus</strong><span>Suitability for video is a clinical decision. Do not confuse a useful video history with a complete physical assessment.</span></div>
+      </article>
+      <article class="online-choice-card">
+        <span class="online-round-kicker">DECISION ${number} OF ${onlineDecisionCases.length}</span>
+        <h3>What should happen next?</h3>
+        <div class="online-choice-grid" role="group" aria-label="Choose the next step">
+          ${onlineDecisionOptions.map(option => `<button class="online-choice" type="button" data-online-choice="${option.id}"><span aria-hidden="true">${option.icon}</span><b>${escapeHTML(option.label)}</b><small>${escapeHTML(option.sub)}</small></button>`).join("")}
+        </div>
+      </article>
+    </div>`;
+
+    els.onlineDecisionScreen.querySelectorAll("[data-online-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const choice = button.dataset.onlineChoice;
+        els.onlineDecisionScreen.querySelectorAll("[data-online-choice]").forEach(btn => { btn.disabled = true; });
+        if (choice === item.correct) {
+          button.classList.add("correct-choice");
+          beep("ok");
+          setOnlineDecisionFeedback(`<div class="online-feedback-inner"><div><strong>✓ Safe decision.</strong> ${escapeHTML(item.explanation)}</div><div class="useful-phrase"><span>USEFUL LANGUAGE</span><p>“${escapeHTML(item.phrase)}”</p><button class="online-phrase-listen" type="button">🔊 Listen</button></div></div>`, "correct");
+          const listen = els.onlineDecisionFeedback.querySelector(".online-phrase-listen");
+          listen?.addEventListener("click", () => speak(item.phrase, listen, 0.92));
+          advanceOnlineDecisionButton(number === onlineDecisionCases.length ? "Complete decision desk →" : "Next case →");
+        } else {
+          button.classList.add("wrong-choice");
+          onlineDecisionState.mistakes += 1;
+          saveOnlineDecisionState();
+          beep("error");
+          setOnlineDecisionFeedback(`<strong>Review the modality decision.</strong> In this exercise, ask what video can establish, what requires hands-on assessment or tests, and whether the symptoms make routine remote management inappropriate.`, "wrong");
+          window.setTimeout(() => {
+            els.onlineDecisionScreen.querySelectorAll("[data-online-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advanceOnlineDecisionButton(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.onlineDecisionFeedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      onlineDecisionState.index += 1;
+      if (onlineDecisionState.index >= onlineDecisionCases.length) onlineDecisionState.completed = true;
+      saveOnlineDecisionState();
+      renderOnlineDecisionCase();
+      els.onlineDecisionScreen.focus({preventScroll:true});
+    });
+  }
+
+  function renderOnlineDecisionComplete() {
+    onlineDecisionState.completed = true;
+    onlineDecisionState.index = onlineDecisionCases.length;
+    saveOnlineDecisionState();
+    els.onlineDecisionInstruction.textContent = "Decision desk complete: you matched the consultation format to what could safely be assessed in each fictional case.";
+    els.onlineDecisionCheckpoint.textContent = `${onlineDecisionCases.length} / ${onlineDecisionCases.length}`;
+    els.onlineDecisionProgress.style.width = "100%";
+    els.shiftStatus.textContent = "Decision desk complete · Patient 03 next";
+    const score = Math.max(0, 100 - onlineDecisionState.mistakes * 7);
+    const quality = onlineDecisionState.mistakes === 0 ? "Modality decisions perfectly controlled" : onlineDecisionState.mistakes <= 2 ? "Safe modality decisions achieved" : "Safe decisions achieved after review";
+
+    els.onlineDecisionScreen.innerHTML = `<div class="mission-complete-card">
+      <div class="mission-badge online-badge" aria-hidden="true">🛡️</div>
+      <p class="mission-step-label">MISSION 5 COMPLETE</p>
+      <h3>Safe Decision Maker badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You distinguished between a consultation that can continue remotely, one that needs hands-on assessment, one that needs further investigations and a situation that should not remain a routine video-only consultation.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>decision score</span></div>
+      <div class="online-summary-grid">
+        <div><span>ONLINE</span><strong>Useful when suitable</strong><small>Video can support history, communication and appropriate follow-up.</small></div>
+        <div><span>FACE-TO-FACE</span><strong>Know the limit</strong><small>If a physical examination matters, say so clearly.</small></div>
+        <div><span>ESCALATE</span><strong>Change the pathway</strong><small>Further tests or urgent assessment may be the safer next step.</small></div>
+      </div>
+      <div class="timeline-preview patient3-preview">
+        <span>NEXT CALL · PATIENT 03</span>
+        <p><strong>Fatigue + unintentional weight loss + dizziness</strong></p>
+        <small>Take a fuller history, explore the patient's concerns and decide how to explain the need for further assessment without overclaiming.</small>
+      </div>
+      <div class="mission-complete-actions"><button id="startPatient3FromDecision" class="tcr-primary" type="button">Take Patient 03 call →</button><button id="replayOnlineDecision" class="tcr-secondary-button" type="button">Replay decision desk</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setOnlineDecisionFeedback("<strong>Next:</strong> Patient 03 — fatigue, weight loss and dizziness.", "info");
+    document.getElementById("replayOnlineDecision")?.addEventListener("click", resetOnlineDecision);
+    document.getElementById("startPatient3FromDecision")?.addEventListener("click", startPatient3);
+    renderOnlineDecisionProgress();
+    renderPatient3Progress();
+  }
+
+  function startOnlineDecision() {
+    if (!onlineDecisionIsUnlocked()) return;
+    if (onlineDecisionState.completed) renderOnlineDecisionComplete();
+    else renderOnlineDecisionCase();
+    els.onlineDecisionArea.scrollIntoView({behavior:"smooth", block:"start"});
+    els.onlineDecisionScreen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetOnlineDecision() {
+    onlineDecisionState = {index:0, completed:false, mistakes:0};
+    saveOnlineDecisionState();
+    renderOnlineDecisionProgress();
+    els.onlineDecisionInstruction.textContent = onlineDecisionIsUnlocked() ? "Decision desk unlocked. Choose the safest next step for each fictional video-consultation case." : "Complete Patient 02 to unlock the decision desk.";
+    els.onlineDecisionScreen.innerHTML = onlineDecisionIsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🖥️</div><h3>Six cases are waiting</h3><p>Continue online, arrange face-to-face assessment, plan further tests / follow-up, or escalate for urgent assessment.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Decision desk locked</h3><p>Finish Patient 02 first.</p></div>`;
+    setOnlineDecisionFeedback();
+  }
+
+
+  function setPatient3Feedback(html = "", type = "") {
+    if (!els.patient3Feedback) return;
+    els.patient3Feedback.className = "mission-feedback" + (type ? ` ${type}` : "");
+    els.patient3Feedback.innerHTML = html;
+  }
+
+  function patient3IsUnlocked() {
+    return onlineDecisionState.completed || patient3State.completed;
+  }
+
+  function renderPatient3Progress() {
+    if (!els.patient3Area) return;
+    const unlocked = patient3IsUnlocked();
+    const total = patient3Items.length;
+    const done = patient3State.completed ? total : Math.min(patient3State.index, total);
+
+    if (!unlocked) {
+      els.patient3Area.classList.add("is-locked");
+      els.patient3Start.disabled = true;
+      els.patient3Start.textContent = "Patient 03 locked";
+      els.patient3Checkpoint.textContent = `0 / ${total}`;
+      els.patient3Progress.style.width = "0%";
+      if (els.patient3Map) {
+        els.patient3Map.classList.remove("live", "done", "next-ready", "patient3-ready");
+        els.patient3Map.querySelector("b").textContent = "LOCKED";
+      }
+      if (els.patient4Map) {
+        els.patient4Map.classList.remove("live", "done", "next-ready");
+        els.patient4Map.querySelector("b").textContent = "LOCKED";
+      }
+      return;
+    }
+
+    els.patient3Area.classList.remove("is-locked");
+    els.patient3Start.disabled = false;
+    els.patient3Start.textContent = patient3State.completed ? "View completed Patient 03 →" : patient3State.index > 0 ? "Continue Patient 03 →" : "Answer Patient 03 →";
+    els.patient3Checkpoint.textContent = `${done} / ${total}`;
+    els.patient3Progress.style.width = `${(done / total) * 100}%`;
+
+    if (els.patient3Map) {
+      els.patient3Map.classList.remove("live", "done", "next-ready", "patient3-ready");
+      els.patient3Map.classList.add(patient3State.completed ? "done" : "patient3-ready");
+      els.patient3Map.querySelector("b").textContent = patient3State.completed ? "DONE" : "LIVE";
+    }
+    if (els.patient4Map) {
+      els.patient4Map.classList.remove("live", "done", "next-ready");
+      if (patient3State.completed) els.patient4Map.classList.add("next-ready");
+      els.patient4Map.querySelector("b").textContent = patient3State.completed ? "NEXT" : "LOCKED";
+    }
+
+    if (els.patientMini3) {
+      els.patientMini3.classList.remove("next-patient");
+      els.patientMini3.classList.add(patient3State.completed ? "consult-complete" : "p3-current");
+      const three = els.patientMini3.querySelector("small");
+      if (three) three.textContent = patient3State.completed ? "Consultation complete" : "Calling now";
+    }
+    if (els.patientMini4) {
+      els.patientMini4.classList.toggle("next-patient", patient3State.completed);
+      const four = els.patientMini4.querySelector("small");
+      if (four) four.textContent = patient3State.completed ? "Next call" : "Waiting";
+    }
+  }
+
+  function unlockPatient3() {
+    renderPatient3Progress();
+    if (!patient3IsUnlocked()) return;
+    if (!patient3State.completed && patient3State.index === 0) {
+      els.patient3Instruction.textContent = "Patient 03 is connected. Take a fuller history, explore concern and explain the need for further assessment without jumping to a diagnosis.";
+      els.patient3Screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🧪</div><h3>Incoming call · Patient 03</h3><p>Unusual fatigue for several weeks · unintentional weight loss · occasional dizziness.</p></div>`;
+    }
+  }
+
+  function patient3VideoPanel(reply = "") {
+    return `<article class="p3-video-card">
+      <div class="p3-image-wrap">
+        <span class="p3-live">● LIVE · PATIENT 03</span>
+        <img src="assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp" alt="Patient 03 at home during a video consultation, appearing tired and concerned.">
+      </div>
+      <div class="p3-video-meta">
+        <span>FICTIONAL CASE · VIDEO CONSULTATION</span>
+        <h3>Patient 03 · fatigue</h3>
+        <small>Several weeks · unintentional weight loss · occasional dizziness</small>
+        ${reply ? `<div class="p3-reply"><div class="p3-reply-head"><strong>Patient reply</strong><button class="p3-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(reply)}”</p></div>` : `<p class="patient-awaiting">The patient is waiting for your first question.</p>`}
+      </div>
+    </article>`;
+  }
+
+  function renderPatient3Item() {
+    renderPatient3Progress();
+    if (!patient3IsUnlocked()) return;
+    if (patient3State.completed || patient3State.index >= patient3Items.length) return renderPatient3Complete();
+
+    const item = patient3Items[patient3State.index];
+    const number = patient3State.index + 1;
+    els.patient3Instruction.textContent = item.instruction;
+    setPatient3Feedback();
+    els.patient3Checkpoint.textContent = `${patient3State.index} / ${patient3Items.length}`;
+    els.patient3Progress.style.width = `${(patient3State.index / patient3Items.length) * 100}%`;
+
+    els.patient3Screen.innerHTML = `<div class="p3-shell">
+      ${patient3VideoPanel(patient3State.lastReply || "")}
+      <article class="p3-decision-card">
+        <span class="p3-round-kicker">HISTORY CHECK ${number} OF ${patient3Items.length}</span>
+        <h3>${escapeHTML(item.title)}</h3>
+        <p>${escapeHTML(item.instruction)}</p>
+        <div class="p3-options" role="group" aria-label="Choose the best consultation response">
+          ${item.options.map((option, idx) => `<button class="p3-choice" type="button" data-p3-choice="${idx}"><span>${String.fromCharCode(65 + idx)}</span><b>${escapeHTML(option.text)}</b></button>`).join("")}
+        </div>
+        <div class="p3-clinical-note"><strong>History-taking principle:</strong> ask, listen and summarise before you interpret. Concern deserves an answer, but uncertainty should be explained honestly.</div>
+      </article>
+    </div>`;
+
+    const replyButton = els.patient3Screen.querySelector(".p3-listen");
+    if (replyButton && patient3State.lastReply) replyButton.addEventListener("click", () => speak(patient3State.lastReply, replyButton, 0.9));
+
+    els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(button => {
+      button.addEventListener("click", () => {
+        const chosen = Number(button.dataset.p3Choice);
+        const option = item.options[chosen];
+        els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(btn => { btn.disabled = true; });
+        if (option.correct) {
+          button.classList.add("correct-choice");
+          patient3State.lastReply = item.patientReply;
+          savePatient3State();
+          beep("ok");
+          setPatient3Feedback(`<strong>✓ Good history-taking.</strong> ${escapeHTML(item.feedback)}`, "correct");
+          const videoMeta = els.patient3Screen.querySelector(".p3-video-meta");
+          if (videoMeta) {
+            videoMeta.querySelector(".patient-awaiting")?.remove();
+            videoMeta.querySelector(".p3-reply")?.remove();
+            videoMeta.insertAdjacentHTML("beforeend", `<div class="p3-reply"><div class="p3-reply-head"><strong>Patient reply</strong><button class="p3-listen" type="button">🔊 Listen</button></div><p>“${escapeHTML(item.patientReply)}”</p></div>`);
+            const listen = videoMeta.querySelector(".p3-listen");
+            listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
+            if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
+          }
+          advancePatient3Button(number === patient3Items.length ? "Complete Patient 03 →" : "Continue consultation →");
+        } else {
+          button.classList.add("wrong-choice");
+          patient3State.mistakes += 1;
+          savePatient3State();
+          beep("error");
+          setPatient3Feedback("<strong>Try again.</strong> Choose the option that gathers information, acknowledges concern and avoids premature reassurance or diagnosis.", "wrong");
+          window.setTimeout(() => {
+            els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(btn => { btn.disabled = false; btn.classList.remove("wrong-choice"); });
+          }, 650);
+        }
+      });
+    });
+  }
+
+  function advancePatient3Button(label) {
+    const holder = document.createElement("div");
+    holder.className = "mission-next-holder";
+    holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
+    els.patient3Feedback.appendChild(holder);
+    holder.querySelector("button").addEventListener("click", () => {
+      patient3State.index += 1;
+      patient3State.lastReply = "";
+      if (patient3State.index >= patient3Items.length) patient3State.completed = true;
+      savePatient3State();
+      renderPatient3Item();
+      els.patient3Screen.focus({preventScroll:true});
+    });
+  }
+
+  function renderPatient3Complete() {
+    patient3State.completed = true;
+    patient3State.index = patient3Items.length;
+    savePatient3State();
+    els.patient3Instruction.textContent = "Patient 03 complete: you took a fuller history, explored the patient's concern and explained the need for further assessment without overclaiming.";
+    els.patient3Checkpoint.textContent = `${patient3Items.length} / ${patient3Items.length}`;
+    els.patient3Progress.style.width = "100%";
+    els.shiftStatus.textContent = "Patient 03 complete · Patient 04 next";
+    const score = Math.max(0, 100 - patient3State.mistakes * 7);
+    const quality = patient3State.mistakes === 0 ? "Excellent listening and uncertainty management" : patient3State.mistakes <= 2 ? "Clear, safe history-taking achieved" : "Safe history-taking achieved after review";
+
+    els.patient3Screen.innerHTML = `<div class="mission-complete-card">
+      <div class="mission-badge p3-badge" aria-hidden="true">👂</div>
+      <p class="mission-step-label">PATIENT 03 COMPLETE</p>
+      <h3>Clinical Listener badge unlocked</h3>
+      <p>${escapeHTML(quality)}. You explored duration, weight and appetite changes, associated symptoms, relevant background, day-to-day impact and the patient's concern before explaining the next step.</p>
+      <div class="mission-complete-score"><strong>${score}%</strong><span>call score</span></div>
+      <div class="p3-summary-grid">
+        <div><span>LISTEN</span><strong>Start broad</strong><small>Let the patient describe the problem before narrowing the history.</small></div>
+        <div><span>UNDERSTAND</span><strong>Explore concern</strong><small>Impact and worries are part of the clinical conversation.</small></div>
+        <div><span>PLAN</span><strong>Explain uncertainty</strong><small>Further assessment and tests can be planned without pretending the video call gives a diagnosis.</small></div>
+      </div>
+      <div class="timeline-preview patient4-preview"><span>NEXT CALL · PATIENT 04</span><p><strong>New medication + nausea / upset stomach</strong></p><small>Clarify the medicine, dose and timing; explore side effects and warning signs; then discuss a safe review plan.</small></div>
+      <div class="mission-complete-actions"><button id="replayPatient3" class="tcr-secondary-button" type="button">Replay Patient 03</button><a class="tcr-secondary-link dark" href="#mission-map">Mission map ↓</a></div>
+    </div>`;
+    setPatient3Feedback("<strong>Next:</strong> Patient 04 — new medication with nausea and an upset stomach.", "info");
+    document.getElementById("replayPatient3")?.addEventListener("click", resetPatient3);
+    renderPatient3Progress();
+  }
+
+  function startPatient3() {
+    if (!patient3IsUnlocked()) return;
+    if (patient3State.completed) renderPatient3Complete();
+    else renderPatient3Item();
+    els.patient3Area.scrollIntoView({behavior:"smooth", block:"start"});
+    els.patient3Screen.focus({preventScroll:true});
+    if (audioPrefs.music) syncMusic();
+  }
+
+  function resetPatient3() {
+    patient3State = {index:0, completed:false, mistakes:0, lastReply:""};
+    savePatient3State();
+    renderPatient3Progress();
+    els.patient3Instruction.textContent = patient3IsUnlocked() ? "Patient 03 is connected. Take a fuller history, explore concern and explain the need for further assessment without jumping to a diagnosis." : "Complete the Online or Face-to-Face decision desk to take Patient 03's call.";
+    els.patient3Screen.innerHTML = patient3IsUnlocked() ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🧪</div><h3>Incoming call · Patient 03</h3><p>Unusual fatigue for several weeks · unintentional weight loss · occasional dizziness.</p></div>` : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 03 is waiting</h3><p>Finish the decision desk first.</p></div>`;
+    setPatient3Feedback();
   }
 
   function feedbackFor(id) {
@@ -1620,11 +2231,15 @@
     audioLabState = {index: 0, completed: false, mistakes: 0, bonusDone: false};
     timelineState = {index: 0, completed: false, mistakes: 0};
     patient2State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
+    onlineDecisionState = {index: 0, completed: false, mistakes: 0};
+    patient3State = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     saveState();
     saveClinicalState();
     saveAudioLabState();
     saveTimelineState();
     savePatient2State();
+    saveOnlineDecisionState();
+    savePatient3State();
     renderProgress();
     renderClinicalProgress();
     els.instruction.innerHTML = "Press <strong>Start Mission 1</strong> when you are ready.";
@@ -1634,6 +2249,8 @@
     resetAudioLab();
     resetTimeline();
     resetPatient2();
+    resetOnlineDecision();
+    resetPatient3();
     setFeedback();
     setClinicalFeedback();
     els.shiftStatus.textContent = "Ready to start";
@@ -1650,6 +2267,8 @@
   els.audioLabStart.addEventListener("click", startAudioLab);
   els.timelineStart.addEventListener("click", startTimeline);
   els.patient2Start.addEventListener("click", startPatient2);
+  els.onlineDecisionStart?.addEventListener("click", startOnlineDecision);
+  els.patient3Start?.addEventListener("click", startPatient3);
 
   els.sound.addEventListener("click", () => {
     audioPrefs.sound = !audioPrefs.sound;
@@ -1683,12 +2302,16 @@
   renderAudioLabProgress();
   renderTimelineProgress();
   renderPatient2Progress();
+  renderOnlineDecisionProgress();
+  renderPatient3Progress();
   if (state.completed) {
-    els.shiftStatus.textContent = patient2State.completed ? "Patient 02 complete · Online vs face-to-face next" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
+    els.shiftStatus.textContent = patient3State.completed ? "Patient 03 complete · Patient 04 next" : onlineDecisionState.completed ? "Decision desk complete · Patient 03 unlocked" : patient2State.completed ? "Patient 02 complete · Online vs face-to-face unlocked" : timelineState.completed ? "Timeline Check complete · Patient 02 unlocked" : audioLabState.completed ? "Missions 1–2 + Audio Lab complete · Timeline unlocked" : clinicalState.completed ? "Missions 1–2 complete · Audio Lab unlocked" : "Mission 1 complete · Mission 2 unlocked";
     els.start.textContent = "View completed Mission 1 →";
     unlockClinicalMission();
     if (clinicalState.completed) unlockAudioLab();
     if (audioLabState.completed || timelineState.completed) unlockTimeline();
     if (timelineState.completed || patient2State.completed) unlockPatient2();
+    if (patient2State.completed || onlineDecisionState.completed) unlockOnlineDecision();
+    if (onlineDecisionState.completed || patient3State.completed) unlockPatient3();
   }
 })();

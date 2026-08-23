@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v13.css">
+  <link rel="stylesheet" href="styles-v15.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -84,11 +84,11 @@
           <img src="assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp" alt="Patient 02 seated at home with an injured ankle visible during a video consultation.">
           <div><strong>Patient 02</strong><span>Twisted ankle</span><small>Waiting</small></div>
         </article>
-        <article class="patient-mini">
+        <article id="patientMini3" class="patient-mini">
           <img src="assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp" alt="Patient 03 at home during a video consultation, appearing tired and concerned.">
           <div><strong>Patient 03</strong><span>Fatigue + weight loss</span><small>Waiting</small></div>
         </article>
-        <article class="patient-mini">
+        <article id="patientMini4" class="patient-mini">
           <img src="assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp" alt="Patient 04 at home during a video consultation, resting a hand on her abdomen.">
           <div><strong>Patient 04</strong><span>New medication + nausea</span><small>Waiting</small></div>
         </article>
@@ -263,6 +263,77 @@
       <div id="patient2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+    <section id="onlineDecisionArea" class="tcr-mission online-decision-section is-locked" aria-labelledby="onlineDecisionTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 5 · CONTROL-ROOM DECISIONS</p>
+          <h2 id="onlineDecisionTitle">Online or Face-to-Face?</h2>
+          <p id="onlineDecisionInstruction">Complete Patient 02 to unlock the decision desk.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>CASE DECISION</span>
+          <strong id="onlineDecisionCheckpointNumber">0 / 6</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="onlineDecisionProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="online-decision-brief">
+        <div class="online-decision-brief-icon" aria-hidden="true">🖥️</div>
+        <div>
+          <span class="case-brief-kicker">REMOTE CONSULTATION · SAFE NEXT STEPS</span>
+          <strong>Decide what video can safely do — and when it is not enough.</strong>
+          <p>For each fictional case, choose the most appropriate next step for this training scenario. The aim is not to diagnose: it is to recognise the limits of remote assessment and communicate the plan clearly.</p>
+        </div>
+        <button id="startOnlineDecision" class="tcr-primary" type="button" disabled>Decision desk locked</button>
+      </div>
+
+      <div id="onlineDecisionScreen" class="mission-screen online-decision-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Decision desk locked</h3>
+          <p>Finish Patient 02 first. The next control-room task will unlock automatically.</p>
+        </div>
+      </div>
+
+      <div id="onlineDecisionFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="patient3Area" class="tcr-mission patient3-section is-locked" aria-labelledby="patient3Title">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 6 · PATIENT 03</p>
+          <h2 id="patient3Title">Listen before you conclude</h2>
+          <p id="patient3Instruction">Complete the Online or Face-to-Face decision desk to take Patient 03's call.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>HISTORY CHECK</span>
+          <strong id="patient3CheckpointNumber">0 / 7</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="patient3ProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="patient3-brief">
+        <div class="patient3-brief-icon" aria-hidden="true">🧪</div>
+        <div>
+          <span class="case-brief-kicker">PATIENT 03 · FATIGUE + WEIGHT LOSS + DIZZINESS</span>
+          <strong>Take a fuller history without jumping to a diagnosis.</strong>
+          <p>The patient has felt unusually tired for several weeks, has lost weight without trying and sometimes feels dizzy. Explore symptoms, background, impact and concern, then explain why further assessment is needed.</p>
+        </div>
+        <button id="startPatient3" class="tcr-primary" type="button" disabled>Patient 03 locked</button>
+      </div>
+
+      <div id="patient3Screen" class="mission-screen patient3-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Patient 03 is waiting</h3>
+          <p>Finish the decision desk first. The next video call will unlock automatically.</p>
+        </div>
+      </div>
+
+      <div id="patient3Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
       <div class="mission-map-heading">
         <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
@@ -275,9 +346,11 @@
         <article id="audioLabMap" class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>LOCKED</b></article>
         <article id="timelineMap" class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>LOCKED</b></article>
         <article id="patient2Map" class="mission-map-card"><span>04</span><div><strong>Patient 02 · Ankle Injury</strong><small>Camera skills · injury questions · visible swelling</small></div><b>LOCKED</b></article>
-        <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
         <article id="onlineMap" class="mission-map-card"><span>05</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>LOCKED</b></article>
-        <article class="mission-map-card"><span>06</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
+        <article id="patient3Map" class="mission-map-card"><span>06</span><div><strong>Patient 03 · Fatigue</strong><small>Fatigue · weight loss · dizziness · further assessment</small></div><b>LOCKED</b></article>
+        <article id="patient4Map" class="mission-map-card"><span>07</span><div><strong>Patient 04 · Medication</strong><small>New medication · nausea · side effects · review plan</small></div><b>LOCKED</b></article>
+        <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
+        <article class="mission-map-card"><span>08</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
         <article class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
       </div>
     </section>
