@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v28.css">
+  <link rel="stylesheet" href="styles-v29.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -658,6 +658,54 @@
       <div id="forumFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+
+
+    <section id="finalArea" class="passport-mission passport-mystery is-locked" aria-labelledby="finalTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">FINAL · MYSTERY DESTINATION</p>
+          <h2 id="finalTitle">One sealed assignment. Ten mixed checkpoints.</h2>
+          <p id="finalInstruction">Clear the Global Health Forum to receive your final confidential assignment.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>FINAL CHECK</span>
+          <strong id="finalCheckpoint">0 / 10</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="finalProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="mystery-brief">
+        <div class="mystery-envelope" aria-hidden="true">
+          <span>GLOBAL MEDICAL EXCHANGE</span>
+          <strong>CONFIDENTIAL</strong>
+          <b>DESTINATION CLASSIFIED</b>
+          <small>OPEN AFTER FORUM CLEARANCE</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">FINAL ASSIGNMENT</span>
+          <strong>You will not be told which skill is being tested.</strong>
+          <p>One of the six destinations will be selected at random. Use clues from the whole day to identify the system, interpret access and vocabulary, compare countries, handle pronunciation and scientific English, and judge claims carefully.</p>
+        </div>
+        <button id="startFinal" class="passport-primary" type="button" disabled>Final locked</button>
+      </div>
+
+      <div class="mystery-rules" aria-label="Mystery Destination rules">
+        <article><span>01</span><strong>Destination hidden</strong><p>The country is selected at random and stays classified at the start.</p></article>
+        <article><span>02</span><strong>Skills mixed</strong><p>No grammar, vocabulary or pronunciation labels tell you what is coming next.</p></article>
+        <article><span>03</span><strong>Evidence matters</strong><p>Choose only what the Day 2 materials support. Avoid absolute claims.</p></article>
+        <article><span>04</span><strong>No timer</strong><p>A first-try answer earns 10 points; a corrected answer earns 6.</p></article>
+      </div>
+
+      <div class="mystery-sealed-grid" aria-hidden="true">
+        <span>?</span><span>?</span><span>?</span><span>?</span><span>?</span><span>?</span>
+      </div>
+
+      <div id="finalScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Final assignment sealed</h3><p>Clear the Global Health Forum first.</p></div>
+      </div>
+      <div id="finalFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -674,16 +722,17 @@
         <div id="stampIe" class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
         <div id="stampPassive" class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control Cleared</strong><small>Language Desk</small></div>
         <div id="stampForum" class="passport-stamp stamp-empty"><span>🏛️</span><strong>Policy Advocate</strong><small>Global Health Forum</small></div>
+        <div id="stampFinal" class="passport-stamp stamp-empty"><span>⭐</span><strong>Passport Complete</strong><small id="stampFinalLevel">Final Assignment</small></div>
       </div>
     </section>
 
-    <section class="passport-coming" aria-labelledby="comingTitle">
+    <section id="day2Completion" class="passport-coming passport-day2-finale" aria-labelledby="comingTitle">
       <div>
-        <p class="section-kicker">NEXT DESTINATIONS</p>
-        <h2 id="comingTitle">Final destination ahead: Mystery Destination.</h2>
-        <p>Your passport is almost complete. The final assignment will mix healthcare systems, vocabulary, evidence, comparisons, pronunciation and scientific English without telling you which skill is being tested.</p>
+        <p class="section-kicker">FINAL CLEARANCE</p>
+        <h2 id="comingTitle">Your Mystery Destination is still sealed.</h2>
+        <p id="comingText">Complete the Global Health Forum, then open the final assignment. One random destination and ten mixed checkpoints stand between you and a completed Global Health Passport.</p>
       </div>
-      <div class="passport-coming-icons" aria-hidden="true">⭐ · 🛂</div>
+      <div id="comingIcons" class="passport-coming-icons" aria-hidden="true">⭐ · 🛂</div>
     </section>
   </main>
 

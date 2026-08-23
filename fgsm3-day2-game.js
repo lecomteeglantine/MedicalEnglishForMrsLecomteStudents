@@ -1298,6 +1298,798 @@
     }
   ];
 
+  const finalSkillMeta = {
+    system: { label: "System Knowledge", short: "SYSTEM", maxItems: 2 },
+    access: { label: "Access & Funding", short: "ACCESS", maxItems: 1 },
+    vocabulary: { label: "Healthcare Vocabulary", short: "VOCAB", maxItems: 2 },
+    comparison: { label: "Comparing Systems", short: "COMPARE", maxItems: 1 },
+    pronunciation: { label: "Pronunciation", short: "SOUND", maxItems: 1 },
+    science: { label: "Scientific English", short: "SCIENCE", maxItems: 1 },
+    policy: { label: "Policy Reasoning", short: "EVIDENCE", maxItems: 2 }
+  };
+
+  const finalCases = {
+    uk: {
+      country: "United Kingdom",
+      city: "London",
+      flag: "🇬🇧",
+      passportCode: "GBR · NHS",
+      reveal: "Your mystery destination was London — the NHS.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief says the system is funded mainly through general taxation and National Insurance. Which profile fits that clue?",
+          options: [
+            { text: "A tax-funded public system", correct: true },
+            { text: "An employer-insurance system with no universal coverage", correct: false },
+            { text: "A system funded mainly by GP co-payments", correct: false }
+          ],
+          model: "The system is funded mainly through general taxation and National Insurance.",
+          explanation: "That is the funding profile given for the NHS."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "The next clue says coverage is universal and most care is free when patients use it. Which statement stays closest to the source?",
+          options: [
+            { text: "Most care is free at the point of use, although some services can carry a charge.", correct: true },
+            { text: "Every service is always free in every part of the country.", correct: false },
+            { text: "Only people with private insurance can use hospital care.", correct: false }
+          ],
+          model: "NHS care is universal and free at the point of use for most services.",
+          explanation: "The country card keeps an important nuance: most care is free, but some services can carry charges."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "You now see three terms on the terminal: NHS · GP surgery · A&E. Where have you landed?",
+          options: [
+            { text: "United Kingdom", correct: true },
+            { text: "Canada", correct: false },
+            { text: "Australia", correct: false }
+          ],
+          model: "The destination is the United Kingdom and the system is the NHS.",
+          explanation: "NHS, GP surgery and A&E are the giveaway clues."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "A treatment file is marked NICE. What is NICE in this system?",
+          options: [
+            { text: "The body that decides which treatments the NHS will pay for", correct: true },
+            { text: "A private insurer for people over 65", correct: false },
+            { text: "A tax charged on every GP visit", correct: false }
+          ],
+          model: "NICE helps decide which treatments the NHS will pay for.",
+          explanation: "That definition comes directly from the UK vocabulary card."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which comparison with the United States is supported by the Day 2 cards?",
+          options: [
+            { text: "Private insurance is supplementary in the UK but central to coverage for many people in the US.", correct: true },
+            { text: "Private insurance is the main route to care in both countries.", correct: false },
+            { text: "Both systems are fully tax-funded and publicly run.", correct: false }
+          ],
+          model: "Private insurance is supplementary in the UK but central to coverage for many people in the United States.",
+          explanation: "The UK card describes private insurance as small and supplementary; the US card describes it as central and dominant."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “patients”, how is the final -s pronounced?",
+          options: [
+            { text: "/s/", correct: true },
+            { text: "/z/", correct: false },
+            { text: "/ɪz/", correct: false }
+          ],
+          model: "Patients may wait for planned care.",
+          explanation: "Patient ends in the voiceless /t/ sound, so the plural -s is pronounced /s/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which sentence correctly uses the passive to describe the system rather than the actor?",
+          options: [
+            { text: "Care is publicly funded and mostly publicly provided.", correct: true },
+            { text: "Care publicly funds and mostly provides.", correct: false },
+            { text: "Care has publicly fund by taxation.", correct: false }
+          ],
+          model: "Care is publicly funded and mostly publicly provided.",
+          explanation: "This is present simple passive: is + past participle."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "The card mentions long waiting lists. Which conclusion is careful enough?",
+          options: [
+            { text: "Waiting lists are a documented challenge, but that fact alone does not prove that every tax-funded system performs worse.", correct: true },
+            { text: "Waiting lists prove tax-funded healthcare never works.", correct: false },
+            { text: "Universal systems cannot have access problems.", correct: false }
+          ],
+          model: "Waiting lists are a documented challenge, but one challenge does not settle the whole policy debate.",
+          explanation: "The source supports the challenge; it does not support a universal judgement about all tax-funded systems."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What is a prescription charge in the UK card?",
+          options: [
+            { text: "A flat fee per prescription item in England", correct: true },
+            { text: "A monthly private insurance premium", correct: false },
+            { text: "A fee charged only by A&E", correct: false }
+          ],
+          model: "A prescription charge is a flat fee per item in England.",
+          explanation: "The UK card lists prescription charge as a key term."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which briefing gives the most balanced summary of this destination?",
+          options: [
+            { text: "The NHS offers universal, mostly free-at-point-of-use care and access based on need, while facing waiting lists, staffing pressure and regional variation.", correct: true },
+            { text: "The NHS is perfect because care is universal.", correct: false },
+            { text: "The NHS is mainly a private insurance system with no universal coverage.", correct: false }
+          ],
+          model: "The NHS combines universal access with important pressures including waiting lists and staff shortages.",
+          explanation: "The strongest summary includes both documented strengths and documented challenges."
+        }
+      ]
+    },
+
+    us: {
+      country: "United States",
+      city: "New York",
+      flag: "🇺🇸",
+      passportCode: "USA · MIXED",
+      reveal: "Your mystery destination was New York — the US healthcare system.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief describes a mixed, private-led system with public programmes for specific groups and no universal coverage. Which profile fits?",
+          options: [
+            { text: "A private-led mixed system", correct: true },
+            { text: "A Beveridge-style public system", correct: false },
+            { text: "A single public insurer in each province", correct: false }
+          ],
+          model: "This is a mixed, private-led system with public programmes for some groups.",
+          explanation: "That is the core model on the US country card."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "Which access statement matches the brief?",
+          options: [
+            { text: "Coverage can depend on employment or eligibility, and some people remain uninsured or under-insured.", correct: true },
+            { text: "Everyone receives the same universal public cover automatically.", correct: false },
+            { text: "Only people aged over 65 can receive any healthcare.", correct: false }
+          ],
+          model: "Coverage may depend on your job or eligibility, and some people remain uninsured or under-insured.",
+          explanation: "The US card explicitly describes coverage as non-universal."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "The terminal displays premium · deductible · co-pay · Medicare · Medicaid. Where have you landed?",
+          options: [
+            { text: "United States", correct: true },
+            { text: "Ireland", correct: false },
+            { text: "New Zealand", correct: false }
+          ],
+          model: "The destination is the United States.",
+          explanation: "That combination of insurance cost terms and public programmes identifies the US card."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "What is a deductible?",
+          options: [
+            { text: "What you pay yourself before insurance starts paying", correct: true },
+            { text: "The monthly amount paid for insurance", correct: false },
+            { text: "A fixed fee per visit or drug", correct: false }
+          ],
+          model: "A deductible is what you pay yourself before insurance starts paying.",
+          explanation: "Do not confuse deductible with premium or co-pay."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which UK–US comparison is supported by the cards?",
+          options: [
+            { text: "The US spends about 17% of GDP and relies far more heavily on private insurance than the UK, which spends about 10–11% and has the NHS at its centre.", correct: true },
+            { text: "The UK spends more than the US and relies more heavily on private insurance.", correct: false },
+            { text: "Both countries have identical coverage and funding structures.", correct: false }
+          ],
+          model: "The United States spends a larger share of GDP and relies more heavily on private insurance than the United Kingdom.",
+          explanation: "The figures support a spending comparison, while the cards support the difference in the role of private insurance."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “patients”, how is the final -s pronounced?",
+          options: [
+            { text: "/s/", correct: true },
+            { text: "/z/", correct: false },
+            { text: "/ɪz/", correct: false }
+          ],
+          model: "Some patients remain uninsured or under-insured.",
+          explanation: "Patient ends in /t/, a voiceless sound, so the final -s is /s/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which passive sentence correctly describes the role of public programmes?",
+          options: [
+            { text: "Specific groups are covered by public programmes such as Medicare and Medicaid.", correct: true },
+            { text: "Specific groups cover by public programmes.", correct: false },
+            { text: "Specific groups have cover by public programmes.", correct: false }
+          ],
+          model: "Specific groups are covered by public programmes such as Medicare and Medicaid.",
+          explanation: "Are covered is present simple passive."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "The card lists cutting-edge care and short waits for the well-insured as strengths. Which conclusion is justified?",
+          options: [
+            { text: "Those are documented strengths, but they do not mean that access is universal or that cost problems disappear.", correct: true },
+            { text: "Those strengths prove everyone in the US receives fast care.", correct: false },
+            { text: "Medical debt is impossible for insured people.", correct: false }
+          ],
+          model: "A strength for some patients does not erase the documented problems of cost and unequal coverage.",
+          explanation: "The same card also identifies high costs, uninsured or under-insured people, medical debt and inequality."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What does out-of-network mean?",
+          options: [
+            { text: "The provider has no agreement with the insurer, so care costs more.", correct: true },
+            { text: "The provider works outside the United States.", correct: false },
+            { text: "The provider only treats people on Medicaid.", correct: false }
+          ],
+          model: "An out-of-network provider has no deal with your insurer, so it costs more.",
+          explanation: "That is the definition on the US vocabulary card."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which final briefing is most faithful to the source?",
+          options: [
+            { text: "The US system offers innovation and provider choice for many insured patients, but it is not universal and faces exceptionally high costs, medical debt and inequality.", correct: true },
+            { text: "The US system is universal because Medicare and Medicaid exist.", correct: false },
+            { text: "Private insurance plays only a small supplementary role in the US.", correct: false }
+          ],
+          model: "The US system combines major medical capacity with high costs and unequal coverage.",
+          explanation: "A balanced summary uses both the strengths and the challenges in the country card."
+        }
+      ]
+    },
+
+    ca: {
+      country: "Canada",
+      city: "Toronto",
+      flag: "🇨🇦",
+      passportCode: "CAN · MEDICARE",
+      reveal: "Your mystery destination was Toronto — Canadian Medicare.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief describes universal public insurance for hospital and physician care, administered by provinces under national rules. Which model fits?",
+          options: [
+            { text: "A provincial single-payer system", correct: true },
+            { text: "A private-led employer insurance system", correct: false },
+            { text: "A national no-fault injury scheme only", correct: false }
+          ],
+          model: "Hospital and physician care are covered through provincial public insurance under national rules.",
+          explanation: "The Canada card describes one public insurer per province."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "Which statement correctly handles the word “universal” in this system?",
+          options: [
+            { text: "Hospital and physician care are universally covered, but drugs outside hospital, dental and vision are often not covered.", correct: true },
+            { text: "Every possible health service is universally free.", correct: false },
+            { text: "Only private insurance covers doctor visits.", correct: false }
+          ],
+          model: "Hospital and doctor care are universal, even though not every health service is publicly covered.",
+          explanation: "This is one of the key nuances in the Canada card."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "The terminal warns: “Medicare — not the US programme” and displays Canada Health Act. Where have you landed?",
+          options: [
+            { text: "Canada", correct: true },
+            { text: "United States", correct: false },
+            { text: "Australia", correct: false }
+          ],
+          model: "The destination is Canada, where the public system is also called Medicare.",
+          explanation: "The shared word Medicare is a deliberate trap between the Canadian and US systems."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "What does pharmacare refer to on the Canada card?",
+          options: [
+            { text: "Proposed national drug coverage", correct: true },
+            { text: "A private hospital network", correct: false },
+            { text: "A tax on medically necessary care", correct: false }
+          ],
+          model: "Pharmacare refers to proposed national drug coverage.",
+          explanation: "The term appears in the Canadian key vocabulary."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which comparison correctly separates Canadian Medicare from US Medicare?",
+          options: [
+            { text: "In Canada, Medicare refers to the public health insurance system; in the US, Medicare is a public programme associated with people aged 65 and over.", correct: true },
+            { text: "Medicare means exactly the same programme in both countries.", correct: false },
+            { text: "US Medicare is the name of universal provincial insurance.", correct: false }
+          ],
+          model: "Canadian Medicare is not the same programme as US Medicare.",
+          explanation: "The Day 2 cards explicitly distinguish the two meanings."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “provinces”, which final -s sound do you hear?",
+          options: [
+            { text: "/ɪz/", correct: true },
+            { text: "/s/", correct: false },
+            { text: "/z/", correct: false }
+          ],
+          model: "The provinces administer their own public insurance systems.",
+          explanation: "Province ends in a sibilant /s/ sound, so the plural ending adds /ɪz/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which sentence uses the passive correctly?",
+          options: [
+            { text: "The system is administered by each province under national rules.", correct: true },
+            { text: "The system administers by each province.", correct: false },
+            { text: "The system has administer by each province.", correct: false }
+          ],
+          model: "The system is administered by each province under national rules.",
+          explanation: "Is administered is present simple passive."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "Someone says, “If dental care is not always covered, the system cannot be universal.” Which response is supported?",
+          options: [
+            { text: "Universal here refers to hospital and physician care; the card also explains that some other services are not universally covered.", correct: true },
+            { text: "Universal means every health-related service must be free.", correct: false },
+            { text: "Canada has no public coverage at all for doctors.", correct: false }
+          ],
+          model: "Universal coverage can refer to a defined set of core services rather than every possible health service.",
+          explanation: "The Canada card itself asks students to explain this distinction."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What does extra-billing mean?",
+          options: [
+            { text: "Charging patients on top of public coverage — a practice that is largely banned", correct: true },
+            { text: "Billing two provinces for the same patient", correct: false },
+            { text: "A federal tax used to pay for hospitals", correct: false }
+          ],
+          model: "Extra-billing means charging patients on top, and it is largely banned.",
+          explanation: "That is the definition on the Canada vocabulary card."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which final briefing is the most balanced?",
+          options: [
+            { text: "Canada provides universal public cover for hospital and doctor care, while facing specialist waits, gaps in drug and dental cover and uneven rural or remote access.", correct: true },
+            { text: "Canada covers every service universally and has no access problems.", correct: false },
+            { text: "Canadian healthcare is mainly financed through employer insurance.", correct: false }
+          ],
+          model: "Canadian Medicare combines universal core coverage with important gaps and access pressures.",
+          explanation: "The summary reflects both the strengths and the challenges in the country card."
+        }
+      ]
+    },
+
+    au: {
+      country: "Australia",
+      city: "Sydney",
+      flag: "🇦🇺",
+      passportCode: "AUS · MEDICARE",
+      reveal: "Your mystery destination was Sydney — Australian Medicare.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief describes universal public insurance plus a strong private tier, funded partly through taxation and a dedicated Medicare Levy. Which model fits?",
+          options: [
+            { text: "Universal public insurance with a substantial private tier", correct: true },
+            { text: "A non-universal employer-insurance model", correct: false },
+            { text: "A public system with no private insurance at all", correct: false }
+          ],
+          model: "The system combines universal Medicare with a strong private tier.",
+          explanation: "That is the core profile on the Australia country card."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "Which access statement matches the brief?",
+          options: [
+            { text: "Public hospitals are free, while GP visits and medicines are subsidised and can still involve patient costs.", correct: true },
+            { text: "All GP visits always cost nothing.", correct: false },
+            { text: "Only privately insured people can use public hospitals.", correct: false }
+          ],
+          model: "Public hospital care is free, while GP visits and medicines are subsidised.",
+          explanation: "The card distinguishes free public hospital care from subsidised services that may involve a gap."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "The terminal displays bulk billing · PBS · Medicare Levy. Where have you landed?",
+          options: [
+            { text: "Australia", correct: true },
+            { text: "Canada", correct: false },
+            { text: "United Kingdom", correct: false }
+          ],
+          model: "The destination is Australia.",
+          explanation: "Bulk billing, PBS and Medicare Levy are distinctive Australian terms in the Day 2 card."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "A GP says, “We bulk bill.” What does that mean?",
+          options: [
+            { text: "The doctor bills Medicare directly and the patient pays nothing for that consultation.", correct: true },
+            { text: "The patient pays the full fee and receives no subsidy.", correct: false },
+            { text: "The consultation is automatically private hospital care.", correct: false }
+          ],
+          model: "With bulk billing, the doctor bills Medicare directly and the patient pays nothing for that consultation.",
+          explanation: "Bulk billing is a central vocabulary point in the Australia card."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which comparison with the UK is supported?",
+          options: [
+            { text: "Private insurance has a much larger role in Australia, where around half the population holds private hospital cover, than in the UK, where it is supplementary for a minority.", correct: true },
+            { text: "Private insurance is compulsory in both countries.", correct: false },
+            { text: "The UK has a larger private hospital tier than Australia.", correct: false }
+          ],
+          model: "Private insurance plays a larger role in Australia than in the United Kingdom.",
+          explanation: "The two cards describe very different sizes and roles for the private tier."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “medicines”, how is the final -s pronounced?",
+          options: [
+            { text: "/z/", correct: true },
+            { text: "/s/", correct: false },
+            { text: "/ɪz/", correct: false }
+          ],
+          model: "Medicines are subsidised through the PBS.",
+          explanation: "Medicine ends in the voiced /n/ sound, so final -s is pronounced /z/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which sentence correctly uses the passive?",
+          options: [
+            { text: "Medicines are subsidised through the PBS.", correct: true },
+            { text: "Medicines subsidise through the PBS.", correct: false },
+            { text: "Medicines have subsidised by the PBS.", correct: false }
+          ],
+          model: "Medicines are subsidised through the PBS.",
+          explanation: "Are subsidised is present simple passive."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "The card mentions out-of-pocket gap fees. Which interpretation is careful enough?",
+          options: [
+            { text: "Gap fees show that universal coverage does not mean every consultation is completely free, but they do not by themselves prove the whole system works badly.", correct: true },
+            { text: "Gap fees prove Australia has no universal coverage.", correct: false },
+            { text: "Every Australian patient pays a gap fee at every visit.", correct: false }
+          ],
+          model: "Universal coverage can coexist with some out-of-pocket costs.",
+          explanation: "The source supports both universal coverage and the existence of gap fees."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What is a gap fee or out-of-pocket payment?",
+          options: [
+            { text: "The extra amount a patient pays above the Medicare rebate", correct: true },
+            { text: "The tax that funds Medicare", correct: false },
+            { text: "A subsidy paid to private insurers", correct: false }
+          ],
+          model: "A gap fee is the extra amount paid above the Medicare rebate.",
+          explanation: "The country card treats gap fee and out-of-pocket as linked patient-cost terms."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which final briefing best matches the Australia card?",
+          options: [
+            { text: "Australia combines universal Medicare with a strong private tier, subsidised primary care and medicines, while facing gap fees, public-hospital pressure and rural access problems.", correct: true },
+            { text: "Australia is a fully private, non-universal system.", correct: false },
+            { text: "Bulk billing means every GP in Australia must provide free care.", correct: false }
+          ],
+          model: "Australia combines universal public insurance with a significant private tier and some patient costs.",
+          explanation: "The best summary preserves both the universal base and the documented tensions."
+        }
+      ]
+    },
+
+    nz: {
+      country: "New Zealand",
+      city: "Wellington",
+      flag: "🇳🇿",
+      passportCode: "NZL · HEALTH NZ",
+      reveal: "Your mystery destination was Wellington — New Zealand.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief says the system is tax-funded, universal and run nationally by Health NZ / Te Whatu Ora. Which profile fits?",
+          options: [
+            { text: "A tax-funded public system", correct: true },
+            { text: "A private-led employer insurance system", correct: false },
+            { text: "A provincial single-payer system", correct: false }
+          ],
+          model: "New Zealand has a tax-funded public system run by Health NZ / Te Whatu Ora.",
+          explanation: "That is the system profile in the New Zealand card."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "An injured patient asks whether they must prove who was responsible before treatment can be covered. Which answer matches the source?",
+          options: [
+            { text: "No. ACC provides no-fault injury cover, so the patient does not need to prove blame.", correct: true },
+            { text: "Yes. Every injured patient must prove legal fault first.", correct: false },
+            { text: "Only private insurance can cover injuries.", correct: false }
+          ],
+          model: "ACC covers injuries on a no-fault basis.",
+          explanation: "No-fault means coverage does not depend on proving who caused the injury."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "The terminal displays Te Whatu Ora · ACC · no-fault. Where have you landed?",
+          options: [
+            { text: "New Zealand", correct: true },
+            { text: "Ireland", correct: false },
+            { text: "Canada", correct: false }
+          ],
+          model: "The destination is New Zealand.",
+          explanation: "Health NZ / Te Whatu Ora and ACC identify the New Zealand system."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "What is a GP co-payment?",
+          options: [
+            { text: "The fee a patient pays to see a family doctor", correct: true },
+            { text: "A payment made only after an accident", correct: false },
+            { text: "A salary paid to a public servant", correct: false }
+          ],
+          model: "A GP co-payment is the fee a patient pays to see a family doctor.",
+          explanation: "GP visits are subsidised, but a co-payment is common."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which comparison with the UK is supported?",
+          options: [
+            { text: "Both systems are tax-funded and universal, but New Zealand commonly has GP co-payments whereas most NHS care is free at the point of use.", correct: true },
+            { text: "Both systems rely mainly on employer insurance.", correct: false },
+            { text: "Neither system provides free public hospital care.", correct: false }
+          ],
+          model: "Both systems are tax-funded and universal, but patient charges differ.",
+          explanation: "The cards support a structural similarity and a meaningful access difference."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “shortages”, how is the final -s pronounced?",
+          options: [
+            { text: "/ɪz/", correct: true },
+            { text: "/s/", correct: false },
+            { text: "/z/", correct: false }
+          ],
+          model: "Workforce shortages are a major challenge.",
+          explanation: "Shortage ends in a sibilant sound, so the plural ending adds /ɪz/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which sentence correctly reports the 2022 reform in the passive?",
+          options: [
+            { text: "The 20 District Health Boards were merged into a single national body in 2022.", correct: true },
+            { text: "The 20 District Health Boards merged by a single national body.", correct: false },
+            { text: "The 20 District Health Boards have merge in 2022.", correct: false }
+          ],
+          model: "The twenty District Health Boards were merged into a single national body in twenty twenty-two.",
+          explanation: "Were merged is past simple passive and matches the reform described in the worksheet."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "The RNZ clip reports resignations. Which statement keeps reported fact and political claim separate?",
+          options: [
+            { text: "Senior figures have resigned; the opposition claims some are being pushed out and blamed for government failures.", correct: true },
+            { text: "RNZ proves the government forced every senior figure to resign.", correct: false },
+            { text: "The clip says the number of resignations is falling.", correct: false }
+          ],
+          model: "The resignations are reported; the claim that people are being pushed out is attributed to the opposition.",
+          explanation: "The worksheet explicitly distinguishes what is reported from what the opposition claims."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What does health equity mean in the Day 2 vocabulary?",
+          options: [
+            { text: "Making sure different groups get equally good care", correct: true },
+            { text: "Making every patient pay the same fee", correct: false },
+            { text: "Giving private insurers equal market share", correct: false }
+          ],
+          model: "Health equity means making sure different groups get equally good care.",
+          explanation: "The card connects this issue to equity gaps for Māori and Pacific peoples."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which final briefing best reflects the New Zealand materials?",
+          options: [
+            { text: "New Zealand combines universal public cover and no-fault injury protection with GP co-payments, workforce shortages, waiting-time pressures and health-equity challenges.", correct: true },
+            { text: "New Zealand has no patient charges and no workforce problems.", correct: false },
+            { text: "ACC is the private insurer that runs all hospitals.", correct: false }
+          ],
+          model: "New Zealand combines universal public cover with distinctive ACC protection and significant access and workforce pressures.",
+          explanation: "The summary brings together the system card and the crisis material without overstating either."
+        }
+      ]
+    },
+
+    ie: {
+      country: "Ireland",
+      city: "Dublin",
+      flag: "🇮🇪",
+      passportCode: "IRL · HSE",
+      reveal: "Your mystery destination was Dublin — Ireland.",
+      items: [
+        {
+          stage: "ARRIVAL CLUE 01",
+          skill: "system",
+          prompt: "The sealed brief describes a mixed, historically two-tier system run publicly by the HSE and reforming towards universal single-tier care. Which profile fits?",
+          options: [
+            { text: "A mixed two-tier system undergoing reform", correct: true },
+            { text: "A fully private employer-insurance system", correct: false },
+            { text: "A no-fault accident scheme that replaces the health service", correct: false }
+          ],
+          model: "The system is mixed and historically two-tier, with reform towards more universal single-tier care.",
+          explanation: "That is how the Ireland card frames the system and Sláintecare."
+        },
+        {
+          stage: "ARRIVAL CLUE 02",
+          skill: "access",
+          prompt: "A lower-income patient asks what a medical card can provide. Which answer matches the source?",
+          options: [
+            { text: "Means-tested free GP and hospital care", correct: true },
+            { text: "Automatic private insurance for every resident", correct: false },
+            { text: "Free flights to receive treatment abroad", correct: false }
+          ],
+          model: "A medical card gives means-tested free GP and hospital care.",
+          explanation: "The Ireland card uses the medical card to illustrate differences in patient charges and access."
+        },
+        {
+          stage: "IDENTITY CHECK",
+          skill: "system",
+          prompt: "The terminal displays HSE · Sláintecare · medical card. Where have you landed?",
+          options: [
+            { text: "Ireland", correct: true },
+            { text: "United Kingdom", correct: false },
+            { text: "Australia", correct: false }
+          ],
+          model: "The destination is Ireland.",
+          explanation: "HSE and Sláintecare are decisive clues."
+        },
+        {
+          stage: "DOCUMENT CHECK",
+          skill: "vocabulary",
+          prompt: "In the workforce article, what does pipeline mean?",
+          options: [
+            { text: "The flow of people being trained into a profession", correct: true },
+            { text: "A hospital's emergency oxygen supply", correct: false },
+            { text: "A private insurance reimbursement route", correct: false }
+          ],
+          model: "A workforce pipeline is the flow of people being trained into a profession.",
+          explanation: "The article links training capacity to the future supply of healthcare professionals."
+        },
+        {
+          stage: "CROSS-BORDER CHECK",
+          skill: "comparison",
+          prompt: "Which comparison with the NHS is supported by the Day 2 materials?",
+          options: [
+            { text: "The NHS is mostly free at the point of use, whereas Ireland has historically had more direct patient charges, including many GP fees unless a patient qualifies for a medical card.", correct: true },
+            { text: "Both systems require private insurance before a patient can see a GP.", correct: false },
+            { text: "Ireland has always been a fully single-tier system with no charges.", correct: false }
+          ],
+          model: "Ireland has historically involved more direct patient charges than the NHS.",
+          explanation: "The two cards make this difference in access and patient payment clear."
+        },
+        {
+          stage: "VOICE GATE",
+          skill: "pronunciation",
+          prompt: "In the word “shortages”, how is the final -s pronounced?",
+          options: [
+            { text: "/ɪz/", correct: true },
+            { text: "/s/", correct: false },
+            { text: "/z/", correct: false }
+          ],
+          model: "Staff shortages can increase pressure on healthcare workers.",
+          explanation: "Shortage ends in a sibilant sound, so the final ending is /ɪz/."
+        },
+        {
+          stage: "RESEARCH GATE",
+          skill: "science",
+          prompt: "Which sentence correctly uses the present perfect passive to report the reform?",
+          options: [
+            { text: "Six hundred and twelve extra annual healthcare places have been created.", correct: true },
+            { text: "Six hundred and twelve extra places have create.", correct: false },
+            { text: "Six hundred and twelve extra places are created last year.", correct: false }
+          ],
+          model: "Six hundred and twelve extra annual healthcare places have been created.",
+          explanation: "Have been created is present perfect passive and echoes the wording in the Day 2 article."
+        },
+        {
+          stage: "EVIDENCE GATE",
+          skill: "policy",
+          prompt: "What can the 612 extra annual places support as an argument — and what can they not prove?",
+          options: [
+            { text: "They show a major expansion of domestic training intended to help address the workforce gap, but they do not prove the gap has already been solved.", correct: true },
+            { text: "They prove Ireland no longer has staffing shortages.", correct: false },
+            { text: "They prove international recruitment will end completely.", correct: false }
+          ],
+          model: "The expansion is intended to strengthen the workforce pipeline; it does not mean the workforce gap has already disappeared.",
+          explanation: "The article says the workforce gap is significant and projected to worsen as the population grows and ages."
+        },
+        {
+          stage: "TERMINOLOGY GATE",
+          skill: "vocabulary",
+          prompt: "What does over-reliance mean in the Ireland article?",
+          options: [
+            { text: "Depending too much on one source — here, professionals trained abroad", correct: true },
+            { text: "Training too many healthcare students at home", correct: false },
+            { text: "Charging patients too little for GP care", correct: false }
+          ],
+          model: "Ireland wants to rebalance an over-reliance on recruiting professionals trained abroad.",
+          explanation: "That is the meaning given in the Day 2 vocabulary activity."
+        },
+        {
+          stage: "FINAL BRIEF",
+          skill: "policy",
+          prompt: "Which final briefing is the most accurate?",
+          options: [
+            { text: "Ireland is reforming a mixed two-tier system while expanding healthcare training to address a workforce gap, waiting times, staffing pressure and over-reliance on recruitment from abroad.", correct: true },
+            { text: "Ireland has already completed Sláintecare and eliminated waiting lists.", correct: false },
+            { text: "Ireland has no public health service and no domestic healthcare training.", correct: false }
+          ],
+          model: "Ireland is pursuing system reform and workforce expansion while significant access and staffing challenges remain.",
+          explanation: "The balanced briefing keeps the reform direction separate from claims that the problems are already solved."
+        }
+      ]
+    }
+  };
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -1348,7 +2140,14 @@
     forumIndex: 0,
     forumScore: 0,
     forumMissed: [],
-    forumComplete: false
+    forumComplete: false,
+    finalStarted: false,
+    finalCaseId: null,
+    finalIndex: 0,
+    finalScore: 0,
+    finalPoints: [],
+    finalMissed: [],
+    finalComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -1427,6 +2226,13 @@
     forumCheckpoint: $("forumCheckpoint"),
     forumProgressBar: $("forumProgressBar"),
     forumInstruction: $("forumInstruction"),
+    finalArea: $("finalArea"),
+    startFinal: $("startFinal"),
+    finalScreen: $("finalScreen"),
+    finalFeedback: $("finalFeedback"),
+    finalCheckpoint: $("finalCheckpoint"),
+    finalProgressBar: $("finalProgressBar"),
+    finalInstruction: $("finalInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -1448,7 +2254,12 @@
     stampNz: $("stampNz"),
     stampIe: $("stampIe"),
     stampPassive: $("stampPassive"),
-    stampForum: $("stampForum")
+    stampForum: $("stampForum"),
+    stampFinal: $("stampFinal"),
+    stampFinalLevel: $("stampFinalLevel"),
+    comingTitle: $("comingTitle"),
+    comingText: $("comingText"),
+    comingIcons: $("comingIcons")
   };
 
   let state = loadState();
@@ -1457,9 +2268,21 @@
   function loadState() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      return { ...defaults, ...saved };
+      const merged = { ...defaults, ...saved };
+      if (!Array.isArray(merged.finalPoints)) merged.finalPoints = [];
+      if (!Array.isArray(merged.finalMissed)) merged.finalMissed = [];
+      if (merged.finalCaseId && !finalCases[merged.finalCaseId]) {
+        merged.finalCaseId = null;
+        merged.finalStarted = false;
+        merged.finalIndex = 0;
+        merged.finalScore = 0;
+        merged.finalPoints = [];
+        merged.finalMissed = [];
+        merged.finalComplete = false;
+      }
+      return merged;
     } catch {
-      return { ...defaults };
+      return { ...defaults, finalPoints: [], finalMissed: [] };
     }
   }
 
@@ -1589,8 +2412,13 @@
     els.forumCheckpoint.textContent = `${forumDone} / ${forumItems.length}`;
     els.forumProgressBar.style.width = `${(forumDone / forumItems.length) * 100}%`;
 
+    const finalTotal = state.finalCaseId && finalCases[state.finalCaseId] ? finalCases[state.finalCaseId].items.length : 10;
+    const finalDone = state.finalComplete ? finalTotal : Math.min(state.finalIndex, finalTotal);
+    els.finalCheckpoint.textContent = `${finalDone} / ${finalTotal}`;
+    els.finalProgressBar.style.width = `${(finalDone / finalTotal) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.forumComplete ? "Forum cleared" : state.passiveComplete ? "Language cleared" : state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.finalComplete ? `Day 2 complete · ${getFinalLevel(state.finalScore)}` : state.forumComplete ? "Forum cleared" : state.passiveComplete ? "Language cleared" : state.dublinComplete ? "Dublin cleared" : state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -1790,9 +2618,32 @@
     if (state.forumComplete) {
       els.stampForum.classList.remove("stamp-empty");
       els.stampForum.classList.add("stamp-earned");
+      els.finalArea.classList.remove("is-locked");
+      els.startFinal.disabled = false;
+      els.startFinal.textContent = state.finalComplete ? "View final results →" : state.finalStarted ? "Resume Mystery Destination →" : "Open sealed assignment →";
+      els.finalInstruction.textContent = state.finalComplete ? "Final assignment completed. Your Global Health Passport is complete." : "Forum cleared. Your confidential final assignment is ready.";
     } else {
       els.stampForum.classList.remove("stamp-earned");
       els.stampForum.classList.add("stamp-empty");
+      els.finalArea.classList.add("is-locked");
+      els.startFinal.disabled = true;
+      els.startFinal.textContent = "Final locked";
+    }
+
+    if (state.finalComplete) {
+      els.stampFinal.classList.remove("stamp-empty");
+      els.stampFinal.classList.add("stamp-earned");
+      els.stampFinalLevel.textContent = getFinalLevel(state.finalScore);
+      els.comingTitle.textContent = "Day 2 complete · Global Health Passport cleared.";
+      els.comingText.textContent = `Final score: ${state.finalScore} / 100 · ${getFinalLevel(state.finalScore)}. You completed all six healthcare systems, the pronunciation and passive-language checks, the policy forum and a mixed mystery assignment.`;
+      els.comingIcons.textContent = "⭐ · ✓";
+    } else {
+      els.stampFinal.classList.remove("stamp-earned");
+      els.stampFinal.classList.add("stamp-empty");
+      els.stampFinalLevel.textContent = "Final Assignment";
+      els.comingTitle.textContent = state.forumComplete ? "Your Mystery Destination is ready." : "Your Mystery Destination is still sealed.";
+      els.comingText.textContent = state.forumComplete ? "Open the confidential assignment. One random destination and ten mixed checkpoints stand between you and a completed Global Health Passport." : "Complete the Global Health Forum, then open the final assignment. One random destination and ten mixed checkpoints stand between you and a completed Global Health Passport.";
+      els.comingIcons.textContent = "⭐ · 🛂";
     }
   }
 
@@ -2327,8 +3178,9 @@
 
     if (state.forumComplete) {
       const pct = Math.round((state.forumScore / forumItems.length) * 100);
-      els.forumScreen.innerHTML = `<div class="passport-complete-card forum-complete"><div class="passport-complete-icon" aria-hidden="true">🏛️</div><p class="passport-case-kicker">GLOBAL HEALTH FORUM CLEARED</p><h3>Policy Advocate</h3><p>You used Day 2 evidence without overclaiming, distinguished evidence from opinion, added concessions and finished by weighing the trade-off.</p><div class="passport-score-line"><strong>${state.forumScore} / ${forumItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="forum-score-skills"><div><b>POSITION</b><span>Clear claim</span></div><div><b>EVIDENCE</b><span>Source-grounded</span></div><div><b>NUANCE</b><span>No overclaiming</span></div><div><b>WEIGHING</b><span>Trade-off stated</span></div></div><div class="passport-model-box"><span>MODEL ARGUMENT FRAME</span><p>“My position is that… A clear example is… Admittedly…, but… On balance, the key trade-off is…”</p><button id="hearForumSummary" class="passport-hear" type="button">🔊 Hear argument frame</button></div><div class="comparison-ticket forum-ticket"><span>GLOBAL HEALTH FORUM</span><b>Policy Advocate</b><span>✓</span><b>Evidence + nuance</b><span>FINAL NEXT</span></div><div class="passport-next-route forum-next-card"><strong>Final destination</strong><span>⭐ Mystery Destination · the final assignment will mix systems, vocabulary, comparisons, pronunciation and scientific English.</span></div></div>`;
+      els.forumScreen.innerHTML = `<div class="passport-complete-card forum-complete"><div class="passport-complete-icon" aria-hidden="true">🏛️</div><p class="passport-case-kicker">GLOBAL HEALTH FORUM CLEARED</p><h3>Policy Advocate</h3><p>You used Day 2 evidence without overclaiming, distinguished evidence from opinion, added concessions and finished by weighing the trade-off.</p><div class="passport-score-line"><strong>${state.forumScore} / ${forumItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="forum-score-skills"><div><b>POSITION</b><span>Clear claim</span></div><div><b>EVIDENCE</b><span>Source-grounded</span></div><div><b>NUANCE</b><span>No overclaiming</span></div><div><b>WEIGHING</b><span>Trade-off stated</span></div></div><div class="passport-model-box"><span>MODEL ARGUMENT FRAME</span><p>“My position is that… A clear example is… Admittedly…, but… On balance, the key trade-off is…”</p><button id="hearForumSummary" class="passport-hear" type="button">🔊 Hear argument frame</button></div><div class="comparison-ticket forum-ticket"><span>GLOBAL HEALTH FORUM</span><b>Policy Advocate</b><span>✓</span><b>Evidence + nuance</b><span>FINAL NEXT</span></div><div class="passport-next-route forum-next-card"><strong>Final destination</strong><span>⭐ Mystery Destination · the final assignment will mix systems, vocabulary, comparisons, pronunciation and scientific English.</span></div><button id="goFinalAssignment" class="passport-primary" type="button">Open sealed final assignment →</button></div>`;
       $("hearForumSummary").addEventListener("click", () => speak("My position is that. A clear example is. Admittedly, but. On balance, the key trade-off is."));
+      $("goFinalAssignment").addEventListener("click", () => { els.finalArea.scrollIntoView({ behavior: "smooth", block: "start" }); window.setTimeout(() => els.startFinal.focus({ preventScroll: true }), 450); });
       updateProgress();
       return;
     }
@@ -2369,10 +3221,133 @@
     window.setTimeout(() => els.forumScreen.focus({ preventScroll: true }), 450);
   }
 
+
+  function getFinalLevel(score) {
+    if (score >= 90) return "Global Health Expert";
+    if (score >= 75) return "International Health Navigator";
+    return "Healthcare Traveller";
+  }
+
+  function pickFinalCase(excludeId = null) {
+    const ids = Object.keys(finalCases).filter(id => id !== excludeId);
+    return ids[Math.floor(Math.random() * ids.length)];
+  }
+
+  function getFinalSkillResults(caseData) {
+    const totals = {};
+    Object.keys(finalSkillMeta).forEach(key => totals[key] = { earned: 0, max: 0 });
+    caseData.items.forEach((item, index) => {
+      if (!totals[item.skill]) return;
+      totals[item.skill].max += 10;
+      totals[item.skill].earned += Number(state.finalPoints[index] || 0);
+    });
+    return totals;
+  }
+
+  function finalSkillCards(caseData) {
+    const totals = getFinalSkillResults(caseData);
+    return Object.entries(finalSkillMeta).map(([key, meta]) => {
+      const result = totals[key];
+      const pct = result.max ? Math.round((result.earned / result.max) * 100) : 0;
+      return `<div><b>${meta.label}</b><strong>${pct}%</strong><span>${result.earned} / ${result.max} pts</span></div>`;
+    }).join("");
+  }
+
+  function resetFinalAssignment(caseId) {
+    state.finalStarted = true;
+    state.finalCaseId = caseId || pickFinalCase();
+    state.finalIndex = 0;
+    state.finalScore = 0;
+    state.finalPoints = [];
+    state.finalMissed = [];
+    state.finalComplete = false;
+    saveState();
+    renderFinal();
+    els.finalArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.finalScreen.focus({ preventScroll: true }), 450);
+  }
+
+  function renderFinal() {
+    updateProgress();
+    els.finalFeedback.innerHTML = "";
+    if (!state.forumComplete) return;
+
+    if (!state.finalStarted) {
+      els.finalScreen.innerHTML = `<div class="passport-waiting mystery-waiting"><span aria-hidden="true">⭐</span><h3>Your assignment is sealed</h3><p>Open it to receive one random destination. The ten checkpoints will deliberately hide the skill being tested.</p></div>`;
+      return;
+    }
+
+    if (!state.finalCaseId || !finalCases[state.finalCaseId]) {
+      state.finalCaseId = pickFinalCase();
+      state.finalIndex = 0;
+      state.finalScore = 0;
+      state.finalPoints = [];
+      state.finalMissed = [];
+      state.finalComplete = false;
+      saveState();
+    }
+
+    const caseData = finalCases[state.finalCaseId];
+
+    if (state.finalComplete) {
+      const level = getFinalLevel(state.finalScore);
+      els.finalScreen.innerHTML = `<div class="passport-complete-card mystery-complete"><div class="mystery-reveal-flag" aria-hidden="true">${caseData.flag}</div><p class="passport-case-kicker">FINAL ASSIGNMENT CLEARED</p><h3>${level}</h3><p class="mystery-reveal-line"><strong>${caseData.reveal}</strong></p><p>You navigated a complete mixed assignment without advance skill labels and kept your answers grounded in the Day 2 materials.</p><div class="passport-score-line mystery-total-score"><strong>${state.finalScore} / 100</strong><span>final score</span></div><div class="mystery-skill-grid">${finalSkillCards(caseData)}</div><div class="passport-model-box mystery-model"><span>GLOBAL HEALTH PASSPORT · COMPLETE</span><p>“I can compare healthcare systems, explain access and funding, use key healthcare vocabulary, control final -s sounds, use the passive in scientific English and distinguish evidence from overclaiming.”</p><button id="hearFinalSummary" class="passport-hear" type="button">🔊 Hear final statement</button></div><div class="mystery-passport-seal"><span>${caseData.passportCode}</span><strong>✓ CLEARED</strong><small>GLOBAL MEDICAL EXCHANGE</small></div><div class="mystery-replay-row"><button id="differentFinalCase" class="passport-primary" type="button">Run a different mystery case →</button><button id="replayFinalCase" class="passport-ghost" type="button">Replay this case</button></div></div>`;
+      $("hearFinalSummary").addEventListener("click", () => speak("I can compare healthcare systems, explain access and funding, use key healthcare vocabulary, control final s sounds, use the passive in scientific English and distinguish evidence from overclaiming."));
+      $("differentFinalCase").addEventListener("click", () => resetFinalAssignment(pickFinalCase(state.finalCaseId)));
+      $("replayFinalCase").addEventListener("click", () => resetFinalAssignment(state.finalCaseId));
+      updateProgress();
+      return;
+    }
+
+    const index = state.finalIndex;
+    const item = caseData.items[index];
+    const destinationStatus = index < 2 ? "DESTINATION CLASSIFIED" : index === 2 ? "IDENTIFY DESTINATION" : "DESTINATION SIGNAL ACQUIRED";
+    const stageLabel = index < 2 ? `ARRIVAL CLUE ${String(index + 1).padStart(2, "0")}` : index === 2 ? "IDENTITY CHECK" : `MIXED CLEARANCE ${String(index + 1).padStart(2, "0")}`;
+    els.finalScreen.innerHTML = `<div class="passport-question-card mystery-question"><div class="passport-question-meta"><span>${stageLabel}</span><b>${destinationStatus}</b></div><div class="mystery-check-line"><span>FINAL ${String(index + 1).padStart(2, "0")}</span><b>${index + 1} / ${caseData.items.length}</b></div><h3>${item.prompt}</h3><div id="finalOptions" class="passport-options"></div><p class="passport-small-note mystery-no-label">No skill label. Read the evidence, then decide.</p></div>`;
+    const optionWrap = $("finalOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        const currentIndex = state.finalIndex;
+        const missed = state.finalMissed.includes(currentIndex);
+        const award = missed ? 6 : 10;
+        state.finalPoints[currentIndex] = award;
+        state.finalScore += award;
+        state.finalIndex += 1;
+        if (state.finalIndex >= caseData.items.length) state.finalComplete = true;
+        saveState();
+        playTone("good");
+        const identityLine = currentIndex === 2 ? `<div class="mystery-identity-reveal"><span>DESTINATION IDENTIFIED</span><strong>${caseData.flag} ${caseData.country}</strong></div>` : "";
+        els.finalFeedback.innerHTML = `<div class="feedback-good"><strong>Checkpoint cleared · +${award} points.</strong><span>${item.explanation}</span></div>${identityLine}<div class="passport-transcript mystery-transcript"><span>MODEL LINE</span><p>${item.model}</p><button id="hearFinalModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="finalNext" class="passport-next" type="button">${state.finalComplete ? "Complete passport →" : "Next sealed checkpoint →"}</button>`;
+        $("hearFinalModel").addEventListener("click", () => speak(item.model));
+        $("finalNext").addEventListener("click", renderFinal);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.finalMissed.includes(state.finalIndex)) state.finalMissed.push(state.finalIndex);
+        saveState();
+        playTone("bad");
+        els.finalFeedback.innerHTML = `<div class="feedback-bad"><strong>Clearance refused — try again.</strong><span>The final does not tell you which skill is being tested. Re-read the wording, eliminate claims that go beyond the Day 2 material, and use the clues already collected.</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startFinal() {
+    if (!state.forumComplete) return;
+    if (!state.finalCaseId) state.finalCaseId = pickFinalCase();
+    state.finalStarted = true;
+    saveState();
+    renderFinal();
+    els.finalArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.finalScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
-    state = { ...defaults };
+    state = { ...defaults, finalPoints: [], finalMissed: [] };
     saveState();
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
     renderDeparture();
@@ -2385,6 +3360,7 @@
     renderDublin();
     renderPassive();
     renderForum();
+    renderFinal();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2405,6 +3381,7 @@
   els.startDublin.addEventListener("click", startDublin);
   els.startPassive.addEventListener("click", startPassive);
   els.startForum.addEventListener("click", startForum);
+  els.startFinal.addEventListener("click", startFinal);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -2428,4 +3405,5 @@
   renderDublin();
   renderPassive();
   renderForum();
+  renderFinal();
 })();
