@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
-  <link rel="stylesheet" href="styles-v36.css">
+  <link rel="stylesheet" href="styles-v37.css">
 </head>
 <body class="field-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -414,8 +414,49 @@
       <p id="ethicsStanceStatus" class="ethics-stance-status">Choose any position. The site does not grade your opinion.</p>
     </section>
 
-    <section id="mission7Teaser" class="field-next-mission is-locked" aria-labelledby="mission7Title">
-      <div><p class="field-kicker">FINAL DAY 3 ASSIGNMENT</p><h2 id="mission7Title">FINAL · 24 Hours to Respond</h2><p>A final mixed mission will combine humanitarian vocabulary, situation assessment, access, resources, word stress, conditional planning and ethical reasoning.</p></div><span class="field-next-icon" aria-hidden="true">⏱️</span>
+    <section id="mission7Area" class="final-mission is-locked" aria-labelledby="mission7Title">
+      <div class="final-hero">
+        <img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian medical response team working in a field setting.">
+        <div class="final-hero-shade" aria-hidden="true"></div>
+        <div class="final-hero-copy">
+          <p class="field-kicker">FINAL DAY 3 ASSIGNMENT</p>
+          <h2 id="mission7Title">24 Hours to Respond</h2>
+          <p class="final-tagline">One fictional crisis. Ten mixed checkpoints. Everything from Day 3.</p>
+          <p>You will be assigned one of four fictional humanitarian situations. The final checks <strong>English, source discipline and response communication</strong> — not clinical certification and not your political opinion.</p>
+          <button id="startMission7" class="field-primary" type="button" disabled>🔒 Complete Mission 6 first</button>
+        </div>
+        <div class="final-hero-score"><span>FINAL SCORE</span><strong id="mission7Score">0 / 100</strong><small>10 first try · 6 after correction</small></div>
+      </div>
+
+      <div class="final-scenario-strip" aria-live="polite">
+        <div class="final-scenario-icon" id="finalScenarioIcon" aria-hidden="true">⏱️</div>
+        <div><span>YOUR FIELD ASSIGNMENT</span><h3 id="finalScenarioTitle">Locked</h3><p id="finalScenarioBrief">Complete Mission 6 to receive your final scenario.</p></div>
+        <button id="hearFinalBrief" class="field-secondary" type="button" disabled>🔊 Hear briefing</button>
+      </div>
+
+      <div class="final-skill-ribbon" aria-label="Skills assessed in the final mission">
+        <span>Vocabulary</span><span>Situation</span><span>Access &amp; resources</span><span>Word stress</span><span>Conditionals</span><span>Safe reporting</span><span>Ethical reasoning</span>
+      </div>
+
+      <div class="final-progress-card" aria-live="polite">
+        <span>FINAL CHECKPOINTS</span><strong id="mission7ProgressText">0 / 10</strong>
+        <div class="field-progress-track"><i id="mission7ProgressBar"></i></div>
+      </div>
+
+      <div id="mission7Workspace" class="final-workspace" aria-labelledby="mission7WorkspaceTitle">
+        <div class="field-workspace-head">
+          <div><p class="field-kicker dark">FINAL · RESPONSE DESK</p><h2 id="mission7WorkspaceTitle">Final mission locked</h2><p id="mission7WorkspaceIntro">Clear the Humanitarian Ethics Board first.</p></div>
+          <div class="field-score-box"><span>CHECKPOINT</span><strong id="mission7Checkpoint">—</strong></div>
+        </div>
+        <div id="mission7Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">⏱️</span><h3>Final assignment locked</h3><p>Complete Mission 6 to draw a field scenario.</p></div></div>
+        <div id="mission7Feedback" class="field-feedback" role="status" aria-live="polite"></div>
+      </div>
+
+      <section id="mission7Result" class="final-result is-locked" aria-labelledby="mission7ResultTitle">
+        <div class="final-result-badge" aria-hidden="true">✓</div>
+        <div class="final-result-copy"><p class="field-kicker dark">DAY 3 COMPLETE</p><h2 id="mission7ResultTitle">24-Hour Response complete</h2><p id="mission7ResultText">Your final report will appear here.</p><div id="mission7SkillBreakdown" class="final-skill-breakdown"></div></div>
+        <div class="final-result-actions"><button id="replayMission7" class="field-secondary" type="button">↻ Draw another scenario</button><a class="field-primary final-link" href="fgsm3.html">Back to FGSM3 →</a></div>
+      </section>
     </section>
   </main>
 

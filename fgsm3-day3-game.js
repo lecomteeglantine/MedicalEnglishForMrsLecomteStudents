@@ -290,6 +290,74 @@
   };
 
 
+  const finalScenarios = [
+    {
+      icon:"🌊", title:"River District Flood", code:"FLOOD-27",
+      brief:"Severe flooding has displaced residents into a temporary clinic and shelter. One bridge is unusable, a secondary road remains open but slow, patient arrivals are increasing, and medical supplies may be delayed.",
+      items:[
+        {skill:"Vocabulary",q:"The briefing says residents have been forced to leave their homes. Which Day 3 term fits?",a:"displaced people",wrong:["commodities","a strike"],feedback:"Displaced people are people forced to leave their homes.",model:"Many displaced people are arriving at the temporary shelter."},
+        {skill:"Situation",q:"Which summary stays closest to the briefing?",a:"The response is under growing pressure from displacement, difficult access and possible supply delays.",wrong:["The clinic has run out of all supplies and all roads are closed.","The emergency has already been stabilised."],feedback:"A strong field summary combines the facts without turning possibilities into certainties.",model:"The response is under growing pressure from displacement, difficult access and possible supply delays."},
+        {skill:"Access & resources",q:"One bridge is unusable but a secondary road remains open, although slow. What is the safest conclusion?",a:"Access is restricted, but the briefing does not say it is impossible.",wrong:["The district is completely inaccessible.","Access is normal."],feedback:"Restricted is more accurate than impossible when an alternative route still exists.",model:"Access is restricted, but an alternative route remains open."},
+        {skill:"Vocabulary",q:"Food, water and hygiene items can be described collectively as…",a:"commodities",wrong:["evacuation orders","shelters"],feedback:"In the worksheet, commodities are basic goods people need.",model:"The team needs reliable access to essential commodities."},
+        {skill:"Word stress",q:"Which stress pattern matches the Presentation Check-in model?",a:"sit-u-A-tion",wrong:["SIT-u-a-tion","sit-U-a-tion"],feedback:"The supplied model is sit-u-A-tion.",model:"situation"},
+        {skill:"Conditional planning",q:"Choose the accurate first conditional for the patient surge.",a:"If more patients arrive, the team will need to review capacity and priorities.",wrong:["If more patients will arrive, the team will need to review capacity.","If more patients arrived, the team will needs to review capacity."],feedback:"Use present simple in the if-clause, then will/can/may in the result clause.",model:"If more patients arrive, the team will need to review capacity and priorities."},
+        {skill:"Conditional planning",q:"Which sentence keeps a core action going despite deterioration?",a:"Even if conditions deteriorate, the team will continue to reassess needs and what can be done safely.",wrong:["Even if conditions will deteriorate, the team will continue unchanged.","Even if conditions deteriorate, normal operations are guaranteed."],feedback:"Even if expresses a difficult condition that does not automatically cancel the main action.",model:"Even if conditions deteriorate, the team will continue to reassess needs and what can be done safely."},
+        {skill:"Safe reporting",q:"The briefing says supplies may be delayed. Which report avoids overclaiming?",a:"Medical supplies may be delayed; the exact stock level is not stated.",wrong:["All medical supplies have run out.","A full delivery will definitely arrive tonight."],feedback:"Keep the original uncertainty: may be delayed.",model:"Medical supplies may be delayed; the exact stock level is not stated."},
+        {skill:"Ethical reasoning",q:"A colleague gives a strong objection. Which pair best shows concession followed by rebuttal?",a:"Admittedly… Even so,…",wrong:["At its heart… On principle…","My main argument… Take the example…"],feedback:"Admittedly concedes part of the objection; Even so pivots to your response.",model:"Admittedly, that concern matters. Even so, the response still needs a clear priority."},
+        {skill:"Integrated response",q:"Which final action best combines the Day 3 approach?",a:"Reassess arrivals, access and supplies, state uncertainty clearly, and adapt the plan if conditions change.",wrong:["Predict exactly what will happen and keep the original plan whatever changes.","Focus only on vocabulary and leave operational limits unreported."],feedback:"The Day 3 approach combines accurate language, careful interpretation and adaptable planning.",model:"We will reassess arrivals, access and supplies, state uncertainty clearly, and adapt the plan if conditions change."}
+      ]
+    },
+    {
+      icon:"🏔️", title:"Mountain Earthquake Response", code:"QUAKE-41",
+      brief:"An earthquake has displaced several communities. A community hall is being used as a shelter, an aftershock has damaged the main access road, some vulnerable residents cannot travel easily, and the timing of the next supply convoy is uncertain.",
+      items:[
+        {skill:"Vocabulary",q:"The community hall is giving temporary protection and housing. In Day 3 vocabulary, it is…",a:"a shelter",wrong:["a strike","a commodity"],feedback:"A shelter is a place providing temporary protection or housing.",model:"The community hall is being used as a temporary shelter."},
+        {skill:"Situation",q:"Which field picture is supported by the briefing?",a:"Displacement, damaged access and uncertainty around supplies are affecting the response.",wrong:["All communities have been evacuated safely and supplies are guaranteed.","The only issue is a language barrier."],feedback:"The briefing supports several pressures, not a single isolated problem.",model:"Displacement, damaged access and uncertainty around supplies are affecting the response."},
+        {skill:"Access & resources",q:"The main road is damaged after an aftershock. What should the report say?",a:"Access has become more difficult and the response may need to adapt.",wrong:["No one can ever reach the area again.","Road access is unaffected."],feedback:"Describe the stated access problem without inventing an absolute conclusion.",model:"If access becomes more difficult, the response may need to adapt."},
+        {skill:"Vocabulary",q:"Some vulnerable residents cannot leave the area easily. Which verb from Day 3 best describes someone unable to escape?",a:"to be trapped",wrong:["to cope with","to be targeted"],feedback:"To be trapped means to be unable to escape from a place.",model:"Some residents may become trapped if access deteriorates."},
+        {skill:"Word stress",q:"Which stress pattern matches the supplied Day 3 pronunciation model?",a:"con-DI-tion",wrong:["CON-di-tion","con-di-TION"],feedback:"The supplied model is con-DI-tion.",model:"condition"},
+        {skill:"Conditional planning",q:"Which first conditional is accurate?",a:"If the road becomes harder to use, the team will need to adapt the response.",wrong:["If the road will become harder to use, the team will need to adapt.","If the road becomes harder to use, the team need adapted."],feedback:"Use present simple after if for a real future possibility.",model:"If the road becomes harder to use, the team will need to adapt the response."},
+        {skill:"Conditional planning",q:"Which sentence correctly uses even if?",a:"Even if the convoy is delayed, the team will continue to reassess available resources.",wrong:["Even if the convoy will be delayed, the team will continue normally.","Even if the convoy is delayed, every supply can be guaranteed."],feedback:"Even if introduces a constraint while the main response continues.",model:"Even if the convoy is delayed, the team will continue to reassess available resources."},
+        {skill:"Safe reporting",q:"The convoy timing is uncertain. Which sentence is appropriately cautious?",a:"The next convoy may be delayed; the briefing does not give a confirmed arrival time.",wrong:["The convoy will definitely fail to arrive.","The convoy is already at the shelter."],feedback:"Do not turn uncertainty into certainty.",model:"The next convoy may be delayed; the briefing does not give a confirmed arrival time."},
+        {skill:"Ethical reasoning",q:"You want to acknowledge competing priorities before concluding. Which supplied phrase is designed for that?",a:"There's a real tension between…",wrong:["The usual counter is…","Take the example of…"],feedback:"This phrase explicitly recognises competing considerations.",model:"There's a real tension between immediate access needs and limited resources."},
+        {skill:"Integrated response",q:"Which response is the most defensible from the information given?",a:"Identify vulnerable residents, review access after aftershocks, monitor supplies and update the plan as conditions change.",wrong:["Assume access will improve and make no contingency plan.","State that every vulnerable resident has already been reached."],feedback:"A strong response tracks vulnerability, access, supplies and changing conditions.",model:"We will identify vulnerable residents, review access, monitor supplies and update the plan as conditions change."}
+      ]
+    },
+    {
+      icon:"🌀", title:"Coastal Cyclone Response", code:"CYCLONE-63",
+      brief:"A cyclone has pushed families into an overcrowded school shelter. Water distribution has been disrupted, the local clinic is still operating, some roads are difficult to use, and additional medical supplies may arrive late.",
+      items:[
+        {skill:"Vocabulary",q:"Families forced from their homes by the cyclone are best described as…",a:"displaced people",wrong:["commodities","strikes"],feedback:"Displaced people have been forced to leave their homes.",model:"Displaced people are arriving at the school shelter."},
+        {skill:"Situation",q:"What does an overcrowded shelter plus disrupted water distribution suggest?",a:"Basic needs are under pressure and the team should monitor shelter conditions closely.",wrong:["The situation is fully stable.","Only specialist surgery is relevant."],feedback:"The details point to pressure on basic shelter and water needs.",model:"Basic needs are under pressure, especially shelter and water."},
+        {skill:"Access & resources",q:"The clinic is operating, but some roads are difficult to use. Which statement is most precise?",a:"Care is still operating, but access is uneven and may affect the response.",wrong:["Healthcare has stopped everywhere.","There are no access problems."],feedback:"Keep both parts of the briefing: the clinic is operating and access is difficult in some places.",model:"Care is still operating, but access is uneven."},
+        {skill:"Vocabulary",q:"The team is trying to deal successfully with a difficult situation. Which Day 3 verb fits?",a:"to cope with",wrong:["to be trapped","to be targeted"],feedback:"To cope with means to deal successfully with a difficult situation.",model:"The team is trying to cope with growing pressure on the shelter."},
+        {skill:"Word stress",q:"Which stress pattern matches the supplied pronunciation model?",a:"co-OR-di-na-tor",wrong:["CO-or-di-na-tor","co-or-di-NA-tor"],feedback:"The supplied model is co-OR-di-na-tor.",model:"coordinator"},
+        {skill:"Conditional planning",q:"Choose the accurate first conditional about supplies.",a:"If additional supplies are delayed, the team may need to prioritise what is already available.",wrong:["If additional supplies will be delayed, the team may need prioritise stock.","If additional supplies are delayed, nothing can change."],feedback:"Present simple belongs in the if-clause; may can express a possible consequence.",model:"If additional supplies are delayed, the team may need to prioritise what is already available."},
+        {skill:"Conditional planning",q:"Which sentence best preserves continuity without making a guarantee?",a:"Even if road access worsens, the team will continue to review what can be delivered safely.",wrong:["Even if road access will worsen, every delivery will continue.","Even if roads worsen, there is no need to change the plan."],feedback:"Continue the core task, but keep the safety and uncertainty limits visible.",model:"Even if road access worsens, the team will continue to review what can be delivered safely."},
+        {skill:"Safe reporting",q:"Which statement is supported by the briefing?",a:"Additional medical supplies may arrive late.",wrong:["All medical supplies have been destroyed.","The exact delivery time is confirmed."],feedback:"Use may because the briefing presents a possibility, not a certainty.",model:"Additional medical supplies may arrive late."},
+        {skill:"Ethical reasoning",q:"You want to finish a balanced argument after weighing different priorities. Which starter fits?",a:"On balance,…",wrong:["Some would object that…","The evidence points to…"],feedback:"On balance introduces a final weighed judgement.",model:"On balance, the priority should be a response that protects access to basic needs while remaining adaptable."},
+        {skill:"Integrated response",q:"Which 24-hour response best fits the Day 3 language principles?",a:"Track shelter pressure, water access, road conditions and supplies; use conditionals to state how the plan will adapt.",wrong:["Promise that all needs will be met within 24 hours.","Ignore access because the clinic is still open."],feedback:"The final response should connect evidence to adaptable action without overclaiming.",model:"We will track shelter pressure, water access, road conditions and supplies, and adapt the plan if the situation changes."}
+      ]
+    },
+    {
+      icon:"🔥", title:"Wildfire Evacuation Response", code:"EVAC-88",
+      brief:"Evacuation orders have moved residents into a temporary camp during a fast-moving wildfire. Smoke and road closures are making access difficult, new arrivals continue, and deliveries of food, water and medical supplies may be delayed.",
+      items:[
+        {skill:"Vocabulary",q:"An official instruction telling residents to leave for safety is…",a:"an evacuation order",wrong:["a refugee camp","a commodity"],feedback:"An evacuation order is an official instruction to leave an area for safety.",model:"An evacuation order has moved residents away from the affected area."},
+        {skill:"Situation",q:"Which summary accurately combines the stated pressures?",a:"New arrivals, difficult access and possible delivery delays are increasing pressure on the temporary camp.",wrong:["The camp has no new arrivals and all roads are open.","Only long-term reconstruction is relevant."],feedback:"Use the facts given: arrivals continue, access is difficult and deliveries may be delayed.",model:"New arrivals, difficult access and possible delivery delays are increasing pressure on the camp."},
+        {skill:"Access & resources",q:"Road closures and smoke are making travel difficult. Which action is best expressed at this level of information?",a:"Review safe access options and update the response if routes change.",wrong:["Guarantee that every route will reopen within an hour.","Ignore access until deliveries stop completely."],feedback:"The briefing supports adaptive access planning, not a guarantee about routes.",model:"The team will review safe access options and update the response if routes change."},
+        {skill:"Vocabulary",q:"Food, water and hygiene goods distributed at the camp are…",a:"commodities",wrong:["evacuation orders","strikes"],feedback:"Commodities are basic goods people need.",model:"Essential commodities include food, water and hygiene items."},
+        {skill:"Word stress",q:"Which stress pattern matches the supplied pronunciation model?",a:"com-MU-ni-ty",wrong:["COM-mu-ni-ty","com-mu-NI-ty"],feedback:"The supplied model is com-MU-ni-ty.",model:"community"},
+        {skill:"Conditional planning",q:"Which first conditional is correct for continuing arrivals?",a:"If more people arrive, the team will need to reassess shelter capacity.",wrong:["If more people will arrive, the team will need to reassess shelter capacity.","If more people arrive, the team will reassessed capacity."],feedback:"Use present simple in the if-clause.",model:"If more people arrive, the team will need to reassess shelter capacity."},
+        {skill:"Conditional planning",q:"Which even if sentence is accurate and appropriately cautious?",a:"Even if deliveries are delayed, the team will continue to review priorities using the resources available.",wrong:["Even if deliveries will be delayed, nothing needs to change.","Even if deliveries are delayed, all needs are guaranteed to be met."],feedback:"The sentence keeps the response going without pretending shortages have no effect.",model:"Even if deliveries are delayed, the team will continue to review priorities using the resources available."},
+        {skill:"Safe reporting",q:"Deliveries may be delayed. What should a careful briefing avoid?",a:"Claiming that supplies have definitely run out when the briefing does not say so",wrong:["Using may to preserve uncertainty","Saying that deliveries are part of the planning problem"],feedback:"Do not convert a possible delay into an unsupported fact.",model:"Deliveries may be delayed; we should not claim that supplies have already run out."},
+        {skill:"Ethical reasoning",q:"A colleague says one solution is obviously perfect. Which supplied phrase helps resist an over-simple binary?",a:"It's not simply either/or.",wrong:["Take the example of…","The usual counter is…"],feedback:"The phrase explicitly rejects an over-simple either/or framing.",model:"It's not simply either/or; the response has to balance access, resources and changing needs."},
+        {skill:"Integrated response",q:"What is the strongest final field message?",a:"Report what is known, identify what remains uncertain, and explain how the team will adapt if arrivals, access or supplies change.",wrong:["Turn every possibility into a certainty so the message sounds decisive.","Avoid mentioning uncertainty or constraints."],feedback:"Clear humanitarian communication distinguishes evidence, uncertainty and planned adaptation.",model:"We will report what is known, identify what remains uncertain, and adapt if arrivals, access or supplies change."}
+      ]
+    }
+  ];
+
+
   const defaults = {
     started:false,current:"vocab",
     indices:{vocab:0,situation:0,video:0,signals:0},
@@ -337,6 +405,10 @@
       complete:{frame:false,case:false,challenge:false,land:false},
       completeAll:false,
       boardPrompt:0,stance:""
+    },
+    mission7:{
+      started:false,completeAll:false,scenario:-1,index:0,score:0,missed:[],
+      skillScores:{},skillMax:{},lastPoints:0
     }
   };
   let state = load();
@@ -350,7 +422,7 @@
     mission3Area:$("mission3Area"),startMission3:$("startMission3"),mission3Score:$("mission3Score"),mission3ProgressText:$("mission3ProgressText"),mission3ProgressBar:$("mission3ProgressBar"),mission3Workspace:$("mission3Workspace"),mission3WorkspaceTitle:$("mission3WorkspaceTitle"),mission3WorkspaceIntro:$("mission3WorkspaceIntro"),mission3ActivityScore:$("mission3ActivityScore"),mission3Screen:$("mission3Screen"),mission3Feedback:$("mission3Feedback"),mission3Complete:$("mission3Complete"),mission3CompleteTitle:$("mission3CompleteTitle"),mission3CompleteText:$("mission3CompleteText"),mission4Button:$("mission4Button"),
     mission4Area:$("mission4Area"),startMission4:$("startMission4"),mission4Score:$("mission4Score"),mission4ProgressText:$("mission4ProgressText"),mission4ProgressBar:$("mission4ProgressBar"),mission4Workspace:$("mission4Workspace"),mission4WorkspaceTitle:$("mission4WorkspaceTitle"),mission4WorkspaceIntro:$("mission4WorkspaceIntro"),mission4ActivityScore:$("mission4ActivityScore"),mission4Screen:$("mission4Screen"),mission4Feedback:$("mission4Feedback"),mission4Complete:$("mission4Complete"),mission4CompleteTitle:$("mission4CompleteTitle"),mission4CompleteText:$("mission4CompleteText"),mission5Button:$("mission5Button"),hearStressRule:$("hearStressRule"),
     mission5Area:$("mission5Area"),startMission5:$("startMission5"),mission5Score:$("mission5Score"),mission5ProgressText:$("mission5ProgressText"),mission5ProgressBar:$("mission5ProgressBar"),mission5Workspace:$("mission5Workspace"),mission5WorkspaceTitle:$("mission5WorkspaceTitle"),mission5WorkspaceIntro:$("mission5WorkspaceIntro"),mission5ActivityScore:$("mission5ActivityScore"),mission5Screen:$("mission5Screen"),mission5Feedback:$("mission5Feedback"),mission5Complete:$("mission5Complete"),mission5CompleteTitle:$("mission5CompleteTitle"),mission5CompleteText:$("mission5CompleteText"),mission6Button:$("mission6Button"),
-    mission6Area:$("mission6Area"),startMission6:$("startMission6"),mission6Score:$("mission6Score"),mission6ProgressText:$("mission6ProgressText"),mission6ProgressBar:$("mission6ProgressBar"),mission6Workspace:$("mission6Workspace"),mission6WorkspaceTitle:$("mission6WorkspaceTitle"),mission6WorkspaceIntro:$("mission6WorkspaceIntro"),mission6ActivityScore:$("mission6ActivityScore"),mission6Screen:$("mission6Screen"),mission6Feedback:$("mission6Feedback"),mission6Complete:$("mission6Complete"),mission6CompleteTitle:$("mission6CompleteTitle"),mission6CompleteText:$("mission6CompleteText"),mission7Button:$("mission7Button"),mission7Teaser:$("mission7Teaser"),ethicsBoardBrief:$("ethicsBoardBrief"),ethicsPromptText:$("ethicsPromptText"),newEthicsPrompt:$("newEthicsPrompt"),ethicsStanceStatus:$("ethicsStanceStatus")
+    mission6Area:$("mission6Area"),startMission6:$("startMission6"),mission6Score:$("mission6Score"),mission6ProgressText:$("mission6ProgressText"),mission6ProgressBar:$("mission6ProgressBar"),mission6Workspace:$("mission6Workspace"),mission6WorkspaceTitle:$("mission6WorkspaceTitle"),mission6WorkspaceIntro:$("mission6WorkspaceIntro"),mission6ActivityScore:$("mission6ActivityScore"),mission6Screen:$("mission6Screen"),mission6Feedback:$("mission6Feedback"),mission6Complete:$("mission6Complete"),mission6CompleteTitle:$("mission6CompleteTitle"),mission6CompleteText:$("mission6CompleteText"),mission7Button:$("mission7Button"),mission7Area:$("mission7Area"),startMission7:$("startMission7"),mission7Score:$("mission7Score"),mission7ProgressText:$("mission7ProgressText"),mission7ProgressBar:$("mission7ProgressBar"),mission7Workspace:$("mission7Workspace"),mission7WorkspaceTitle:$("mission7WorkspaceTitle"),mission7WorkspaceIntro:$("mission7WorkspaceIntro"),mission7Checkpoint:$("mission7Checkpoint"),mission7Screen:$("mission7Screen"),mission7Feedback:$("mission7Feedback"),mission7Result:$("mission7Result"),mission7ResultTitle:$("mission7ResultTitle"),mission7ResultText:$("mission7ResultText"),mission7SkillBreakdown:$("mission7SkillBreakdown"),replayMission7:$("replayMission7"),finalScenarioIcon:$("finalScenarioIcon"),finalScenarioTitle:$("finalScenarioTitle"),finalScenarioBrief:$("finalScenarioBrief"),hearFinalBrief:$("hearFinalBrief"),ethicsBoardBrief:$("ethicsBoardBrief"),ethicsPromptText:$("ethicsPromptText"),newEthicsPrompt:$("newEthicsPrompt"),ethicsStanceStatus:$("ethicsStanceStatus")
   };
 
   function load(){
@@ -392,6 +464,11 @@
       merged.mission6.scores={...base.mission6.scores,...(s6.scores||{})};
       merged.mission6.missed={...base.mission6.missed,...(s6.missed||{})};
       merged.mission6.complete={...base.mission6.complete,...(s6.complete||{})};
+      const s7=saved.mission7||{};
+      merged.mission7={...base.mission7,...s7};
+      merged.mission7.missed=Array.isArray(s7.missed)?s7.missed:[];
+      merged.mission7.skillScores={...base.mission7.skillScores,...(s7.skillScores||{})};
+      merged.mission7.skillMax={...base.mission7.skillMax,...(s7.skillMax||{})};
       return merged;
     }catch{return structuredClone(defaults);}
   }
@@ -807,12 +884,13 @@
       els.mission6CompleteTitle.textContent="Humanitarian Ethics Advisor";
       els.mission6CompleteText.textContent="You can frame a difficult question, build a supported case, handle an objection and reach a nuanced conclusion without having your viewpoint graded.";
       els.mission7Button.disabled=false;els.mission7Button.textContent="FINAL · 24 Hours to Respond →";
-      els.mission7Teaser.classList.remove("is-locked");
+      els.mission7Area.classList.remove("is-locked");
+      els.startMission7.disabled=false;els.startMission7.textContent=state.mission7.started?(state.mission7.completeAll?"Draw another scenario →":"Resume final mission →"):"Draw final scenario →";
       els.startMission6.textContent="Replay Mission 6 →";
     }else{
-      els.mission6Complete.classList.add("is-locked");els.mission7Button.disabled=true;els.mission7Teaser.classList.add("is-locked");
+      els.mission6Complete.classList.add("is-locked");els.mission7Button.disabled=true;els.mission7Area.classList.add("is-locked");els.startMission7.disabled=true;els.startMission7.textContent="🔒 Complete Mission 6 first";
     }
-    updateEthicsBrief();save();
+    updateEthicsBrief();updateMission7UI();save();
   }
 
   function renderMission6(){
@@ -851,6 +929,102 @@
     const stageRecap={frame:"At its heart… · The real question is whether… · On principle…",case:"My main argument… · The evidence points to… · If we do this…",challenge:"Some would object… · Admittedly… · Even so…",land:"There's a real tension… · On balance… · All things considered…"}[key];
     els.mission6Screen.innerHTML=`<div class="field-cleared-card ethics-cleared-card"><span aria-hidden="true">✓</span><p class="field-kicker dark">MISSION 6 STAGE CLEARED</p><h3>${act.title}</h3><p>First-try score: <strong>${state.mission6.scores[key]} / ${act.items.length}</strong>.</p><div class="ethics-model-line"><span>STAGE TOOLKIT</span><p>${stageRecap}</p></div>${next?`<button id="continueMission6" class="field-primary" type="button">Open ${mission6Activities[next].title} →</button>`:`<button id="continueMission6" class="field-primary" type="button">Clear the Ethics Board →</button>`}</div>`;
     $("continueMission6").onclick=()=>{if(next){state.mission6.current=next;save();renderMission6();}else{state.mission6.completeAll=true;state.mission6.boardPrompt=Math.floor(Math.random()*ethicsPrompts.length);cue("unlock");save();updateMission6UI();els.mission6Complete.scrollIntoView({behavior:"smooth",block:"center"});}};
+  }
+
+
+  function finalScenario(){
+    const i=Number(state.mission7.scenario);
+    return Number.isInteger(i)&&i>=0&&i<finalScenarios.length?finalScenarios[i]:null;
+  }
+  function chooseFinalScenario(previous=-1){
+    let choices=finalScenarios.map((_,i)=>i).filter(i=>i!==previous);
+    if(!choices.length)choices=finalScenarios.map((_,i)=>i);
+    return choices[Math.floor(Math.random()*choices.length)];
+  }
+  function finalInitSkills(scenario){
+    const max={};
+    scenario.items.forEach(item=>{max[item.skill]=(max[item.skill]||0)+10;});
+    state.mission7.skillMax=max;
+    const scores={};Object.keys(max).forEach(k=>scores[k]=0);state.mission7.skillScores=scores;
+  }
+  function finalRank(score){
+    if(score>=90)return {title:"Humanitarian Field Lead",icon:"🏅",text:"Excellent command of careful reporting, field English and adaptable response communication."};
+    if(score>=75)return {title:"Field Response Ready",icon:"✅",text:"Strong Day 3 performance. Your response language is clear, cautious and operationally coherent."};
+    return {title:"Response Team Trainee",icon:"📋",text:"Mission completed. Replaying with another scenario will reinforce the language patterns that still need work."};
+  }
+  function updateMission7UI(){
+    if(!els.mission7Area)return;
+    const unlocked=!!state.mission6.completeAll;
+    els.mission7Area.classList.toggle("is-locked",!unlocked);
+    els.startMission7.disabled=!unlocked;
+    if(!unlocked){
+      els.finalScenarioIcon.textContent="⏱️";els.finalScenarioTitle.textContent="Locked";els.finalScenarioBrief.textContent="Complete Mission 6 to receive your final scenario.";els.hearFinalBrief.disabled=true;els.mission7Score.textContent="0 / 100";els.mission7ProgressText.textContent="0 / 10";els.mission7ProgressBar.style.width="0%";els.mission7Result.classList.add("is-locked");return;
+    }
+    const scenario=finalScenario();
+    els.startMission7.textContent=state.mission7.started?(state.mission7.completeAll?"Draw another scenario →":"Resume final mission →"):"Draw final scenario →";
+    els.mission7Score.textContent=`${state.mission7.score||0} / 100`;
+    els.mission7ProgressText.textContent=`${Math.min(state.mission7.index||0,10)} / 10`;
+    els.mission7ProgressBar.style.width=`${Math.min(state.mission7.index||0,10)*10}%`;
+    if(scenario){
+      els.finalScenarioIcon.textContent=scenario.icon;els.finalScenarioTitle.textContent=`${scenario.title} · ${scenario.code}`;els.finalScenarioBrief.textContent=scenario.brief;els.hearFinalBrief.disabled=false;
+    }else{
+      els.finalScenarioIcon.textContent="🎯";els.finalScenarioTitle.textContent="Final scenario ready to draw";els.finalScenarioBrief.textContent="Start the final mission to receive one of four fictional humanitarian response situations.";els.hearFinalBrief.disabled=true;
+    }
+    if(state.mission7.completeAll){els.clearance.textContent="DAY 3 COMPLETE";els.mission7Result.classList.remove("is-locked");}
+    else els.mission7Result.classList.add("is-locked");
+  }
+  function startMission7(){
+    if(!state.mission6.completeAll)return;
+    const previous=state.mission7.scenario;
+    if(!state.mission7.started||state.mission7.completeAll){
+      state.mission7=structuredClone(defaults.mission7);
+      state.mission7.started=true;
+      state.mission7.scenario=chooseFinalScenario(previous);
+      finalInitSkills(finalScenario());
+    }else state.mission7.started=true;
+    save();cue("start");if(musicOn)startMusic();renderMission7();els.mission7Workspace.scrollIntoView({behavior:"smooth",block:"start"});setTimeout(()=>els.mission7Screen.focus({preventScroll:true}),450);
+  }
+  function renderMission7(){
+    updateMission7UI();
+    if(!els.mission7Feedback)return;
+    els.mission7Feedback.innerHTML="";
+    if(!state.mission6.completeAll){els.mission7WorkspaceTitle.textContent="Final mission locked";els.mission7WorkspaceIntro.textContent="Clear the Humanitarian Ethics Board first.";return;}
+    if(!state.mission7.started){els.mission7WorkspaceTitle.textContent="Final mission ready";els.mission7WorkspaceIntro.textContent="Draw one fictional crisis. You will answer ten mixed checkpoints from across Day 3.";els.mission7Checkpoint.textContent="—";els.mission7Screen.innerHTML=`<div class="field-waiting"><span aria-hidden="true">🎯</span><h3>Ready for the final assignment</h3><p>No countdown and no war-game scoring. This is a mixed English mission built around careful humanitarian communication.</p></div>`;return;}
+    if(state.mission7.completeAll){renderMission7Result();return;}
+    const scenario=finalScenario();if(!scenario)return;
+    const idx=Math.min(state.mission7.index,scenario.items.length-1),item=scenario.items[idx];
+    els.mission7WorkspaceTitle.textContent=`${scenario.title} · Checkpoint ${idx+1}`;
+    els.mission7WorkspaceIntro.textContent=`Skill focus: ${item.skill}. First-try answers earn 10 points; a corrected answer earns 6.`;
+    els.mission7Checkpoint.textContent=`${idx+1} / 10`;
+    const hear=item.model?`<button id="hearFinalModel" class="field-hear" type="button">🔊 Hear key line</button>`:"";
+    els.mission7Screen.innerHTML=`<div class="field-question final-question"><div class="field-question-meta"><span>${item.skill.toUpperCase()}</span><b>${idx+1} / ${scenario.items.length}</b></div><h3>${item.q}</h3><div id="mission7Options" class="field-options"></div><p class="final-context-note"><strong>${scenario.code}</strong> · ${scenario.brief}</p>${hear}</div>`;
+    const wrap=$("mission7Options");shuffled([item.a,...item.wrong]).forEach(text=>{const b=document.createElement("button");b.className="field-option";b.type="button";b.textContent=text;b.onclick=()=>answerMission7(idx,text===item.a,b,wrap,item);wrap.appendChild(b);});
+    if($("hearFinalModel"))$("hearFinalModel").onclick=()=>speak(item.model);
+  }
+  function answerMission7(idx,isCorrect,button,wrap,item){
+    if(isCorrect){
+      wrap.querySelectorAll("button").forEach(b=>b.disabled=true);button.classList.add("is-correct");
+      const corrected=state.mission7.missed.includes(idx),points=corrected?6:10;
+      state.mission7.score+=points;state.mission7.lastPoints=points;state.mission7.skillScores[item.skill]=(state.mission7.skillScores[item.skill]||0)+points;state.mission7.index+=1;cue("good");save();
+      els.mission7Feedback.innerHTML=`<div class="field-good"><strong>Checkpoint cleared.</strong><span>${item.feedback}</span></div><span class="final-points ${corrected?"corrected":""}">+${points} points${corrected?" · corrected":" · first try"}</span><div class="final-model-line"><span>FIELD LANGUAGE</span><p>${item.model}</p><button id="hearFinalFeedback" class="field-hear" type="button">🔊 Hear it</button></div><button id="mission7Next" class="field-next" type="button">${state.mission7.index>=10?"Complete Day 3 →":"Next final checkpoint →"}</button>`;
+      $("hearFinalFeedback").onclick=()=>speak(item.model);
+      $("mission7Next").onclick=()=>{if(state.mission7.index>=10){state.mission7.completeAll=true;cue("unlock");save();renderMission7Result();updateMission7UI();els.mission7Result.scrollIntoView({behavior:"smooth",block:"center"});}else renderMission7();};
+      updateMission7UI();
+    }else{
+      button.disabled=true;button.classList.add("is-wrong");if(!state.mission7.missed.includes(idx))state.mission7.missed.push(idx);cue("bad");save();
+      els.mission7Feedback.innerHTML=`<div class="field-bad"><strong>Not cleared yet.</strong><span>Go back to the Day 3 principle behind this checkpoint: use the stated evidence, preserve uncertainty, and keep the English structure accurate. Try again.</span></div>`;
+    }
+  }
+  function renderMission7Result(){
+    const scenario=finalScenario();if(!scenario)return;
+    state.mission7.completeAll=true;save();updateMission7UI();
+    const rank=finalRank(state.mission7.score);
+    els.mission7WorkspaceTitle.textContent="Final mission complete";els.mission7WorkspaceIntro.textContent=`${scenario.title} · final response submitted.`;els.mission7Checkpoint.textContent="10 / 10";
+    els.mission7Screen.innerHTML=`<div class="field-cleared-card"><span aria-hidden="true">${rank.icon}</span><p class="field-kicker dark">FINAL FIELD REPORT</p><h3>${rank.title}</h3><p>You completed all ten checkpoints for <strong>${scenario.title}</strong> with <strong>${state.mission7.score} / 100</strong>.</p><p class="final-disclaimer">This is an English-learning mission rating, not clinical or humanitarian-response certification.</p></div>`;
+    els.mission7ResultTitle.textContent=`${rank.icon} ${rank.title}`;els.mission7ResultText.textContent=`${rank.text} Final score: ${state.mission7.score} / 100 on ${scenario.title}.`;
+    const order=["Vocabulary","Situation","Access & resources","Word stress","Conditional planning","Safe reporting","Ethical reasoning","Integrated response"];
+    els.mission7SkillBreakdown.innerHTML=order.filter(k=>state.mission7.skillMax[k]).map(k=>{const got=state.mission7.skillScores[k]||0,max=state.mission7.skillMax[k]||10,pct=Math.round(got/max*100);return `<div class="final-skill-row"><div><b>${k}</b><span>${got} / ${max}</span></div><div class="final-skill-meter"><i style="width:${pct}%"></i></div></div>`;}).join("");
+    els.mission7Result.classList.remove("is-locked");els.clearance.textContent="DAY 3 COMPLETE";
   }
 
   function startMission6(){
@@ -899,7 +1073,7 @@
   els.start.onclick=start;
   els.sound.onclick=()=>{soundOn=!soundOn;localStorage.setItem(SOUND_KEY,soundOn?"on":"off");if(!soundOn&&"speechSynthesis" in window)speechSynthesis.cancel();syncControls();status(soundOn?"Sound on.":"Sound off. All audio-dependent content also appears as text.");};
   els.musicToggle.onclick=()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");syncControls();if(musicOn)startMusic();else stopMusic();status(musicOn?"Music on. Field briefing ambience is playing.":"Music off.");};
-  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
+  els.reset.onclick=()=>{if(!confirm("Reset all Day 3 progress on this device?"))return;state=structuredClone(defaults);save();stopMusic();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();renderMission7();updateUI();window.scrollTo({top:0,behavior:"smooth"});status("Day 3 progress reset.");};
   els.mission2Button.onclick=()=>{els.mission2Area.scrollIntoView({behavior:"smooth",block:"start"});};
   els.startMission2.onclick=startMission2;
   document.querySelectorAll(".triage-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m2Activity;if(!mission2Unlocked(key))return;state.mission2.started=true;state.mission2.current=key;save();renderMission2();els.mission2Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
@@ -918,7 +1092,10 @@
   document.querySelectorAll(".ethics-activity-card").forEach(card=>card.addEventListener("click",()=>{const key=card.dataset.m6Activity;if(!mission6Unlocked(key))return;state.mission6.started=true;state.mission6.current=key;save();renderMission6();els.mission6Workspace.scrollIntoView({behavior:"smooth",block:"start"});}));
   els.newEthicsPrompt.onclick=()=>{if(!state.mission6.completeAll)return;let next=(state.mission6.boardPrompt+1)%ethicsPrompts.length;state.mission6.boardPrompt=next;state.mission6.stance="";save();updateEthicsBrief();cue("good");};
   document.querySelectorAll("[data-ethics-stance]").forEach(button=>button.addEventListener("click",()=>{if(!state.mission6.completeAll)return;state.mission6.stance=button.dataset.ethicsStance;save();updateEthicsBrief();cue("good");}));
-  els.mission7Button.onclick=()=>els.mission7Teaser.scrollIntoView({behavior:"smooth",block:"center"});
+  els.mission7Button.onclick=()=>els.mission7Area.scrollIntoView({behavior:"smooth",block:"start"});
+  els.startMission7.onclick=startMission7;
+  els.replayMission7.onclick=startMission7;
+  els.hearFinalBrief.onclick=()=>{const s=finalScenario();if(s)speak(`${s.title}. ${s.brief}`);};
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();
+  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();renderMission7();
 })();
