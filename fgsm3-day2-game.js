@@ -2,6 +2,7 @@
   // Keep the original Day 2 storage key so V20 progress survives the V21 update.
   const STORAGE_KEY = "mrsLecomteFgsm3Day2PassportV20";
   const SOUND_KEY = "mrsLecomteFgsm3Day2Sound";
+  const MUSIC_KEY = "mrsLecomteFgsm3Day2Music";
 
   const departureItems = [
     {
@@ -2154,6 +2155,8 @@
   const els = {
     startPassport: $("startPassport"),
     soundToggle: $("day2SoundToggle"),
+    musicToggle: $("day2MusicToggle"),
+    music: $("day2Music"),
     reset: $("resetDay2Progress"),
     audioStatus: $("day2AudioStatus"),
     passportClearance: $("passportClearance"),
@@ -2264,6 +2267,7 @@
 
   let state = loadState();
   let soundOn = localStorage.getItem(SOUND_KEY) !== "off";
+  let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
 
   function loadState() {
     try {
@@ -2345,6 +2349,69 @@
       osc.stop(ctx.currentTime + 0.17);
       osc.onended = () => ctx.close();
     } catch {}
+  }
+
+  function playTravelCue(kind = "boarding") {
+    if (!soundOn) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const gain = ctx.createGain();
+      gain.gain.value = 0.045;
+      gain.connect(ctx.destination);
+      const noteSets = {
+        boarding: [523.25, 659.25, 783.99],
+        stamp: [659.25, 880.0],
+        alert: [392.0, 330.0, 523.25]
+      };
+      const notes = noteSets[kind] || noteSets.boarding;
+      notes.forEach((freq, index) => {
+        const osc = ctx.createOscillator();
+        const noteGain = ctx.createGain();
+        osc.type = kind === "alert" ? "triangle" : "sine";
+        osc.frequency.value = freq;
+        const start = ctx.currentTime + index * 0.14;
+        noteGain.gain.setValueAtTime(0.0001, start);
+        noteGain.gain.exponentialRampToValueAtTime(0.06, start + 0.01);
+        noteGain.gain.exponentialRampToValueAtTime(0.0001, start + 0.18);
+        osc.connect(noteGain).connect(gain);
+        osc.start(start);
+        osc.stop(start + 0.2);
+      });
+      window.setTimeout(() => ctx.close(), notes.length * 220 + 350);
+    } catch {}
+  }
+
+  function startMusicPlayback() {
+    if (!els.music) return;
+    els.music.volume = 0.18;
+    const playPromise = els.music.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => setStatus("Music is ready. Tap again if your browser blocked playback."));
+    }
+  }
+
+  function stopMusicPlayback() {
+    if (!els.music) return;
+    els.music.pause();
+    els.music.currentTime = 0;
+  }
+
+  function syncMusicButton() {
+    if (!els.musicToggle) return;
+    els.musicToggle.setAttribute("aria-pressed", String(musicOn));
+    els.musicToggle.textContent = musicOn ? "🎵 Music ON" : "🎵 Music OFF";
+  }
+
+  function applyMusicState(fromUser = false) {
+    syncMusicButton();
+    if (!els.music) return;
+    if (musicOn) {
+      if (fromUser) startMusicPlayback();
+    } else {
+      stopMusicPlayback();
+    }
   }
 
   function shuffle(array) {
@@ -2693,6 +2760,8 @@
   }
 
   function startDeparture() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     state.departureStarted = true;
     saveState();
     renderDeparture();
@@ -2750,6 +2819,8 @@
   }
 
   function startLondon() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.departureComplete) return;
     state.londonStarted = true;
     saveState();
@@ -2808,6 +2879,8 @@
   }
 
   function startNewYork() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.londonComplete) return;
     state.newYorkStarted = true;
     saveState();
@@ -2866,6 +2939,8 @@
   }
 
   function startToronto() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.newYorkComplete) return;
     state.torontoStarted = true;
     saveState();
@@ -2924,6 +2999,8 @@
   }
 
   function startSydney() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.torontoComplete) return;
     state.sydneyStarted = true;
     saveState();
@@ -2985,6 +3062,8 @@
   }
 
   function startFinalS() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.sydneyComplete) return;
     state.finalSStarted = true;
     saveState();
@@ -3044,6 +3123,8 @@
   }
 
   function startWellington() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.finalSComplete) return;
     state.wellingtonStarted = true;
     saveState();
@@ -3100,6 +3181,8 @@
   }
 
   function startDublin() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.wellingtonComplete) return;
     state.dublinStarted = true;
     saveState();
@@ -3157,6 +3240,8 @@
   }
 
   function startPassive() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.dublinComplete) return;
     state.passiveStarted = true;
     saveState();
@@ -3213,6 +3298,8 @@
   }
 
   function startForum() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.passiveComplete) return;
     state.forumStarted = true;
     saveState();
@@ -3335,6 +3422,8 @@
   }
 
   function startFinal() {
+    if (musicOn) startMusicPlayback();
+    playTravelCue("boarding");
     if (!state.forumComplete) return;
     if (!state.finalCaseId) state.finalCaseId = pickFinalCase();
     state.finalStarted = true;
@@ -3383,6 +3472,14 @@
   els.startForum.addEventListener("click", startForum);
   els.startFinal.addEventListener("click", startFinal);
   els.reset.addEventListener("click", resetProgress);
+  if (els.musicToggle) {
+    els.musicToggle.addEventListener("click", () => {
+      musicOn = !musicOn;
+      localStorage.setItem(MUSIC_KEY, musicOn ? "on" : "off");
+      applyMusicState(true);
+      setStatus(musicOn ? "Music on. A travel-lounge theme is now playing." : "Music off. Speech and text remain available.");
+    });
+  }
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
     localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off");
@@ -3394,6 +3491,7 @@
   if ("speechSynthesis" in window) window.speechSynthesis.addEventListener?.("voiceschanged", chooseBritishVoice);
 
   syncSoundButton();
+  syncMusicButton();
   updateProgress();
   renderDeparture();
   renderLondon();

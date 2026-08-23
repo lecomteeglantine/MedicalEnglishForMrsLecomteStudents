@@ -1685,3 +1685,14 @@ html.a11y-high-contrast .a11y-launcher{border-color:#ffbf47}
   .mystery-passport-seal{grid-template-columns:1fr}.mystery-passport-seal strong{grid-row:auto;grid-column:auto;width:max-content;margin-top:.35rem}
   .mystery-replay-row .passport-primary,.mystery-replay-row .passport-ghost{width:100%}
 }
+
+
+/* V30 Day 2 immersive upgrade */
+.passport-toolbar-actions{flex-wrap:wrap;}
+.passport-photo-card{margin:1.1rem 0 1.35rem;border-radius:22px;overflow:hidden;background:rgba(255,255,255,.88);border:1px solid rgba(11,59,69,.12);box-shadow:0 20px 45px rgba(7,29,34,.14);}
+.passport-photo-card img{display:block;width:100%;height:clamp(220px,32vw,360px);object-fit:cover;}
+.passport-photo-card figcaption{padding:.85rem 1rem 1rem;font-size:.95rem;color:#31535c;font-weight:700;background:linear-gradient(180deg,rgba(245,251,252,.94),rgba(236,247,249,.98));}
+.departure-photo img{height:clamp(230px,34vw,390px);}
+.system-photo{max-width:980px;}
+.passport-audio{display:none;}
+@media (min-width: 900px){.system-photo{margin-left:auto;margin-right:auto;}}

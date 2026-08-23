@@ -76,6 +76,7 @@
       </div>
       <div class="passport-toolbar-actions">
         <button id="day2SoundToggle" class="passport-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="day2MusicToggle" class="passport-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
         <button id="resetDay2Progress" class="passport-reset" type="button">Reset Day 2</button>
       </div>
       <p id="day2AudioStatus" class="passport-status-text" role="status" aria-live="polite"></p>
@@ -147,6 +148,11 @@
         <div class="departure-board-row muted"><span>GME 303</span><strong>TORONTO</strong><em>LOCKED</em></div>
       </div>
 
+      <figure class="passport-photo-card departure-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-departure-lounge.png" alt="Sunlit airport departure lounge with travellers waiting near an international departures board.">
+        <figcaption>Departure Lounge · Your Day 2 mission begins here.</figcaption>
+      </figure>
+
       <div id="departureScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting">
           <span aria-hidden="true">🛂</span>
@@ -187,6 +193,11 @@
         <span><small>COVERAGE</small><strong>Universal</strong></span>
         <span><small>SPEND</small><strong>≈ 10–11% GDP</strong></span>
       </div>
+
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-london-nhs-reception.png" alt="Modern GP surgery reception and waiting room in the United Kingdom.">
+        <figcaption>London · NHS arrival briefing.</figcaption>
+      </figure>
 
       <div id="londonScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting">
@@ -240,6 +251,11 @@
         <article><span>OUT-OF-NETWORK</span><p>A provider without an agreement with your insurer — usually more expensive.</p></article>
       </div>
 
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-newyork-insurance-desk.png" alt="Hospital reception desk where a patient is showing a card to a staff member.">
+        <figcaption>New York · Insurance desk and access checkpoints.</figcaption>
+      </figure>
+
       <div id="newYorkScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting">
           <span aria-hidden="true">🔒</span>
@@ -292,6 +308,11 @@
         <article class="variable"><span>? NOT ALWAYS</span><strong>Dental &amp; vision</strong><p>Often supported through supplementary cover.</p></article>
       </div>
 
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-toronto-medicare-clinic.png" alt="Warm, modern Canadian clinic environment with a nurse speaking to a patient.">
+        <figcaption>Toronto · Public insurance with a patient-centred feel.</figcaption>
+      </figure>
+
       <div id="torontoScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting">
           <span aria-hidden="true">🔒</span>
@@ -343,6 +364,11 @@
         <article><span>GAP FEE</span><strong>Out-of-pocket</strong><p>The extra amount a patient pays above the Medicare rebate.</p></article>
         <article><span>PBS</span><strong>Medicines</strong><p>The Pharmaceutical Benefits Scheme subsidises medicines.</p></article>
       </div>
+
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-sydney-gp-consultation.png" alt="Doctor and patient talking in a bright consultation room in Australia.">
+        <figcaption>Sydney · GP consultation, Medicare and patient pathways.</figcaption>
+      </figure>
 
       <div id="sydneyScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting">
@@ -457,6 +483,11 @@
         <article><span>PHASE 3</span><strong>Classify the evidence</strong><p>Reported fact/context · political claim · not stated.</p></article>
       </div>
 
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-wellington-hospital-alert.png" alt="Hospital team talking urgently in a clinical corridor.">
+        <figcaption>Wellington · Health-system alert and staff pressure.</figcaption>
+      </figure>
+
       <div id="wellingtonScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Wellington alert locked</h3><p>Clear the Final -s Training Bay first.</p></div>
       </div>
@@ -535,6 +566,11 @@
         <article><span>PHASE 2</span><strong>Workforce Dashboard</strong><p>Read the 612-place expansion and interpret the distribution.</p></article>
         <article><span>PHASE 3</span><strong>Pipeline Strategy</strong><p>Workforce gap, burnout, domestic training, recruitment abroad and retention.</p></article>
       </div>
+
+      <figure class="passport-photo-card system-photo">
+        <img src="assets/fgsm3/day2/images/fgsm3-day2-dublin-workforce-meeting.png" alt="Healthcare professionals gathered around charts and workforce planning data in a meeting room.">
+        <figcaption>Dublin · Workforce planning and training expansion.</figcaption>
+      </figure>
 
       <div id="dublinScreen" class="passport-screen" tabindex="-1">
         <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Dublin assignment locked</h3><p>Clear Wellington first.</p></div>
@@ -735,6 +771,10 @@
       <div id="comingIcons" class="passport-coming-icons" aria-hidden="true">⭐ · 🛂</div>
     </section>
   </main>
+
+  <audio id="day2Music" class="passport-audio" loop preload="none">
+    <source src="assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3" type="audio/mpeg">
+  </audio>
 
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
