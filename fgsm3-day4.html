@@ -1,63 +1,93 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#0c2d66">
+  <meta name="theme-color" content="#07141b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Medical English">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 4 Medical English course resources for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 4 · Medical English for Mrs Lecomte's Students</title>
-  <link rel="stylesheet" href="styles-v8.css">
+  <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
+  <title>FGSM3 · Day 4 · AI Clinical Control</title>
+  <link rel="stylesheet" href="styles-v41.css">
 </head>
-<body>
+<body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">🩺</span>
-      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="dictionary.html">Dictionary</a>
-      <a href="fgsm2.html">FGSM2</a>
-      <a class="active" aria-current="page" href="fgsm3.html">FGSM3</a>
-      <a href="games.html">Games</a>
-    </nav>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a class="active" aria-current="page" href="fgsm3.html">FGSM3</a><a href="games.html">Games</a></nav>
   </header>
 
-  <main id="main" class="course-day-main">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span aria-hidden="true">›</span>
-      <a href="fgsm3.html">FGSM3</a>
-      <span aria-hidden="true">›</span>
-      <span aria-current="page">Day 4</span>
-    </nav>
+  <main id="main" class="ai4-main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span><span aria-current="page">Day 4</span></nav>
 
-    <section class="course-day-placeholder day-purple">
-      <div class="day-placeholder-number">04</div>
-      <div class="day-placeholder-copy">
-        <p class="eyebrow dark-eyebrow">FOR MRS LECOMTE'S STUDENTS · FGSM3</p>
-        <h1>Day 4</h1>
-        <p>This page is ready for the course materials, activities and resources for Day 4.</p>
-        <span class="coming-large">Content coming soon</span>
-        <a class="ghost-link dark-ghost" href="fgsm3.html">← Back to FGSM3</a>
+    <section class="ai4-hero" aria-labelledby="ai4Title">
+      <img class="ai4-hero-image" src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Vintage-style illustration of a doctor, a patient and an artificial-intelligence system in a medical setting.">
+      <div class="ai4-hero-overlay" aria-hidden="true"></div>
+      <div class="ai4-hero-copy">
+        <p class="ai4-kicker">FGSM3 · DAY 4 GAME</p>
+        <h1 id="ai4Title">AI Clinical Control</h1>
+        <p class="ai4-subtitle">Human in the Loop</p>
+        <p class="ai4-lead">AI can monitor, flag patterns and support clinical work. Your job is to understand exactly what the system is doing — and keep the human decision-maker in control.</p>
+        <button id="startDay4Mission1" class="ai4-primary" type="button">Boot Mission 1 →</button>
       </div>
-      <div class="day-placeholder-icon" aria-hidden="true">🧠</div>
+      <div class="ai4-status-card" aria-label="Day 4 mission status"><span>CONTROL ROOM</span><strong>MISSION 01</strong><b>SYSTEM BOOT</b><small id="day4Clearance">Clearance pending</small></div>
+    </section>
+
+    <section class="ai4-toolbar" aria-label="Day 4 controls">
+      <div><strong>Clinical control panel</strong><span>Progress is stored only on this device.</span></div>
+      <div class="ai4-toolbar-actions">
+        <button id="day4SoundToggle" class="ai4-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="day4MusicToggle" class="ai4-toggle" type="button" disabled aria-disabled="true">🎵 Music pending</button>
+        <button id="resetDay4" class="ai4-reset" type="button">Reset Day 4</button>
+      </div>
+      <p id="day4AudioStatus" class="ai4-status-text" role="status" aria-live="polite">Day 4 soundtrack has not been installed yet. Sound effects and UK speech are available.</p>
+    </section>
+
+    <section class="ai4-board" aria-labelledby="ai4MissionTitle">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 01</p><h2 id="ai4MissionTitle">Mission 1 · System Boot</h2><p>Learn the core language from the Day 4 worksheet, then prove that you can tell the difference between an AI function, a regulatory label, a patient concern and a human responsibility.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION PROGRESS</span><strong id="day4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-activity-grid">
+        <button class="ai4-activity-card" data-ai4-activity="lexicon" type="button"><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor, patient and AI system in a medical setting."><div><small>CLINICAL LEXICON</small><strong>Load the Vocabulary</strong><p>Decode the ten core terms from the Day 4 worksheet.</p><b id="ai4StatusLexicon">READY</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="signals" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="AI-assisted medical consultation illustration."><div><small>SIGNAL RECOGNITION</small><strong>Read the System</strong><p>Choose the term that best fits a real medical-AI context.</p><b id="ai4StatusSignals">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="boundaries" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system."><div><small>TRUST BOUNDARY</small><strong>Who Does What?</strong><p>Separate system functions, regulation, patient risk and human control.</p><b id="ai4StatusBoundaries">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="clearance" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor maintaining oversight while using AI in medicine."><div><small>HUMAN-IN-THE-LOOP</small><strong>Final Boot Check</strong><p>Check the report's core message before the live clinical feed opens.</p><b id="ai4StatusClearance">LOCKED</b></div></button>
+      </div>
+    </section>
+
+    <section class="ai4-workspace" aria-labelledby="ai4WorkspaceTitle">
+      <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACTIVE CONSOLE</p><h2 id="ai4WorkspaceTitle">System waiting</h2><p id="ai4WorkspaceIntro">Boot Mission 1 to start the vocabulary clearance.</p></div><div class="ai4-score-box"><span>FIRST-TRY SCORE</span><strong id="day4Score">0</strong></div></div>
+      <div id="ai4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div></div>
+      <div id="ai4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="day4Mission1Complete" class="ai4-completion is-locked" aria-labelledby="day4CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🧠</div>
+      <div><p class="ai4-kicker dark">MISSION 01 CLEARANCE</p><h2 id="day4CompleteTitle">System Boot is not cleared yet.</h2><p id="day4CompleteText">Complete all four control-room activities.</p></div>
+      <button id="day4Mission2Button" class="ai4-primary" type="button" disabled>🔒 Mission 2 · Live Clinical Feed</button>
+    </section>
+
+    <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
+      <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
+      <div class="ai4-roadmap-grid">
+        <div class="ai4-roadmap-card active"><span>01 · ACTIVE</span><strong>System Boot</strong><p>Vocabulary and human-in-the-loop principles.</p><b>NOW</b></div>
+        <div class="ai4-roadmap-card"><span>02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
+        <div class="ai4-roadmap-card"><span>03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
+        <div class="ai4-roadmap-card"><span>04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
+        <div class="ai4-roadmap-card"><span>05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
+        <div class="ai4-roadmap-card"><span>06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
+        <div class="ai4-roadmap-card"><span>FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
+      </div>
+      <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
-    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
-  </footer>
-  <script src="pwa.js" defer></script>
-  <script src="accessibility.js" defer></script>
+  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
+  <script src="fgsm3-day4-game.js" defer></script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v40-dictionary-learning-hub-20260823";
+const CACHE_NAME = "mrs-lecomte-medical-english-v41-day4-system-boot-20260823";
 
 const APP_SHELL = [
   "./",
@@ -50,9 +50,11 @@ const APP_SHELL = [
   "./styles-v35.css",
   "./styles-v36.css",
   "./styles-v37.css",
+  "./styles-v41.css",
   "./fgsm3-day1-game.js",
   "./fgsm3-day2-game.js",
   "./fgsm3-day3-game.js",
+  "./fgsm3-day4-game.js",
   "./assets/fgsm3/day1/images/fgsm3-day1-control-room.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
   "./assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp",
@@ -74,6 +76,7 @@ const APP_SHELL = [
   "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
   "./assets/fgsm3/day3/music/day3-field-briefing-suno.mp3",
   "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
+  "./assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp",
   "./app.js",
   "./home.js",
   "./games.js",
