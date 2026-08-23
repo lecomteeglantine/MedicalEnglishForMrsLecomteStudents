@@ -10,12 +10,13 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 1 Medical English course resources for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 1 · Medical English for Mrs Lecomte's Students</title>
-  <link rel="stylesheet" href="styles-v8.css">
+  <meta name="description" content="Teleconsultation Control Room — FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
+  <title>FGSM3 · Day 1 · Teleconsultation Control Room</title>
+  <link rel="stylesheet" href="styles-v9.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
+
   <header class="topbar">
     <a class="brand" href="index.html">
       <span class="brand-mark" aria-hidden="true">🩺</span>
@@ -30,33 +31,161 @@
     </nav>
   </header>
 
-  <main id="main" class="course-day-main">
+  <main id="main" class="day1-game-main">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span aria-hidden="true">›</span>
-      <a href="fgsm3.html">FGSM3</a>
-      <span aria-hidden="true">›</span>
+      <a href="index.html">Home</a><span aria-hidden="true">›</span>
+      <a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span>
       <span aria-current="page">Day 1</span>
     </nav>
 
-    <section class="course-day-placeholder day-purple">
-      <div class="day-placeholder-number">01</div>
-      <div class="day-placeholder-copy">
-        <p class="eyebrow dark-eyebrow">FOR MRS LECOMTE'S STUDENTS · FGSM3</p>
-        <h1>Day 1</h1>
-        <p>This page is ready for the course materials, activities and resources for Day 1.</p>
-        <span class="coming-large">Content coming soon</span>
-        <a class="ghost-link dark-ghost" href="fgsm3.html">← Back to FGSM3</a>
+    <section class="tcr-hero" aria-labelledby="day1Title">
+      <img class="tcr-hero-image" src="assets/fgsm3/day1/images/fgsm3-day1-control-room.webp" alt="A realistic teleconsultation workstation with several patient video calls displayed on medical monitors.">
+      <div class="tcr-hero-overlay"></div>
+      <div class="tcr-hero-copy">
+        <p class="eyebrow">FGSM3 · DAY 1 GAME</p>
+        <h1 id="day1Title">Teleconsultation<br>Control Room</h1>
+        <p>Your first shift starts here. Connect safely, communicate professionally and keep control of the consultation.</p>
+        <div class="tcr-hero-actions">
+          <button id="startMission" class="tcr-primary" type="button">Start Mission 1 →</button>
+          <a class="tcr-secondary-link" href="#mission-map">View mission map</a>
+        </div>
       </div>
-      <div class="day-placeholder-icon" aria-hidden="true">🧠</div>
+      <div class="tcr-status-card" aria-label="Day 1 game status">
+        <span class="tcr-status-dot" aria-hidden="true"></span>
+        <div><strong>SHIFT STATUS</strong><span id="shiftStatus">Ready to start</span></div>
+      </div>
+    </section>
+
+    <section class="tcr-toolbar" aria-label="Game audio controls">
+      <div class="tcr-toolbar-title"><strong>Control Room Audio</strong><span>Separate controls for speech/sound and background music.</span></div>
+      <div class="tcr-toolbar-controls">
+        <button id="soundToggle" class="tcr-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="musicToggle" class="tcr-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
+        <button id="resetDay1Progress" class="tcr-reset" type="button">Reset Day 1</button>
+      </div>
+      <p id="audioStatus" class="tcr-audio-status" role="status" aria-live="polite"></p>
+      <audio id="controlRoomMusic" loop preload="none">
+        <source src="assets/fgsm3/day1/music/fgsm3-day1-control-room-theme.mp3" type="audio/mpeg">
+      </audio>
+    </section>
+
+    <section class="tcr-briefing" aria-labelledby="briefingTitle">
+      <div class="tcr-briefing-copy">
+        <p class="section-kicker">TODAY'S SHIFT</p>
+        <h2 id="briefingTitle">Four patients are waiting.</h2>
+        <p>Mission 1 focuses on the first minutes of a safe video consultation. You will prepare your station, connect to Patient 01, confirm identity, protect privacy and obtain verbal consent.</p>
+      </div>
+      <div class="patient-strip" aria-label="Patients waiting today">
+        <article class="patient-mini active-patient">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp" alt="Patient 01 on a home video consultation, looking concerned.">
+          <div><strong>Patient 01</strong><span>Headache + dizziness</span><small>Calling now</small></div>
+        </article>
+        <article class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp" alt="Patient 02 seated at home with an injured ankle visible during a video consultation.">
+          <div><strong>Patient 02</strong><span>Twisted ankle</span><small>Waiting</small></div>
+        </article>
+        <article class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp" alt="Patient 03 at home during a video consultation, appearing tired and concerned.">
+          <div><strong>Patient 03</strong><span>Fatigue + weight loss</span><small>Waiting</small></div>
+        </article>
+        <article class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp" alt="Patient 04 at home during a video consultation, resting a hand on her abdomen.">
+          <div><strong>Patient 04</strong><span>New medication + nausea</span><small>Waiting</small></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="missionArea" class="tcr-mission" aria-labelledby="missionTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 1 · SAFE START</p>
+          <h2 id="missionTitle">Start the call properly</h2>
+          <p id="missionInstruction">Press <strong>Start Mission 1</strong> when you are ready.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>CHECKPOINT</span>
+          <strong id="checkpointNumber">0 / 5</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="missionProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div id="missionScreen" class="mission-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">📞</div>
+          <h3>Incoming video consultation</h3>
+          <p>Patient 01 is waiting. Prepare your station before connecting.</p>
+        </div>
+      </div>
+
+      <div id="missionFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+
+    <section id="mission2Area" class="tcr-mission is-locked" aria-labelledby="mission2Title">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 2 · ASK THE RIGHT QUESTIONS</p>
+          <h2 id="mission2Title">Explore the headache safely</h2>
+          <p id="mission2Instruction">Complete Mission 1 to unlock the clinical history.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>CHECKPOINT</span>
+          <strong id="mission2CheckpointNumber">0 / 5</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="mission2ProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="mission2-case-brief" aria-label="Patient 01 case brief">
+        <div>
+          <span class="case-brief-kicker">PATIENT 01 · HEADACHE + DIZZINESS</span>
+          <strong>Your aim</strong>
+          <p>Start broad, then clarify onset, frequency, associated symptoms, severity, warning signs, previous episodes and the patient's concern.</p>
+        </div>
+        <button id="startMission2" class="tcr-primary" type="button" disabled>Mission 2 locked</button>
+      </div>
+
+      <div id="mission2Screen" class="mission-screen" tabindex="-1">
+        <div class="mission-waiting">
+          <div class="mission-waiting-icon" aria-hidden="true">🔒</div>
+          <h3>Clinical history locked</h3>
+          <p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p>
+        </div>
+      </div>
+
+      <div id="mission2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
+      <div class="mission-map-heading">
+        <p class="section-kicker">DAY 1 · GAME ROADMAP</p>
+        <h2 id="missionMapTitle">What the Control Room will revise</h2>
+        <p>Day 1 will mix clinical communication with the pronunciation and grammar work from class.</p>
+      </div>
+      <div class="mission-map-grid">
+        <article class="mission-map-card live"><span>01</span><div><strong>Safe Start</strong><small>Connection · identity · privacy · verbal consent</small></div><b>LIVE</b></article>
+        <article id="missionMap2" class="mission-map-card"><span>02</span><div><strong>Ask the Right Questions</strong><small>Open questions · symptom exploration · concerns</small></div><b>LOCKED</b></article>
+        <article class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>NEXT</b></article>
+        <article class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>NEXT</b></article>
+        <article class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>NEXT</b></article>
+        <article class="mission-map-card"><span>04</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>NEXT</b></article>
+        <article class="mission-map-card"><span>05</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>NEXT</b></article>
+        <article class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
+      </div>
+    </section>
+
+    <section class="tcr-accessibility-note">
+      <span aria-hidden="true">♿</span>
+      <p><strong>Accessible by design:</strong> audio is optional, every patient reply has a transcript, the mission works with keyboard or touch, and there is no time limit. Use the Accessibility button for text size, spacing, contrast, reduced motion and reading support.</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Game progress and preferences are stored locally in your browser on this device. No patient data should ever be entered into the site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
   </footer>
+
+  <script src="fgsm3-day1-game.js"></script>
   <script src="pwa.js" defer></script>
   <script src="accessibility.js" defer></script>
 </body>
