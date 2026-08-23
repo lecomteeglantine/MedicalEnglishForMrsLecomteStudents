@@ -660,6 +660,165 @@
     }
   ];
 
+  const wellingtonItems = [
+    {
+      phase: "SYSTEM CHECK",
+      tag: "WHO RUNS IT?",
+      prompt: "Since the 2022 reform, which national body runs New Zealand's health system?",
+      options: [
+        { text: "Health NZ / Te Whatu Ora", correct: true },
+        { text: "The former District Health Boards", correct: false },
+        { text: "ACC", correct: false }
+      ],
+      model: "Since the 2022 reform, Health NZ, or Te Whatu Ora, has run the national health system.",
+      explanation: "The 20 District Health Boards were merged into a single national body in 2022."
+    },
+    {
+      phase: "SYSTEM CHECK",
+      tag: "FUNDING",
+      prompt: "How is New Zealand's health system mainly funded?",
+      options: [
+        { text: "Mainly through general taxation", correct: true },
+        { text: "Mainly through private insurance premiums", correct: false },
+        { text: "Mainly through GP co-payments", correct: false }
+      ],
+      model: "New Zealand's public health system is funded mainly through general taxation.",
+      explanation: "The system is tax-funded and publicly run."
+    },
+    {
+      phase: "SYSTEM CHECK",
+      tag: "ACCESS",
+      prompt: "Which statement best describes care at the point of use?",
+      options: [
+        { text: "Public hospital care is free, but GP visits commonly involve a co-payment", correct: true },
+        { text: "All healthcare is completely free", correct: false },
+        { text: "Patients pay the full cost of public hospital care", correct: false }
+      ],
+      model: "Public hospital care is free, while GP visits are subsidised and commonly involve a co-payment.",
+      explanation: "Universal coverage does not mean every service is completely free at the point of use."
+    },
+    {
+      phase: "SYSTEM CHECK",
+      tag: "ACC",
+      prompt: "What is distinctive about ACC injury cover?",
+      options: [
+        { text: "It covers treatment for injuries on a no-fault basis", correct: true },
+        { text: "It only covers injuries caused by employers", correct: false },
+        { text: "Patients must prove who was legally at fault before treatment is covered", correct: false }
+      ],
+      model: "ACC provides no-fault injury cover, so patients do not have to prove who caused the injury.",
+      explanation: "No-fault means injury cover does not depend on proving blame."
+    },
+    {
+      phase: "SYSTEM CHECK",
+      tag: "PRIVATE COVER",
+      prompt: "What role does private insurance play in New Zealand?",
+      options: [
+        { text: "A supplementary role, often for faster elective or private treatment", correct: true },
+        { text: "It is compulsory for all residents", correct: false },
+        { text: "It replaces public hospital care", correct: false }
+      ],
+      model: "Private insurance is supplementary rather than the core route to coverage.",
+      explanation: "The Day 2 card says around a third of people hold some private cover, mainly for faster elective or private treatment."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "TRUE · FALSE · NOT GIVEN",
+      prompt: "Senior figures in New Zealand's health service are resigning one after another.",
+      options: [
+        { text: "True", correct: true },
+        { text: "False", correct: false },
+        { text: "Not Given", correct: false }
+      ],
+      model: "The RNZ clip reports a succession of senior resignations.",
+      explanation: "This is stated in the clip."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "TRUE · FALSE · NOT GIVEN",
+      prompt: "Patients are waiting too long in emergency departments, for a GP and for scans.",
+      options: [
+        { text: "True", correct: true },
+        { text: "False", correct: false },
+        { text: "Not Given", correct: false }
+      ],
+      model: "The report links the crisis to long waits in emergency departments, for GPs and for scans.",
+      explanation: "These waiting problems are explicitly mentioned."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "TRUE · FALSE · NOT GIVEN",
+      prompt: "The clip says the number of resignations is now falling.",
+      options: [
+        { text: "False", correct: true },
+        { text: "True", correct: false },
+        { text: "Not Given", correct: false }
+      ],
+      model: "The clip says the list of resignations is getting longer, not shorter.",
+      explanation: "The statement reverses what the clip reports."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "TRUE · FALSE · NOT GIVEN",
+      prompt: "The opposition believes these senior figures are simply choosing to move on at the right point in their careers.",
+      options: [
+        { text: "False", correct: true },
+        { text: "True", correct: false },
+        { text: "Not Given", correct: false }
+      ],
+      model: "The opposition claims senior figures are being pushed out rather than simply moving on.",
+      explanation: "The statement contradicts the political claim reported in the clip."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "TRUE · FALSE · NOT GIVEN",
+      prompt: "The clip states the exact number of staff who have resigned.",
+      options: [
+        { text: "Not Given", correct: true },
+        { text: "True", correct: false },
+        { text: "False", correct: false }
+      ],
+      model: "The clip describes multiple resignations but does not state an exact total.",
+      explanation: "Not Given means the clip does not provide this information."
+    },
+    {
+      phase: "RNZ NEWS FEED",
+      tag: "SOURCE CHECK",
+      prompt: "The clip is taken from a podcast called The Detail.",
+      options: [
+        { text: "True", correct: true },
+        { text: "False", correct: false },
+        { text: "Not Given", correct: false }
+      ],
+      model: "The source is The Detail from RNZ, Radio New Zealand.",
+      explanation: "The programme name is explicitly identified."
+    },
+    {
+      phase: "EVIDENCE DESK",
+      tag: "FACT OR CLAIM?",
+      prompt: "“Senior figures are being pushed out and blamed for the government's own failures.” How should you classify this statement in the context of the clip?",
+      options: [
+        { text: "A political claim attributed to the opposition", correct: true },
+        { text: "An established fact stated without attribution", correct: false },
+        { text: "Information not mentioned anywhere", correct: false }
+      ],
+      model: "The clip reports this as an opposition claim, so it should remain attributed rather than presented as an established fact.",
+      explanation: "Good reporting language preserves who is making a contested claim."
+    },
+    {
+      phase: "EVIDENCE DESK",
+      tag: "CONTEXT CHECK",
+      prompt: "Which summary best matches the context presented by the RNZ clip?",
+      options: [
+        { text: "Leadership departures are occurring against a background of shortages, long waits and hospital near misses", correct: true },
+        { text: "The health service has solved its workforce shortages and waiting-time problems", correct: false },
+        { text: "The clip focuses mainly on private health insurance premiums", correct: false }
+      ],
+      model: "The leadership crisis is reported against a background of workforce shortages, long waits and hospital near misses.",
+      explanation: "This combines the reported system pressures without turning the opposition's interpretation into fact."
+    }
+  ];
+
   const defaults = {
     departureStarted: false,
     departureIndex: 0,
@@ -690,7 +849,12 @@
     finalSIndex: 0,
     finalSScore: 0,
     finalSMissed: [],
-    finalSComplete: false
+    finalSComplete: false,
+    wellingtonStarted: false,
+    wellingtonIndex: 0,
+    wellingtonScore: 0,
+    wellingtonMissed: [],
+    wellingtonComplete: false
   };
 
   const $ = id => document.getElementById(id);
@@ -741,6 +905,13 @@
     finalSCheckpoint: $("finalSCheckpoint"),
     finalSProgressBar: $("finalSProgressBar"),
     finalSInstruction: $("finalSInstruction"),
+    wellingtonArea: $("wellingtonArea"),
+    startWellington: $("startWellington"),
+    wellingtonScreen: $("wellingtonScreen"),
+    wellingtonFeedback: $("wellingtonFeedback"),
+    wellingtonCheckpoint: $("wellingtonCheckpoint"),
+    wellingtonProgressBar: $("wellingtonProgressBar"),
+    wellingtonInstruction: $("wellingtonInstruction"),
     routeUk: $("routeUk"),
     routeUkStatus: $("routeUkStatus"),
     routeUs: $("routeUs"),
@@ -751,12 +922,15 @@
     routeAuStatus: $("routeAuStatus"),
     routeNz: $("routeNz"),
     routeNzStatus: $("routeNzStatus"),
+    routeIe: $("routeIe"),
+    routeIeStatus: $("routeIeStatus"),
     stampDeparture: $("stampDeparture"),
     stampUk: $("stampUk"),
     stampUs: $("stampUs"),
     stampCa: $("stampCa"),
     stampAu: $("stampAu"),
-    stampFinalS: $("stampFinalS")
+    stampFinalS: $("stampFinalS"),
+    stampNz: $("stampNz")
   };
 
   let state = loadState();
@@ -881,8 +1055,12 @@
     els.finalSCheckpoint.textContent = `${sDone} / ${finalSItems.length}`;
     els.finalSProgressBar.style.width = `${(sDone / finalSItems.length) * 100}%`;
 
+    const nzDone = state.wellingtonComplete ? wellingtonItems.length : Math.min(state.wellingtonIndex, wellingtonItems.length);
+    els.wellingtonCheckpoint.textContent = `${nzDone} / ${wellingtonItems.length}`;
+    els.wellingtonProgressBar.style.width = `${(nzDone / wellingtonItems.length) * 100}%`;
+
     if (state.departureComplete) {
-      els.passportClearance.textContent = state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
+      els.passportClearance.textContent = state.wellingtonComplete ? "Wellington cleared" : state.finalSComplete ? "Training Bay cleared" : state.sydneyComplete ? "Sydney cleared" : state.torontoComplete ? "Toronto cleared" : state.newYorkComplete ? "New York cleared" : state.londonComplete ? "London cleared" : "Issued";
       els.departureBoardStatus.textContent = "BOARDING";
       els.stampDeparture.classList.remove("stamp-empty");
       els.stampDeparture.classList.add("stamp-earned");
@@ -1000,15 +1178,41 @@
     if (state.finalSComplete) {
       els.stampFinalS.classList.remove("stamp-empty");
       els.stampFinalS.classList.add("stamp-earned");
-      els.routeNz.classList.remove("destination-locked", "destination-cleared");
-      els.routeNz.classList.add("destination-next");
-      els.routeNzStatus.textContent = "NEXT";
+      els.wellingtonArea.classList.remove("is-locked");
+      els.startWellington.disabled = false;
+      els.startWellington.textContent = state.wellingtonStarted ? "Resume Wellington →" : "Open Health System Alert →";
+      els.wellingtonInstruction.textContent = state.wellingtonComplete ? "Wellington completed. Your System Crisis Analyst stamp has been issued." : "Communication check cleared. Your New Zealand assignment is ready.";
+      if (!state.wellingtonComplete) {
+        els.routeNz.classList.remove("destination-locked", "destination-cleared");
+        els.routeNz.classList.add("destination-next");
+        els.routeNzStatus.textContent = state.wellingtonStarted ? "IN PROGRESS" : "NEXT";
+      }
     } else {
       els.stampFinalS.classList.remove("stamp-earned");
       els.stampFinalS.classList.add("stamp-empty");
+      els.wellingtonArea.classList.add("is-locked");
+      els.startWellington.disabled = true;
+      els.startWellington.textContent = "Wellington locked";
       els.routeNz.classList.remove("destination-next", "destination-cleared");
       els.routeNz.classList.add("destination-locked");
       els.routeNzStatus.textContent = "LOCKED";
+    }
+
+    if (state.wellingtonComplete) {
+      els.stampNz.classList.remove("stamp-empty");
+      els.stampNz.classList.add("stamp-earned");
+      els.routeNz.classList.remove("destination-next", "destination-locked");
+      els.routeNz.classList.add("destination-cleared");
+      els.routeNzStatus.textContent = "CLEARED";
+      els.routeIe.classList.remove("destination-locked", "destination-cleared");
+      els.routeIe.classList.add("destination-next");
+      els.routeIeStatus.textContent = "NEXT";
+    } else {
+      els.stampNz.classList.remove("stamp-earned");
+      els.stampNz.classList.add("stamp-empty");
+      els.routeIe.classList.remove("destination-next", "destination-cleared");
+      els.routeIe.classList.add("destination-locked");
+      els.routeIeStatus.textContent = "LOCKED";
     }
   }
 
@@ -1312,8 +1516,8 @@
       els.finalSScreen.innerHTML = `<div class="passport-complete-card final-s-complete"><div class="passport-complete-icon" aria-hidden="true">🔊</div><p class="passport-case-kicker">TRANSIT CHECK CLEARED</p><h3>Clear Communicator</h3><p>You can now sort final <em>-s</em> endings by sound and apply the rule to healthcare and research vocabulary.</p><div class="passport-score-line"><strong>${state.finalSScore} / ${finalSItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="sound-summary"><div><b>/ɪz/</b><span>shortages · misses · nurses</span></div><div><b>/s/</b><span>specialists · layoffs · patients</span></div><div><b>/z/</b><span>resignations · failures · stories</span></div></div><div class="passport-model-box"><span>QUICK RULE</span><p>“Use /ɪz/ after sibilant sounds, /s/ after voiceless sounds such as /p t k f/, and /z/ after other voiced sounds.”</p><button id="hearFinalSRule" class="passport-hear" type="button">🔊 Hear rule</button></div><div class="comparison-ticket transit-ticket"><span>SYDNEY</span><b>Bulk Billing Expert</b><span>✈</span><b>Clear Communicator</b><span>WELLINGTON NEXT</span></div><div class="passport-next-route"><strong>Next stop</strong><span>🇳🇿 Wellington · Health System Alert.</span></div><button id="goWellingtonRoute" class="passport-primary" type="button">View Wellington gate →</button></div>`;
       $("hearFinalSRule").addEventListener("click", () => speak("Use iz after sibilant sounds, s after voiceless sounds such as p, t, k and f, and z after other voiced sounds."));
       $("goWellingtonRoute").addEventListener("click", () => {
-        els.routeNz.scrollIntoView({ behavior: "smooth", block: "center" });
-        window.setTimeout(() => els.routeNz.focus?.({ preventScroll: true }), 450);
+        els.wellingtonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+        window.setTimeout(() => els.startWellington.focus({ preventScroll: true }), 450);
       });
       updateProgress();
       return;
@@ -1358,6 +1562,64 @@
     window.setTimeout(() => els.finalSScreen.focus({ preventScroll: true }), 450);
   }
 
+  function renderWellington() {
+    updateProgress();
+    els.wellingtonFeedback.innerHTML = "";
+    if (!state.finalSComplete) return;
+
+    if (!state.wellingtonStarted) {
+      els.wellingtonScreen.innerHTML = `<div class="passport-waiting"><span aria-hidden="true">🇳🇿</span><h3>Health System Alert ready</h3><p>Start by decoding New Zealand's system. The RNZ clip is embedded above for the news-feed checkpoints, with a text alternative for accessibility.</p></div>`;
+      return;
+    }
+
+    if (state.wellingtonComplete) {
+      const pct = Math.round((state.wellingtonScore / wellingtonItems.length) * 100);
+      els.wellingtonScreen.innerHTML = `<div class="passport-complete-card nz-complete"><div class="passport-complete-icon" aria-hidden="true">🇳🇿</div><p class="passport-case-kicker">STOP 05 CLEARED</p><h3>System Crisis Analyst</h3><p>You can explain New Zealand's public system and ACC, verify claims against a news source, use Not Given correctly, and keep political claims attributed.</p><div class="passport-score-line"><strong>${state.wellingtonScore} / ${wellingtonItems.length}</strong><span>${pct}% first-attempt score</span></div><div class="passport-model-box"><span>MODEL SUMMARY</span><p>“New Zealand has a tax-funded universal public system, with free public hospital care, subsidised GP visits and ACC no-fault injury cover. The RNZ clip reports a leadership crisis against a background of workforce shortages and long waits.”</p><button id="hearNzSummary" class="passport-hear" type="button">🔊 Hear summary</button></div><div class="comparison-ticket nz-ticket"><span>WELLINGTON</span><b>System Crisis Analyst</b><span>✈</span><b>Dublin</b><span>WORKFORCE NEXT</span></div><div class="passport-next-route nz-next-card"><strong>Next stop</strong><span>🇮🇪 Dublin · Workforce Emergency.</span></div><button id="goDublinRoute" class="passport-primary" type="button">View Dublin gate →</button></div>`;
+      $("hearNzSummary").addEventListener("click", () => speak("New Zealand has a tax-funded universal public system, with free public hospital care, subsidised G P visits and A C C no-fault injury cover. The R N Z clip reports a leadership crisis against a background of workforce shortages and long waits."));
+      $("goDublinRoute").addEventListener("click", () => {
+        els.routeIe.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+      updateProgress();
+      return;
+    }
+
+    const item = wellingtonItems[state.wellingtonIndex];
+    els.wellingtonScreen.innerHTML = `<div class="passport-question-card nz-question"><div class="passport-question-meta"><span>${item.phase}</span><b>${item.tag}</b></div><div class="sound-chip">Checkpoint ${state.wellingtonIndex + 1} of ${wellingtonItems.length}</div><h3>${item.prompt}</h3><div id="wellingtonOptions" class="passport-options"></div></div>`;
+    const optionWrap = $("wellingtonOptions");
+    optionButtons(item.options, (option, button) => {
+      if (option.correct) {
+        lockOptions(optionWrap);
+        button.classList.add("is-correct");
+        if (!state.wellingtonMissed.includes(state.wellingtonIndex)) state.wellingtonScore += 1;
+        state.wellingtonIndex += 1;
+        if (state.wellingtonIndex >= wellingtonItems.length) state.wellingtonComplete = true;
+        saveState();
+        playTone("good");
+        els.wellingtonFeedback.innerHTML = `<div class="feedback-good"><strong>Alert verified.</strong><span>${item.explanation}</span></div><div class="passport-transcript nz-transcript"><span>USEFUL ENGLISH</span><p>${item.model}</p><button id="hearNzModel" class="passport-hear" type="button">🔊 Hear it</button></div><button id="wellingtonNext" class="passport-next" type="button">${state.wellingtonComplete ? "Stamp passport →" : "Next Wellington check →"}</button>`;
+        $("hearNzModel").addEventListener("click", () => speak(item.model));
+        $("wellingtonNext").addEventListener("click", renderWellington);
+        updateProgress();
+      } else {
+        button.classList.add("is-wrong");
+        button.disabled = true;
+        if (!state.wellingtonMissed.includes(state.wellingtonIndex)) state.wellingtonMissed.push(state.wellingtonIndex);
+        saveState();
+        playTone("bad");
+        const hint = item.phase === "RNZ NEWS FEED" ? "Check what the clip actually states. Not Given is not the same as False." : item.phase === "EVIDENCE DESK" ? "Keep reported facts, attributed political claims and unstated information separate." : "Use the New Zealand system briefing above.";
+        els.wellingtonFeedback.innerHTML = `<div class="feedback-bad"><strong>Re-check the alert.</strong><span>${hint}</span></div>`;
+      }
+    }).forEach(button => optionWrap.appendChild(button));
+  }
+
+  function startWellington() {
+    if (!state.finalSComplete) return;
+    state.wellingtonStarted = true;
+    saveState();
+    renderWellington();
+    els.wellingtonArea.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.setTimeout(() => els.wellingtonScreen.focus({ preventScroll: true }), 450);
+  }
+
   function resetProgress() {
     const ok = window.confirm("Reset all Day 2 Global Health Passport progress on this device?");
     if (!ok) return;
@@ -1370,6 +1632,7 @@
     renderToronto();
     renderSydney();
     renderFinalS();
+    renderWellington();
     updateProgress();
     setStatus("Day 2 progress reset.");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1386,6 +1649,7 @@
   els.startToronto.addEventListener("click", startToronto);
   els.startSydney.addEventListener("click", startSydney);
   els.startFinalS.addEventListener("click", startFinalS);
+  els.startWellington.addEventListener("click", startWellington);
   els.reset.addEventListener("click", resetProgress);
   els.soundToggle.addEventListener("click", () => {
     soundOn = !soundOn;
@@ -1405,4 +1669,5 @@
   renderToronto();
   renderSydney();
   renderFinalS();
+  renderWellington();
 })();

@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v24.css">
+  <link rel="stylesheet" href="styles-v25.css">
 </head>
 <body class="passport-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -114,10 +114,10 @@
           <div><small>STOP 05</small><strong>Wellington</strong><span>Health System Alert</span></div>
           <b id="routeNzStatus">LOCKED</b>
         </article>
-        <article class="destination-card destination-locked">
+        <article id="routeIe" class="destination-card destination-locked">
           <span class="destination-flag" aria-hidden="true">🇮🇪</span>
           <div><small>STOP 06</small><strong>Dublin</strong><span>Workforce Emergency</span></div>
-          <b>LOCKED</b>
+          <b id="routeIeStatus">LOCKED</b>
         </article>
       </div>
     </section>
@@ -398,6 +398,71 @@
       <div id="finalSFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
     </section>
 
+    <section id="wellingtonArea" class="passport-mission passport-wellington is-locked" aria-labelledby="wellingtonTitle">
+      <div class="passport-mission-header">
+        <div>
+          <p class="section-kicker">STOP 05 · WELLINGTON</p>
+          <h2 id="wellingtonTitle">Health System Alert</h2>
+          <p id="wellingtonInstruction">Clear the Final -s Training Bay to unlock your New Zealand assignment.</p>
+        </div>
+        <div class="passport-progress-card" aria-live="polite">
+          <span>WELLINGTON CHECK</span>
+          <strong id="wellingtonCheckpoint">0 / 13</strong>
+          <div class="passport-progress-track" aria-hidden="true"><span id="wellingtonProgressBar"></span></div>
+        </div>
+      </div>
+
+      <div class="nz-alert-brief">
+        <div class="nz-alert-badge" aria-hidden="true">
+          <span>HEALTH SYSTEM ALERT</span>
+          <strong>WELLINGTON</strong>
+          <small>NZ · STOP 05</small>
+        </div>
+        <div>
+          <span class="passport-case-kicker">🇳🇿 NEW ZEALAND · HEALTH NZ / TE WHATU ORA</span>
+          <strong>First decode the system. Then analyse a real leadership crisis reported by RNZ.</strong>
+          <p>New Zealand has universal public cover, free public hospital care, subsidised GP visits with common co-payments, and ACC no-fault injury cover. Your second task is to separate what the RNZ clip reports from political claims and information it does not give.</p>
+        </div>
+        <button id="startWellington" class="passport-primary" type="button" disabled>Wellington locked</button>
+      </div>
+
+      <div class="nz-facts" aria-label="New Zealand healthcare briefing categories">
+        <span><small>MODEL</small><strong>Tax-funded · public</strong></span>
+        <span><small>RUN BY</small><strong>Health NZ / Te Whatu Ora</strong></span>
+        <span><small>COVERAGE</small><strong>Universal</strong></span>
+        <span><small>SPEND</small><strong>≈ 9–10% GDP</strong></span>
+      </div>
+
+      <div class="nz-video-card">
+        <div>
+          <video id="nzLeadershipVideo" controls preload="metadata" playsinline aria-label="New Zealand's health leadership crisis — The Detail, RNZ">
+            <source src="assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4" type="video/mp4">
+            Your browser cannot play this video. Use the text alternative beside it.
+          </video>
+        </div>
+        <div class="nz-video-copy">
+          <span class="nz-source-chip">▶ RNZ · THE DETAIL</span>
+          <h3>New Zealand's health leadership crisis</h3>
+          <p>Watch the 1 min 23 clip before the crisis checkpoints. The game never depends on sound alone: a text alternative summarises the context, but <strong>Not Given</strong> still means the clip does not state the information.</p>
+          <details>
+            <summary>Read the accessible briefing</summary>
+            <p>The clip reports a succession of senior departures from New Zealand's health leadership. It places these departures against a background of staff shortages, long waits in emergency departments, for GPs and for scans, and hospital “near misses”. It also reports an opposition claim that senior figures are being pushed out and blamed for government failures. The clip does not give an exact number of resignations.</p>
+          </details>
+        </div>
+      </div>
+
+      <div class="nz-crisis-strip" aria-label="Wellington mission phases">
+        <article><span>PHASE 1</span><strong>Decode the system</strong><p>Health NZ, funding, access, ACC and private cover.</p></article>
+        <article><span>PHASE 2</span><strong>Verify the news feed</strong><p>True · False · Not Given from the RNZ clip.</p></article>
+        <article><span>PHASE 3</span><strong>Classify the evidence</strong><p>Reported fact/context · political claim · not stated.</p></article>
+      </div>
+
+      <div id="wellingtonScreen" class="passport-screen" tabindex="-1">
+        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Wellington alert locked</h3><p>Clear the Final -s Training Bay first.</p></div>
+      </div>
+      <div id="wellingtonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
+    </section>
+
     <section class="passport-stamps" aria-labelledby="stampsTitle">
       <div class="passport-section-heading compact">
         <p class="section-kicker">YOUR PASSPORT</p>
@@ -410,7 +475,7 @@
         <div id="stampCa" class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
         <div id="stampAu" class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
         <div id="stampFinalS" class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
-        <div class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
+        <div id="stampNz" class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
         <div class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
         <div class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control</strong><small>Language Desk</small></div>
       </div>
@@ -420,9 +485,9 @@
       <div>
         <p class="section-kicker">NEXT DESTINATIONS</p>
         <h2 id="comingTitle">Your international rotation has only just begun.</h2>
-        <p>Wellington, Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
+        <p>Dublin, the Passive Control Desk and the Mystery Destination final will unlock in the next stages of Day 2.</p>
       </div>
-      <div class="passport-coming-icons" aria-hidden="true">🇳🇿 · 🇮🇪 · 📐 · ⭐</div>
+      <div class="passport-coming-icons" aria-hidden="true">🇮🇪 · 📐 · ⭐</div>
     </section>
   </main>
 
