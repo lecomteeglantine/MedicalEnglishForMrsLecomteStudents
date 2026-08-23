@@ -8,6 +8,7 @@
   const M3_ORDER = ["conflict", "review", "silent", "brief"];
   const M4_ORDER = ["numbers", "headlines", "limits", "tfng"];
   const M5_ORDER = ["dial", "overclaim", "future", "claim"];
+  const M6_ORDER = ["frame", "evidence", "steelman", "verdict"];
 
   const meta = {
     lexicon: ["Load the Vocabulary", "Decode the ten core terms from the Day 4 worksheet."],
@@ -46,6 +47,15 @@
     overclaim: ["Overclaiming Detector", "Judge whether a claim is too certain, appropriately calibrated or too weak for the evidence shown."],
     future: ["Prediction Language", "Use the five prediction forms from the worksheet accurately without turning a prediction into a fact."],
     claim: ["Calibrate the Conclusion", "Turn a result or limitation from the supplied Day 4 material into careful scientific English."]
+  };
+
+
+
+  const m6Meta = {
+    frame: ["Frame the Issue", "Define the real question without building the conclusion into the opening."],
+    evidence: ["Build the Case", "Choose evidence and limitations that the supplied Day 4 article actually supports."],
+    steelman: ["Steelman It", "Represent the other side fairly, then test or challenge the claim."],
+    verdict: ["Reach a Balanced Position", "Synthesize the evidence and finish with a qualified, source-disciplined conclusion."]
   };
 
   const vocab = [
@@ -242,12 +252,54 @@
   ];
 
 
+  /* Mission 6 follows the three debate statements and the Useful Language section in the supplied Day 4 worksheet.
+     The student's viewpoint is never scored: checkpoints assess rhetorical function and source discipline only. */
+  const m6Frame = [
+    {q:"Which worksheet phrase is designed to introduce the underlying issue rather than announce your conclusion?",a:"What's really at stake here is…",opts:["What's really at stake here is…","For me, there's little doubt that…","That simply doesn't hold, because…","On balance, the stronger case is…"],ex:"'What's really at stake here is…' frames the issue before you commit to a position."},
+    {q:"Which phrase narrows a broad debate to its central question?",a:"The question comes down to…",opts:["The question comes down to…","The evidence actually cuts the other way:","And from there,…","Pulling the threads together,…"],ex:"This phrase is a framing tool: it identifies the core decision the debate is about."},
+    {q:"You want to clarify exactly what the group is debating before anyone takes sides. Choose the best opening.",a:"Let's be clear about what we're debating:",opts:["Let's be clear about what we're debating:","I'd argue firmly that…","And yet the problem is…","On balance, the stronger case is…"],ex:"Clarifying the scope first prevents the debate from sliding into a different question."},
+    {q:"Which opening frames the responsibility question without already blaming either the doctor or the AI company?",a:"What's really at stake here is how responsibility should be handled when AI contributes to a clinical decision.",opts:["What's really at stake here is how responsibility should be handled when AI contributes to a clinical decision.","Doctors are obviously responsible whenever AI makes an error.","AI companies are obviously responsible whenever AI makes an error.","There is no real accountability question if a human was present."],ex:"A good frame identifies the accountability problem without smuggling in the verdict."},
+    {q:"Which sentence neutrally frames the transparency debate from the worksheet?",a:"The question comes down to whether patients should be told when AI is involved in diagnosis or treatment.",opts:["The question comes down to whether patients should be told when AI is involved in diagnosis or treatment.","Patients must always be told, so there is nothing to debate.","Patients never need to know how clinical decisions are supported.","AI involvement is only a technical detail and cannot matter to patients."],ex:"This wording restates the worksheet question without scoring either side as correct."}
+  ];
+
+  const m6Evidence = [
+    {evidence:"Fast triage experiment",q:"Which statement accurately uses the reported 67% vs 50–55% result?",a:"In one text-based fast-triage experiment, the AI identified the exact or a very close diagnosis more often than the human doctors.",opts:["In one text-based fast-triage experiment, the AI identified the exact or a very close diagnosis more often than the human doctors.","AI has proved that it diagnoses every patient better than every doctor.","The study showed that doctors were correct only 34% of the time in fast triage.","The article says the AI replaced the emergency physicians during the experiment."],ex:"The result supports a comparison in that specific experiment, not a universal claim about all diagnosis."},
+    {evidence:"With more detail: 82% vs 70–79%; difference not statistically significant",q:"Which use of this result is source-disciplined?",a:"The AI scored higher numerically, but the article says this difference was not statistically significant.",opts:["The AI scored higher numerically, but the article says this difference was not statistically significant.","The result proves a reliable AI advantage once more detail is available.","The doctors clearly outperformed the AI when more detail was available.","The study did not compare AI and doctors when more detail was available."],ex:"The article reports the higher number and the statistical limitation together."},
+    {evidence:"The AI read text records; appearance and distress were not tested",q:"Which argument can this limitation legitimately support?",a:"The experiment did not test all the information a clinician can observe at the bedside.",opts:["The experiment did not test all the information a clinician can observe at the bedside.","Visual assessment has been proved clinically useless.","The AI can assess distress better than a human doctor.","The study proves text data are sufficient for every clinical decision."],ex:"The limitation narrows what the experiment can establish; it does not prove the missing information is irrelevant."},
+    {evidence:"The article states that there is not a formal framework for accountability",q:"What does this evidence support in the responsibility debate?",a:"The article presents accountability for AI error as an unresolved issue.",opts:["The article presents accountability for AI error as an unresolved issue.","The article states that doctors are legally responsible in every AI-related error.","The article states that AI companies are legally responsible in every case.","The article says accountability no longer matters because AI is accurate."],ex:"The source identifies an unresolved framework; it does not settle the allocation of responsibility."},
+    {evidence:"Dr Wei Xing warned that doctors may defer to AI; subgroup performance information was missing",q:"Which claim best stays within the evidence?",a:"The article raises a risk of over-reliance and notes missing information about which patient groups the AI may perform worse on.",opts:["The article raises a risk of over-reliance and notes missing information about which patient groups the AI may perform worse on.","The study proves the AI is biased against elderly patients.","Doctors never think independently when AI is available.","The article demonstrates equal AI performance across all patient groups."],ex:"The source raises concerns and missing evidence; it does not prove a specific subgroup bias."}
+  ];
+
+  const m6Steelman = [
+    {q:"Which phrase from the worksheet explicitly asks you to present the strongest version of the opposing view?",a:"The strongest version of that view is…",opts:["The strongest version of that view is…","I'd argue firmly that…","It follows that…","On balance, the stronger case is…"],ex:"Steelman the other side before rebutting it; do not replace it with a weaker caricature."},
+    {q:"Which opening acknowledges that an opposing position can sound reasonable?",a:"I can see why one might think…",opts:["I can see why one might think…","For me, there's little doubt that…","And from there,…","The data show that…"],ex:"This phrase recognises plausibility without forcing you to agree."},
+    {q:"Which phrase signals a fair concession to the other side?",a:"To be fair to that argument,…",opts:["To be fair to that argument,…","That simply doesn't hold, because…","What's really at stake here is…","Pulling the threads together,…"],ex:"A concession demonstrates that you have understood the opposing argument before responding."},
+    {q:"After presenting the other side fairly, which phrase makes a clear rebuttal pivot?",a:"And yet the problem is…",opts:["And yet the problem is…","Let's be clear about what we're debating:","Going back to the study/report,…","So where does that leave us?"],ex:"'And yet…' acknowledges what came before and then opens the counterargument."},
+    {q:"Which question tests the strength of an opponent's evidence instead of attacking the person?",a:"How solid is that evidence, really?",opts:["How solid is that evidence, really?","Why would anyone believe that?","That view is ridiculous.","You clearly do not understand AI."],ex:"The worksheet's 'Test the claim' language challenges evidence rather than the speaker."}
+  ];
+
+  const m6Verdict = [
+    {q:"Which worksheet phrase signals that you are now synthesising the different strands of the debate?",a:"Pulling the threads together,…",opts:["Pulling the threads together,…","My starting point is that…","Take the example of…","The strongest version of that view is…"],ex:"This phrase moves from individual arguments toward synthesis."},
+    {q:"Which phrase is designed to transition from discussion to a final judgement?",a:"So where does that leave us?",opts:["So where does that leave us?","The data show that…","I can see why one might think…","And from there,…"],ex:"It explicitly signals that the argument is moving toward a verdict."},
+    {q:"Which phrase gives a clear but qualified conclusion rather than pretending there is no complexity?",a:"On balance, the stronger case is…",opts:["On balance, the stronger case is…","There is absolutely no possible objection.","Everyone must agree that…","The debate is over because one number is higher."],ex:"'On balance' allows a conclusion while recognising competing considerations."},
+    {evidence:"The article says the AI can look like a useful second-opinion tool, while the authors say the findings do not mean AI replaces doctors.",q:"Which verdict best matches the supplied source?",a:"On balance, the study supports AI as a potentially useful second-opinion tool, but it does not show that AI can replace doctors.",opts:["On balance, the study supports AI as a potentially useful second-opinion tool, but it does not show that AI can replace doctors.","The study proves emergency doctors will soon be unnecessary.","The article shows that AI has no clinical value at all.","Because AI scored highly in one experiment, human judgement is no longer relevant."],ex:"This conclusion preserves both parts of the article: promising performance and a continuing human role."},
+    {evidence:"The article discusses human guidance and unresolved accountability, but does not establish a universal disclosure rule.",q:"Which verdict is safest for the statement 'Patients should always be told when AI is involved'?",a:"The article gives relevant reasons to discuss transparency, but it does not by itself settle an 'always tell' rule.",opts:["The article gives relevant reasons to discuss transparency, but it does not by itself settle an 'always tell' rule.","The article proves that every patient must always be told.","The article proves patients should never be told.","The study directly tested patient disclosure policies and found one rule superior."],ex:"The debate question invites argument; the supplied article does not provide a definitive universal disclosure policy."}
+  ];
+
+  const boardPrompts = [
+    "In ten years, AI will diagnose patients better than doctors.",
+    "If an AI makes a diagnostic error, the doctor — not the AI company — should be held responsible.",
+    "Patients should always be told when AI is involved in their diagnosis or treatment."
+  ];
+
+
   let state = loadState();
   let current = null, index = 0, attempts = 0, sessionScore = 0;
   let m2Current = null, m2Index = 0, m2Attempts = 0, m2SessionScore = 0;
   let m3Current = null, m3Index = 0, m3Attempts = 0, m3SessionScore = 0;
   let m4Current = null, m4Index = 0, m4Attempts = 0, m4SessionScore = 0;
   let m5Current = null, m5Index = 0, m5Attempts = 0, m5SessionScore = 0;
+  let m6Current = null, m6Index = 0, m6Attempts = 0, m6SessionScore = 0;
 
   const $ = id => document.getElementById(id);
   const screen = $("ai4Screen"), feedback = $("ai4Feedback"), workspaceTitle = $("ai4WorkspaceTitle"), workspaceIntro = $("ai4WorkspaceIntro");
@@ -255,6 +307,7 @@
   const m3Screen = $("ai4M3Screen"), m3Feedback = $("ai4M3Feedback"), m3WorkspaceTitle = $("ai4M3WorkspaceTitle"), m3WorkspaceIntro = $("ai4M3WorkspaceIntro");
   const m4Screen = $("ai4M4Screen"), m4Feedback = $("ai4M4Feedback"), m4WorkspaceTitle = $("ai4M4WorkspaceTitle"), m4WorkspaceIntro = $("ai4M4WorkspaceIntro");
   const m5Screen = $("ai4M5Screen"), m5Feedback = $("ai4M5Feedback"), m5WorkspaceTitle = $("ai4M5WorkspaceTitle"), m5WorkspaceIntro = $("ai4M5WorkspaceIntro");
+  const m6Screen = $("ai4M6Screen"), m6Feedback = $("ai4M6Feedback"), m6WorkspaceTitle = $("ai4M6WorkspaceTitle"), m6WorkspaceIntro = $("ai4M6WorkspaceIntro");
   const music = $("day4Music"), musicToggle = $("day4MusicToggle"), audioStatus = $("day4AudioStatus"), clinicalVideo = $("day4ClinicalVideo");
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
   let videoPausedMusic = false;
@@ -266,16 +319,21 @@
       mission3Completed: {conflict:false, review:false, silent:false, brief:false},
       mission4Completed: {numbers:false, headlines:false, limits:false, tfng:false},
       mission5Completed: {dial:false, overclaim:false, future:false, claim:false},
+      mission6Completed: {frame:false, evidence:false, steelman:false, verdict:false},
       firstTryScore: 0,
       mission2FirstTryScore: 0,
       mission3FirstTryScore: 0,
       mission4FirstTryScore: 0,
       mission5FirstTryScore: 0,
+      mission6FirstTryScore: 0,
       started: false,
       mission2Started: false,
       mission3Started: false,
       mission4Started: false,
       mission5Started: false,
+      mission6Started: false,
+      boardPrompt: 0,
+      boardStance: "",
       soundOff: false
     };
   }
@@ -291,7 +349,8 @@
         mission2Completed: {...base.mission2Completed, ...(saved.mission2Completed || {})},
         mission3Completed: {...base.mission3Completed, ...(saved.mission3Completed || {})},
         mission4Completed: {...base.mission4Completed, ...(saved.mission4Completed || {})},
-        mission5Completed: {...base.mission5Completed, ...(saved.mission5Completed || {})}
+        mission5Completed: {...base.mission5Completed, ...(saved.mission5Completed || {})},
+        mission6Completed: {...base.mission6Completed, ...(saved.mission6Completed || {})}
       };
     } catch (e) {
       return base;
@@ -344,6 +403,11 @@
     return bank.map(x => ({...x, opts: shuffle(x.opts)}));
   }
 
+  function m6ItemsFor(name) {
+    const bank = name === "frame" ? m6Frame : name === "evidence" ? m6Evidence : name === "steelman" ? m6Steelman : m6Verdict;
+    return bank.map(x => ({...x, opts: shuffle(x.opts)}));
+  }
+
   function updateUI() {
     const done = ACTIVITY_ORDER.filter(a=>state.completed[a]).length;
     $("day4ProgressText").textContent = `${done} / 4`;
@@ -368,6 +432,7 @@
     updateMission3UI();
     updateMission4UI();
     updateMission5UI();
+    updateMission6UI();
   }
 
   function updateMission2UI() {
@@ -483,6 +548,49 @@
     if(r6){r6.classList.toggle('ready',all);r6s.textContent=all?'06 · READY':'06 · LOCKED';}
     if(m4Cleared && !state.mission5Started && m5Screen){m5Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty Calibration ready</h3><p>Open Set the Certainty Level to begin.</p></div>';m5WorkspaceIntro.textContent='Open Set the Certainty Level to begin.';}
   }
+
+
+  function updateBoardBrief() {
+    const brief=$("day4BoardBrief"), prompt=$("day4BoardPromptText"), status=$("day4StanceStatus");
+    if(!brief) return;
+    const all=M6_ORDER.every(a=>state.mission6Completed[a]);
+    brief.classList.toggle("is-locked",!all);
+    if(!all){prompt.textContent="Complete Mission 6 to draw a board case.";status.textContent="Choose any position. Your viewpoint is not scored.";return;}
+    const idx=Math.max(0,Math.min(boardPrompts.length-1,Number(state.boardPrompt)||0));
+    prompt.textContent=`“${boardPrompts[idx]}”`;
+    document.querySelectorAll("[data-ai4-stance]").forEach(b=>b.classList.toggle("selected",b.dataset.ai4Stance===state.boardStance));
+    status.textContent=state.boardStance?`Position selected: ${state.boardStance}. Now build a 60-second response with Frame → Evidence → Other side → Verdict.`:"Choose any position. The site does not grade your opinion.";
+  }
+
+  function updateMission6UI() {
+    if(!$("day4Mission6")) return;
+    const m5Cleared=M5_ORDER.every(a=>state.mission5Completed[a]);
+    const done=M6_ORDER.filter(a=>state.mission6Completed[a]).length;
+    $("day4Mission6").classList.toggle("is-locked",!m5Cleared);
+    $("day4Mission6ProgressText").textContent=`${done} / 4`;
+    $("day4Mission6ProgressBar").style.width=`${done*25}%`;
+    $("day4Mission6Score").textContent=state.mission6FirstTryScore;
+    const ids={frame:"ai4M6StatusFrame",evidence:"ai4M6StatusEvidence",steelman:"ai4M6StatusSteelman",verdict:"ai4M6StatusVerdict"};
+    M6_ORDER.forEach((a,i)=>{
+      const btn=document.querySelector(`[data-ai4-m6="${a}"]`);
+      const unlocked=m5Cleared&&(i===0||state.mission6Completed[M6_ORDER[i-1]]);
+      if(btn) btn.disabled=!unlocked;
+      if($(ids[a])) $(ids[a]).textContent=state.mission6Completed[a]?"CLEARED":unlocked?"READY":"LOCKED";
+    });
+    const all=done===4;
+    $("day4Mission6Complete").classList.toggle("is-locked",!all);
+    $("day4M6CompleteTitle").textContent=all?"⚖️ AI Accountability Advisor.":"Accountability Board is not cleared yet.";
+    $("day4M6CompleteText").textContent=all?"You framed contested questions, used the source carefully, represented counterarguments fairly and reached calibrated verdicts without turning an opinion into an answer key.":"Complete all four argument stages.";
+    $("day4FinalButton").disabled=!all;
+    $("day4FinalButton").textContent=all?"FINAL · Human-in-the-Loop Test →":"🔒 FINAL · Human-in-the-Loop Test";
+    $("day4FinalTeaser").classList.toggle("is-locked",!all);
+    const r6=$("ai4RoadmapM6"),r6s=$("ai4RoadmapM6State"),rf=$("ai4RoadmapFinal"),rfs=$("ai4RoadmapFinalState");
+    if(r6){r6.classList.toggle("ready",m5Cleared&&!all);r6.classList.toggle("cleared",all);r6s.textContent=all?"06 · CLEARED":m5Cleared?"06 · READY":"06 · LOCKED";}
+    if(rf){rf.classList.toggle("ready",all);if(rfs)rfs.textContent=all?"FINAL · READY":"FINAL · LOCKED";}
+    if(m5Cleared&&!state.mission6Started&&m6Screen){m6Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">⚖️</span><h3>Accountability Board ready</h3><p>Open Frame the Issue. Your viewpoint will never be scored.</p></div>';m6WorkspaceIntro.textContent="Open Frame the Issue. Your viewpoint will never be scored.";}
+    updateBoardBrief();
+  }
+
 
   function start(name) {
     if (musicOn) startMusicPlayback();
@@ -643,23 +751,56 @@
   }
 
 
+  function startM6(name) {
+    if(!M5_ORDER.every(a=>state.mission5Completed[a])) return;
+    if(musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
+    m6Current={name,items:shuffle(m6ItemsFor(name))};m6Index=0;m6Attempts=0;m6SessionScore=0;state.mission6Started=true;save();
+    m6WorkspaceTitle.textContent=m6Meta[name][0];m6WorkspaceIntro.textContent=m6Meta[name][1];m6Feedback.textContent="";m6Feedback.className="ai4-feedback";renderM6();
+  }
+
+  function renderM6() {
+    const it=m6Current.items[m6Index];if(!it){completeM6Activity();return;}
+    const label=m6Current.name==="frame"?"FRAME THE CASE":m6Current.name==="evidence"?"EVIDENCE ON RECORD":m6Current.name==="steelman"?"STEELMAN THE OTHER SIDE":"DELIVER THE VERDICT";
+    const evidence=it.evidence?`<div class="ai4-evidence-chip"><span>EVIDENCE ON RECORD</span><strong>${it.evidence}</strong></div>`:"";
+    const toolkit=m6Current.name==="frame"?"What's really at stake here is… · The question comes down to… · Let's be clear about what we're debating:":m6Current.name==="evidence"?"Going back to the study/report,… · The data show that… · As we saw in the video,…":m6Current.name==="steelman"?"The strongest version of that view is… · To be fair to that argument,… · And yet the problem is…":"Pulling the threads together,… · So where does that leave us? · On balance, the stronger case is…";
+    m6Screen.innerHTML=`<span class="ai4-feed-label">${label}</span><div class="ai4-question-top"><span>BOARD · CHECKPOINT ${m6Index+1}</span><b>${m6Index+1} / ${m6Current.items.length}</b></div>${evidence}<div class="ai4-board-toolkit"><span>LANGUAGE TOOLKIT</span><p>${toolkit}</p></div><h3 class="ai4-question">${it.q}</h3><div class="ai4-options">${it.opts.map((o,i)=>`<button class="ai4-option" type="button" data-m6-answer="${encodeURIComponent(o)}"><b>${String.fromCharCode(65+i)}</b> · ${o}</button>`).join("")}</div><div class="ai4-source-guardrail"><strong>Board rule:</strong> your political or ethical position is not being graded. Choose the option that best performs the requested argumentative function or stays closest to the supplied evidence.</div>`;
+    m6Screen.querySelectorAll("[data-m6-answer]").forEach(b=>b.addEventListener("click",answerM6));m6Screen.focus();
+  }
+
+  function answerM6(e) {
+    const it=m6Current.items[m6Index],chosen=decodeURIComponent(e.currentTarget.dataset.m6Answer),good=chosen===it.a;m6Attempts++;
+    m6Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m6Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
+    if(good){const pts=m6Attempts===1?10:6;m6SessionScore+=pts;state.mission6FirstTryScore+=pts;m6Feedback.className="ai4-feedback good";m6Feedback.innerHTML=`<strong>Argument function verified.</strong> ${it.ex}`;cue(true);}else{m6Feedback.className="ai4-feedback bad";m6Feedback.innerHTML=`<strong>Re-check the function or the source.</strong> ${it.ex}`;cue(false);}
+    save();const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m6Index===m6Current.items.length-1?"Clear board stage →":"Next board checkpoint →";next.addEventListener("click",()=>{m6Index++;m6Attempts=0;m6Feedback.textContent="";m6Feedback.className="ai4-feedback";renderM6();});m6Feedback.appendChild(document.createElement("br"));m6Feedback.appendChild(next);updateUI();
+  }
+
+  function completeM6Activity() {
+    state.mission6Completed[m6Current.name]=true;save();const i=M6_ORDER.indexOf(m6Current.name);const next=i<M6_ORDER.length-1?`${m6Meta[M6_ORDER[i+1]][0]} is now unlocked.`:"Mission 6 is complete. Your Accountability Brief and the final Day 4 clearance are ready.";
+    m6Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m6Meta[m6Current.name][0]} cleared</h3><p>Activity score: ${m6SessionScore}. ${next}</p></div>`;m6Feedback.textContent="";updateUI();
+  }
+
+
   $("startDay4Mission1").addEventListener("click",()=>start("lexicon"));
   document.querySelectorAll("[data-ai4-activity]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)start(b.dataset.ai4Activity);}));
   document.querySelectorAll("[data-ai4-m2]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM2(b.dataset.ai4M2);}));
   document.querySelectorAll("[data-ai4-m3]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM3(b.dataset.ai4M3);}));
   document.querySelectorAll("[data-ai4-m4]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM4(b.dataset.ai4M4);}));
   document.querySelectorAll("[data-ai4-m5]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM5(b.dataset.ai4M5);}));
+  document.querySelectorAll("[data-ai4-m6]").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled)startM6(b.dataset.ai4M6);}));
 
   $("day4SoundToggle").addEventListener("click",()=>{state.soundOff=!state.soundOff;save();updateUI();audioStatus.textContent=state.soundOff?"Sound effects and UK speech are off. Music is controlled separately.":"Sound effects and UK speech are on. Music is controlled separately.";});
   musicToggle.addEventListener("click",()=>{musicOn=!musicOn;localStorage.setItem(MUSIC_KEY,musicOn?"on":"off");applyMusicState(true);audioStatus.textContent=musicOn?"Music on. AI Clinical Control — Human in the Loop is playing.":"Music off. Sound effects and UK speech remain available.";});
 
-  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;m3Current=null;m4Current=null;m5Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div>';m3WorkspaceTitle.textContent="Override waiting";m3WorkspaceIntro.textContent="Clear Mission 2, then open Spot the Conflict.";m3Feedback.textContent="";m4Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div>';m4WorkspaceTitle.textContent="Scanner waiting";m4WorkspaceIntro.textContent="Clear Mission 3, then open Read the Numbers.";m4Feedback.textContent="";m5Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty calibrator locked</h3><p>Mission 4 clearance is required.</p></div>';m5WorkspaceTitle.textContent="Calibration waiting";m5WorkspaceIntro.textContent="Clear Mission 4, then open Set the Certainty Level.";m5Feedback.textContent="";updateUI();}});
+  $("resetDay4").addEventListener("click",()=>{if(confirm("Reset all Day 4 progress on this device?")){state=freshState();save();current=null;m2Current=null;m3Current=null;m4Current=null;m5Current=null;m6Current=null;if(clinicalVideo){clinicalVideo.pause();clinicalVideo.currentTime=0;}screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div>';workspaceTitle.textContent="System waiting";workspaceIntro.textContent="Boot Mission 1 to start the vocabulary clearance.";feedback.textContent="";m2Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div>';m2WorkspaceTitle.textContent="Feed waiting";m2WorkspaceIntro.textContent="Clear Mission 1, then start Feed Orientation.";m2Feedback.textContent="";m3Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div>';m3WorkspaceTitle.textContent="Override waiting";m3WorkspaceIntro.textContent="Clear Mission 2, then open Spot the Conflict.";m3Feedback.textContent="";m4Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div>';m4WorkspaceTitle.textContent="Scanner waiting";m4WorkspaceIntro.textContent="Clear Mission 3, then open Read the Numbers.";m4Feedback.textContent="";m5Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty calibrator locked</h3><p>Mission 4 clearance is required.</p></div>';m5WorkspaceTitle.textContent="Calibration waiting";m5WorkspaceIntro.textContent="Clear Mission 4, then open Set the Certainty Level.";m5Feedback.textContent="";m6Screen.innerHTML='<div class="ai4-waiting"><span aria-hidden="true">⚖️</span><h3>Accountability Board locked</h3><p>Mission 5 clearance is required.</p></div>';m6WorkspaceTitle.textContent="Board locked";m6WorkspaceIntro.textContent="Clear Mission 5, then open Frame the Issue.";m6Feedback.textContent="";updateUI();}});
 
   $("day4Mission2Button").addEventListener("click",()=>{if(!$("day4Mission2Button").disabled){$("day4Mission2").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 2 ready. Watch the supplied video, then open Feed Orientation.";}});
   $("day4Mission3Button").addEventListener("click",()=>{if(!$("day4Mission3Button").disabled){$("day4Mission3").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 3 ready. Open Spot the Conflict to start the human-review audit.";}});
   $("day4Mission4Button").addEventListener("click",()=>{if(!$("day4Mission4Button").disabled){$("day4Mission4").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 4 ready. Open Read the Numbers to begin the evidence audit.";}});
   $("day4Mission5Button").addEventListener("click",()=>{if(!$("day4Mission5Button").disabled){$("day4Mission5").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 5 ready. Open Set the Certainty Level to begin calibration.";}});
-  $("day4Mission6Button").addEventListener("click",()=>{if(!$("day4Mission6Button").disabled){audioStatus.textContent="Mission 6 · Accountability Board is unlocked and will be added in the next update.";}});
+  $("day4Mission6Button").addEventListener("click",()=>{if(!$("day4Mission6Button").disabled){$("day4Mission6").scrollIntoView({behavior:"smooth",block:"start"});audioStatus.textContent="Mission 6 ready. Open Frame the Issue to enter the Accountability Board.";}});
+  $("day4FinalButton").addEventListener("click",()=>{if(!$("day4FinalButton").disabled){$("day4FinalTeaser").scrollIntoView({behavior:"smooth",block:"center"});audioStatus.textContent="Final Day 4 clearance granted. Human-in-the-Loop Test is the next mission.";}});
+  $("newDay4BoardPrompt").addEventListener("click",()=>{if(!M6_ORDER.every(a=>state.mission6Completed[a]))return;state.boardPrompt=(Number(state.boardPrompt||0)+1)%boardPrompts.length;state.boardStance="";save();updateBoardBrief();cue(true);});
+  document.querySelectorAll("[data-ai4-stance]").forEach(b=>b.addEventListener("click",()=>{if(!M6_ORDER.every(a=>state.mission6Completed[a]))return;state.boardStance=b.dataset.ai4Stance;save();updateBoardBrief();cue(true);}));
 
   if (clinicalVideo) {
     clinicalVideo.addEventListener("play",()=>{

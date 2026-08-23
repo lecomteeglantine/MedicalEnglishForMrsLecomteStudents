@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v45.css">
+  <link rel="stylesheet" href="styles-v46.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -219,6 +219,67 @@
       <button id="day4Mission6Button" class="ai4-primary" type="button" disabled>🔒 Mission 6 · Accountability Board</button>
     </section>
 
+
+
+    <section id="day4Mission6" class="ai4-board ai4-mission6 is-locked" aria-labelledby="ai4Mission6Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 06</p><h2 id="ai4Mission6Title">Mission 6 · Accountability Board</h2><p>Three difficult questions, one rule: <strong>your opinion is never the answer key</strong>. The scored work is how well you frame the issue, use evidence, represent the other side fairly and reach a qualified verdict.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 6 PROGRESS</span><strong id="day4Mission6ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission6ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-board-statements" aria-label="The three debate statements from the Day 4 worksheet">
+        <article><span>BOARD CASE 01</span><p>“In ten years, AI will diagnose patients better than doctors.”</p></article>
+        <article><span>BOARD CASE 02</span><p>“If an AI makes a diagnostic error, the doctor — not the AI company — should be held responsible.”</p></article>
+        <article><span>BOARD CASE 03</span><p>“Patients should always be told when AI is involved in their diagnosis or treatment.”</p></article>
+      </div>
+
+      <div class="ai4-opinion-notice" role="note"><strong>⚖️ No opinion is marked right or wrong.</strong><span>The score checks argument structure, source use, fair counterargument and calibrated conclusions.</span></div>
+
+      <div class="ai4-evidence-record" role="note" aria-label="Evidence on record from the supplied Day 4 article">
+        <div><span>FAST TRIAGE</span><strong>67% vs 50–55%</strong><small>AI vs doctors in one text-record experiment</small></div>
+        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference reported as not statistically significant</small></div>
+        <div><span>LIMITATION</span><strong>Text records only</strong><small>appearance and distress were not tested</small></div>
+        <div><span>ACCOUNTABILITY</span><strong>No formal framework</strong><small>the article presents responsibility as unresolved</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m6-grid">
+        <button class="ai4-activity-card" data-ai4-m6="frame" type="button" disabled><span class="ai4-card-number">01</span><div class="ai4-board-icon" aria-hidden="true">◉</div><div><small>FRAME THE CASE</small><strong>Frame the Issue</strong><p>Define what is really being debated without prejudging the answer.</p><b id="ai4M6StatusFrame">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="evidence" type="button" disabled><span class="ai4-card-number">02</span><div class="ai4-board-icon" aria-hidden="true">▤</div><div><small>EVIDENCE ON RECORD</small><strong>Build the Case</strong><p>Use only claims and limitations actually supported by the Day 4 material.</p><b id="ai4M6StatusEvidence">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="steelman" type="button" disabled><span class="ai4-card-number">03</span><div class="ai4-board-icon" aria-hidden="true">⇄</div><div><small>OTHER SIDE</small><strong>Steelman It</strong><p>Represent an opposing view fairly before you challenge it.</p><b id="ai4M6StatusSteelman">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="verdict" type="button" disabled><span class="ai4-card-number">04</span><div class="ai4-board-icon" aria-hidden="true">⚖</div><div><small>FINAL VERDICT</small><strong>Reach a Balanced Position</strong><p>Synthesise the evidence and finish with a clear, qualified conclusion.</p><b id="ai4M6StatusVerdict">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m6-workspace" aria-labelledby="ai4M6WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACCOUNTABILITY BOARD</p><h2 id="ai4M6WorkspaceTitle">Board locked</h2><p id="ai4M6WorkspaceIntro">Clear Mission 5, then open Frame the Issue.</p></div><div class="ai4-score-box"><span>MISSION 6 SCORE</span><strong id="day4Mission6Score">0</strong></div></div>
+        <div id="ai4M6Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">⚖️</span><h3>Accountability Board locked</h3><p>Mission 5 clearance is required.</p></div></div>
+        <div id="ai4M6Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission6Complete" class="ai4-completion ai4-m6-complete is-locked" aria-labelledby="day4M6CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">⚖️</div>
+      <div><p class="ai4-kicker dark">MISSION 06 CLEARANCE</p><h2 id="day4M6CompleteTitle">Accountability Board is not cleared yet.</h2><p id="day4M6CompleteText">Complete all four argument stages.</p></div>
+      <button id="day4FinalButton" class="ai4-primary" type="button" disabled>🔒 FINAL · Human-in-the-Loop Test</button>
+    </section>
+
+    <section id="day4BoardBrief" class="ai4-board-brief is-locked" aria-labelledby="ai4BoardBriefTitle">
+      <div class="ai4-board-brief-head"><div><p class="ai4-kicker dark">UNSCORED SPEAKING TRANSFER</p><h2 id="ai4BoardBriefTitle">Your 60-second Accountability Brief</h2><p>Choose any position. The site grades none of your opinions — use the structure to prepare a spoken response.</p></div><button id="newDay4BoardPrompt" class="ai4-secondary" type="button">↻ New board case</button></div>
+      <blockquote id="day4BoardPromptText">Complete Mission 6 to draw a board case.</blockquote>
+      <div class="ai4-stance-row" aria-label="Choose a position"><button type="button" data-ai4-stance="Agree">Agree</button><button type="button" data-ai4-stance="Disagree">Disagree</button><button type="button" data-ai4-stance="Qualified / mixed position">Qualified / mixed</button></div>
+      <div class="ai4-brief-template">
+        <article><b>FRAME</b><span>What's really at stake here is… / The question comes down to…</span></article>
+        <article><b>EVIDENCE</b><span>Going back to the study/report,… / The data show that…</span></article>
+        <article><b>OTHER SIDE</b><span>The strongest version of that view is… / To be fair to that argument,…</span></article>
+        <article><b>VERDICT</b><span>Pulling the threads together,… / On balance, the stronger case is…</span></article>
+      </div>
+      <p id="day4StanceStatus" class="ai4-stance-status">Choose any position. Your viewpoint is not scored.</p>
+    </section>
+
+    <section id="day4FinalTeaser" class="ai4-final-teaser is-locked" aria-labelledby="day4FinalTeaserTitle">
+      <div><span>FINAL CLEARANCE</span><h2 id="day4FinalTeaserTitle">Human-in-the-Loop Test</h2><p>One new fictional case. Ten mixed checkpoints. Vocabulary, video, AI limits, silent letters, evidence, calibration and accountability.</p></div>
+      <b>FINAL · READY FOR NEXT UPDATE</b>
+    </section>
+
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
       <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
       <div class="ai4-roadmap-grid">
@@ -228,7 +289,7 @@
         <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
         <div id="ai4RoadmapM5" class="ai4-roadmap-card"><span id="ai4RoadmapM5State">05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
         <div id="ai4RoadmapM6" class="ai4-roadmap-card"><span id="ai4RoadmapM6State">06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
-        <div class="ai4-roadmap-card"><span>FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
+        <div id="ai4RoadmapFinal" class="ai4-roadmap-card"><span id="ai4RoadmapFinalState">FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
       </div>
       <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
     </section>
