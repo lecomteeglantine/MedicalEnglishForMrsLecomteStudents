@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 4 · AI Clinical Control</title>
-  <link rel="stylesheet" href="styles-v44.css">
+  <link rel="stylesheet" href="styles-v45.css">
 </head>
 <body class="ai4-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -186,6 +186,39 @@
       <button id="day4Mission5Button" class="ai4-primary" type="button" disabled>🔒 Mission 5 · Certainty Calibration</button>
     </section>
 
+    <section id="day4Mission5" class="ai4-board ai4-mission5 is-locked" aria-labelledby="ai4Mission5Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 05</p><h2 id="ai4Mission5Title">Mission 5 · Certainty Calibration</h2><p>Clinical and scientific language should match the strength of the evidence. Calibrate each claim so it is clear, precise and no more certain than the data allow.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 5 PROGRESS</span><strong id="day4Mission5ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission5ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-calibration-panel" role="note" aria-label="Certainty calibration guide">
+        <div><span>STRONG DEDUCTION</span><strong>must · can’t</strong><small>Use when the evidence strongly supports or rules out an explanation.</small></div>
+        <div><span>POSSIBILITY</span><strong>may · might · could</strong><small>Use when the evidence allows an explanation but does not prove it.</small></div>
+        <div><span>PREDICTION</span><strong>will · won’t</strong><small>Use for a prediction stated with confidence.</small></div>
+        <div><span>LIKELIHOOD</span><strong>is likely to · is unlikely to</strong><small>Use when you want to calibrate a prediction more cautiously.</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m5-grid">
+        <button class="ai4-activity-card" data-ai4-m5="dial" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI display used for a certainty calibration activity."><div><small>CONFIDENCE DIAL</small><strong>Set the Certainty Level</strong><p>Choose the modal that matches what the evidence actually supports.</p><b id="ai4M5StatusDial">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="overclaim" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor checking the strength of an AI claim."><div><small>CLAIM CONTROL</small><strong>Overclaiming Detector</strong><p>Flag wording that is too strong — or too weak — for the evidence.</p><b id="ai4M5StatusOverclaim">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="future" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical team considering future uses of AI."><div><small>MEDICINE 2035</small><strong>Prediction Language</strong><p>Use will, won’t, likely, unlikely and possibility modals accurately.</p><b id="ai4M5StatusFuture">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="claim" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Evidence display for choosing a calibrated scientific claim."><div><small>EVIDENCE → CLAIM</small><strong>Calibrate the Conclusion</strong><p>Turn a result or limitation into careful scientific English.</p><b id="ai4M5StatusClaim">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m5-workspace" aria-labelledby="ai4M5WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">CERTAINTY CONSOLE</p><h2 id="ai4M5WorkspaceTitle">Calibration waiting</h2><p id="ai4M5WorkspaceIntro">Clear Mission 4, then open Set the Certainty Level.</p></div><div class="ai4-score-box"><span>MISSION 5 SCORE</span><strong id="day4Mission5Score">0</strong></div></div>
+        <div id="ai4M5Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty calibrator locked</h3><p>Mission 4 clearance is required.</p></div></div>
+        <div id="ai4M5Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission5Complete" class="ai4-completion ai4-m5-complete is-locked" aria-labelledby="day4M5CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🎚️</div>
+      <div><p class="ai4-kicker dark">MISSION 05 CLEARANCE</p><h2 id="day4M5CompleteTitle">Certainty Calibration is not cleared yet.</h2><p id="day4M5CompleteText">Complete all four calibration activities.</p></div>
+      <button id="day4Mission6Button" class="ai4-primary" type="button" disabled>🔒 Mission 6 · Accountability Board</button>
+    </section>
+
     <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
       <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
       <div class="ai4-roadmap-grid">
@@ -194,7 +227,7 @@
         <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
         <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
         <div id="ai4RoadmapM5" class="ai4-roadmap-card"><span id="ai4RoadmapM5State">05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
-        <div class="ai4-roadmap-card"><span>06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
+        <div id="ai4RoadmapM6" class="ai4-roadmap-card"><span id="ai4RoadmapM6State">06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
         <div class="ai4-roadmap-card"><span>FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
       </div>
       <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
