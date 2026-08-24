@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
   <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
-  <link rel="stylesheet" href="styles-v49.css">
+  <link rel="stylesheet" href="styles-v50.css">
 </head>
 <body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -56,7 +56,7 @@
         <li id="day5Route1" class="is-current"><b>01</b><span><strong>Meet the Pilots</strong><small>First impressions + review criteria</small></span></li>
         <li id="day5Route2"><b>02</b><span><strong>Reality Intelligence</strong><small>CBS + article + research evidence</small></span></li>
         <li id="day5Route3"><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
-        <li><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
+        <li id="day5Route4"><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
         <li><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
         <li><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
         <li><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
@@ -167,8 +167,43 @@
       <button id="day5Mission3Button" class="stream5-primary" type="button" disabled>🔒 Mission 3 · Script Audit</button>
     </section>
 
+    <section id="day5Mission3" class="stream5-script-audit is-locked" aria-labelledby="scriptAuditTitle">
+      <div class="stream5-section-head stream5-board-head">
+        <div>
+          <p class="stream5-kicker dark">REVIEW BOARD · MISSION 03</p>
+          <h2 id="scriptAuditTitle">Script Audit</h2>
+          <p>The evidence deck is open. Audit fictional scenes from all four pilots and decide whether each one is <strong>plausible, dramatised, unrealistic or dependent on context</strong>. Do not diagnose patients: review how television represents medical work.</p>
+        </div>
+        <div class="stream5-progress-card">
+          <span>SCENES AUDITED</span><strong id="day5AuditText">0 / 16</strong>
+          <div class="stream5-progress-track"><i id="day5AuditBar"></i></div>
+        </div>
+      </div>
+
+      <div class="stream5-audit-grid" aria-label="Pilots under audit">
+        <article class="stream5-audit-show stream5-audit-trauma"><span>PILOT 01</span><strong>Trauma Bay</strong><small>Emergency pace, resuscitation and compressed timelines.</small></article>
+        <article class="stream5-audit-show stream5-audit-diagnosis"><span>PILOT 02</span><strong>The Diagnosis</strong><small>Diagnostic puzzles, rare conditions and certainty.</small></article>
+        <article class="stream5-audit-show stream5-audit-ward"><span>PILOT 03</span><strong>Ward 17</strong><small>Teamwork, routine care, handovers and communication.</small></article>
+        <article class="stream5-audit-show stream5-audit-knife"><span>PILOT 04</span><strong>Under the Knife</strong><small>Surgical teamwork, consent and dramatic compression.</small></article>
+      </div>
+
+      <div class="stream5-audit-legend" aria-label="Script Audit verdicts">
+        <span><b>PLAUSIBLE</b> compatible with the evidence and credible as shown</span>
+        <span><b>DRAMATISED</b> recognisable medicine compressed or intensified for television</span>
+        <span><b>UNREALISTIC</b> conflicts with the review evidence or badly distorts roles/workflow</span>
+        <span><b>DEPENDS</b> not enough context for a confident verdict</span>
+      </div>
+      <button id="startScriptAudit" class="stream5-primary" type="button" disabled>🔒 Clear Reality Intelligence first</button>
+    </section>
+
+    <section id="day5Mission3Complete" class="stream5-completion is-locked" aria-labelledby="day5M3CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">🎬</div>
+      <div><p class="stream5-kicker dark">MISSION 03 CLEARANCE</p><h2 id="day5M3CompleteTitle">Script room not cleared yet.</h2><p id="day5M3CompleteText">Audit all 16 scenes.</p></div>
+      <button id="day5Mission4Button" class="stream5-primary" type="button" disabled>🔒 Mission 4 · What TV Leaves Out</button>
+    </section>
+
     <section class="stream5-next-preview" aria-labelledby="nextReviewTitle">
-      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 3 · Script Audit</h2><p>Now that you have source evidence, the board can inspect fictional scenes and decide what is plausible, dramatised, unrealistic or dependent on context.</p><div id="day5Mission3LockChip" class="stream5-lock-chip">🔒 Script room locked</div>
+      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 4 · What TV Leaves Out</h2><p>Once the scripts are audited, the board will investigate everything medical drama tends to hide: charting, calls, waiting, handovers, routine monitoring, follow-up and the less glamorous work that keeps care moving.</p><div id="day5Mission4LockChip" class="stream5-lock-chip">🔒 Production reality desk locked</div>
     </section>
   </main>
 
