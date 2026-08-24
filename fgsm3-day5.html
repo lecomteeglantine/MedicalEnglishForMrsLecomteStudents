@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
   <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
-  <link rel="stylesheet" href="styles-v48.css">
+  <link rel="stylesheet" href="styles-v49.css">
 </head>
 <body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -51,11 +51,11 @@
     </section>
 
     <section class="stream5-route" aria-labelledby="stream5RouteTitle">
-      <div class="stream5-section-head"><div><p class="stream5-kicker dark">THE COMMISSION</p><h2 id="stream5RouteTitle">Your review route</h2><p>First impressions come first. Evidence from the class video and article will be used in the next review stages.</p></div></div>
+      <div class="stream5-section-head"><div><p class="stream5-kicker dark">THE COMMISSION</p><h2 id="stream5RouteTitle">Your review route</h2><p>First impressions come first. Mission 2 uses a CBS video report, a Cleveland Clinic article and a university research summary as the evidence base for the next review stages.</p></div></div>
       <ol class="stream5-route-list">
-        <li class="is-current"><b>01</b><span><strong>Meet the Pilots</strong><small>First impressions + review criteria</small></span></li>
-        <li><b>02</b><span><strong>Reality Intelligence</strong><small>Video evidence</small></span></li>
-        <li><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
+        <li id="day5Route1" class="is-current"><b>01</b><span><strong>Meet the Pilots</strong><small>First impressions + review criteria</small></span></li>
+        <li id="day5Route2"><b>02</b><span><strong>Reality Intelligence</strong><small>CBS + article + research evidence</small></span></li>
+        <li id="day5Route3"><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
         <li><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
         <li><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
         <li><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
@@ -113,8 +113,62 @@
       <button id="day5Mission2Button" class="stream5-primary" type="button" disabled>🔒 Mission 2 · Reality Intelligence</button>
     </section>
 
+    <section id="day5Mission2" class="stream5-reality is-locked" aria-labelledby="realityTitle">
+      <div class="stream5-section-head stream5-board-head">
+        <div>
+          <p class="stream5-kicker dark">REVIEW BOARD · MISSION 02</p>
+          <h2 id="realityTitle">Reality Intelligence</h2>
+          <p>Build an evidence deck before you audit the pilots. Your job is not to decide whether medical TV is “good” or “bad” — it is to identify exactly what each source supports.</p>
+        </div>
+        <div class="stream5-progress-card">
+          <span>EVIDENCE CARDS</span><strong id="day5EvidenceText">0 / 15</strong>
+          <div class="stream5-progress-track"><i id="day5EvidenceBar"></i></div>
+        </div>
+      </div>
+
+      <div class="stream5-source-grid">
+        <article class="stream5-source-card source-cbs">
+          <div class="stream5-source-icon">▶</div>
+          <p class="stream5-tagline">VIDEO · CBS PITTSBURGH · 10 JUNE 2025 · 3:34</p>
+          <h3>How accurate is <em>The Pitt</em>?</h3>
+          <p>An emergency physician explains why the series has earned praise for accuracy: medical experts on set, credible language and procedures, and storylines informed by real clinical experience.</p>
+          <a class="stream5-source-link" href="https://www.cbsnews.com/pittsburgh/video/how-accurate-is-the-pitt-a-upmc-doctor-weighs-in/" target="_blank" rel="noopener">Watch the CBS source ↗</a>
+        </article>
+        <article class="stream5-source-card source-cleveland">
+          <div class="stream5-source-icon">📰</div>
+          <p class="stream5-tagline">ARTICLE · CLEVELAND CLINIC · 27 NOVEMBER 2024</p>
+          <h3>How Accurate Are Medical TV Shows?</h3>
+          <p>A family medicine specialist explains how medical dramas simplify real hospital work, exaggerate errors and roles, yet often use genuine medical terminology.</p>
+          <a class="stream5-source-link" href="https://health.clevelandclinic.org/are-medical-tv-shows-accurate" target="_blank" rel="noopener">Read the Cleveland Clinic article ↗</a>
+        </article>
+        <article class="stream5-source-card source-research">
+          <div class="stream5-source-icon">🔬</div>
+          <p class="stream5-tagline">RESEARCH SIGNAL · WITTEN/HERDECKE UNIVERSITY · 7 APRIL 2025</p>
+          <h3>TV series vs reality</h3>
+          <p>A doctoral project analysing more than 300 episodes reports substantial differences between television and reality in depictions of illness, death and intensive care.</p>
+          <a class="stream5-source-link" href="https://www.uni-wh.de/en/tv-series-vs-reality" target="_blank" rel="noopener">Read the university summary ↗</a>
+        </article>
+      </div>
+
+      <div class="stream5-reality-legend" aria-label="Reality Intelligence verdicts">
+        <span><b>SUPPORTED</b> the source says this</span>
+        <span><b>CONTRADICTED</b> the source says the opposite</span>
+        <span><b>NOT STATED</b> the source does not tell us</span>
+        <span><b>OVERCLAIM</b> the claim goes beyond the evidence</span>
+      </div>
+
+      <p class="stream5-source-note">Source links open on the original publishers’ websites and require an internet connection. The evidence game itself remains available in the site after caching.</p>
+      <button id="startRealityCheck" class="stream5-primary" type="button" disabled>🔒 Complete Mission 1 first</button>
+    </section>
+
+    <section id="day5Mission2Complete" class="stream5-completion is-locked" aria-labelledby="day5M2CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">📡</div>
+      <div><p class="stream5-kicker dark">MISSION 02 CLEARANCE</p><h2 id="day5M2CompleteTitle">Evidence feed not cleared yet.</h2><p id="day5M2CompleteText">Collect all 15 evidence cards.</p></div>
+      <button id="day5Mission3Button" class="stream5-primary" type="button" disabled>🔒 Mission 3 · Script Audit</button>
+    </section>
+
     <section class="stream5-next-preview" aria-labelledby="nextReviewTitle">
-      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 2 · Reality Intelligence</h2><p>The next mission will turn the class video into an evidence deck: what medical TV gets right, what it exaggerates and what it leaves out.</p><div class="stream5-lock-chip">🔒 Evidence feed locked</div>
+      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 3 · Script Audit</h2><p>Now that you have source evidence, the board can inspect fictional scenes and decide what is plausible, dramatised, unrealistic or dependent on context.</p><div id="day5Mission3LockChip" class="stream5-lock-chip">🔒 Script room locked</div>
     </section>
   </main>
 
