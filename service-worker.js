@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v54-day5-greenlight-final-20260824";
+const CACHE_NAME = "mrs-lecomte-medical-english-v55-grammar-pronunciation-20260824";
 
 const APP_SHELL = [
   "./",
@@ -6,6 +6,8 @@ const APP_SHELL = [
   "./dictionary.html",
   "./fgsm2.html",
   "./fgsm3.html",
+  "./grammar.html",
+  "./pronunciation.html",
   "./fgsm2-day1.html",
   "./fgsm2-day2.html",
   "./fgsm2-day3.html",
@@ -64,6 +66,8 @@ const APP_SHELL = [
   "./styles-v52.css",
   "./styles-v53.css",
   "./styles-v54.css",
+  "./styles-v55.css",
+  "./review-v55.js",
   "./fgsm3-day5-game.js",
   "./fgsm3-day1-game.js",
   "./fgsm3-day2-game.js",
