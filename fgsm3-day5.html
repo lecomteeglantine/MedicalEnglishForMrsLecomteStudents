@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
   <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
-  <link rel="stylesheet" href="styles-v52.css">
+  <link rel="stylesheet" href="styles-v53.css">
 </head>
 <body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -59,7 +59,7 @@
         <li id="day5Route4"><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
         <li id="day5Route5"><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
         <li id="day5Route6"><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
-        <li><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
+        <li id="day5RouteFinal"><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
       </ol>
     </section>
 
@@ -284,8 +284,44 @@
       <button id="day5Mission6Button" class="stream5-primary" type="button" disabled>🔒 Mission 6 · Notes for the Writers</button>
     </section>
 
-    <section id="day5Mission6Preview" class="stream5-next-preview" aria-labelledby="nextReviewTitle">
-      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 6 · Notes for the Writers</h2><p>The ratings are in. Now the writers want actionable notes: what should they <strong>KEEP, CHANGE, CUT or ADD CONTEXT</strong> before the pilots return to the Greenlight Room?</p><div id="day5Mission6LockChip" class="stream5-lock-chip">🔒 Writers' room locked</div>
+    <section id="day5Mission6" class="stream5-writers-room is-locked" aria-labelledby="writersRoomTitle">
+      <div class="stream5-section-head stream5-writers-head">
+        <div>
+          <p class="stream5-kicker dark">WRITERS’ ROOM · MISSION 06</p>
+          <h2 id="writersRoomTitle">Notes for the Writers</h2>
+          <p>The platform has the ratings. Now make them useful. For each scene, decide whether the production should <strong>KEEP, CHANGE, CUT or ADD CONTEXT</strong> — then phrase the note like a professional medical consultant.</p>
+        </div>
+        <div class="stream5-progress-card">
+          <span>WRITER NOTES</span><strong id="day5WritersText">0 / 20</strong>
+          <div class="stream5-progress-track"><i id="day5WritersBar"></i></div>
+        </div>
+      </div>
+
+      <div class="stream5-writers-actions" aria-label="Four types of production note">
+        <div class="keep"><b>KEEP</b><span>Accurate or useful drama. Preserve it.</span></div>
+        <div class="change"><b>CHANGE</b><span>The idea can stay, but the execution needs revision.</span></div>
+        <div class="cut"><b>CUT</b><span>The element actively misleads and adds little value.</span></div>
+        <div class="context"><b>ADD CONTEXT</b><span>Keep the dramatic beat, but restore missing clinical reality.</span></div>
+      </div>
+
+      <div class="stream5-writers-brief">
+        <div><span>01</span><strong>Protect the drama</strong><p>Do not sterilise the script. Medical realism and entertainment can coexist.</p></div>
+        <div><span>02</span><strong>Name the problem</strong><p>Timing? Teamwork? Communication? Ethics? Missing uncertainty?</p></div>
+        <div><span>03</span><strong>Give an actionable note</strong><p>Tell the writers what to change, not merely that something feels wrong.</p></div>
+        <div><span>04</span><strong>Use consultant language</strong><p>“Consider…”, “Could we…?”, “Avoid implying…”, “This may work better if…”</p></div>
+      </div>
+
+      <button id="startWritersRoom" class="stream5-primary" type="button" disabled>🔒 Clear Ratings Department first</button>
+    </section>
+
+    <section id="day5Mission6Complete" class="stream5-completion is-locked" aria-labelledby="day5M6CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">📝</div>
+      <div><p class="stream5-kicker dark">MISSION 06 CLEARANCE</p><h2 id="day5M6CompleteTitle">Writers’ room not cleared yet.</h2><p id="day5M6CompleteText">Deliver all 20 production notes.</p></div>
+      <button id="day5FinalButton" class="stream5-primary" type="button" disabled>🔒 FINAL · Greenlight Meeting</button>
+    </section>
+
+    <section id="day5FinalPreview" class="stream5-next-preview stream5-greenlight-preview" aria-labelledby="nextReviewTitle">
+      <p class="stream5-kicker">SEASON FINALE</p><h2 id="nextReviewTitle">FINAL · Greenlight Meeting</h2><p>The four pilots are coming back to the board. You will have to defend a final commissioning decision using the evidence, ratings and writer notes you collected across Day 5.</p><div id="day5FinalLockChip" class="stream5-lock-chip">🔒 Greenlight Room locked</div>
     </section>
   </main>
 

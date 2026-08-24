@@ -42,7 +42,15 @@
     ratingsIndex:0,
     ratingsOrder:[],
     ratingsAnsweredIds:[],
-    mission5:false
+    mission5:false,
+    writersDone:false,
+    writersScore:0,
+    writersFirstTry:0,
+    writersIndex:0,
+    writersOrder:[],
+    writersAnsweredIds:[],
+    writersNotes:{},
+    mission6:false
   };
   let state = load();
   let currentQuestions = [];
@@ -57,6 +65,8 @@
   let invisibleLocked = false;
   let ratingsFirstAttempt = true;
   let ratingsLocked = false;
+  let writersFirstAttempt = true;
+  let writersLocked = false;
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
 
   const pilots = {
@@ -207,6 +217,33 @@
     {id:"rc12",q:"What is the Ratings Department actually trying to produce?",a:"A transparent evidence-based profile across several dimensions, not one vague 'realistic/unrealistic' verdict",opts:["A transparent evidence-based profile across several dimensions, not one vague 'realistic/unrealistic' verdict","A list of favourite actors","A medical diagnosis for each fictional patient","One entertainment score that replaces all other criteria"],ex:"The point of the board is multidimensional evaluation grounded in evidence."}
   ];
 
+  const writersQuestions = [
+    {id:"wr1",phase:"DECISION",show:"Trauma Bay",scene:"A nurse gives a concise handover using the patient's observations, treatment so far and the main concern before the next clinician takes over.",a:"KEEP",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The handover adds believable teamwork and can stay without slowing the episode."},
+    {id:"wr2",phase:"DECISION",show:"Trauma Bay",scene:"A patient arrives with non-specific symptoms. Within 20 seconds, one doctor announces a rare diagnosis with absolute certainty before any examination or test.",a:"CHANGE",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The dramatic beat can remain, but the certainty and speed should be revised to show uncertainty, examination or investigation."},
+    {id:"wr3",phase:"DECISION",show:"Trauma Bay",scene:"The lead doctor personally triages the patient, takes blood, performs imaging, dispenses medication, updates the family and completes every record while the rest of the team disappears.",a:"ADD CONTEXT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The character can remain central, but the script needs visible team roles so one doctor does not appear to do an entire department's work."},
+    {id:"wr4",phase:"DECISION",show:"Trauma Bay",scene:"For a joke, a clinician shouts a patient's confidential test result across a crowded waiting room. The disclosure has no later consequence and is not needed for the plot.",a:"CUT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The gag misrepresents confidentiality and contributes little. Removing it is cleaner than trying to justify it."},
+
+    {id:"wr5",phase:"DECISION",show:"The Diagnosis",scene:"The consultant says, “We need more information before we can rule anything out,” then asks the team for alternative explanations.",a:"KEEP",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"This preserves drama while modelling uncertainty and collaborative reasoning."},
+    {id:"wr6",phase:"DECISION",show:"The Diagnosis",scene:"A doctor recognises an extremely rare condition from one symptom, says there is no need for tests and the diagnosis is treated as proven immediately.",a:"CHANGE",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"Keep the diagnostic reveal if the writers want it, but build a credible route to it and avoid presenting a hunch as proof."},
+    {id:"wr7",phase:"DECISION",show:"The Diagnosis",scene:"A montage jumps from ordering several tests to discussing the results. The exact waiting time is not shown.",a:"ADD CONTEXT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"Compression is normal television grammar. A small cue that time has passed can protect realism without losing pace."},
+    {id:"wr8",phase:"DECISION",show:"The Diagnosis",scene:"A fictional handheld device instantly identifies every disease from a fingerprint. The technology is presented as standard hospital equipment and is not important to the plot.",a:"CUT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"If the invented technology is neither signposted as fictional nor narratively necessary, it creates avoidable misinformation."},
+
+    {id:"wr9",phase:"DECISION",show:"Ward 17",scene:"The episode spends 35 seconds on a structured multidisciplinary handover before the next storyline begins.",a:"KEEP",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"A short handover makes team care visible and can also move the story forward efficiently."},
+    {id:"wr10",phase:"DECISION",show:"Ward 17",scene:"Across an entire shift, nobody writes notes, checks records, calls another service or arranges follow-up, although several complex cases are managed.",a:"ADD CONTEXT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The episode does not need to show every task, but one or two cues can restore the invisible work that television often removes."},
+    {id:"wr11",phase:"DECISION",show:"Ward 17",scene:"A doctor gives detailed information about an adult patient's diagnosis to a relative without checking what the patient has consented to share.",a:"CHANGE",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The relationship scene can stay, but the script should handle consent and confidentiality more carefully."},
+    {id:"wr12",phase:"DECISION",show:"Ward 17",scene:"A junior doctor repeatedly ignores nurses' warnings solely so the character can look rebellious. The behaviour never affects the story and is forgotten by the next scene.",a:"CUT",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The device weakens teamwork realism without serving the plot. Cutting it is more useful than normalising it."},
+
+    {id:"wr13",phase:"DECISION",show:"Under the Knife",scene:"Before surgery, the team pauses for a safety check, confirms the procedure and briefly clarifies roles.",a:"KEEP",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"This is a compact way to show that surgery is organised team care."},
+    {id:"wr14",phase:"DECISION",show:"Under the Knife",scene:"For a heroic visual, the surgeon performs a complex operation completely alone in an otherwise empty operating theatre.",a:"CHANGE",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The star can remain visually central, but the wider surgical team should not disappear."},
+    {id:"wr15",phase:"DECISION",show:"Under the Knife",scene:"A two-hour operation is represented by a 45-second montage with a clear time transition before the patient reaches recovery.",a:"KEEP",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"Editorial compression is not automatically misinformation when the sequence clearly signals that time has passed."},
+    {id:"wr16",phase:"DECISION",show:"Under the Knife",scene:"A surgeon promises, “This operation will cure you. There is no risk,” although the scene gives no basis for absolute certainty.",a:"CHANGE",opts:["KEEP","CHANGE","CUT","ADD CONTEXT"],ex:"The scene needs calibrated language and a more credible consent discussion; absolute guarantees are the problem."},
+
+    {id:"wr17",phase:"CONSULTANT LANGUAGE",show:"All pilots",scene:"The writers want to keep a fast diagnostic reveal. Which production note sounds most useful and professional?",a:"Could we keep the reveal but add one brief line showing what evidence changed the team's thinking?",opts:["Could we keep the reveal but add one brief line showing what evidence changed the team's thinking?","This diagnosis is ridiculous. Rewrite the whole thing.","Doctors never make fast decisions, so delete the scene.","Make it more medical somehow."],ex:"A consultant note should be specific, actionable and collaborative rather than dismissive."},
+    {id:"wr18",phase:"CONSULTANT LANGUAGE",show:"All pilots",scene:"A scene compresses several hours of waiting into a montage. Which note is best calibrated?",a:"The compression works for pace; consider adding a visual or dialogue cue that time has passed.",opts:["The compression works for pace; consider adding a visual or dialogue cue that time has passed.","Never compress time in a medical drama.","This is completely realistic because montages are allowed.","Cut all waiting from the episode."],ex:"The note protects the storytelling choice while addressing the specific realism risk."},
+    {id:"wr19",phase:"CONSULTANT LANGUAGE",show:"All pilots",scene:"One character appears to do the work of an entire multidisciplinary team. Which note gives the writers a practical fix?",a:"Avoid implying that one doctor handles every task; a short handover or visible team member could restore the wider care team.",opts:["Avoid implying that one doctor handles every task; a short handover or visible team member could restore the wider care team.","Hospitals have lots of staff.","The scene is fake.","Add ten new speaking characters to every scene."],ex:"The strongest note identifies the misleading implication and proposes a low-cost way to correct it."},
+    {id:"wr20",phase:"CONSULTANT LANGUAGE",show:"All pilots",scene:"A dramatic line states a clinical conclusion more strongly than the scene's evidence supports. Which note best models careful medical English?",a:"This may work better if the dialogue signals uncertainty — for example, “This could be…” rather than presenting the diagnosis as certain.",opts:["This may work better if the dialogue signals uncertainty — for example, “This could be…” rather than presenting the diagnosis as certain.","Doctors should never sound confident.","Replace every modal verb with 'must'.","The line is wrong because television is not medicine."],ex:"The note links the rewrite to the level of evidence and gives the writers usable language."}
+  ];
+
   function $(id){return document.getElementById(id);}
   function load(){try{return {...defaultState,...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch(e){return {...defaultState};}}
   function save(){localStorage.setItem(KEY,JSON.stringify(state)); updateUI();}
@@ -338,28 +375,52 @@
 
     const m5Complete=$("day5Mission5Complete");
     const m6Button=$("day5Mission6Button");
+    const m6=$("day5Mission6");
+    const startWriters=$("startWritersRoom");
     if(state.mission5){
       m5Complete.classList.remove("is-locked");
       $("day5M5CompleteTitle").textContent="Ratings Department cleared.";
       $("day5M5CompleteText").textContent=`Four evidence-based reviews saved. Board Calibration: ${state.ratingsScore}/${ratingsCalibrationQuestions.length*10}.`;
-      m6Button.disabled=false;m6Button.textContent="Open Mission 6 · Notes for the Writers →";
-      $("day5Mission6LockChip").textContent="✓ Writers' room ready";
+      m6Button.disabled=false;m6Button.textContent=state.mission6?"✓ Mission 6 · Notes for the Writers cleared":"Open Mission 6 · Notes for the Writers →";
+      m6.classList.remove("is-locked");
+      startWriters.disabled=false;startWriters.textContent=state.mission6?"✓ Writers’ Room cleared":"Enter the Writers’ Room →";
     }else{
       m5Complete.classList.add("is-locked");
       $("day5M5CompleteTitle").textContent="Ratings Department not cleared yet.";
       $("day5M5CompleteText").textContent="Re-rate all four pilots and clear Board Calibration.";
       m6Button.disabled=true;m6Button.textContent="🔒 Mission 6 · Notes for the Writers";
-      $("day5Mission6LockChip").textContent="🔒 Writers' room locked";
+      m6.classList.add("is-locked");
+      startWriters.disabled=true;startWriters.textContent="🔒 Clear Ratings Department first";
     }
 
-    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5"),r6=$("day5Route6");
-    [r1,r2,r3,r4,r5,r6].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
+    const writersCount=Math.min((state.writersAnsweredIds||[]).length,writersQuestions.length);
+    $("day5WritersText").textContent=`${writersCount} / ${writersQuestions.length}`;
+    $("day5WritersBar").style.width=`${(writersCount/writersQuestions.length)*100}%`;
+    const m6Complete=$("day5Mission6Complete");
+    const finalButton=$("day5FinalButton");
+    if(state.mission6){
+      m6Complete.classList.remove("is-locked");
+      $("day5M6CompleteTitle").textContent="Writers’ Room cleared.";
+      $("day5M6CompleteText").textContent=`You delivered all ${writersQuestions.length} production notes and scored ${state.writersScore}/${writersQuestions.length*10}.`;
+      finalButton.disabled=false;finalButton.textContent="Open FINAL · Greenlight Meeting →";
+      $("day5FinalLockChip").textContent="✓ Greenlight Room ready";
+    }else{
+      m6Complete.classList.add("is-locked");
+      $("day5M6CompleteTitle").textContent="Writers’ room not cleared yet.";
+      $("day5M6CompleteText").textContent=`Deliver all ${writersQuestions.length} production notes.`;
+      finalButton.disabled=true;finalButton.textContent="🔒 FINAL · Greenlight Meeting";
+      $("day5FinalLockChip").textContent="🔒 Greenlight Room locked";
+    }
+
+    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5"),r6=$("day5Route6"),rf=$("day5RouteFinal");
+    [r1,r2,r3,r4,r5,r6,rf].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
     if(!state.mission1){r1?.classList.add("is-current");}
     else if(!state.mission2){r1?.classList.add("is-done");r2?.classList.add("is-current");}
     else if(!state.mission3){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-current");}
     else if(!state.mission4){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-current");}
     else if(!state.mission5){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-current");}
-    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-current");}
+    else if(!state.mission6){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-current");}
+    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-done");rf?.classList.add("is-current");}
   }
 
   function showPilot(key){
@@ -706,6 +767,83 @@
     $("scrollM5Complete").addEventListener("click",()=>$("day5Mission5Complete").scrollIntoView({behavior:"smooth",block:"center"}));
   }
 
+
+  function startWritersRoom(){
+    if(!state.mission5)return;
+    if(state.mission6){showWritersClearance();return;}
+    if(!Array.isArray(state.writersOrder)||state.writersOrder.length!==writersQuestions.length){
+      const decisionIds=writersQuestions.filter(q=>q.phase==="DECISION").map(q=>q.id);
+      const languageIds=writersQuestions.filter(q=>q.phase!=="DECISION").map(q=>q.id);
+      state.writersOrder=[...shuffle(decisionIds),...shuffle(languageIds)];
+      state.writersIndex=0;state.writersScore=0;state.writersFirstTry=0;state.writersAnsweredIds=[];state.writersNotes={};state.writersDone=false;save();
+    }
+    renderWritersQuestion();
+    document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+
+  function writersItem(){const id=state.writersOrder?.[state.writersIndex];return writersQuestions.find(q=>q.id===id);}
+
+  function renderWritersQuestion(){
+    const item=writersItem();if(!item){finishWritersRoom();return;}
+    writersLocked=false;writersFirstAttempt=true;
+    document.querySelector(".stream5-score-box span").textContent="WRITERS’ SCORE";
+    $("day5Score").textContent=state.writersScore||0;
+    $("stream5WorkspaceTitle").textContent="Notes for the Writers";
+    $("stream5WorkspaceIntro").textContent=`Writer note ${state.writersIndex+1} of ${writersQuestions.length} · ${item.phase==="DECISION"?"Choose the production action that best protects both realism and storytelling.":"Choose the most useful consultant wording."}`;
+    $("stream5Feedback").innerHTML="";
+    const options=shuffle(item.opts);
+    const actionClass=o=>({"KEEP":"keep","CHANGE":"change","CUT":"cut","ADD CONTEXT":"context"}[o]||"");
+    $("stream5Screen").innerHTML=`<div class="stream5-question stream5-writer-question"><div class="stream5-question-meta"><span>${esc(item.phase)} · ${esc(item.show)}</span><b>${state.writersIndex+1}/${writersQuestions.length}</b></div><div class="stream5-script-slip"><small>SCENE / NOTE REQUEST</small><p>${esc(item.scene)}</p></div><div class="stream5-options stream5-writer-options">${options.map((o,i)=>`<button type="button" class="stream5-option ${actionClass(o)}" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${item.phase==="DECISION"?`<strong>${esc(o)}</strong>`:esc(o)}</button>`).join("")}</div></div>`;
+    $("stream5Screen").querySelectorAll(".stream5-option").forEach(btn=>btn.addEventListener("click",()=>answerWritersQuestion(btn,item)));
+    $("stream5Screen").focus();
+  }
+
+  function answerWritersQuestion(btn,item){
+    if(writersLocked)return;
+    const choice=btn.dataset.opt;
+    if(choice===item.a){
+      writersLocked=true;btn.classList.add("is-correct");
+      const fresh=!(state.writersAnsweredIds||[]).includes(item.id);
+      const pts=writersFirstAttempt?10:6;
+      if(fresh){
+        state.writersScore=(state.writersScore||0)+pts;
+        if(writersFirstAttempt)state.writersFirstTry=(state.writersFirstTry||0)+1;
+        state.writersAnsweredIds=[...(state.writersAnsweredIds||[]),item.id];
+        state.writersNotes={...(state.writersNotes||{}),[item.id]:item.a};
+      }
+      save();ping(900,.08);
+      document.querySelector(".stream5-score-box span").textContent="WRITERS’ SCORE";
+      $("day5Score").textContent=state.writersScore||0;
+      const label=item.phase==="DECISION"?`Production note: ${item.a}`:"Consultant note accepted";
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>${esc(label)}${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextWriterNote" class="stream5-inline-next" type="button">${state.writersIndex===writersQuestions.length-1?"Send notes to the board":"Next writer note →"}</button></div>`;
+      $("nextWriterNote").addEventListener("click",()=>{state.writersIndex=(state.writersIndex||0)+1;save();renderWritersQuestion();});
+    }else{
+      writersFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Not the strongest production note yet.</strong> Ask what the scene needs: preserve it, revise it, remove a misleading element, or restore missing context. Try again.</div>`;
+    }
+  }
+
+  function finishWritersRoom(){state.writersDone=true;state.mission6=true;save();ping(1040,.16);updateUI();showWritersClearance();}
+
+  function showWritersClearance(){
+    document.querySelector(".stream5-score-box span").textContent="WRITERS’ SCORE";
+    $("day5Score").textContent=state.writersScore||0;
+    $("stream5WorkspaceTitle").textContent="Writers’ Room cleared";
+    $("stream5WorkspaceIntro").textContent="The four pilots now have actionable medical-consultant notes for their rewrite pass.";
+    $("stream5Feedback").innerHTML="";
+    const decisionItems=writersQuestions.filter(q=>q.phase==="DECISION");
+    const counts={"KEEP":0,"CHANGE":0,"CUT":0,"ADD CONTEXT":0};
+    decisionItems.forEach(q=>{const v=state.writersNotes?.[q.id]||q.a;if(counts[v]!==undefined)counts[v]++;});
+    const showMemos=Object.keys(pilots).map(k=>{
+      const title=pilots[k].title;
+      const items=decisionItems.filter(q=>q.show===title);
+      const labels=items.map(q=>q.a).join(" · ");
+      return `<div><b>${esc(title)}</b><span>${esc(labels)}</span><small>Rewrite pass ready</small></div>`;
+    }).join("");
+    $("stream5Screen").innerHTML=`<div class="stream5-clearance stream5-writers-clearance"><span>📝</span><h3>Medical Script Consultant</h3><p><strong>${state.writersScore}/${writersQuestions.length*10}</strong> · ${state.writersFirstTry}/${writersQuestions.length} notes accepted on the first attempt.</p><p>You did not try to make television boring. You protected credible drama, repaired misleading shortcuts and turned criticism into actionable notes.</p><div class="stream5-writers-summary"><div class="keep"><b>${counts["KEEP"]}</b><span>KEEP</span></div><div class="change"><b>${counts["CHANGE"]}</b><span>CHANGE</span></div><div class="cut"><b>${counts["CUT"]}</b><span>CUT</span></div><div class="context"><b>${counts["ADD CONTEXT"]}</b><span>ADD CONTEXT</span></div></div><div class="stream5-final-scorecards">${showMemos}</div><button id="scrollM6Complete" class="stream5-primary" type="button">Send memo to Greenlight Room ↓</button></div>`;
+    $("scrollM6Complete").addEventListener("click",()=>$("day5Mission6Complete").scrollIntoView({behavior:"smooth",block:"center"}));
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     updateUI();
     $("startDay5Mission1").addEventListener("click",()=>{document.querySelector(".stream5-board").scrollIntoView({behavior:"smooth"}); ping();});
@@ -723,11 +861,14 @@
     $("day5Mission5Button").addEventListener("click",()=>{if(state.mission4)$("day5Mission5").scrollIntoView({behavior:"smooth",block:"start"});});
     document.querySelectorAll(".final-rating-btn").forEach(b=>b.addEventListener("click",()=>showFinalRating(b.dataset.finalRating)));
     $("startRatingsCalibration").addEventListener("click",()=>{if(!$("startRatingsCalibration").disabled)startRatingsCalibration();});
-    $("day5Mission6Button").addEventListener("click",()=>{if(state.mission5)$("day5Mission6Preview").scrollIntoView({behavior:"smooth",block:"start"});});
+    $("day5Mission6Button").addEventListener("click",()=>{if(state.mission5)$("day5Mission6").scrollIntoView({behavior:"smooth",block:"start"});});
+    $("startWritersRoom").addEventListener("click",()=>{if(!$("startWritersRoom").disabled)startWritersRoom();});
+    $("day5FinalButton").addEventListener("click",()=>{if(state.mission6)$("day5FinalPreview").scrollIntoView({behavior:"smooth",block:"start"});});
     $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF";
     $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound));
     applyMusicState(false);
-    if(state.mission5){showRatingsClearance();}
+    if(state.mission6){showWritersClearance();}
+    else if(state.mission5){showRatingsClearance();}
     else if(state.mission4){showInvisibleClearance();}
     else if(state.mission3){showScriptClearance();}
     else if(state.mission2){showRealityClearance();}
