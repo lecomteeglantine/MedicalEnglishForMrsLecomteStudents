@@ -50,7 +50,15 @@
     writersOrder:[],
     writersAnsweredIds:[],
     writersNotes:{},
-    mission6:false
+    mission6:false,
+    finalChallengeDone:false,
+    finalScore:0,
+    finalFirstTry:0,
+    finalIndex:0,
+    finalOrder:[],
+    finalAnsweredIds:[],
+    finalDecisions:{},
+    finalDone:false
   };
   let state = load();
   let currentQuestions = [];
@@ -67,6 +75,8 @@
   let ratingsLocked = false;
   let writersFirstAttempt = true;
   let writersLocked = false;
+  let finalFirstAttempt = true;
+  let finalLocked = false;
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
 
   const pilots = {
@@ -244,6 +254,28 @@
     {id:"wr20",phase:"CONSULTANT LANGUAGE",show:"All pilots",scene:"A dramatic line states a clinical conclusion more strongly than the scene's evidence supports. Which note best models careful medical English?",a:"This may work better if the dialogue signals uncertainty — for example, “This could be…” rather than presenting the diagnosis as certain.",opts:["This may work better if the dialogue signals uncertainty — for example, “This could be…” rather than presenting the diagnosis as certain.","Doctors should never sound confident.","Replace every modal verb with 'must'.","The line is wrong because television is not medicine."],ex:"The note links the rewrite to the level of evidence and gives the writers usable language."}
   ];
 
+
+  const finalQuestions = [
+    {id:"gf1",show:"Trauma Bay",q:"A pilot uses authentic medical terminology, but its star doctor repeatedly performs the work of the entire team. Which board statement is best calibrated?",a:"Authentic terminology helps, but the teamwork realism still needs rewriting",opts:["Authentic terminology helps, but the teamwork realism still needs rewriting","The terminology proves the whole pilot is realistic","The show must be cancelled because one dimension is weak","Entertainment value makes the teamwork issue irrelevant"],ex:"One strength does not erase a weakness in another review dimension."},
+    {id:"gf2",show:"The Diagnosis",q:"A montage moves from ordering tests to discussing results and clearly signals that time has passed. What is the strongest commissioning view?",a:"Compression can be acceptable television if the passage of time is clear",opts:["Compression can be acceptable television if the passage of time is clear","Any compressed timeline is medically false","The montage proves the tests were instantaneous","Realistic television must show the entire waiting period"],ex:"Day 5 distinguishes editorial compression from a claim that events happened instantly."},
+    {id:"gf3",show:"Ward 17",q:"A confidential result is shouted across a waiting room purely for a joke, with no consequence for the story. What should the board prioritise?",a:"The ethical problem should be cut or rewritten; entertainment does not cancel the confidentiality issue",opts:["The ethical problem should be cut or rewritten; entertainment does not cancel the confidentiality issue","Keep it because comedy outranks ethics","Approve it because TV dialogue is never judged for realism","Cancel the entire series automatically"],ex:"A specific misleading scene can be repaired without pretending the whole concept is worthless."},
+    {id:"gf4",show:"The Diagnosis",q:"A rare diagnosis is announced from one symptom with absolute certainty before examination or tests. Which note best protects both drama and realism?",a:"Keep the reveal if desired, but build a credible route to it and restore uncertainty",opts:["Keep the reveal if desired, but build a credible route to it and restore uncertainty","Rare diagnoses should never appear on television","Absolute certainty is necessary for dramatic pacing","Replace the diagnosis with unrelated paperwork"],ex:"The writers can keep the dramatic beat while changing how the conclusion is reached and expressed."},
+    {id:"gf5",show:"Ward 17",q:"A short structured handover clearly shows observations, treatment so far and the main concern. What does that evidence support?",a:"It strengthens teamwork and communication realism and can stay",opts:["It strengthens teamwork and communication realism and can stay","It should be cut because handovers are not dramatic","It proves every other scene in the pilot is realistic","It belongs only under entertainment"],ex:"A compact handover can make collaborative care visible while still moving the story forward."},
+    {id:"gf6",show:"Ward 17",q:"Across a complex shift, the episode never hints at records, calls, follow-up or coordination. Which verdict is most defensible?",a:"Add a few cues of the invisible work rather than assuming the whole shift is impossible",opts:["Add a few cues of the invisible work rather than assuming the whole shift is impossible","The absence proves the medicine is false","Show every phone call and every note in full","Ignore it because off-screen work never matters to realism"],ex:"The evidence desk highlighted ordinary work that television often backgrounds or removes."},
+    {id:"gf7",show:"Under the Knife",q:"A complex operation is shown with the surgeon completely alone in an empty theatre. What is the core commissioning problem?",a:"The scene collapses team care into one heroic role and should be rewritten",opts:["The scene collapses team care into one heroic role and should be rewritten","The operation is automatically impossible because it is on television","The main issue is only the soundtrack","No review dimension is affected"],ex:"The strongest criticism names the teamwork-representation problem and points toward a repair."},
+    {id:"gf8",show:"All pilots",q:"A series scores 5/5 for entertainment but 2/5 for medical realism. Which board conclusion follows?",a:"Keep the scores separate: high entertainment does not erase the realism concerns",opts:["Keep the scores separate: high entertainment does not erase the realism concerns","Average them mentally and call the series realistic","Entertainment is the only score that matters","A low realism score means nobody can enjoy the show"],ex:"The review board was designed to prevent one dimension from swallowing all the others."},
+    {id:"gf9",show:"Evidence desk",q:"The Pitt is praised for close medical consultation and realistic detail. What can the board safely conclude from that evidence?",a:"A medical drama can be made with a high level of realism; it does not prove all medical dramas are realistic",opts:["A medical drama can be made with a high level of realism; it does not prove all medical dramas are realistic","All current medical dramas are realistic","Any show with a consultant is automatically accurate","Medical consultation guarantees perfect ethics in every scene"],ex:"Evidence about one production supports a possibility, not a universal claim about the genre."},
+    {id:"gf10",show:"Greenlight Room",q:"Which final commissioning statement is strongest?",a:"The pilot has clear strengths, specific weaknesses and manageable rewrites; our decision is based on the evidence collected",opts:["The pilot has clear strengths, specific weaknesses and manageable rewrites; our decision is based on the evidence collected","I liked the poster, so greenlight it","Medical dramas are unrealistic, so cancel everything","The numbers look good, therefore no rewrite can be needed"],ex:"A commissioning verdict should connect evidence, strengths, weaknesses and the scale of the required changes."}
+  ];
+
+  const finalReasons = [
+    "The concept is strong and the remaining realism issues are manageable.",
+    "The series has value, but specific teamwork / communication / ethics rewrites are still needed.",
+    "The entertainment value is strong enough to justify a rewrite pass before commissioning.",
+    "The current version has major credibility problems that would require more than a normal rewrite pass.",
+    "The evidence is mixed; my decision reflects the balance across several review dimensions."
+  ];
+
   function $(id){return document.getElementById(id);}
   function load(){try{return {...defaultState,...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch(e){return {...defaultState};}}
   function save(){localStorage.setItem(KEY,JSON.stringify(state)); updateUI();}
@@ -398,19 +430,33 @@
     $("day5WritersBar").style.width=`${(writersCount/writersQuestions.length)*100}%`;
     const m6Complete=$("day5Mission6Complete");
     const finalButton=$("day5FinalButton");
+    const finalSection=$("day5Final");
+    const startFinal=$("startGreenlightMeeting");
     if(state.mission6){
       m6Complete.classList.remove("is-locked");
       $("day5M6CompleteTitle").textContent="Writers’ Room cleared.";
       $("day5M6CompleteText").textContent=`You delivered all ${writersQuestions.length} production notes and scored ${state.writersScore}/${writersQuestions.length*10}.`;
-      finalButton.disabled=false;finalButton.textContent="Open FINAL · Greenlight Meeting →";
-      $("day5FinalLockChip").textContent="✓ Greenlight Room ready";
+      finalButton.disabled=false;finalButton.textContent=state.finalDone?"✓ FINAL · Greenlight Meeting complete":"Open FINAL · Greenlight Meeting →";
+      finalSection.classList.remove("is-locked");startFinal.disabled=false;startFinal.textContent=state.finalDone?"✓ Greenlight Meeting complete":state.finalChallengeDone?"Open commissioning slate →":"Start Greenlight Meeting →";
+      $("day5FinalLockChip").textContent=state.finalDone?"✓ Season commissioned":"✓ Greenlight Room ready";
     }else{
       m6Complete.classList.add("is-locked");
       $("day5M6CompleteTitle").textContent="Writers’ room not cleared yet.";
       $("day5M6CompleteText").textContent=`Deliver all ${writersQuestions.length} production notes.`;
       finalButton.disabled=true;finalButton.textContent="🔒 FINAL · Greenlight Meeting";
+      finalSection.classList.add("is-locked");startFinal.disabled=true;startFinal.textContent="🔒 Clear Mission 6 first";
       $("day5FinalLockChip").textContent="🔒 Greenlight Room locked";
     }
+    const finalAnswered=Math.min((state.finalAnsweredIds||[]).length,finalQuestions.length);
+    $("day5FinalProgressText").textContent=`${finalAnswered} / ${finalQuestions.length}`;
+    $("day5FinalProgressBar").style.width=`${(finalAnswered/finalQuestions.length)*100}%`;
+    $("day5FinalScore").textContent=state.finalScore||0;
+    const slateCount=Object.keys(state.finalDecisions||{}).filter(k=>state.finalDecisions[k]?.submitted).length;
+    $("day5SlateText").textContent=`${slateCount} / 4 decisions saved`;
+    const finalComplete=$("day5FinalComplete");
+    if(state.finalDone){finalComplete.classList.remove("is-locked");$("day5FinalCompleteTitle").textContent="Season commissioned.";$("day5FinalCompleteText").textContent=`Greenlight board: ${state.finalScore}/${finalQuestions.length*10}. Four final decisions saved.`;}
+    else{finalComplete.classList.add("is-locked");$("day5FinalCompleteTitle").textContent="Greenlight decision pending.";$("day5FinalCompleteText").textContent="Clear the board challenge and save four commissioning decisions.";}
+    renderGreenlightPackets();
 
     const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5"),r6=$("day5Route6"),rf=$("day5RouteFinal");
     [r1,r2,r3,r4,r5,r6,rf].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
@@ -420,7 +466,8 @@
     else if(!state.mission4){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-current");}
     else if(!state.mission5){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-current");}
     else if(!state.mission6){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-current");}
-    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-done");rf?.classList.add("is-current");}
+    else if(!state.finalDone){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-done");rf?.classList.add("is-current");}
+    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-done");rf?.classList.add("is-done");}
   }
 
   function showPilot(key){
@@ -844,6 +891,95 @@
     $("scrollM6Complete").addEventListener("click",()=>$("day5Mission6Complete").scrollIntoView({behavior:"smooth",block:"center"}));
   }
 
+
+  function ratingAverage(obj){return dimensions.reduce((sum,[id])=>sum+Number(obj?.[id]||3),0)/dimensions.length;}
+  function writerSummaryForPilot(key){
+    const title=pilots[key].title;
+    const items=writersQuestions.filter(q=>q.phase==="DECISION"&&q.show===title);
+    const counts={"KEEP":0,"CHANGE":0,"CUT":0,"ADD CONTEXT":0};
+    items.forEach(q=>{const v=state.writersNotes?.[q.id]||q.a;if(counts[v]!==undefined)counts[v]++;});
+    return counts;
+  }
+  function renderGreenlightPackets(){
+    const box=$("day5FinalPackets"); if(!box)return;
+    box.innerHTML=Object.keys(pilots).map(key=>{
+      const p=pilots[key], first=state.pilots?.[key]||{}, last=state.finalRatings?.[key]||first;
+      const avg=ratingAverage(last), delta=avg-ratingAverage(first), c=writerSummaryForPilot(key);
+      const strongest=dimensions.slice().sort((a,b)=>Number(last[b[0]]||3)-Number(last[a[0]]||3))[0];
+      const weakest=dimensions.slice().sort((a,b)=>Number(last[a[0]]||3)-Number(last[b[0]]||3))[0];
+      const evidence=last.evidence||"Evidence review saved in Mission 5";
+      return `<article class="stream5-packet ${key}"><small>FINAL PACKET</small><h3>${esc(p.title)}</h3><p class="genre">${esc(p.genre)}</p><div class="stream5-packet-metric"><b>Final board average</b><span>${avg.toFixed(1)}/5</span></div><div class="stream5-packet-metric"><b>Change from first look</b><span>${delta===0?"0.0":(delta>0?"+":"")+delta.toFixed(1)}</span></div><div class="stream5-packet-metric"><b>Strongest lens</b><span>${esc(strongest[1].replace(/^.. /,""))}</span></div><div class="stream5-packet-metric"><b>Weakest lens</b><span>${esc(weakest[1].replace(/^.. /,""))}</span></div><div class="stream5-packet-metric"><b>Writer actions</b><span>${c.KEEP}K · ${c.CHANGE}C · ${c.CUT}X · ${c["ADD CONTEXT"]}A</span></div><p class="packet-note">Evidence flag: ${esc(evidence)}</p></article>`;
+    }).join("");
+  }
+
+  function startGreenlightMeeting(){
+    if(!state.mission6)return;
+    if(state.finalDone){showGreenlightClearance();return;}
+    if(state.finalChallengeDone){showCommissioningDesk();return;}
+    if(!Array.isArray(state.finalOrder)||state.finalOrder.length!==finalQuestions.length){
+      state.finalOrder=shuffle(finalQuestions.map(q=>q.id));state.finalIndex=0;state.finalScore=0;state.finalFirstTry=0;state.finalAnsweredIds=[];state.finalChallengeDone=false;state.finalDecisions={};save();
+    }
+    renderFinalQuestion();
+    $("day5FinalScreen").scrollIntoView({behavior:"smooth",block:"center"});
+  }
+  function finalItem(){const id=state.finalOrder?.[state.finalIndex];return finalQuestions.find(q=>q.id===id);}
+  function renderFinalQuestion(){
+    const item=finalItem();if(!item){finishFinalChallenge();return;}
+    finalLocked=false;finalFirstAttempt=true;
+    $("day5FinalScore").textContent=state.finalScore||0;
+    $("day5FinalFeedback").innerHTML="";
+    $("day5FinalScreen").classList.remove("is-empty");
+    const options=shuffle(item.opts);
+    $("day5FinalScreen").innerHTML=`<div class="stream5-question stream5-greenlight-question"><div class="stream5-question-meta"><span>GREENLIGHT BOARD · ${esc(item.show)}</span><b>${state.finalIndex+1}/${finalQuestions.length}</b></div><h3>${esc(item.q)}</h3><div class="stream5-options">${options.map((o,i)=>`<button type="button" class="stream5-option" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${esc(o)}</button>`).join("")}</div></div>`;
+    $("day5FinalScreen").querySelectorAll(".stream5-option").forEach(btn=>btn.addEventListener("click",()=>answerFinalQuestion(btn,item)));
+    $("day5FinalScreen").focus();
+  }
+  function answerFinalQuestion(btn,item){
+    if(finalLocked)return;const choice=btn.dataset.opt;
+    if(choice===item.a){
+      finalLocked=true;btn.classList.add("is-correct");const fresh=!(state.finalAnsweredIds||[]).includes(item.id);const pts=finalFirstAttempt?10:6;
+      if(fresh){state.finalScore=(state.finalScore||0)+pts;if(finalFirstAttempt)state.finalFirstTry=(state.finalFirstTry||0)+1;state.finalAnsweredIds=[...(state.finalAnsweredIds||[]),item.id];}
+      save();ping(930,.08);$("day5FinalScore").textContent=state.finalScore||0;
+      $("day5FinalFeedback").innerHTML=`<div class="stream5-feedback-good"><strong>Board logic accepted${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextFinalQuestion" class="stream5-inline-next" type="button">${state.finalIndex===finalQuestions.length-1?"Open the commissioning slate":"Next board file →"}</button></div>`;
+      $("nextFinalQuestion").addEventListener("click",()=>{state.finalIndex=(state.finalIndex||0)+1;save();renderFinalQuestion();});
+    }else{finalFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);$("day5FinalFeedback").innerHTML='<div class="stream5-feedback-bad"><strong>Board challenge.</strong> Separate evidence, review dimensions and storytelling value. Try again.</div>';}
+  }
+  function finishFinalChallenge(){state.finalChallengeDone=true;save();ping(1040,.14);showCommissioningDesk();}
+
+  function showCommissioningDesk(){
+    $("day5FinalScreen").classList.remove("is-empty");
+    $("day5FinalScreen").innerHTML=`<div class="stream5-clearance"><span>🎬</span><h3>Board challenge cleared</h3><p><strong>${state.finalScore}/${finalQuestions.length*10}</strong> · ${state.finalFirstTry}/${finalQuestions.length} decisions accepted on the first attempt.</p><p>Now commission the slate. GREENLIGHT, REWRITE and CANCEL are all legitimate if your reason matches the evidence you collected.</p></div>`;
+    $("day5FinalFeedback").innerHTML="";
+    $("day5CommissioningDesk").hidden=false;renderDecisionGrid();
+  }
+  function renderDecisionGrid(){
+    const grid=$("day5DecisionGrid");if(!grid)return;
+    const savedCount=Object.keys(state.finalDecisions||{}).filter(k=>state.finalDecisions[k]?.submitted).length;
+    $("day5SlateText").textContent=`${savedCount} / 4 decisions saved`;
+    grid.innerHTML=Object.keys(pilots).map(key=>{
+      const p=pilots[key], saved=state.finalDecisions?.[key]||{}, last=state.finalRatings?.[key]||{}, avg=ratingAverage(last), c=writerSummaryForPilot(key);
+      return `<article class="stream5-decision-card"><small>COMMISSIONING DECISION</small><h4>${esc(p.title)}</h4><div class="decision-summary">Final average: <b>${avg.toFixed(1)}/5</b> · Writer pass: ${c.KEEP} keep, ${c.CHANGE} change, ${c.CUT} cut, ${c["ADD CONTEXT"]} add context.</div><label><span>VERDICT</span><select data-final-decision="${key}"><option value="">Choose…</option>${["GREENLIGHT","GREENLIGHT WITH REWRITES","CANCEL"].map(v=>`<option value="${v}" ${saved.decision===v?"selected":""}>${v}</option>`).join("")}</select></label><label><span>MAIN REASON</span><select data-final-reason="${key}"><option value="">Choose the reason that best matches your view…</option>${finalReasons.map(v=>`<option value="${esc(v)}" ${saved.reason===v?"selected":""}>${esc(v)}</option>`).join("")}</select></label><label><span>OPTIONAL BOARD NOTE</span><textarea data-final-note="${key}" maxlength="220" placeholder="One sentence for the commissioning record…">${esc(saved.note||"")}</textarea></label><button class="stream5-primary save-greenlight" data-save-final="${key}" type="button">Save ${esc(p.title)} decision</button><span class="stream5-decision-state ${saved.submitted?"is-done":""}">${saved.submitted?"SAVED":"WAITING"}</span></article>`;
+    }).join("");
+    grid.querySelectorAll("[data-save-final]").forEach(btn=>btn.addEventListener("click",()=>saveCommissionDecision(btn.dataset.saveFinal)));
+  }
+  function saveCommissionDecision(key){
+    const decision=document.querySelector(`[data-final-decision="${key}"]`).value;
+    const reason=document.querySelector(`[data-final-reason="${key}"]`).value;
+    const note=document.querySelector(`[data-final-note="${key}"]`).value.trim();
+    if(!decision||!reason){$("day5FinalFeedback").innerHTML='<div class="stream5-feedback-bad"><strong>Commissioning record incomplete.</strong> Choose both a verdict and a reason. The verdict itself is not graded.</div>';return;}
+    state.finalDecisions={...(state.finalDecisions||{}),[key]:{submitted:true,decision,reason,note}};save();ping(720,.08);$("day5FinalFeedback").innerHTML=`<div class="stream5-feedback-good"><strong>${esc(pilots[key].title)} saved.</strong> Your commissioning judgement is on the record.</div>`;
+    const count=Object.keys(state.finalDecisions||{}).filter(k=>state.finalDecisions[k]?.submitted).length;
+    if(count===4){finishGreenlight();}else renderDecisionGrid();
+  }
+  function finishGreenlight(){state.finalDone=true;save();ping(1160,.18);showGreenlightClearance();}
+  function showGreenlightClearance(){
+    $("day5CommissioningDesk").hidden=true;$("day5FinalFeedback").innerHTML="";$("day5FinalScreen").classList.remove("is-empty");
+    const values=Object.values(state.finalDecisions||{}).filter(x=>x?.submitted);const counts={"GREENLIGHT":0,"GREENLIGHT WITH REWRITES":0,"CANCEL":0};values.forEach(v=>counts[v.decision]=(counts[v.decision]||0)+1);
+    const slate=Object.keys(pilots).map(key=>{const d=state.finalDecisions?.[key]||{};return `<div><b>${esc(pilots[key].title)}</b><strong>${esc(d.decision||"Decision pending")}</strong><small>${esc(d.reason||"")}</small></div>`;}).join("");
+    $("day5FinalScreen").innerHTML=`<div class="stream5-final-clearance"><span>📺</span><h3>Streaming Medical Consultant</h3><p><strong>${state.finalScore}/${finalQuestions.length*10}</strong> · ${state.finalFirstTry}/${finalQuestions.length} board challenges correct on the first attempt.</p><p>Your final slate is evidence-based, but it is not pretending that television has one mathematically correct commissioning answer. You separated realism, storytelling and the scale of the required rewrites.</p><div class="stream5-final-counts"><span>🟢 ${counts["GREENLIGHT"]} Greenlight</span><span>🟡 ${counts["GREENLIGHT WITH REWRITES"]} With rewrites</span><span>🔴 ${counts["CANCEL"]} Cancel</span></div><div class="stream5-final-slate">${slate}</div><p><strong>Day 5 complete.</strong> The platform has its slate.</p></div>`;
+    updateUI();$("day5FinalComplete").scrollIntoView({behavior:"smooth",block:"center"});
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     updateUI();
     $("startDay5Mission1").addEventListener("click",()=>{document.querySelector(".stream5-board").scrollIntoView({behavior:"smooth"}); ping();});
@@ -863,11 +999,14 @@
     $("startRatingsCalibration").addEventListener("click",()=>{if(!$("startRatingsCalibration").disabled)startRatingsCalibration();});
     $("day5Mission6Button").addEventListener("click",()=>{if(state.mission5)$("day5Mission6").scrollIntoView({behavior:"smooth",block:"start"});});
     $("startWritersRoom").addEventListener("click",()=>{if(!$("startWritersRoom").disabled)startWritersRoom();});
-    $("day5FinalButton").addEventListener("click",()=>{if(state.mission6)$("day5FinalPreview").scrollIntoView({behavior:"smooth",block:"start"});});
+    $("day5FinalButton").addEventListener("click",()=>{if(state.mission6)$("day5Final").scrollIntoView({behavior:"smooth",block:"start"});});
+    $("startGreenlightMeeting").addEventListener("click",()=>{if(!$("startGreenlightMeeting").disabled)startGreenlightMeeting();});
     $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF";
     $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound));
     applyMusicState(false);
-    if(state.mission6){showWritersClearance();}
+    if(state.finalDone){showGreenlightClearance();}
+    else if(state.finalChallengeDone){showCommissioningDesk();}
+    else if(state.mission6){showWritersClearance();}
     else if(state.mission5){showRatingsClearance();}
     else if(state.mission4){showInvisibleClearance();}
     else if(state.mission3){showScriptClearance();}
