@@ -25,7 +25,15 @@
     scriptOrder:[],
     scriptAnsweredIds:[],
     scriptVerdicts:{},
-    mission3:false
+    mission3:false,
+    invisibleDone:false,
+    invisibleScore:0,
+    invisibleFirstTry:0,
+    invisibleReviewed:0,
+    invisibleIndex:0,
+    invisibleOrder:[],
+    invisibleAnsweredIds:[],
+    mission4:false
   };
   let state = load();
   let currentQuestions = [];
@@ -36,6 +44,8 @@
   let realityLocked = false;
   let scriptFirstAttempt = true;
   let scriptLocked = false;
+  let invisibleFirstAttempt = true;
+  let invisibleLocked = false;
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
 
   const pilots = {
@@ -106,6 +116,33 @@
     {id:"uk2",show:"Under the Knife",episode:"Episode 2 · surgical montage",lens:["Timing","Visual storytelling"],scene:"A long operation is represented by a five-minute montage. Several team members remain visible and the episode does not claim that the procedure itself lasts five minutes.",a:"DRAMATISED",opts:["PLAUSIBLE","DRAMATISED","UNREALISTIC","DEPENDS"],ex:"This is classic narrative compression. The production shortens screen time while preserving the idea of a team and a longer process.",cue:"Reality Intelligence · compression can be a storytelling device without making every underlying action false."},
     {id:"uk3",show:"Under the Knife",episode:"Episode 4 · pre-op",lens:["Communication","Consent"],scene:"Before the procedure, the surgeon explains the purpose of the operation, acknowledges uncertainty and gives the patient space to ask questions. The scene then cuts away before the operation begins.",a:"PLAUSIBLE",opts:["PLAUSIBLE","DRAMATISED","UNREALISTIC","DEPENDS"],ex:"The communication is careful, uncertainty is visible and consent is treated as part of the process. The scene does not need to show every administrative detail to be credible.",cue:"Review criteria · consent, communication and acknowledgement of uncertainty strengthen credibility."},
     {id:"uk4",show:"Under the Knife",episode:"Episode 7 · emergency scene",lens:["Missing context","Ethics"],scene:"The episode moves rapidly into an emergency procedure without showing a consent discussion. We are not told whether consent was possible, discussed off screen or covered before the scene began.",a:"DEPENDS",opts:["PLAUSIBLE","DRAMATISED","UNREALISTIC","DEPENDS"],ex:"The missing scene is not enough evidence by itself. A responsible reviewer should ask what context is absent rather than automatically labelling the programme accurate or inaccurate.",cue:"Evidence discipline · absence on screen is not always proof that an event did not happen in the story world."}
+  ];
+
+
+  const invisibleQuestions = [
+    {id:"ow1",module:"OFF-SCREEN WORK",scene:"The episode cuts from a consultation straight to the next patient. Which task is specifically identified by the Cleveland Clinic source as ordinary medical work that may disappear from television?",a:"Filling in charts",opts:["Filling in charts","Performing a dramatic emergency operation","Delivering a cliffhanger speech","Solving a rare diagnosis alone"],ex:"Cleveland Clinic explicitly mentions filling in charts as part of real doctors' ordinary work.",cue:"Cleveland Clinic · doctors spend substantial time filling out charts."},
+    {id:"ow2",module:"OFF-SCREEN WORK",scene:"A doctor spends an entire episode moving from bedside to bedside. Which missing activity is directly supported by the evidence deck?",a:"Making phone calls",opts:["Making phone calls","Secretly hiding every error","Doing every operation personally","Avoiding all paperwork"],ex:"Phone work is one of the ordinary activities the Cleveland Clinic article says television rarely foregrounds.",cue:"Cleveland Clinic · doctors spend time making phone calls."},
+    {id:"ow3",module:"OFF-SCREEN WORK",scene:"The writers want a realistic non-procedural task for a quiet scene. Which option is explicitly supported by the source?",a:"Advocating for a patient",opts:["Advocating for a patient","Inventing a new diagnosis for drama","Removing the rest of the care team","Skipping documentation because nothing happened"],ex:"Patient advocacy is specifically named as part of real medical work.",cue:"Cleveland Clinic · doctors spend a lot of time advocating for patients."},
+    {id:"ow4",module:"OFF-SCREEN WORK",scene:"Which statement best captures the evidence about ordinary medical work?",a:"Some essential work is real but not very visible on television",opts:["Some essential work is real but not very visible on television","Anything not shown on television is unimportant","Real doctors mainly perform dramatic procedures","Documentation is invented for hospital administration dramas"],ex:"The source does not say ordinary work is unimportant — only that television tends not to foreground it.",cue:"Cleveland Clinic · entertainment selects what is most watchable."},
+    {id:"ow5",module:"OFF-SCREEN WORK",scene:"A script adds a short scene in which a doctor phones another service, updates the chart and discusses a practical problem with the patient. What does that mainly improve?",a:"The visibility of routine medical work",opts:["The visibility of routine medical work","The number of medical errors","The speed of diagnosis","The amount of surgical spectacle"],ex:"These details restore work that the evidence says often stays off screen.",cue:"Cleveland Clinic · calls, charts and advocacy are ordinary parts of the job."},
+
+    {id:"tm1",module:"THE MISSING TEAM",scene:"One star doctor receives the patient in the emergency department, performs the surgery and later gives all follow-up instructions. What is the clearest realism problem?",a:"The show collapses team care into one character",opts:["The show collapses team care into one character","The medical vocabulary is automatically fake","The patient should never see the same doctor twice","The scene proves the procedure is impossible"],ex:"The Cleveland Clinic source specifically criticises the television habit of showing the same doctor across roles that would involve a broader team.",cue:"Cleveland Clinic · medical teams and professional roles are often oversimplified."},
+    {id:"tm2",module:"THE MISSING TEAM",scene:"Which rewrite best restores teamwork realism without making the episode much longer?",a:"Show a brief handover and name the next professional taking over",opts:["Show a brief handover and name the next professional taking over","Let the star doctor do every task faster","Remove nurses from the dialogue","Have one character claim responsibility for the whole hospital"],ex:"A concise handover can make the team visible without requiring a long documentary-style sequence.",cue:"Evidence deck · team care is often simplified for television."},
+    {id:"tm3",module:"THE MISSING TEAM",scene:"A medical student repeatedly 'saves the day' while senior staff and the wider team stay passive. Which source-based concern does this resemble?",a:"Television oversimplifying who does what",opts:["Television oversimplifying who does what","Real hospitals never use medical students","Medical students always make final decisions","The terminology must therefore be inaccurate"],ex:"The issue is role simplification, not a claim that students never contribute to care.",cue:"Cleveland Clinic · a medical student is probably not going to save the day in the way TV repeatedly depicts."},
+    {id:"tm4",module:"THE MISSING TEAM",scene:"A scene shows nurses, junior doctors and a senior clinician exchanging information before responsibility shifts. What does this add?",a:"A visible care team and transfer of information",opts:["A visible care team and transfer of information","Proof that all medical dramas are accurate","A reason to remove documentation","Evidence that waiting never happens"],ex:"Showing information transfer counters the single-hero simplification identified in the evidence.",cue:"Review Board lens · teamwork realism."},
+    {id:"tm5",module:"THE MISSING TEAM",scene:"Why is 'one doctor does everything' more than a harmless casting shortcut?",a:"It can distort viewers' picture of how multidisciplinary care works",opts:["It can distort viewers' picture of how multidisciplinary care works","It makes every procedure medically impossible","It means the actors are not trained","It proves the hospital has no protocols"],ex:"The evidence criticises oversimplification of teams because it changes the representation of real work.",cue:"Cleveland Clinic · medical teams are broader than television often suggests."},
+
+    {id:"tmn1",module:"THE MISSING MINUTES",scene:"A blood sample is taken and the result appears after a 10-second montage. What is the most careful review comment?",a:"The process may be recognisable, but the waiting time has probably been compressed",opts:["The process may be recognisable, but the waiting time has probably been compressed","Blood tests are fictional television devices","The result must be clinically wrong","Real hospitals always return results immediately"],ex:"Television commonly compresses the spaces between dramatic events. That is different from saying the underlying process is impossible.",cue:"Script Audit · distinguish dramatic compression from outright impossibility."},
+    {id:"tmn2",module:"THE MISSING MINUTES",scene:"Which addition would make a shift feel more realistic without turning the episode into a documentary?",a:"A short beat showing waiting, routine observations or an update call",opts:["A short beat showing waiting, routine observations or an update call","A new emergency every two minutes","Instant results for every investigation","A doctor who never has to document anything"],ex:"A brief transitional beat can restore the existence of ordinary time and work without slowing the story excessively.",cue:"Cleveland Clinic · real work contains ordinary tasks television rarely foregrounds."},
+    {id:"tmn3",module:"THE MISSING MINUTES",scene:"Every patient in a 45-minute episode becomes a major emergency. Which interpretation is most defensible?",a:"The programme is selecting dramatic moments rather than representing the balance of a whole shift",opts:["The programme is selecting dramatic moments rather than representing the balance of a whole shift","Every emergency shown is therefore medically impossible","Real emergency departments only treat minor problems","The episode proves medical errors are rare"],ex:"Television selects for drama. The evidence supports questioning the balance of the representation, not declaring every event impossible.",cue:"Cleveland Clinic + Witten/Herdecke · television foregrounds dramatic events."},
+    {id:"tmn4",module:"THE MISSING MINUTES",scene:"A patient is treated, then disappears from the story immediately. Which missing element could make the care pathway feel more complete?",a:"Follow-up or a handover to the next stage of care",opts:["Follow-up or a handover to the next stage of care","A romantic subplot","Another instant diagnosis","A heroic monologue"],ex:"Showing even a brief continuation reminds viewers that care does not end when the dramatic scene does.",cue:"Review Board · the camera can cut before the real care pathway is finished."},
+    {id:"tmn5",module:"THE MISSING MINUTES",scene:"Why is waiting useful evidence when reviewing medical drama?",a:"Because television can remove time between events and make care appear more instantaneous than it is",opts:["Because television can remove time between events and make care appear more instantaneous than it is","Because all hospital waiting is caused by medical error","Because waiting means no care is happening","Because realistic series must show every minute in real time"],ex:"The issue is temporal compression. Realism does not require real-time television, but the audience should not confuse montage speed with real workflow.",cue:"Script Audit principle · compressed timing can be dramatic rather than literally accurate."},
+
+    {id:"qr1",module:"QUIET REALITY",scene:"The research summary contrasts dramatic emergency operations on television with a different reality around death. What does it say may happen in real life?",a:"Patients may die quietly and without much fuss",opts:["Patients may die quietly and without much fuss","Every death involves an emergency operation","Doctors always make a dramatic speech","Intensive care is almost never involved"],ex:"That quiet contrast is explicitly highlighted in the Witten/Herdecke university summary.",cue:"Witten/Herdecke · dramatic emergency operations often take centre stage on TV, while real death may be quiet."},
+    {id:"qr2",module:"QUIET REALITY",scene:"After analysing more than 300 episodes, what broad conclusion did the Witten/Herdecke project report?",a:"Some portrayals of illness, death and intensive care differ sharply from reality",opts:["Some portrayals of illness, death and intensive care differ sharply from reality","Every medical series is medically false","Only surgical scenes are inaccurate","Medical television has no effect on viewers"],ex:"The research summary identifies substantial discrepancies in some areas; it does not condemn every scene or every series.",cue:"Witten/Herdecke University · more than 300 episodes analysed."},
+    {id:"qr3",module:"QUIET REALITY",scene:"A writer says: 'If a death scene is quiet, viewers will think nothing medical is happening.' What is the best evidence-based response?",a:"Quiet does not mean unrealistic; real dying can be far less theatrical than television suggests",opts:["Quiet does not mean unrealistic; real dying can be far less theatrical than television suggests","Every death scene should remove clinicians entirely","Real medicine has no emergencies","Television should never dramatise anything"],ex:"The research explicitly challenges the assumption that medically important moments must look spectacular.",cue:"Witten/Herdecke · real deaths may be quiet and without much fuss."},
+    {id:"qr4",module:"QUIET REALITY",scene:"Which editorial principle best fits the evidence from both sources?",a:"Keep drama, but do not let spectacle erase the ordinary systems and people that make care possible",opts:["Keep drama, but do not let spectacle erase the ordinary systems and people that make care possible","Remove all dramatic scenes from medical television","Assume genuine terminology makes every scene accurate","Make one doctor responsible for every stage of care"],ex:"Both sources support a nuanced position: entertainment can coexist with realism if compression and spectacle do not completely distort the work.",cue:"Cleveland Clinic + Witten/Herdecke · realism is about representation, not banning drama."},
+    {id:"qr5",module:"QUIET REALITY",scene:"The board has to summarise Mission 4 in one sentence. Which is strongest?",a:"What television omits can shape viewers' understanding just as much as what it shows",opts:["What television omits can shape viewers' understanding just as much as what it shows","Only factual medical errors matter when judging realism","Routine work is irrelevant because it is not entertaining","A medically realistic series must show every task in full"],ex:"Mission 4 is about omissions as a form of representation: team care, routine work and quiet moments change the picture viewers receive.",cue:"Evidence synthesis · omission is part of storytelling and part of realism."}
   ];
 
   const coreEvidence = [
@@ -192,28 +229,57 @@
 
     const m3Complete=$("day5Mission3Complete");
     const m4Button=$("day5Mission4Button");
+    const m4=$("day5Mission4");
+    const startInvisible=$("startInvisibleWork");
     if(state.mission3){
       m3Complete.classList.remove("is-locked");
       $("day5M3CompleteTitle").textContent="Script Audit cleared.";
       $("day5M3CompleteText").textContent=`You audited all ${scriptQuestions.length} scenes and scored ${state.scriptScore}/${scriptQuestions.length*10}.`;
       m4Button.disabled=false;
-      m4Button.textContent="✓ Mission 4 · What TV Leaves Out · Next update";
-      $("day5Mission4LockChip").textContent="✓ Production reality desk ready";
+      m4Button.textContent=state.mission4?"✓ Mission 4 · What TV Leaves Out cleared":"Open Mission 4 · What TV Leaves Out →";
+      m4.classList.remove("is-locked");
+      startInvisible.disabled=false;
+      startInvisible.textContent=state.mission4?"✓ What TV Leaves Out cleared":"Start the Invisible Shift Audit →";
     } else {
       m3Complete.classList.add("is-locked");
       $("day5M3CompleteTitle").textContent="Script room not cleared yet.";
       $("day5M3CompleteText").textContent=`Audit all ${scriptQuestions.length} scenes.`;
       m4Button.disabled=true;
       m4Button.textContent="🔒 Mission 4 · What TV Leaves Out";
-      $("day5Mission4LockChip").textContent="🔒 Production reality desk locked";
+      m4.classList.add("is-locked");
+      startInvisible.disabled=true;
+      startInvisible.textContent="🔒 Clear Script Audit first";
     }
 
-    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4");
-    [r1,r2,r3,r4].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
+    const invisible=Math.min(Number(state.invisibleReviewed)||0,invisibleQuestions.length);
+    $("day5InvisibleText").textContent=`${invisible} / ${invisibleQuestions.length}`;
+    $("day5InvisibleBar").style.width=`${(invisible/invisibleQuestions.length)*100}%`;
+
+    const m4Complete=$("day5Mission4Complete");
+    const m5Button=$("day5Mission5Button");
+    if(state.mission4){
+      m4Complete.classList.remove("is-locked");
+      $("day5M4CompleteTitle").textContent="Invisible Shift audit cleared.";
+      $("day5M4CompleteText").textContent=`You reviewed all ${invisibleQuestions.length} off-screen files and scored ${state.invisibleScore}/${invisibleQuestions.length*10}.`;
+      m5Button.disabled=false;
+      m5Button.textContent="✓ Mission 5 · Ratings Department · Next update";
+      $("day5Mission5LockChip").textContent="✓ Ratings desk ready";
+    } else {
+      m4Complete.classList.add("is-locked");
+      $("day5M4CompleteTitle").textContent="Production reality desk not cleared yet.";
+      $("day5M4CompleteText").textContent=`Review all ${invisibleQuestions.length} off-screen files.`;
+      m5Button.disabled=true;
+      m5Button.textContent="🔒 Mission 5 · Ratings Department";
+      $("day5Mission5LockChip").textContent="🔒 Ratings desk locked";
+    }
+
+    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5");
+    [r1,r2,r3,r4,r5].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
     if(!state.mission1){r1?.classList.add("is-current");}
     else if(!state.mission2){r1?.classList.add("is-done");r2?.classList.add("is-current");}
     else if(!state.mission3){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-current");}
-    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-current");}
+    else if(!state.mission4){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-current");}
+    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-current");}
   }
 
   function showPilot(key){
@@ -418,6 +484,76 @@
     $("scrollM3Complete").addEventListener("click",()=>$("day5Mission3Complete").scrollIntoView({behavior:"smooth",block:"center"}));
   }
 
+
+  function startInvisibleWork(){
+    if(!state.mission3)return;
+    if(state.mission4){showInvisibleClearance();return;}
+    if(!Array.isArray(state.invisibleOrder)||state.invisibleOrder.length!==invisibleQuestions.length){
+      state.invisibleOrder=shuffle(invisibleQuestions.map(q=>q.id));
+      state.invisibleIndex=0;
+      state.invisibleScore=0;
+      state.invisibleFirstTry=0;
+      state.invisibleReviewed=0;
+      state.invisibleAnsweredIds=[];
+      save();
+    }
+    renderInvisibleQuestion();
+    document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function invisibleItem(){
+    const id=state.invisibleOrder?.[state.invisibleIndex];
+    return invisibleQuestions.find(q=>q.id===id);
+  }
+  function renderInvisibleQuestion(){
+    const item=invisibleItem();
+    if(!item){finishInvisibleWork();return;}
+    invisibleLocked=false; invisibleFirstAttempt=true;
+    document.querySelector(".stream5-score-box span").textContent="INVISIBLE SHIFT SCORE";
+    $("day5Score").textContent=state.invisibleScore||0;
+    $("stream5WorkspaceTitle").textContent=`What TV Leaves Out · ${item.module}`;
+    $("stream5WorkspaceIntro").textContent=`Off-screen file ${state.invisibleIndex+1} of ${invisibleQuestions.length} · Decide what a medical drama may be hiding or distorting.`;
+    $("stream5Feedback").innerHTML="";
+    const opts=shuffle(item.opts);
+    $("stream5Screen").innerHTML=`<div class="stream5-question stream5-behind-question"><div class="stream5-question-meta"><span>PRODUCTION REALITY DESK</span><b>${state.invisibleIndex+1}/${invisibleQuestions.length}</b></div><div class="stream5-offscreen-tag">🎞️ ${esc(item.module)}</div><div class="stream5-offscreen-scenario"><span>SCENE / EDITING NOTE</span>${esc(item.scene)}</div><h3>What is the strongest evidence-based review?</h3><div class="stream5-options">${opts.map((o,i)=>`<button type="button" class="stream5-option" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${esc(o)}</button>`).join("")}</div><div class="stream5-offscreen-source"><strong>Evidence cue:</strong> ${esc(item.cue)}</div></div>`;
+    $("stream5Screen").querySelectorAll(".stream5-option").forEach(btn=>btn.addEventListener("click",()=>answerInvisible(btn,item)));
+    $("stream5Screen").focus();
+  }
+  function answerInvisible(btn,item){
+    if(invisibleLocked)return;
+    const choice=btn.dataset.opt;
+    if(choice===item.a){
+      invisibleLocked=true; btn.classList.add("is-correct");
+      const fresh=!(state.invisibleAnsweredIds||[]).includes(item.id);
+      const pts=invisibleFirstAttempt?10:6;
+      if(fresh){
+        state.invisibleScore=(state.invisibleScore||0)+pts;
+        if(invisibleFirstAttempt)state.invisibleFirstTry=(state.invisibleFirstTry||0)+1;
+        state.invisibleReviewed=(state.invisibleReviewed||0)+1;
+        state.invisibleAnsweredIds=[...(state.invisibleAnsweredIds||[]),item.id];
+      }
+      save(); ping(850,.085); updateUI();
+      document.querySelector(".stream5-score-box span").textContent="INVISIBLE SHIFT SCORE";
+      $("day5Score").textContent=state.invisibleScore;
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Evidence restored${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextInvisible" class="stream5-inline-next" type="button">${state.invisibleIndex===invisibleQuestions.length-1?"Complete the Invisible Shift":"Next off-screen file →"}</button></div>`;
+      $("nextInvisible").addEventListener("click",()=>{state.invisibleIndex=(state.invisibleIndex||0)+1;save();renderInvisibleQuestion();});
+    }else{
+      invisibleFirstAttempt=false; btn.classList.add("is-wrong");btn.disabled=true;ping(205,.10);
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>That edit note goes too far.</strong> Use the named evidence cue: distinguish what the source actually supports from what would be an assumption. Try again.</div>`;
+    }
+  }
+  function finishInvisibleWork(){
+    state.invisibleDone=true;state.mission4=true;state.invisibleReviewed=invisibleQuestions.length;save();ping(960,.15);updateUI();showInvisibleClearance();
+  }
+  function showInvisibleClearance(){
+    document.querySelector(".stream5-score-box span").textContent="INVISIBLE SHIFT SCORE";
+    $("day5Score").textContent=state.invisibleScore||0;
+    $("stream5WorkspaceTitle").textContent="What TV Leaves Out cleared";
+    $("stream5WorkspaceIntro").textContent="You can now review not only what a medical drama shows, but also what its editing removes.";
+    $("stream5Feedback").innerHTML="";
+    $("stream5Screen").innerHTML=`<div class="stream5-clearance stream5-invisible-clearance"><span>🧾</span><h3>Production Reality Editor</h3><p><strong>${state.invisibleScore}/${invisibleQuestions.length*10}</strong> · ${state.invisibleFirstTry}/${invisibleQuestions.length} evidence judgements correct on the first attempt.</p><p>Realism is also about omission. A series can use genuine terminology and credible emergencies while still giving viewers a distorted picture if it erases teamwork, routine work, waiting and quieter forms of care.</p><div class="stream5-invisible-takeaways"><div><b>OFF-SCREEN WORK</b><p>Charts, calls and patient advocacy are part of real medical work.</p></div><div><b>TEAM CARE</b><p>One star doctor should not silently replace an entire multidisciplinary pathway.</p></div><div><b>TIME</b><p>Montage can compress care; viewers should not mistake television time for hospital time.</p></div><div><b>QUIET REALITY</b><p>Not every medically important moment looks dramatic on screen.</p></div></div><button id="scrollM4Complete" class="stream5-primary" type="button">See mission clearance ↓</button></div>`;
+    $("scrollM4Complete").addEventListener("click",()=>$("day5Mission4Complete").scrollIntoView({behavior:"smooth",block:"center"}));
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     updateUI();
     $("startDay5Mission1").addEventListener("click",()=>{document.querySelector(".stream5-board").scrollIntoView({behavior:"smooth"}); ping();});
@@ -430,11 +566,14 @@
     $("startRealityCheck").addEventListener("click",()=>{if(!$("startRealityCheck").disabled)startReality();});
     $("day5Mission3Button").addEventListener("click",()=>{if(state.mission2)$("day5Mission3").scrollIntoView({behavior:"smooth",block:"start"});});
     $("startScriptAudit").addEventListener("click",()=>{if(!$("startScriptAudit").disabled)startScriptAudit();});
-    $("day5Mission4Button").addEventListener("click",()=>{$("day5AudioStatus").textContent="Mission 4 · What TV Leaves Out is next. Your Script Audit is saved on this device.";});
+    $("day5Mission4Button").addEventListener("click",()=>{if(state.mission3)$("day5Mission4").scrollIntoView({behavior:"smooth",block:"start"});});
+    $("startInvisibleWork").addEventListener("click",()=>{if(!$("startInvisibleWork").disabled)startInvisibleWork();});
+    $("day5Mission5Button").addEventListener("click",()=>{$("day5AudioStatus").textContent="Mission 5 · Ratings Department is next. Your Invisible Shift audit is saved on this device.";});
     $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF";
     $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound));
     applyMusicState(false);
-    if(state.mission3){showScriptClearance();}
+    if(state.mission4){showInvisibleClearance();}
+    else if(state.mission3){showScriptClearance();}
     else if(state.mission2){showRealityClearance();}
   });
 })();

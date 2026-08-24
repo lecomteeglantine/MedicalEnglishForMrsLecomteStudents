@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
   <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
-  <link rel="stylesheet" href="styles-v50.css">
+  <link rel="stylesheet" href="styles-v51.css">
 </head>
 <body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -57,7 +57,7 @@
         <li id="day5Route2"><b>02</b><span><strong>Reality Intelligence</strong><small>CBS + article + research evidence</small></span></li>
         <li id="day5Route3"><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
         <li id="day5Route4"><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
-        <li><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
+        <li id="day5Route5"><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
         <li><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
         <li><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
       </ol>
@@ -202,8 +202,51 @@
       <button id="day5Mission4Button" class="stream5-primary" type="button" disabled>🔒 Mission 4 · What TV Leaves Out</button>
     </section>
 
+    <section id="day5Mission4" class="stream5-invisible-work is-locked" aria-labelledby="invisibleWorkTitle">
+      <div class="stream5-section-head stream5-board-head">
+        <div>
+          <p class="stream5-kicker dark">REVIEW BOARD · MISSION 04</p>
+          <h2 id="invisibleWorkTitle">What TV Leaves Out</h2>
+          <p>A 45-minute episode cannot show an entire shift. Your job is to identify the <strong>ordinary work that disappears off screen</strong> — and to distinguish sensible compression from a distorted picture of medicine.</p>
+        </div>
+        <div class="stream5-progress-card">
+          <span>OFF-SCREEN FILES</span><strong id="day5InvisibleText">0 / 20</strong>
+          <div class="stream5-progress-track"><i id="day5InvisibleBar"></i></div>
+        </div>
+      </div>
+
+      <div class="stream5-invisible-intro">
+        <article class="stream5-offscreen-card">
+          <span class="eyebrow">THE INVISIBLE SHIFT</span>
+          <h3>Medicine does not stop when the camera cuts.</h3>
+          <p>The evidence desk highlights ordinary work that television rarely foregrounds.</p>
+          <div class="stream5-hidden-list"><span>📝 charting</span><span>☎️ phone calls</span><span>🤝 patient advocacy</span><span>👥 team care</span><span>⏳ waiting</span><span>📋 handovers</span><span>📈 routine monitoring</span><span>🔁 follow-up</span></div>
+        </article>
+        <article class="stream5-reality-note">
+          <strong>Two evidence signals</strong>
+          <p><b>Cleveland Clinic:</b> medical dramas often simplify team roles and leave ordinary work such as patient advocacy, filling in charts and making phone calls in the background.</p>
+          <p><b>Witten/Herdecke research:</b> after analysing more than 300 episodes, the project found that illness, death and intensive-care scenarios can differ sharply from reality; television often foregrounds dramatic emergency operations while real death may be quiet.</p>
+          <small>This mission reviews representation and storytelling. It is not clinical training.</small>
+        </article>
+      </div>
+
+      <div class="stream5-invisible-modules" aria-label="Mission 4 review modules">
+        <div><b>📝 OFF-SCREEN WORK</b><span>Documentation, calls and advocacy.</span></div>
+        <div><b>👥 THE MISSING TEAM</b><span>Who disappears when one star doctor does everything?</span></div>
+        <div><b>⏳ THE MISSING MINUTES</b><span>Waiting, monitoring and the gaps between dramatic beats.</span></div>
+        <div><b>🌙 QUIET REALITY</b><span>What television intensifies because ordinary medicine is less theatrical.</span></div>
+      </div>
+      <button id="startInvisibleWork" class="stream5-primary" type="button" disabled>🔒 Clear Script Audit first</button>
+    </section>
+
+    <section id="day5Mission4Complete" class="stream5-completion is-locked" aria-labelledby="day5M4CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">🧾</div>
+      <div><p class="stream5-kicker dark">MISSION 04 CLEARANCE</p><h2 id="day5M4CompleteTitle">Production reality desk not cleared yet.</h2><p id="day5M4CompleteText">Review all 20 off-screen files.</p></div>
+      <button id="day5Mission5Button" class="stream5-primary" type="button" disabled>🔒 Mission 5 · Ratings Department</button>
+    </section>
+
     <section class="stream5-next-preview" aria-labelledby="nextReviewTitle">
-      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 4 · What TV Leaves Out</h2><p>Once the scripts are audited, the board will investigate everything medical drama tends to hide: charting, calls, waiting, handovers, routine monitoring, follow-up and the less glamorous work that keeps care moving.</p><div id="day5Mission4LockChip" class="stream5-lock-chip">🔒 Production reality desk locked</div>
+      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 5 · Ratings Department</h2><p>Now that you have evidence about what television shows, exaggerates and hides, return to the four pilots and revise your original ratings. Which series has earned credibility — and which one needs a rewrite?</p><div id="day5Mission5LockChip" class="stream5-lock-chip">🔒 Ratings desk locked</div>
     </section>
   </main>
 
