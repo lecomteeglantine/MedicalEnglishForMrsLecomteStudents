@@ -1,62 +1,128 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#0c2d66">
+  <meta name="theme-color" content="#120d1e">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Medical English">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 5 Medical English course resources for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 5 · Medical English for Mrs Lecomte's Students</title>
-  <link rel="stylesheet" href="styles-v8.css">
+  <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
+  <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
+  <link rel="stylesheet" href="styles-v48.css">
 </head>
-<body>
+<body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">🩺</span>
-      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="dictionary.html">Dictionary</a>
-      <a href="fgsm2.html">FGSM2</a>
-      <a class="active" aria-current="page" href="fgsm3.html">FGSM3</a>
-      <a href="games.html">Games</a>
-    </nav>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a class="active" aria-current="page" href="fgsm3.html">FGSM3</a><a href="games.html">Games</a></nav>
   </header>
 
-  <main id="main" class="course-day-main">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a>
-      <span aria-hidden="true">›</span>
-      <a href="fgsm3.html">FGSM3</a>
-      <span aria-hidden="true">›</span>
-      <span aria-current="page">Day 5</span>
-    </nav>
+  <main id="main" class="stream5-main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span><span aria-current="page">Day 5</span></nav>
 
-    <section class="course-day-placeholder day-purple">
-      <div class="day-placeholder-number">05</div>
-      <div class="day-placeholder-copy">
-        <p class="eyebrow dark-eyebrow">FOR MRS LECOMTE'S STUDENTS · FGSM3</p>
-        <h1>Day 5</h1>
-        <p>This page is ready for the course materials, activities and resources for Day 5.</p>
-        <span class="coming-large">Content coming soon</span>
-        <a class="ghost-link dark-ghost" href="fgsm3.html">← Back to FGSM3</a>
+    <section class="stream5-hero" aria-labelledby="stream5Title">
+      <div class="stream5-hero-glow" aria-hidden="true"></div>
+      <div class="stream5-hero-copy">
+        <p class="stream5-kicker">FGSM3 · DAY 5 GAME</p>
+        <h1 id="stream5Title">Streaming Platform Review Board</h1>
+        <p class="stream5-subtitle">Which medical drama deserves the green light?</p>
+        <p class="stream5-lead">Four new medical dramas are competing for a place on the platform. You are the medical consultant. Rate the pilots, collect evidence, audit the scripts and decide what needs rewriting before broadcast.</p>
+        <button id="startDay5Mission1" class="stream5-primary" type="button">Take your seat on the board →</button>
       </div>
-      <div class="day-placeholder-icon" aria-hidden="true">🧠</div>
+      <div class="stream5-screenwall" aria-label="Four fictional medical drama pilots">
+        <article class="stream5-mini-poster poster-trauma"><span>NEW PILOT</span><b>TRAUMA<br>BAY</b><small>Emergency drama</small></article>
+        <article class="stream5-mini-poster poster-diagnosis"><span>NEW PILOT</span><b>THE<br>DIAGNOSIS</b><small>Medical mystery</small></article>
+        <article class="stream5-mini-poster poster-ward"><span>NEW PILOT</span><b>WARD<br>17</b><small>Hospital ensemble</small></article>
+        <article class="stream5-mini-poster poster-knife"><span>NEW PILOT</span><b>UNDER<br>THE KNIFE</b><small>Surgical drama</small></article>
+      </div>
+    </section>
+
+    <section class="stream5-toolbar" aria-label="Day 5 controls">
+      <div><strong>Review Board console</strong><span>Your ratings and progress stay on this device.</span></div>
+      <div class="stream5-toolbar-actions">
+        <button id="day5SoundToggle" class="stream5-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="day5MusicToggle" class="stream5-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
+        <button id="resetDay5" class="stream5-reset" type="button">Reset Day 5</button>
+      </div>
+      <p id="day5AudioStatus" class="stream5-status-text" role="status" aria-live="polite">Day 5 soundtrack installed. Tap Music OFF to start Streaming Platform Review Board — Greenlight Room.</p>
+    </section>
+
+    <section class="stream5-route" aria-labelledby="stream5RouteTitle">
+      <div class="stream5-section-head"><div><p class="stream5-kicker dark">THE COMMISSION</p><h2 id="stream5RouteTitle">Your review route</h2><p>First impressions come first. Evidence from the class video and article will be used in the next review stages.</p></div></div>
+      <ol class="stream5-route-list">
+        <li class="is-current"><b>01</b><span><strong>Meet the Pilots</strong><small>First impressions + review criteria</small></span></li>
+        <li><b>02</b><span><strong>Reality Intelligence</strong><small>Video evidence</small></span></li>
+        <li><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
+        <li><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
+        <li><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
+        <li><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
+        <li><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
+      </ol>
+    </section>
+
+    <section class="stream5-board" aria-labelledby="stream5MissionTitle">
+      <div class="stream5-section-head stream5-board-head">
+        <div><p class="stream5-kicker dark">REVIEW BOARD · MISSION 01</p><h2 id="stream5MissionTitle">Meet the Pilots</h2><p>Do not try to be “right” yet. Your first ratings are hypotheses. Later, you will compare them with evidence from the sources.</p></div>
+        <div class="stream5-progress-card" aria-live="polite"><span>MISSION PROGRESS</span><strong id="day5ProgressText">0 / 5</strong><div class="stream5-progress-track"><i id="day5ProgressBar"></i></div></div>
+      </div>
+
+      <div class="stream5-pilot-grid" id="day5PilotGrid">
+        <article class="stream5-pilot" data-pilot="trauma">
+          <div class="stream5-poster poster-trauma"><div class="stream5-poster-top">ORIGINAL SERIES</div><div class="stream5-poster-symbol">＋</div><h3>TRAUMA<br>BAY</h3><p>Every second counts.</p><span>Emergency drama</span></div>
+          <div class="stream5-pilot-copy"><p class="stream5-tagline">PILOT 01 · EMERGENCY</p><h3>Trauma Bay</h3><p>A relentless emergency department where every shift brings a major crisis, a difficult decision and a race against the clock.</p><ul><li>Fast diagnoses</li><li>High-stakes resuscitations</li><li>Constant pressure</li></ul><button class="stream5-secondary pilot-review-btn" type="button" data-review="trauma">Rate first impression →</button><b class="stream5-review-state" id="pilotStateTrauma">NOT REVIEWED</b></div>
+        </article>
+        <article class="stream5-pilot" data-pilot="diagnosis">
+          <div class="stream5-poster poster-diagnosis"><div class="stream5-poster-top">ORIGINAL SERIES</div><div class="stream5-poster-symbol">⌁</div><h3>THE<br>DIAGNOSIS</h3><p>Every symptom is a clue.</p><span>Medical mystery</span></div>
+          <div class="stream5-pilot-copy"><p class="stream5-tagline">PILOT 02 · MYSTERY</p><h3>The Diagnosis</h3><p>A brilliant doctor tackles baffling cases by spotting the one clue everyone else has missed.</p><ul><li>Rare conditions</li><li>Diagnostic puzzles</li><li>Big reveals</li></ul><button class="stream5-secondary pilot-review-btn" type="button" data-review="diagnosis">Rate first impression →</button><b class="stream5-review-state" id="pilotStateDiagnosis">NOT REVIEWED</b></div>
+        </article>
+        <article class="stream5-pilot" data-pilot="ward">
+          <div class="stream5-poster poster-ward"><div class="stream5-poster-top">ORIGINAL SERIES</div><div class="stream5-poster-symbol">17</div><h3>WARD<br>17</h3><p>Medicine is a team sport.</p><span>Hospital ensemble</span></div>
+          <div class="stream5-pilot-copy"><p class="stream5-tagline">PILOT 03 · WARD LIFE</p><h3>Ward 17</h3><p>Junior doctors, nurses and senior clinicians navigate handovers, routine care, uncertainty, fatigue and relationships on a busy ward.</p><ul><li>Teamwork</li><li>Routine + pressure</li><li>Professional relationships</li></ul><button class="stream5-secondary pilot-review-btn" type="button" data-review="ward">Rate first impression →</button><b class="stream5-review-state" id="pilotStateWard">NOT REVIEWED</b></div>
+        </article>
+        <article class="stream5-pilot" data-pilot="knife">
+          <div class="stream5-poster poster-knife"><div class="stream5-poster-top">ORIGINAL SERIES</div><div class="stream5-poster-symbol">✦</div><h3>UNDER<br>THE KNIFE</h3><p>Precision has a price.</p><span>Surgical drama</span></div>
+          <div class="stream5-pilot-copy"><p class="stream5-tagline">PILOT 04 · SURGERY</p><h3>Under the Knife</h3><p>An ambitious surgical team faces complex operations, hierarchy, consent questions and pressure to deliver perfect outcomes.</p><ul><li>Operating theatre</li><li>Hierarchy</li><li>Ethical dilemmas</li></ul><button class="stream5-secondary pilot-review-btn" type="button" data-review="knife">Rate first impression →</button><b class="stream5-review-state" id="pilotStateKnife">NOT REVIEWED</b></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="stream5-workspace" aria-labelledby="stream5WorkspaceTitle">
+      <div class="stream5-workspace-head"><div><p class="stream5-kicker dark">ACTIVE REVIEW</p><h2 id="stream5WorkspaceTitle">Board waiting</h2><p id="stream5WorkspaceIntro">Choose a pilot to record your first impression.</p></div><div class="stream5-score-box"><span>CRITERIA SCORE</span><strong id="day5Score">0</strong></div></div>
+      <div id="stream5Screen" class="stream5-screen" tabindex="-1"><div class="stream5-waiting"><span aria-hidden="true">📺</span><h3>Your board pack is ready.</h3><p>Rate all four pilots, then complete the Review Criteria Check.</p></div></div>
+      <div id="stream5Feedback" class="stream5-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="stream5-criteria" aria-labelledby="criteriaTitle">
+      <div><p class="stream5-kicker dark">BOARD TRAINING</p><h2 id="criteriaTitle">Know what you are rating</h2><p>Once all four first impressions are saved, the Review Criteria Check opens. This part <strong>is</strong> scored: identify which aspect of a medical drama is being assessed.</p></div>
+      <div class="stream5-criteria-grid">
+        <article><span>🩺</span><strong>Medical realism</strong><p>Clinical actions, procedures, investigations, timing and plausibility.</p></article>
+        <article><span>👥</span><strong>Teamwork realism</strong><p>Who does what, professional roles, handovers and collaboration.</p></article>
+        <article><span>💬</span><strong>Communication</strong><p>How clinicians speak with patients, relatives and colleagues.</p></article>
+        <article><span>⚖️</span><strong>Ethics</strong><p>Consent, confidentiality, boundaries, fairness and responsibility.</p></article>
+        <article><span>🎭</span><strong>Entertainment</strong><p>Pace, suspense, emotional impact and storytelling value.</p></article>
+      </div>
+      <button id="startCriteriaCheck" class="stream5-primary" type="button" disabled>🔒 Complete all four pilot ratings first</button>
+    </section>
+
+    <section id="day5Mission1Complete" class="stream5-completion is-locked" aria-labelledby="day5CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">🎟️</div>
+      <div><p class="stream5-kicker dark">MISSION 01 CLEARANCE</p><h2 id="day5CompleteTitle">Your board seat is not confirmed yet.</h2><p id="day5CompleteText">Rate the four pilots and clear the Review Criteria Check.</p></div>
+      <button id="day5Mission2Button" class="stream5-primary" type="button" disabled>🔒 Mission 2 · Reality Intelligence</button>
+    </section>
+
+    <section class="stream5-next-preview" aria-labelledby="nextReviewTitle">
+      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 2 · Reality Intelligence</h2><p>The next mission will turn the class video into an evidence deck: what medical TV gets right, what it exaggerates and what it leaves out.</p><div class="stream5-lock-chip">🔒 Evidence feed locked</div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
-    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
-  </footer>
+  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
+  <audio id="day5Music" loop preload="none">
+    <source src="assets/fgsm3/day5/music/day5-streaming-greenlight-room-suno.mp3" type="audio/mpeg">
+  </audio>
+  <script src="fgsm3-day5-game.js" defer></script>
   <script src="pwa.js" defer></script>
   <script src="accessibility.js" defer></script>
 </body>
