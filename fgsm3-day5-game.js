@@ -33,7 +33,16 @@
     invisibleIndex:0,
     invisibleOrder:[],
     invisibleAnsweredIds:[],
-    mission4:false
+    mission4:false,
+    finalRatings:{},
+    ratingsSubmitted:0,
+    ratingsCheckDone:false,
+    ratingsScore:0,
+    ratingsFirstTry:0,
+    ratingsIndex:0,
+    ratingsOrder:[],
+    ratingsAnsweredIds:[],
+    mission5:false
   };
   let state = load();
   let currentQuestions = [];
@@ -46,6 +55,8 @@
   let scriptLocked = false;
   let invisibleFirstAttempt = true;
   let invisibleLocked = false;
+  let ratingsFirstAttempt = true;
+  let ratingsLocked = false;
   let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
 
   const pilots = {
@@ -154,6 +165,48 @@
     ["Witten/Herdecke","A research project analysing 300+ episodes found substantial gaps between screen depictions and reality in illness, death and intensive care."]
   ];
 
+  const pilotEvidenceChoices = {
+    trauma:[
+      "Television can compress time without making every underlying event impossible.",
+      "A shift made only of spectacular emergencies can distort the balance of real work.",
+      "Team roles should remain visible even when the pace is fast.",
+      "Entertainment and medical realism must be rated separately."
+    ],
+    diagnosis:[
+      "Fast certainty can overstate how much information is actually available.",
+      "Genuine terminology does not automatically make the surrounding diagnostic process realistic.",
+      "A credible mystery can preserve uncertainty and still be entertaining.",
+      "If key context is missing, a reviewer should avoid pretending the evidence is stronger than it is."
+    ],
+    ward:[
+      "Charts, calls and patient advocacy are ordinary medical work worth making visible.",
+      "Handovers and multidisciplinary roles strengthen teamwork realism.",
+      "Quiet moments can be medically important even when they are less theatrical.",
+      "Routine work does not have to destroy entertainment value."
+    ],
+    knife:[
+      "Surgical care is team care; one star surgeon should not erase the wider team.",
+      "Editing may compress an operation without proving that the procedure itself is unrealistic.",
+      "Consent and context matter when judging an apparently problematic scene.",
+      "Spectacle should not be confused with evidence of clinical accuracy."
+    ]
+  };
+
+  const ratingsCalibrationQuestions = [
+    {id:"rc1",q:"A medical drama uses accurate disease names and procedure terminology. What can the board safely conclude?",a:"Its terminology may be credible, but that alone does not prove the whole representation is realistic",opts:["Its terminology may be credible, but that alone does not prove the whole representation is realistic","The series deserves 5/5 medical realism automatically","The actors must have medical licences","Its teamwork and ethics scores must also be high"],ex:"Cleveland Clinic distinguishes genuine terminology from the broader realism of roles, timing and situations."},
+    {id:"rc2",q:"One star doctor receives the patient, performs the operation and manages the entire follow-up. Which rating should be challenged most directly?",a:"Teamwork realism",opts:["Teamwork realism","Entertainment","Sound design","Episode length"],ex:"The evidence specifically warns that television can collapse multidisciplinary care into one character."},
+    {id:"rc3",q:"A lab result appears after a ten-second montage, but the underlying investigation is recognisable. What is the most careful review?",a:"The timing is probably dramatised or compressed",opts:["The timing is probably dramatised or compressed","The test is automatically medically impossible","The series is completely accurate","The scene proves laboratory errors are common"],ex:"Mission 3 separated dramatic compression from outright impossibility."},
+    {id:"rc4",q:"A consent discussion is not shown, but the episode gives too little context to know whether it happened off screen. What should the board do?",a:"Mark the issue as context-dependent rather than inventing certainty",opts:["Mark the issue as context-dependent rather than inventing certainty","Declare the entire series unethical","Assume consent definitely happened","Ignore ethics because the scene is entertaining"],ex:"Absence on screen is not always proof that an event did not occur in the story world."},
+    {id:"rc5",q:"A pilot shows almost no charting, calls, advocacy or handovers. Why can that matter to its realism score?",a:"Omission can distort viewers' picture of what medical work actually contains",opts:["Omission can distort viewers' picture of what medical work actually contains","Those tasks are never part of medicine","Only procedural errors affect realism","It proves the programme has no medical consultants"],ex:"Mission 4 treated omission as part of representation, not as neutral empty space."},
+    {id:"rc6",q:"CBS reports that The Pitt uses emergency-medicine experts on set and has been praised for credible procedures. What is the strongest conclusion?",a:"Some medical dramas can achieve high realism when production actively uses medical expertise",opts:["Some medical dramas can achieve high realism when production actively uses medical expertise","All modern medical dramas are realistic","Medical consultants guarantee that every scene is perfect","Older medical dramas are necessarily inaccurate"],ex:"Evidence about one series supports a possibility, not a universal claim about the whole genre."},
+    {id:"rc7",q:"The Witten/Herdecke project analysed more than 300 episodes and found substantial gaps in some depictions. What should NOT follow from that?",a:"Every scene in every medical series is false",opts:["Every scene in every medical series is false","Some representations deserve careful fact-checking","Illness and death can be made more theatrical on screen","A large sample can reveal recurring representation patterns"],ex:"The source supports recurring discrepancies, not the claim that everything shown on television is wrong."},
+    {id:"rc8",q:"Can a pilot receive both a high Entertainment score and a high Medical realism score?",a:"Yes — those are separate dimensions",opts:["Yes — those are separate dimensions","No — realism always makes television boring","No — entertainment requires medical errors","Only if the series is a documentary"],ex:"The Review Board deliberately separates storytelling quality from accuracy."},
+    {id:"rc9",q:"Your final score is different from your first impression after you collected evidence. What does that show?",a:"You revised a hypothesis in response to evidence",opts:["You revised a hypothesis in response to evidence","Your first review must be deleted","The final score is automatically correct","You should always keep your first rating for consistency"],ex:"Changing your mind after stronger evidence is exactly what this mission is designed to reward."},
+    {id:"rc10",q:"A pilot is gripping television but repeatedly erases the wider care team. Which rating pattern is possible?",a:"High Entertainment, lower Teamwork realism",opts:["High Entertainment, lower Teamwork realism","All five dimensions must have the same score","High Entertainment proves high Medical realism","Low Teamwork realism forces low Entertainment"],ex:"Different dimensions can move independently."},
+    {id:"rc11",q:"Which final board note is best calibrated?",a:"The pilot is engaging, but its compressed timing and simplified team roles reduce its realism score",opts:["The pilot is engaging, but its compressed timing and simplified team roles reduce its realism score","This is television, so none of it can be trusted","The terminology sounds medical, therefore the series is accurate","I liked it, therefore it deserves full marks for ethics"],ex:"A strong review separates dimensions and names the evidence behind the judgement."},
+    {id:"rc12",q:"What is the Ratings Department actually trying to produce?",a:"A transparent evidence-based profile across several dimensions, not one vague 'realistic/unrealistic' verdict",opts:["A transparent evidence-based profile across several dimensions, not one vague 'realistic/unrealistic' verdict","A list of favourite actors","A medical diagnosis for each fictional patient","One entertainment score that replaces all other criteria"],ex:"The point of the board is multidimensional evaluation grounded in evidence."}
+  ];
+
   function $(id){return document.getElementById(id);}
   function load(){try{return {...defaultState,...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch(e){return {...defaultState};}}
   function save(){localStorage.setItem(KEY,JSON.stringify(state)); updateUI();}
@@ -257,29 +310,56 @@
 
     const m4Complete=$("day5Mission4Complete");
     const m5Button=$("day5Mission5Button");
+    const m5=$("day5Mission5");
     if(state.mission4){
       m4Complete.classList.remove("is-locked");
       $("day5M4CompleteTitle").textContent="Invisible Shift audit cleared.";
       $("day5M4CompleteText").textContent=`You reviewed all ${invisibleQuestions.length} off-screen files and scored ${state.invisibleScore}/${invisibleQuestions.length*10}.`;
       m5Button.disabled=false;
-      m5Button.textContent="✓ Mission 5 · Ratings Department · Next update";
-      $("day5Mission5LockChip").textContent="✓ Ratings desk ready";
+      m5Button.textContent=state.mission5?"✓ Mission 5 · Ratings Department cleared":"Open Mission 5 · Ratings Department →";
+      m5.classList.remove("is-locked");
     } else {
       m4Complete.classList.add("is-locked");
       $("day5M4CompleteTitle").textContent="Production reality desk not cleared yet.";
       $("day5M4CompleteText").textContent=`Review all ${invisibleQuestions.length} off-screen files.`;
       m5Button.disabled=true;
       m5Button.textContent="🔒 Mission 5 · Ratings Department";
-      $("day5Mission5LockChip").textContent="🔒 Ratings desk locked";
+      m5.classList.add("is-locked");
     }
 
-    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5");
-    [r1,r2,r3,r4,r5].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
+    const finalCount=Object.keys(state.finalRatings||{}).filter(k=>state.finalRatings[k]?.submitted).length;
+    state.ratingsSubmitted=finalCount;
+    $("day5RatingsText").textContent=`${finalCount} / 4`;
+    $("day5RatingsBar").style.width=`${finalCount*25}%`;
+    Object.keys(pilots).forEach(k=>{const id="finalRatingState"+k[0].toUpperCase()+k.slice(1);const el=$(id);if(el){const ok=!!state.finalRatings?.[k]?.submitted;el.textContent=ok?"RE-RATED":"WAITING";el.classList.toggle("is-done",ok);}});
+    const startCal=$("startRatingsCalibration");
+    if(state.mission4 && finalCount===4){startCal.disabled=false;startCal.textContent=state.mission5?"✓ Board Calibration cleared":"Start Board Calibration →";}
+    else {startCal.disabled=true;startCal.textContent=state.mission4?`🔒 Re-rate ${4-finalCount} more pilot${4-finalCount===1?"":"s"}`:"🔒 Clear Mission 4 first";}
+
+    const m5Complete=$("day5Mission5Complete");
+    const m6Button=$("day5Mission6Button");
+    if(state.mission5){
+      m5Complete.classList.remove("is-locked");
+      $("day5M5CompleteTitle").textContent="Ratings Department cleared.";
+      $("day5M5CompleteText").textContent=`Four evidence-based reviews saved. Board Calibration: ${state.ratingsScore}/${ratingsCalibrationQuestions.length*10}.`;
+      m6Button.disabled=false;m6Button.textContent="Open Mission 6 · Notes for the Writers →";
+      $("day5Mission6LockChip").textContent="✓ Writers' room ready";
+    }else{
+      m5Complete.classList.add("is-locked");
+      $("day5M5CompleteTitle").textContent="Ratings Department not cleared yet.";
+      $("day5M5CompleteText").textContent="Re-rate all four pilots and clear Board Calibration.";
+      m6Button.disabled=true;m6Button.textContent="🔒 Mission 6 · Notes for the Writers";
+      $("day5Mission6LockChip").textContent="🔒 Writers' room locked";
+    }
+
+    const r1=$("day5Route1"),r2=$("day5Route2"),r3=$("day5Route3"),r4=$("day5Route4"),r5=$("day5Route5"),r6=$("day5Route6");
+    [r1,r2,r3,r4,r5,r6].forEach(el=>{if(el){el.classList.remove("is-current","is-done");}});
     if(!state.mission1){r1?.classList.add("is-current");}
     else if(!state.mission2){r1?.classList.add("is-done");r2?.classList.add("is-current");}
     else if(!state.mission3){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-current");}
     else if(!state.mission4){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-current");}
-    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-current");}
+    else if(!state.mission5){r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-current");}
+    else {r1?.classList.add("is-done");r2?.classList.add("is-done");r3?.classList.add("is-done");r4?.classList.add("is-done");r5?.classList.add("is-done");r6?.classList.add("is-current");}
   }
 
   function showPilot(key){
@@ -554,6 +634,78 @@
     $("scrollM4Complete").addEventListener("click",()=>$("day5Mission4Complete").scrollIntoView({behavior:"smooth",block:"center"}));
   }
 
+
+
+  function showFinalRating(key){
+    if(!state.mission4)return;
+    const p=pilots[key];
+    const initial=state.pilots?.[key]||{};
+    const saved=state.finalRatings?.[key]||{};
+    $("stream5WorkspaceTitle").textContent=`Ratings Department · ${p.title}`;
+    $("stream5WorkspaceIntro").textContent="Compare your first impression with the evidence. The platform does not mark your opinion; it records whether you can separate the review dimensions.";
+    document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";
+    $("day5Score").textContent=state.ratingsScore||0;
+    $("stream5Feedback").innerHTML="";
+    const rows=dimensions.map(([id,label,help])=>{
+      const before=Number(initial[id]||3), now=Number(saved[id]||before);
+      return `<label class="stream5-rating-compare"><span class="stream5-rating-label"><strong>${label}</strong><small>${help}</small></span><span class="stream5-before"><b>FIRST</b>${before}/5</span><input type="range" min="1" max="5" step="1" value="${now}" data-final-dim="${id}" aria-label="${esc(label)} final rating"><output data-final-out="${id}">${now}/5</output></label>`;
+    }).join("");
+    const evidence=(pilotEvidenceChoices[key]||[]).map((x,i)=>`<label class="stream5-evidence-choice"><input type="radio" name="ratingEvidence" value="${esc(x)}" ${saved.evidence===x?"checked":""}><span>${String.fromCharCode(65+i)}</span><b>${esc(x)}</b></label>`).join("");
+    $("stream5Screen").innerHTML=`<div class="stream5-final-review-panel"><div class="stream5-final-review-head"><span>FINAL COMMISSIONING PROFILE</span><h3>${esc(p.title)}</h3><p>${esc(p.genre)} · A changed score is not a mistake if the evidence changed your view.</p></div><div class="stream5-rating-compare-list">${rows}</div><div class="stream5-evidence-reason"><span>EVIDENCE THAT MOST INFLUENCED THIS REVIEW</span><div>${evidence}</div></div><label class="stream5-comment"><span>Optional final board note</span><textarea id="finalPilotNote" maxlength="260" placeholder="Why did your view stay the same or change?">${esc(saved.note||"")}</textarea></label><button id="saveFinalPilotReview" class="stream5-primary" type="button">Save evidence-based rating</button></div>`;
+    $("stream5Screen").querySelectorAll("[data-final-dim]").forEach(inp=>inp.addEventListener("input",()=>{$("stream5Screen").querySelector(`[data-final-out="${inp.dataset.finalDim}"]`).textContent=`${inp.value}/5`;}));
+    $("saveFinalPilotReview").addEventListener("click",()=>{
+      const chosen=$("stream5Screen").querySelector('input[name="ratingEvidence"]:checked');
+      if(!chosen){$("stream5Feedback").innerHTML='<div class="stream5-feedback-bad"><strong>One thing is missing.</strong> Choose the evidence that most influenced your final review.</div>';return;}
+      const values={submitted:true,evidence:chosen.value,note:$("finalPilotNote").value.trim()};
+      $("stream5Screen").querySelectorAll("[data-final-dim]").forEach(i=>values[i.dataset.finalDim]=Number(i.value));
+      state.finalRatings={...(state.finalRatings||{}),[key]:values};save();ping(720,.08);
+      const deltas=dimensions.map(([id,label])=>{const a=Number(initial[id]||3),b=Number(values[id]||a),d=b-a;return `${label.replace(/^.. /,"")}: ${d===0?"no change":(d>0?`+${d}`:`${d}`)}`;}).join(" · ");
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Final rating saved.</strong> ${esc(deltas)}. Your evidence choice is attached to the review.</div>`;
+    });
+    $("stream5Screen").focus();
+  }
+
+  function startRatingsCalibration(){
+    if(!state.mission4)return;
+    const count=Object.keys(state.finalRatings||{}).filter(k=>state.finalRatings[k]?.submitted).length;
+    if(count<4)return;
+    if(state.mission5){showRatingsClearance();return;}
+    if(!Array.isArray(state.ratingsOrder)||state.ratingsOrder.length!==ratingsCalibrationQuestions.length){
+      state.ratingsOrder=shuffle(ratingsCalibrationQuestions.map(q=>q.id));state.ratingsIndex=0;state.ratingsScore=0;state.ratingsFirstTry=0;state.ratingsAnsweredIds=[];save();
+    }
+    renderRatingsCalibration();document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  function ratingsItem(){const id=state.ratingsOrder?.[state.ratingsIndex];return ratingsCalibrationQuestions.find(q=>q.id===id);}
+  function renderRatingsCalibration(){
+    const item=ratingsItem();if(!item){finishRatingsCalibration();return;}
+    ratingsLocked=false;ratingsFirstAttempt=true;
+    document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";$("day5Score").textContent=state.ratingsScore||0;
+    $("stream5WorkspaceTitle").textContent="Ratings Department · Board Calibration";
+    $("stream5WorkspaceIntro").textContent=`Calibration ${state.ratingsIndex+1} of ${ratingsCalibrationQuestions.length} · Keep entertainment, evidence and realism separate.`;
+    $("stream5Feedback").innerHTML="";
+    const opts=shuffle(item.opts);
+    $("stream5Screen").innerHTML=`<div class="stream5-question stream5-ratings-question"><div class="stream5-question-meta"><span>COMMISSIONING CALIBRATION</span><b>${state.ratingsIndex+1}/${ratingsCalibrationQuestions.length}</b></div><h3>${esc(item.q)}</h3><div class="stream5-options">${opts.map((o,i)=>`<button type="button" class="stream5-option" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${esc(o)}</button>`).join("")}</div></div>`;
+    $("stream5Screen").querySelectorAll(".stream5-option").forEach(btn=>btn.addEventListener("click",()=>answerRatingsCalibration(btn,item)));$("stream5Screen").focus();
+  }
+  function answerRatingsCalibration(btn,item){
+    if(ratingsLocked)return;const choice=btn.dataset.opt;
+    if(choice===item.a){
+      ratingsLocked=true;btn.classList.add("is-correct");const fresh=!(state.ratingsAnsweredIds||[]).includes(item.id);const pts=ratingsFirstAttempt?10:6;
+      if(fresh){state.ratingsScore=(state.ratingsScore||0)+pts;if(ratingsFirstAttempt)state.ratingsFirstTry=(state.ratingsFirstTry||0)+1;state.ratingsAnsweredIds=[...(state.ratingsAnsweredIds||[]),item.id];}
+      save();ping(860,.08);document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";$("day5Score").textContent=state.ratingsScore;
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Board calibrated${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextRatingsCalibration" class="stream5-inline-next" type="button">${state.ratingsIndex===ratingsCalibrationQuestions.length-1?"Accept final ratings":"Next calibration →"}</button></div>`;
+      $("nextRatingsCalibration").addEventListener("click",()=>{state.ratingsIndex=(state.ratingsIndex||0)+1;save();renderRatingsCalibration();});
+    }else{ratingsFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(210,.10);$("stream5Feedback").innerHTML='<div class="stream5-feedback-bad"><strong>Ratings logic rejected.</strong> Separate the evidence from your taste, and separate each review dimension. Try again.</div>';}
+  }
+  function finishRatingsCalibration(){state.ratingsCheckDone=true;state.mission5=true;save();ping(980,.15);updateUI();showRatingsClearance();}
+  function showRatingsClearance(){
+    document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";$("day5Score").textContent=state.ratingsScore||0;
+    $("stream5WorkspaceTitle").textContent="Ratings Department cleared";$("stream5WorkspaceIntro").textContent="The four pilots now have an evidence-based commissioning profile.";$("stream5Feedback").innerHTML="";
+    const cards=Object.keys(pilots).map(k=>{const p=pilots[k],first=state.pilots?.[k]||{},last=state.finalRatings?.[k]||{};const avg=o=>dimensions.reduce((n,[id])=>n+Number(o[id]||3),0)/dimensions.length;const a=avg(first),b=avg(last),d=(b-a).toFixed(1);return `<div><b>${esc(p.title)}</b><span>${b.toFixed(1)}/5</span><small>${Number(d)===0?"No overall change":(Number(d)>0?`▲ ${d}`:`▼ ${Math.abs(Number(d)).toFixed(1)}`)} from first impression</small></div>`;}).join("");
+    $("stream5Screen").innerHTML=`<div class="stream5-clearance stream5-ratings-clearance"><span>📊</span><h3>Evidence-Based Commissioner</h3><p><strong>${state.ratingsScore}/${ratingsCalibrationQuestions.length*10}</strong> · ${state.ratingsFirstTry}/${ratingsCalibrationQuestions.length} calibration decisions correct on the first attempt.</p><p>Your final ratings can disagree with someone else's. What matters is that each dimension is separated and the review is tied to evidence rather than instinct.</p><div class="stream5-final-scorecards">${cards}</div><button id="scrollM5Complete" class="stream5-primary" type="button">See mission clearance ↓</button></div>`;
+    $("scrollM5Complete").addEventListener("click",()=>$("day5Mission5Complete").scrollIntoView({behavior:"smooth",block:"center"}));
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     updateUI();
     $("startDay5Mission1").addEventListener("click",()=>{document.querySelector(".stream5-board").scrollIntoView({behavior:"smooth"}); ping();});
@@ -568,11 +720,15 @@
     $("startScriptAudit").addEventListener("click",()=>{if(!$("startScriptAudit").disabled)startScriptAudit();});
     $("day5Mission4Button").addEventListener("click",()=>{if(state.mission3)$("day5Mission4").scrollIntoView({behavior:"smooth",block:"start"});});
     $("startInvisibleWork").addEventListener("click",()=>{if(!$("startInvisibleWork").disabled)startInvisibleWork();});
-    $("day5Mission5Button").addEventListener("click",()=>{$("day5AudioStatus").textContent="Mission 5 · Ratings Department is next. Your Invisible Shift audit is saved on this device.";});
+    $("day5Mission5Button").addEventListener("click",()=>{if(state.mission4)$("day5Mission5").scrollIntoView({behavior:"smooth",block:"start"});});
+    document.querySelectorAll(".final-rating-btn").forEach(b=>b.addEventListener("click",()=>showFinalRating(b.dataset.finalRating)));
+    $("startRatingsCalibration").addEventListener("click",()=>{if(!$("startRatingsCalibration").disabled)startRatingsCalibration();});
+    $("day5Mission6Button").addEventListener("click",()=>{if(state.mission5)$("day5Mission6Preview").scrollIntoView({behavior:"smooth",block:"start"});});
     $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF";
     $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound));
     applyMusicState(false);
-    if(state.mission4){showInvisibleClearance();}
+    if(state.mission5){showRatingsClearance();}
+    else if(state.mission4){showInvisibleClearance();}
     else if(state.mission3){showScriptClearance();}
     else if(state.mission2){showRealityClearance();}
   });

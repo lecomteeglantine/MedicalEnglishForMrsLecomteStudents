@@ -11,7 +11,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="FGSM3 Day 5 — Streaming Platform Review Board: an interactive Medical English game about realism in medical TV drama.">
   <title>FGSM3 · Day 5 · Streaming Platform Review Board</title>
-  <link rel="stylesheet" href="styles-v51.css">
+  <link rel="stylesheet" href="styles-v52.css">
 </head>
 <body class="stream5-body">
   <a class="skip-link" href="#main">Skip to main content</a>
@@ -58,7 +58,7 @@
         <li id="day5Route3"><b>03</b><span><strong>Script Audit</strong><small>Accurate · dramatised · unrealistic · depends</small></span></li>
         <li id="day5Route4"><b>04</b><span><strong>What TV Leaves Out</strong><small>The invisible work of medicine</small></span></li>
         <li id="day5Route5"><b>05</b><span><strong>Ratings Department</strong><small>Score the four shows</small></span></li>
-        <li><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
+        <li id="day5Route6"><b>06</b><span><strong>Notes for the Writers</strong><small>Keep · change · cut · add context</small></span></li>
         <li><b>★</b><span><strong>Greenlight Meeting</strong><small>Final commissioning decision</small></span></li>
       </ol>
     </section>
@@ -245,8 +245,47 @@
       <button id="day5Mission5Button" class="stream5-primary" type="button" disabled>🔒 Mission 5 · Ratings Department</button>
     </section>
 
-    <section class="stream5-next-preview" aria-labelledby="nextReviewTitle">
-      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 5 · Ratings Department</h2><p>Now that you have evidence about what television shows, exaggerates and hides, return to the four pilots and revise your original ratings. Which series has earned credibility — and which one needs a rewrite?</p><div id="day5Mission5LockChip" class="stream5-lock-chip">🔒 Ratings desk locked</div>
+    <section id="day5Mission5" class="stream5-ratings-dept is-locked" aria-labelledby="ratingsDeptTitle">
+      <div class="stream5-section-head stream5-board-head">
+        <div>
+          <p class="stream5-kicker dark">REVIEW BOARD · MISSION 05</p>
+          <h2 id="ratingsDeptTitle">Ratings Department</h2>
+          <p>Your first scores were instinct. These scores must be <strong>evidence-based</strong>. Re-rate all four pilots after Reality Intelligence, Script Audit and the Invisible Shift.</p>
+        </div>
+        <div class="stream5-progress-card">
+          <span>FINAL REVIEWS</span><strong id="day5RatingsText">0 / 4</strong>
+          <div class="stream5-progress-track"><i id="day5RatingsBar"></i></div>
+        </div>
+      </div>
+
+      <div class="stream5-ratings-principle">
+        <div><span>01</span><strong>Compare</strong><p>Look at your original 1–5 ratings.</p></div>
+        <div><span>02</span><strong>Re-rate</strong><p>Change them only if the evidence changes your view.</p></div>
+        <div><span>03</span><strong>Justify</strong><p>Name the evidence that influenced your decision.</p></div>
+        <div><span>04</span><strong>Keep dimensions separate</strong><p>A show can be entertaining and still medically weak — or excellent at both.</p></div>
+      </div>
+
+      <div class="stream5-final-rating-grid" aria-label="Four pilots to re-rate">
+        <article class="stream5-final-rating-card trauma"><span>PILOT 01</span><h3>Trauma Bay</h3><p>Emergency drama</p><button class="stream5-secondary final-rating-btn" type="button" data-final-rating="trauma">Re-rate with evidence →</button><b id="finalRatingStateTrauma">WAITING</b></article>
+        <article class="stream5-final-rating-card diagnosis"><span>PILOT 02</span><h3>The Diagnosis</h3><p>Medical mystery</p><button class="stream5-secondary final-rating-btn" type="button" data-final-rating="diagnosis">Re-rate with evidence →</button><b id="finalRatingStateDiagnosis">WAITING</b></article>
+        <article class="stream5-final-rating-card ward"><span>PILOT 03</span><h3>Ward 17</h3><p>Hospital ensemble</p><button class="stream5-secondary final-rating-btn" type="button" data-final-rating="ward">Re-rate with evidence →</button><b id="finalRatingStateWard">WAITING</b></article>
+        <article class="stream5-final-rating-card knife"><span>PILOT 04</span><h3>Under the Knife</h3><p>Surgical drama</p><button class="stream5-secondary final-rating-btn" type="button" data-final-rating="knife">Re-rate with evidence →</button><b id="finalRatingStateKnife">WAITING</b></article>
+      </div>
+
+      <div class="stream5-calibration-box">
+        <div><p class="stream5-kicker dark">BOARD CALIBRATION</p><h3>Can you rate without confusing drama, accuracy and evidence?</h3><p>Once all four final reviews are saved, clear a 12-checkpoint calibration before the platform accepts your ratings.</p></div>
+        <button id="startRatingsCalibration" class="stream5-primary" type="button" disabled>🔒 Re-rate all four pilots first</button>
+      </div>
+    </section>
+
+    <section id="day5Mission5Complete" class="stream5-completion is-locked" aria-labelledby="day5M5CompleteTitle">
+      <div class="stream5-completion-badge" aria-hidden="true">📊</div>
+      <div><p class="stream5-kicker dark">MISSION 05 CLEARANCE</p><h2 id="day5M5CompleteTitle">Ratings Department not cleared yet.</h2><p id="day5M5CompleteText">Re-rate all four pilots and clear Board Calibration.</p></div>
+      <button id="day5Mission6Button" class="stream5-primary" type="button" disabled>🔒 Mission 6 · Notes for the Writers</button>
+    </section>
+
+    <section id="day5Mission6Preview" class="stream5-next-preview" aria-labelledby="nextReviewTitle">
+      <p class="stream5-kicker">NEXT ON THE PLATFORM</p><h2 id="nextReviewTitle">Mission 6 · Notes for the Writers</h2><p>The ratings are in. Now the writers want actionable notes: what should they <strong>KEEP, CHANGE, CUT or ADD CONTEXT</strong> before the pilots return to the Greenlight Room?</p><div id="day5Mission6LockChip" class="stream5-lock-chip">🔒 Writers' room locked</div>
     </section>
   </main>
 
