@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="theme-color" content="#07141b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Medical English">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FGSM3 Day 4 — AI Clinical Control: Human in the Loop, an interactive Medical English game for Mrs Lecomte's students.">
+  <title>FGSM3 · Day 4 · AI Clinical Control</title>
+  <link rel="stylesheet" href="styles-v47.css">
+
+  <style>
+    .conference-rescue-callout{
+      margin: 28px 0 34px;
+      border: 1px solid rgba(45, 212, 191, .28);
+      border-radius: 24px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top right, rgba(45,212,191,.16), transparent 34%),
+        linear-gradient(135deg, #0a2029 0%, #0d2a35 55%, #123b49 100%);
+      color: #f4fbfc;
+      box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    }
+    .conference-rescue-callout-inner{
+      display:grid;
+      grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);
+      gap:24px;
+      align-items:center;
+      padding:28px;
+    }
+    .conference-rescue-callout .eyebrow{
+      margin:0 0 8px;
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-weight:800;
+      color:#6ee7d8;
+    }
+    .conference-rescue-callout h2{
+      margin:.1em 0 .35em;
+      font-size:clamp(1.8rem,4vw,3rem);
+      color:#fff;
+    }
+    .conference-rescue-callout p{
+      margin:0;
+      max-width:68ch;
+      color:#d8eaee;
+      line-height:1.6;
+    }
+    .conference-rescue-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:16px;
+    }
+    .conference-rescue-tags span{
+      display:inline-flex;
+      align-items:center;
+      min-height:30px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.07);
+      font-size:.78rem;
+      color:#eef9fa;
+    }
+    .conference-rescue-launch{
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      justify-content:center;
+      gap:10px;
+      padding:20px;
+      border-radius:18px;
+      background:rgba(2,13,18,.38);
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .conference-rescue-launch strong{
+      font-size:1.05rem;
+      color:#fff;
+    }
+    .conference-rescue-launch small{
+      color:#a9c8ce;
+      line-height:1.45;
+    }
+    .conference-rescue-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:48px;
+      padding:12px 18px;
+      border-radius:999px;
+      background:#5eead4;
+      color:#062028;
+      font-weight:900;
+      text-decoration:none;
+      box-shadow:0 8px 22px rgba(94,234,212,.18);
+      transition:transform .15s ease, filter .15s ease;
+    }
+    .conference-rescue-button:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+    }
+    .conference-rescue-button:focus-visible{
+      outline:3px solid #fff;
+      outline-offset:3px;
+    }
+    @media (max-width: 760px){
+      .conference-rescue-callout-inner{grid-template-columns:1fr;padding:22px}
+    }
+  </style>
+
+</head>
+<body class="ai4-body">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="dictionary.html">Dictionary</a>
+      <a href="fgsm2.html">FGSM2</a>
+      <a href="fgsm3.html">FGSM3</a>
+      <a href="grammar.html">Grammar</a>
+      <a href="pronunciation.html">Pronunciation</a>
+      <a href="games.html">Games</a>
+    </nav>
+  </header>
+
+  <main id="main" class="ai4-main">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span><span aria-current="page">Day 4</span></nav>
+
+    <section class="ai4-hero" aria-labelledby="ai4Title">
+      <img class="ai4-hero-image" src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Vintage-style illustration of a doctor, a patient and an artificial-intelligence system in a medical setting.">
+      <div class="ai4-hero-overlay" aria-hidden="true"></div>
+      <div class="ai4-hero-copy">
+        <p class="ai4-kicker">FGSM3 · DAY 4 GAME</p>
+        <h1 id="ai4Title">AI Clinical Control</h1>
+        <p class="ai4-subtitle">Human in the Loop</p>
+        <p class="ai4-lead">AI can monitor, flag patterns and support clinical work. Your job is to understand exactly what the system is doing — and keep the human decision-maker in control.</p>
+        <button id="startDay4Mission1" class="ai4-primary" type="button">Boot Mission 1 →</button>
+      </div>
+      <div class="ai4-status-card" aria-label="Day 4 mission status"><span>CONTROL ROOM</span><strong>MISSION 01</strong><b>SYSTEM BOOT</b><small id="day4Clearance">Clearance pending</small></div>
+    </section>
+
+    <section class="ai4-toolbar" aria-label="Day 4 controls">
+      <div><strong>Clinical control panel</strong><span>Progress is stored only on this device.</span></div>
+      <div class="ai4-toolbar-actions">
+        <button id="day4SoundToggle" class="ai4-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="day4MusicToggle" class="ai4-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
+        <button id="resetDay4" class="ai4-reset" type="button">Reset Day 4</button>
+      </div>
+      <p id="day4AudioStatus" class="ai4-status-text" role="status" aria-live="polite">Day 4 soundtrack installed. Tap Music OFF to start the AI Clinical Control theme.</p>
+    </section>
+
+    <section class="conference-rescue-callout" aria-labelledby="conferenceRescueTitle">
+      <div class="conference-rescue-callout-inner">
+        <div>
+          <p class="eyebrow">DAY 4 · PRONUNCIATION GAME</p>
+          <h2 id="conferenceRescueTitle">🎤 The Conference Rescue</h2>
+          <p>Your scientific presentation starts soon. Fix the pronunciation problems that can make a medical talk difficult to follow — medical vocabulary, TH sounds, word stress, rhythm and intonation.</p>
+          <div class="conference-rescue-tags" aria-label="Pronunciation skills practised">
+            <span>kidney · liver · heart</span>
+            <span>vital signs</span>
+            <span>TH sounds</span>
+            <span>word stress</span>
+            <span>intonation</span>
+          </div>
+        </div>
+        <div class="conference-rescue-launch">
+          <strong>Ready for the soundcheck?</strong>
+          <small>The game opens as a separate Day 4 activity. Your progress in AI Clinical Control stays unchanged.</small>
+          <a class="conference-rescue-button" href="conference-rescue.html">Launch The Conference Rescue →</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ai4-board" aria-labelledby="ai4MissionTitle">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 01</p><h2 id="ai4MissionTitle">Mission 1 · System Boot</h2><p>Learn the core language from the Day 4 worksheet, then prove that you can tell the difference between an AI function, a regulatory label, a patient concern and a human responsibility.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION PROGRESS</span><strong id="day4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-activity-grid">
+        <button class="ai4-activity-card" data-ai4-activity="lexicon" type="button"><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor, patient and AI system in a medical setting."><div><small>CLINICAL LEXICON</small><strong>Load the Vocabulary</strong><p>Decode the ten core terms from the Day 4 worksheet.</p><b id="ai4StatusLexicon">READY</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="signals" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="AI-assisted medical consultation illustration."><div><small>SIGNAL RECOGNITION</small><strong>Read the System</strong><p>Choose the term that best fits a real medical-AI context.</p><b id="ai4StatusSignals">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="boundaries" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system."><div><small>TRUST BOUNDARY</small><strong>Who Does What?</strong><p>Separate system functions, regulation, patient risk and human control.</p><b id="ai4StatusBoundaries">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-activity="clearance" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor maintaining oversight while using AI in medicine."><div><small>HUMAN-IN-THE-LOOP</small><strong>Final Boot Check</strong><p>Check the report's core message before the live clinical feed opens.</p><b id="ai4StatusClearance">LOCKED</b></div></button>
+      </div>
+    </section>
+
+    <section class="ai4-workspace" aria-labelledby="ai4WorkspaceTitle">
+      <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACTIVE CONSOLE</p><h2 id="ai4WorkspaceTitle">System waiting</h2><p id="ai4WorkspaceIntro">Boot Mission 1 to start the vocabulary clearance.</p></div><div class="ai4-score-box"><span>FIRST-TRY SCORE</span><strong id="day4Score">0</strong></div></div>
+      <div id="ai4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div></div>
+      <div id="ai4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="day4Mission1Complete" class="ai4-completion is-locked" aria-labelledby="day4CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🧠</div>
+      <div><p class="ai4-kicker dark">MISSION 01 CLEARANCE</p><h2 id="day4CompleteTitle">System Boot is not cleared yet.</h2><p id="day4CompleteText">Complete all four control-room activities.</p></div>
+      <button id="day4Mission2Button" class="ai4-primary" type="button" disabled>🔒 Mission 2 · Live Clinical Feed</button>
+    </section>
+
+    <section id="day4Mission2" class="ai4-board ai4-mission2 is-locked" aria-labelledby="ai4Mission2Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 02</p><h2 id="ai4Mission2Title">Mission 2 · Live Clinical Feed</h2><p>Watch the supplied news report, then verify exactly what each AI system does — and where human judgement still matters.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 2 PROGRESS</span><strong id="day4Mission2ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission2ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-video-console">
+        <div class="ai4-video-frame">
+          <video id="day4ClinicalVideo" controls preload="metadata" poster="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp">
+            <source src="assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4" type="video/mp4">
+            Your browser does not support embedded video.
+          </video>
+        </div>
+        <div class="ai4-video-brief">
+          <span class="ai4-live-chip">● LIVE CLINICAL FEED</span>
+          <h3>How AI is transforming healthcare</h3>
+          <p>The report follows three clinical uses: early sepsis detection, live 3-D navigation in spine surgery and seizure detection from brainwaves.</p>
+          <div class="ai4-feed-modules" aria-label="Three AI systems in the report">
+            <article><b>01</b><strong>SEPSIS</strong><span>Vital-sign monitoring</span></article>
+            <article><b>02</b><strong>SPINE</strong><span>Live 3-D navigation</span></article>
+            <article><b>03</b><strong>EEG</strong><span>Seizure detection</span></article>
+          </div>
+          <p class="ai4-video-note"><strong>Audio behaviour:</strong> your Day 4 music pauses while the video plays and resumes afterwards if Music is ON.</p>
+        </div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m2-grid">
+        <button class="ai4-activity-card" data-ai4-m2="overview" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="3-D visualisation from the supplied AI and medicine news report."><div><small>FIRST VIEWING</small><strong>Feed Orientation</strong><p>Seven rapid checks on the report's main ideas.</p><b id="ai4M2StatusOverview">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="sepsis" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor and AI system in a medical setting."><div><small>EARLY WARNING</small><strong>Sepsis Feed</strong><p>Track what the system monitors and why earlier alerts matter.</p><b id="ai4M2StatusSepsis">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="tools" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Spinal navigation image from the supplied report."><div><small>CLINICAL TOOLS</small><strong>Navigation + Neuro</strong><p>Verify the spine-navigation and seizure-detection systems.</p><b id="ai4M2StatusTools">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m2="human" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system."><div><small>SAFETY LAYER</small><strong>Keep the Human in the Loop</strong><p>Check the patient's view, risks and final-decision boundary.</p><b id="ai4M2StatusHuman">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m2-workspace" aria-labelledby="ai4M2WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">LIVE FEED CONSOLE</p><h2 id="ai4M2WorkspaceTitle">Feed waiting</h2><p id="ai4M2WorkspaceIntro">Clear Mission 1, then start Feed Orientation.</p></div><div class="ai4-score-box"><span>MISSION 2 SCORE</span><strong id="day4Mission2Score">0</strong></div></div>
+        <div id="ai4M2Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div></div>
+        <div id="ai4M2Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission2Complete" class="ai4-completion ai4-m2-complete is-locked" aria-labelledby="day4M2CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">📡</div>
+      <div><p class="ai4-kicker dark">MISSION 02 CLEARANCE</p><h2 id="day4M2CompleteTitle">Live Clinical Feed is not cleared yet.</h2><p id="day4M2CompleteText">Complete all four live-feed activities.</p></div>
+      <button id="day4Mission3Button" class="ai4-primary" type="button" disabled>🔒 Mission 3 · Override the Algorithm</button>
+    </section>
+
+
+    <section id="day4Mission3" class="ai4-board ai4-mission3 is-locked" aria-labelledby="ai4Mission3Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 03</p><h2 id="ai4Mission3Title">Mission 3 · Override the Algorithm</h2><p>Eight worksheet cases contain a mismatch between the AI's first answer and the rest of the clinical information. Spot the conflict, keep your language cautious and know when human review is essential.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 3 PROGRESS</span><strong id="day4Mission3ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission3ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-override-banner" role="note">
+        <div class="ai4-override-icon" aria-hidden="true">🛑</div>
+        <div><span>HUMAN REVIEW PROTOCOL</span><strong>Do not diagnose. Check the mismatch.</strong><p>These are English-learning scenarios from the Day 4 worksheet. Your task is to notice information the AI output does not adequately explain, not to practise real clinical decision-making.</p></div>
+        <div class="ai4-override-stats"><b>8</b><span>case files</span><b>9</b><span>silent-letter checks</span></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m3-grid">
+        <button class="ai4-activity-card" data-ai4-m3="conflict" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI-supported medical case."><div><small>CASE SCANNER</small><strong>Spot the Conflict</strong><p>Find the detail that makes the AI's first answer incomplete.</p><b id="ai4M3StatusConflict">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="review" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation from the Day 4 report."><div><small>HUMAN OVERRIDE</small><strong>Re-check the AI</strong><p>Choose the most source-consistent reason for human review.</p><b id="ai4M3StatusReview">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="silent" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical English pronunciation activity."><div><small>PRONUNCIATION SCANNER</small><strong>Silent Letter Check</strong><p>Hear the word, then identify the letter you write but do not pronounce.</p><b id="ai4M3StatusSilent">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m3="brief" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Human clinician checking an AI output."><div><small>CAUTIOUS REPORTING</small><strong>Override Brief</strong><p>Select the clearest, most cautious way to explain why the case needs another look.</p><b id="ai4M3StatusBrief">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m3-workspace" aria-labelledby="ai4M3WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">OVERRIDE CONSOLE</p><h2 id="ai4M3WorkspaceTitle">Override waiting</h2><p id="ai4M3WorkspaceIntro">Clear Mission 2, then open Spot the Conflict.</p></div><div class="ai4-score-box"><span>MISSION 3 SCORE</span><strong id="day4Mission3Score">0</strong></div></div>
+        <div id="ai4M3Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div></div>
+        <div id="ai4M3Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission3Complete" class="ai4-completion ai4-m3-complete is-locked" aria-labelledby="day4M3CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🛑</div>
+      <div><p class="ai4-kicker dark">MISSION 03 CLEARANCE</p><h2 id="day4M3CompleteTitle">Override the Algorithm is not cleared yet.</h2><p id="day4M3CompleteText">Complete all four human-review activities.</p></div>
+      <button id="day4Mission4Button" class="ai4-primary" type="button" disabled>🔒 Mission 4 · Evidence Scanner</button>
+    </section>
+
+
+
+    <section id="day4Mission4" class="ai4-board ai4-mission4 is-locked" aria-labelledby="ai4Mission4Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 04</p><h2 id="ai4Mission4Title">Mission 4 · Evidence Scanner</h2><p>The Harvard study looks impressive — but your job is to read the numbers, limits and claims precisely. Separate what the article supports from what would be hype.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 4 PROGRESS</span><strong id="day4Mission4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission4ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-evidence-dashboard" role="note" aria-label="Key figures from the Harvard AI study reported in the supplied article">
+        <div><span>FAST TRIAGE</span><strong>67%</strong><small>AI exact / very close diagnosis</small></div>
+        <div><span>DOCTORS</span><strong>50–55%</strong><small>same fast-triage experiment</small></div>
+        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference not statistically significant</small></div>
+        <div><span>TREATMENT PLANS</span><strong>89% vs 34%</strong><small>AI vs 46 doctors</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m4-grid">
+        <button class="ai4-activity-card" data-ai4-m4="numbers" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation used as the evidence scanner illustration."><div><small>DATA CHECK</small><strong>Read the Numbers</strong><p>Match the figures to exactly what the study reported.</p><b id="ai4M4StatusNumbers">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="headlines" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI claim."><div><small>CLAIM CHECK</small><strong>Headline Scanner</strong><p>Decide whether a claim is supported, overclaimed or not supported.</p><b id="ai4M4StatusHeadlines">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="limits" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Medical AI display representing study limitations."><div><small>LIMITATION CHECK</small><strong>Find the Limitation</strong><p>Identify what the experiment did not test and what risks remain.</p><b id="ai4M4StatusLimits">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m4="tfng" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Evidence verification activity."><div><small>SOURCE VERIFICATION</small><strong>True · False · Not Given</strong><p>Use the article only — not outside knowledge.</p><b id="ai4M4StatusTfng">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m4-workspace" aria-labelledby="ai4M4WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">EVIDENCE CONSOLE</p><h2 id="ai4M4WorkspaceTitle">Scanner waiting</h2><p id="ai4M4WorkspaceIntro">Clear Mission 3, then open Read the Numbers.</p></div><div class="ai4-score-box"><span>MISSION 4 SCORE</span><strong id="day4Mission4Score">0</strong></div></div>
+        <div id="ai4M4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div></div>
+        <div id="ai4M4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission4Complete" class="ai4-completion ai4-m4-complete is-locked" aria-labelledby="day4M4CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🔎</div>
+      <div><p class="ai4-kicker dark">MISSION 04 CLEARANCE</p><h2 id="day4M4CompleteTitle">Evidence Scanner is not cleared yet.</h2><p id="day4M4CompleteText">Complete all four evidence-audit activities.</p></div>
+      <button id="day4Mission5Button" class="ai4-primary" type="button" disabled>🔒 Mission 5 · Certainty Calibration</button>
+    </section>
+
+    <section id="day4Mission5" class="ai4-board ai4-mission5 is-locked" aria-labelledby="ai4Mission5Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 05</p><h2 id="ai4Mission5Title">Mission 5 · Certainty Calibration</h2><p>Clinical and scientific language should match the strength of the evidence. Calibrate each claim so it is clear, precise and no more certain than the data allow.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 5 PROGRESS</span><strong id="day4Mission5ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission5ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-calibration-panel" role="note" aria-label="Certainty calibration guide">
+        <div><span>STRONG DEDUCTION</span><strong>must · can’t</strong><small>Use when the evidence strongly supports or rules out an explanation.</small></div>
+        <div><span>POSSIBILITY</span><strong>may · might · could</strong><small>Use when the evidence allows an explanation but does not prove it.</small></div>
+        <div><span>PREDICTION</span><strong>will · won’t</strong><small>Use for a prediction stated with confidence.</small></div>
+        <div><span>LIKELIHOOD</span><strong>is likely to · is unlikely to</strong><small>Use when you want to calibrate a prediction more cautiously.</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m5-grid">
+        <button class="ai4-activity-card" data-ai4-m5="dial" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI display used for a certainty calibration activity."><div><small>CONFIDENCE DIAL</small><strong>Set the Certainty Level</strong><p>Choose the modal that matches what the evidence actually supports.</p><b id="ai4M5StatusDial">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="overclaim" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor checking the strength of an AI claim."><div><small>CLAIM CONTROL</small><strong>Overclaiming Detector</strong><p>Flag wording that is too strong — or too weak — for the evidence.</p><b id="ai4M5StatusOverclaim">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="future" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical team considering future uses of AI."><div><small>MEDICINE 2035</small><strong>Prediction Language</strong><p>Use will, won’t, likely, unlikely and possibility modals accurately.</p><b id="ai4M5StatusFuture">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m5="claim" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Evidence display for choosing a calibrated scientific claim."><div><small>EVIDENCE → CLAIM</small><strong>Calibrate the Conclusion</strong><p>Turn a result or limitation into careful scientific English.</p><b id="ai4M5StatusClaim">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m5-workspace" aria-labelledby="ai4M5WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">CERTAINTY CONSOLE</p><h2 id="ai4M5WorkspaceTitle">Calibration waiting</h2><p id="ai4M5WorkspaceIntro">Clear Mission 4, then open Set the Certainty Level.</p></div><div class="ai4-score-box"><span>MISSION 5 SCORE</span><strong id="day4Mission5Score">0</strong></div></div>
+        <div id="ai4M5Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty calibrator locked</h3><p>Mission 4 clearance is required.</p></div></div>
+        <div id="ai4M5Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission5Complete" class="ai4-completion ai4-m5-complete is-locked" aria-labelledby="day4M5CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">🎚️</div>
+      <div><p class="ai4-kicker dark">MISSION 05 CLEARANCE</p><h2 id="day4M5CompleteTitle">Certainty Calibration is not cleared yet.</h2><p id="day4M5CompleteText">Complete all four calibration activities.</p></div>
+      <button id="day4Mission6Button" class="ai4-primary" type="button" disabled>🔒 Mission 6 · Accountability Board</button>
+    </section>
+
+
+
+    <section id="day4Mission6" class="ai4-board ai4-mission6 is-locked" aria-labelledby="ai4Mission6Title">
+      <div class="ai4-heading">
+        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 06</p><h2 id="ai4Mission6Title">Mission 6 · Accountability Board</h2><p>Three difficult questions, one rule: <strong>your opinion is never the answer key</strong>. The scored work is how well you frame the issue, use evidence, represent the other side fairly and reach a qualified verdict.</p></div>
+        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 6 PROGRESS</span><strong id="day4Mission6ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission6ProgressBar"></i></div></div>
+      </div>
+
+      <div class="ai4-board-statements" aria-label="The three debate statements from the Day 4 worksheet">
+        <article><span>BOARD CASE 01</span><p>“In ten years, AI will diagnose patients better than doctors.”</p></article>
+        <article><span>BOARD CASE 02</span><p>“If an AI makes a diagnostic error, the doctor — not the AI company — should be held responsible.”</p></article>
+        <article><span>BOARD CASE 03</span><p>“Patients should always be told when AI is involved in their diagnosis or treatment.”</p></article>
+      </div>
+
+      <div class="ai4-opinion-notice" role="note"><strong>⚖️ No opinion is marked right or wrong.</strong><span>The score checks argument structure, source use, fair counterargument and calibrated conclusions.</span></div>
+
+      <div class="ai4-evidence-record" role="note" aria-label="Evidence on record from the supplied Day 4 article">
+        <div><span>FAST TRIAGE</span><strong>67% vs 50–55%</strong><small>AI vs doctors in one text-record experiment</small></div>
+        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference reported as not statistically significant</small></div>
+        <div><span>LIMITATION</span><strong>Text records only</strong><small>appearance and distress were not tested</small></div>
+        <div><span>ACCOUNTABILITY</span><strong>No formal framework</strong><small>the article presents responsibility as unresolved</small></div>
+      </div>
+
+      <div class="ai4-activity-grid ai4-m6-grid">
+        <button class="ai4-activity-card" data-ai4-m6="frame" type="button" disabled><span class="ai4-card-number">01</span><div class="ai4-board-icon" aria-hidden="true">◉</div><div><small>FRAME THE CASE</small><strong>Frame the Issue</strong><p>Define what is really being debated without prejudging the answer.</p><b id="ai4M6StatusFrame">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="evidence" type="button" disabled><span class="ai4-card-number">02</span><div class="ai4-board-icon" aria-hidden="true">▤</div><div><small>EVIDENCE ON RECORD</small><strong>Build the Case</strong><p>Use only claims and limitations actually supported by the Day 4 material.</p><b id="ai4M6StatusEvidence">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="steelman" type="button" disabled><span class="ai4-card-number">03</span><div class="ai4-board-icon" aria-hidden="true">⇄</div><div><small>OTHER SIDE</small><strong>Steelman It</strong><p>Represent an opposing view fairly before you challenge it.</p><b id="ai4M6StatusSteelman">LOCKED</b></div></button>
+        <button class="ai4-activity-card" data-ai4-m6="verdict" type="button" disabled><span class="ai4-card-number">04</span><div class="ai4-board-icon" aria-hidden="true">⚖</div><div><small>FINAL VERDICT</small><strong>Reach a Balanced Position</strong><p>Synthesise the evidence and finish with a clear, qualified conclusion.</p><b id="ai4M6StatusVerdict">LOCKED</b></div></button>
+      </div>
+
+      <div class="ai4-workspace ai4-m6-workspace" aria-labelledby="ai4M6WorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACCOUNTABILITY BOARD</p><h2 id="ai4M6WorkspaceTitle">Board locked</h2><p id="ai4M6WorkspaceIntro">Clear Mission 5, then open Frame the Issue.</p></div><div class="ai4-score-box"><span>MISSION 6 SCORE</span><strong id="day4Mission6Score">0</strong></div></div>
+        <div id="ai4M6Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">⚖️</span><h3>Accountability Board locked</h3><p>Mission 5 clearance is required.</p></div></div>
+        <div id="ai4M6Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="day4Mission6Complete" class="ai4-completion ai4-m6-complete is-locked" aria-labelledby="day4M6CompleteTitle">
+      <div class="ai4-completion-badge" aria-hidden="true">⚖️</div>
+      <div><p class="ai4-kicker dark">MISSION 06 CLEARANCE</p><h2 id="day4M6CompleteTitle">Accountability Board is not cleared yet.</h2><p id="day4M6CompleteText">Complete all four argument stages.</p></div>
+      <button id="day4FinalButton" class="ai4-primary" type="button" disabled>🔒 FINAL · Human-in-the-Loop Test</button>
+    </section>
+
+    <section id="day4BoardBrief" class="ai4-board-brief is-locked" aria-labelledby="ai4BoardBriefTitle">
+      <div class="ai4-board-brief-head"><div><p class="ai4-kicker dark">UNSCORED SPEAKING TRANSFER</p><h2 id="ai4BoardBriefTitle">Your 60-second Accountability Brief</h2><p>Choose any position. The site grades none of your opinions — use the structure to prepare a spoken response.</p></div><button id="newDay4BoardPrompt" class="ai4-secondary" type="button">↻ New board case</button></div>
+      <blockquote id="day4BoardPromptText">Complete Mission 6 to draw a board case.</blockquote>
+      <div class="ai4-stance-row" aria-label="Choose a position"><button type="button" data-ai4-stance="Agree">Agree</button><button type="button" data-ai4-stance="Disagree">Disagree</button><button type="button" data-ai4-stance="Qualified / mixed position">Qualified / mixed</button></div>
+      <div class="ai4-brief-template">
+        <article><b>FRAME</b><span>What's really at stake here is… / The question comes down to…</span></article>
+        <article><b>EVIDENCE</b><span>Going back to the study/report,… / The data show that…</span></article>
+        <article><b>OTHER SIDE</b><span>The strongest version of that view is… / To be fair to that argument,…</span></article>
+        <article><b>VERDICT</b><span>Pulling the threads together,… / On balance, the stronger case is…</span></article>
+      </div>
+      <p id="day4StanceStatus" class="ai4-stance-status">Choose any position. Your viewpoint is not scored.</p>
+    </section>
+
+    <section id="day4Final" class="ai4-final is-locked" aria-labelledby="day4FinalTitle">
+      <div class="ai4-final-hero">
+        <div class="ai4-final-copy">
+          <p class="ai4-kicker">FINAL DAY 4 CLEARANCE</p>
+          <h2 id="day4FinalTitle">The Human-in-the-Loop Test</h2>
+          <p class="ai4-final-lead">One fictional AI-control case. Ten mixed checkpoints. Your job is not to prove that AI is good or bad — it is to use the Day 4 evidence accurately and keep human judgement in the loop.</p>
+          <div class="ai4-final-actions"><button id="startDay4Final" class="ai4-primary" type="button" disabled>🔒 Complete Mission 6 first</button><button id="hearDay4FinalBrief" class="ai4-secondary" type="button" disabled>🔊 Hear case briefing</button></div>
+        </div>
+        <div class="ai4-final-score"><span>FINAL SCORE</span><strong id="day4FinalScore">0 / 100</strong><small>10 first try · 6 after correction</small></div>
+      </div>
+
+      <div class="ai4-final-case" aria-live="polite">
+        <div id="day4FinalCaseIcon" class="ai4-final-case-icon" aria-hidden="true">🧠</div>
+        <div><span>CONTROL-ROOM CASE</span><h3 id="day4FinalCaseTitle">Locked</h3><p id="day4FinalCaseBrief">Complete Mission 6 to receive your final case.</p></div>
+      </div>
+
+      <div class="ai4-final-skills" aria-label="Skills assessed"><span>Vocabulary</span><span>Video</span><span>Human oversight</span><span>Silent letters</span><span>Evidence</span><span>Limitations</span><span>Modals</span><span>Overclaiming</span><span>Accountability</span><span>Integrated judgement</span></div>
+
+      <div class="ai4-final-progress"><div><span>FINAL CHECKPOINTS</span><strong id="day4FinalProgressText">0 / 10</strong></div><div class="ai4-progress-track"><i id="day4FinalProgressBar"></i></div></div>
+
+      <div class="ai4-workspace ai4-final-workspace" aria-labelledby="day4FinalWorkspaceTitle">
+        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">FINAL · CONTROL DESK</p><h2 id="day4FinalWorkspaceTitle">Final test locked</h2><p id="day4FinalWorkspaceIntro">Clear the Accountability Board first.</p></div><div class="ai4-score-box"><span>CHECKPOINT</span><strong id="day4FinalCheckpoint">—</strong></div></div>
+        <div id="day4FinalScreen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>Final case locked</h3><p>Complete Mission 6 to enter the Human-in-the-Loop Test.</p></div></div>
+        <div id="day4FinalFeedback" class="ai4-feedback" role="status" aria-live="polite"></div>
+      </div>
+
+      <section id="day4FinalResult" class="ai4-final-result is-locked" aria-labelledby="day4FinalResultTitle">
+        <div class="ai4-final-result-badge" id="day4FinalResultBadge" aria-hidden="true">✓</div>
+        <div class="ai4-final-result-copy"><p class="ai4-kicker dark">DAY 4 COMPLETE</p><h2 id="day4FinalResultTitle">Human-in-the-Loop Test complete</h2><p id="day4FinalResultText">Your final report will appear here.</p><div id="day4FinalSkillBreakdown" class="ai4-final-breakdown"></div><p class="ai4-final-disclaimer"><strong>Training note:</strong> this score assesses English, evidence reading and communication choices. It is not a clinical qualification and the fictional cases are not medical advice.</p></div>
+        <div class="ai4-final-result-actions"><button id="replayDay4Final" class="ai4-secondary" type="button">↻ Draw another case</button><a class="ai4-primary ai4-final-link" href="fgsm3.html">Back to FGSM3 →</a></div>
+      </section>
+    </section>
+
+    <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
+      <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
+      <div class="ai4-roadmap-grid">
+        <div class="ai4-roadmap-card active"><span>01 · ACTIVE</span><strong>System Boot</strong><p>Vocabulary and human-in-the-loop principles.</p><b>NOW</b></div>
+        <div id="ai4RoadmapM2" class="ai4-roadmap-card"><span id="ai4RoadmapM2State">02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
+        <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
+        <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
+        <div id="ai4RoadmapM5" class="ai4-roadmap-card"><span id="ai4RoadmapM5State">05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
+        <div id="ai4RoadmapM6" class="ai4-roadmap-card"><span id="ai4RoadmapM6State">06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
+        <div id="ai4RoadmapFinal" class="ai4-roadmap-card"><span id="ai4RoadmapFinalState">FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
+      </div>
+      <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
+    </section>
+  </main>
+
+  <audio id="day4Music" loop preload="none">
+    <source src="assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3" type="audio/mpeg">
+  </audio>
+
+  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>created and designed by Eglantine Lecomte, with the help of ChatGPT</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
+  <script src="fgsm3-day4-game.js" defer></script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
+</body>
+</html>
