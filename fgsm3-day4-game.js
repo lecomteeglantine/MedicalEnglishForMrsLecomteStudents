@@ -400,6 +400,10 @@
       mission4FirstTryScore: 0,
       mission5FirstTryScore: 0,
       mission6FirstTryScore: 0,
+      answered: {},
+      missed: {},
+      activityScores: {},
+      finalMissed: [],
       started: false,
       mission2Started: false,
       mission3Started: false,
@@ -431,7 +435,11 @@
         mission3Completed: {...base.mission3Completed, ...(saved.mission3Completed || {})},
         mission4Completed: {...base.mission4Completed, ...(saved.mission4Completed || {})},
         mission5Completed: {...base.mission5Completed, ...(saved.mission5Completed || {})},
-        mission6Completed: {...base.mission6Completed, ...(saved.mission6Completed || {})}
+        mission6Completed: {...base.mission6Completed, ...(saved.mission6Completed || {})},
+        answered: {...base.answered, ...(saved.answered || {})},
+        missed: {...base.missed, ...(saved.missed || {})},
+        activityScores: {...base.activityScores, ...(saved.activityScores || {})},
+        finalMissed: Array.isArray(saved.finalMissed) ? saved.finalMissed : []
       };
     } catch (e) {
       return base;
@@ -450,8 +458,49 @@
   function syncMusicButton() { if (!musicToggle) return; musicToggle.setAttribute("aria-pressed", String(musicOn)); musicToggle.textContent = musicOn ? "🎵 Music ON" : "🎵 Music OFF"; }
   function applyMusicState(fromUser=false) { syncMusicButton(); if (!music) return; if (musicOn) { if (fromUser) startMusicPlayback(); } else stopMusicPlayback(); }
   function shuffle(arr) { const a = [...arr]; for (let i=a.length-1; i>0; i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
-  function speak(text) { if (!state.soundOff && "speechSynthesis" in window) { speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="en-GB"; u.rate=.88; speechSynthesis.speak(u); } }
+  function speak(text) {
+    if (state.soundOff || !("speechSynthesis" in window)) return;
+    speechSynthesis.cancel();
+    const shouldDuck = !!(musicOn && music && !music.paused);
+    if (shouldDuck) music.volume = .06;
+    const restore = () => { if (music) music.volume = .18; };
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-GB"; u.rate = .88; u.onend = restore; u.onerror = restore;
+    speechSynthesis.speak(u);
+  }
   function cue(good=true) { if (state.soundOff) return; try { const C=window.AudioContext||window.webkitAudioContext; const c=new C(),o=c.createOscillator(),g=c.createGain(); o.frequency.value=good?660:210; g.gain.setValueAtTime(.055,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.16); o.connect(g).connect(c.destination); o.start(); o.stop(c.currentTime+.16); } catch(e){} }
+
+  function activityBucket(stage,name){ return `${stage}:${name}`; }
+  function itemKey(it){ return String(it.term || it.q || it.statement || it.claim || it.display || it.word || "item") + "||" + String(it.a || ""); }
+  function answeredList(stage,name){ const k=activityBucket(stage,name); return Array.isArray(state.answered[k]) ? state.answered[k] : []; }
+  function missedList(stage,name){ const k=activityBucket(stage,name); return Array.isArray(state.missed[k]) ? state.missed[k] : []; }
+  function prepareActivity(stage,name,items,alreadyCompleted){
+    const bucket=activityBucket(stage,name), answered=new Set(answeredList(stage,name));
+    const practice=!!alreadyCompleted;
+    const pending=practice ? items : items.filter(it=>!answered.has(itemKey(it)));
+    return {bucket, practice, items:shuffle(pending)};
+  }
+  function recordMiss(stage,name,it){
+    const bucket=activityBucket(stage,name), key=itemKey(it);
+    if(answeredList(stage,name).includes(key)) return;
+    if(!missedList(stage,name).includes(key)) state.missed[bucket]=[...missedList(stage,name),key];
+    save();
+  }
+  function awardActivity(stage,name,it,scoreField,practice=false){
+    const bucket=activityBucket(stage,name), key=itemKey(it);
+    const already=answeredList(stage,name).includes(key);
+    const corrected=missedList(stage,name).includes(key);
+    const pts=corrected?6:10;
+    if(!already && !practice){
+      state.answered[bucket]=[...answeredList(stage,name),key];
+      state.activityScores[bucket]=(Number(state.activityScores[bucket])||0)+pts;
+      state[scoreField]=(Number(state[scoreField])||0)+pts;
+      save();
+      return pts;
+    }
+    return practice ? pts : 0;
+  }
+  function activityTotal(stage,name){ return Number(state.activityScores[activityBucket(stage,name)])||0; }
 
   function itemsFor(name) {
     if (name === "lexicon") return vocab.map(v => ({q:v.term,a:v.def,opts:shuffle([v.def,...shuffle(vocab.filter(x=>x.term!==v.term).map(x=>x.def)).slice(0,3)]),ex:v.def,term:v.term,ipa:v.ipa,kind:"vocab"}));
@@ -724,7 +773,7 @@
     if(musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
     if(forceNew || !state.finalStarted || state.finalComplete){
       const previous=Number(state.finalScenario);
-      state.finalStarted=true;state.finalComplete=false;state.finalScenario=chooseFinalScenario(previous);state.finalIndex=0;state.finalScore=0;state.finalSkillScores={};state.finalSkillMax={};
+      state.finalStarted=true;state.finalComplete=false;state.finalScenario=chooseFinalScenario(previous);state.finalIndex=0;state.finalScore=0;state.finalSkillScores={};state.finalSkillMax={};state.finalMissed=[];
       initFinalSkills(getFinalScenario());
     }
     finalAttempts=0;save();updateFinalUI();renderFinal();
@@ -744,16 +793,18 @@
   }
 
   function answerFinal(e) {
-    const s=getFinalScenario(),it=s.items[Number(state.finalIndex)||0],chosen=decodeURIComponent(e.currentTarget.dataset.finalAnswer),good=chosen===it.a;finalAttempts++;
+    const s=getFinalScenario(),i=Number(state.finalIndex)||0,it=s.items[i],chosen=decodeURIComponent(e.currentTarget.dataset.finalAnswer),good=chosen===it.a;
+    const key=`${state.finalScenario}:${i}:${itemKey(it)}`;
     if(!good){
       e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");
+      if(!state.finalMissed.includes(key)) state.finalMissed=[...state.finalMissed,key];
       finalFeedback.className="ai4-feedback bad";finalFeedback.innerHTML=`<strong>Re-check the evidence and try again.</strong> ${it.ex}`;cue(false);save();return;
     }
     finalScreen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.finalAnswer);if(v===it.a)btn.classList.add("correct");});
-    const pts=finalAttempts===1?10:6;
-    state.finalScore=(Number(state.finalScore)||0)+pts;state.finalSkillScores[it.skill]=(Number(state.finalSkillScores[it.skill])||0)+pts;
+    const pts=state.finalMissed.includes(key)?6:10;
+    state.finalScore=(Number(state.finalScore)||0)+pts;state.finalSkillScores[it.skill]=(Number(state.finalSkillScores[it.skill])||0)+pts;state.finalIndex=i+1;
     finalFeedback.className="ai4-feedback good";finalFeedback.innerHTML=`<strong>Control check passed · +${pts}</strong> ${it.ex}<div class="ai4-final-model"><strong>MODEL LINE</strong><br>${it.model}</div>`;cue(true);save();
-    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=(Number(state.finalIndex)||0)===9?"Finish Day 4 →":"Next final checkpoint →";next.addEventListener("click",()=>{state.finalIndex=(Number(state.finalIndex)||0)+1;finalAttempts=0;save();updateFinalUI();if(state.finalIndex>=10)completeFinal();else renderFinal();});finalFeedback.appendChild(document.createElement("br"));finalFeedback.appendChild(next);updateFinalUI();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=i===9?"Finish Day 4 →":"Next final checkpoint →";next.addEventListener("click",()=>{updateFinalUI();if((Number(state.finalIndex)||0)>=10)completeFinal();else renderFinal();});finalFeedback.appendChild(document.createElement("br"));finalFeedback.appendChild(next);updateFinalUI();
   }
 
   function completeFinal() {
@@ -767,8 +818,11 @@
 
   function start(name) {
     if (musicOn) startMusicPlayback();
-    current={name,items:shuffle(itemsFor(name))}; index=0; attempts=0; sessionScore=0; state.started=true; save();
-    workspaceTitle.textContent=meta[name][0]; workspaceIntro.textContent=meta[name][1]; feedback.textContent=""; feedback.className="ai4-feedback"; render();
+    const prep=prepareActivity("m1",name,itemsFor(name),!!state.completed[name]);
+    current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; index=0; attempts=0; sessionScore=prep.practice?0:activityTotal("m1",name); state.started=true; save();
+    workspaceTitle.textContent=meta[name][0]; workspaceIntro.textContent=prep.practice?"Practice replay — your original score and unlocks are protected.":meta[name][1]; feedback.textContent=""; feedback.className="ai4-feedback";
+    if(!prep.practice && current.items.length===0){ completeActivity(); return; }
+    render();
   }
 
   function render() {
@@ -783,21 +837,33 @@
 
   function answer(e) {
     const it=current.items[index], chosen=decodeURIComponent(e.currentTarget.dataset.answer), good=chosen===it.a; attempts++;
-    screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
-    if(good){const pts=attempts===1?10:6;sessionScore+=pts;state.firstTryScore+=pts;feedback.className="ai4-feedback good";feedback.innerHTML=`<strong>System check passed.</strong> ${it.ex}`;cue(true);}else{feedback.className="ai4-feedback bad";feedback.innerHTML=`<strong>Review the signal.</strong> ${it.ex}`;cue(false);}
-    save(); const next=document.createElement("button"); next.type="button"; next.className="ai4-primary ai4-next"; next.textContent=index===current.items.length-1?"Clear activity →":"Next checkpoint →"; next.addEventListener("click",()=>{index++;attempts=0;feedback.textContent="";feedback.className="ai4-feedback";render();}); feedback.appendChild(document.createElement("br")); feedback.appendChild(next); updateUI();
+    if(!good){
+      e.currentTarget.disabled=true; e.currentTarget.classList.add("wrong"); recordMiss("m1",current.name,it);
+      feedback.className="ai4-feedback bad"; feedback.innerHTML=`<strong>Review the signal and try again.</strong> ${it.ex}`; cue(false); return;
+    }
+    screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m1",current.name,it,"firstTryScore",current.practice); sessionScore=current.practice?sessionScore+pts:activityTotal("m1",current.name);
+    feedback.className="ai4-feedback good";feedback.innerHTML=`<strong>System check passed${pts?` · +${pts}`:""}.</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=index===current.items.length-1?"Clear activity →":"Next checkpoint →";next.addEventListener("click",()=>{index++;attempts=0;feedback.textContent="";feedback.className="ai4-feedback";render();});feedback.appendChild(document.createElement("br"));feedback.appendChild(next);updateUI();
   }
 
   function completeActivity() {
-    state.completed[current.name]=true; save(); screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${meta[current.name][0]} cleared</h3><p>Activity score: ${sessionScore}. ${nextText(current.name)}</p></div>`; feedback.textContent=""; updateUI();
+    if(!current.practice) state.completed[current.name]=true;
+    save();
+    const title=current.practice?`${meta[current.name][0]} practice complete`:`${meta[current.name][0]} cleared`;
+    const tail=current.practice?"Your original score and mission unlocks were not changed.":nextText(current.name);
+    screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${title}</h3><p>${current.practice?"Practice score":"Activity score"}: ${sessionScore}. ${tail}</p></div>`;feedback.textContent="";updateUI();
   }
   function nextText(name){const i=ACTIVITY_ORDER.indexOf(name);return i<ACTIVITY_ORDER.length-1?`${meta[ACTIVITY_ORDER[i+1]][0]} is now unlocked.`:"Mission 1 is complete. Live Clinical Feed is now ready.";}
 
   function startM2(name) {
     if (!ACTIVITY_ORDER.every(a=>state.completed[a])) return;
     if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
-    m2Current={name,items:shuffle(m2ItemsFor(name))}; m2Index=0; m2Attempts=0; m2SessionScore=0; state.mission2Started=true; save();
-    m2WorkspaceTitle.textContent=m2Meta[name][0]; m2WorkspaceIntro.textContent=m2Meta[name][1]; m2Feedback.textContent=""; m2Feedback.className="ai4-feedback"; renderM2();
+    const prep=prepareActivity("m2",name,m2ItemsFor(name),!!state.mission2Completed[name]);
+    m2Current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; m2Index=0; m2Attempts=0; m2SessionScore=prep.practice?0:activityTotal("m2",name); state.mission2Started=true; save();
+    m2WorkspaceTitle.textContent=m2Meta[name][0]; m2WorkspaceIntro.textContent=prep.practice?"Practice replay — original score and unlocks are protected.":m2Meta[name][1]; m2Feedback.textContent=""; m2Feedback.className="ai4-feedback";
+    if(!prep.practice && m2Current.items.length===0){ completeM2Activity(); return; }
+    renderM2();
   }
 
   function renderM2() {
@@ -810,15 +876,21 @@
   }
 
   function answerM2(e) {
-    const it=m2Current.items[m2Index], chosen=decodeURIComponent(e.currentTarget.dataset.m2Answer), good=chosen===it.a; m2Attempts++;
-    m2Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m2Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
-    if(good){const pts=m2Attempts===1?10:6;m2SessionScore+=pts;state.mission2FirstTryScore+=pts;m2Feedback.className="ai4-feedback good";m2Feedback.innerHTML=`<strong>Feed verified.</strong> ${it.ex}`;cue(true);}else{m2Feedback.className="ai4-feedback bad";m2Feedback.innerHTML=`<strong>Check the source again.</strong> ${it.ex}`;cue(false);}
-    save(); const next=document.createElement("button"); next.type="button"; next.className="ai4-primary ai4-next"; next.textContent=m2Index===m2Current.items.length-1?"Clear feed module →":"Next feed checkpoint →"; next.addEventListener("click",()=>{m2Index++;m2Attempts=0;m2Feedback.textContent="";m2Feedback.className="ai4-feedback";renderM2();}); m2Feedback.appendChild(document.createElement("br")); m2Feedback.appendChild(next); updateUI();
+    const it=m2Current.items[m2Index],chosen=decodeURIComponent(e.currentTarget.dataset.m2Answer),good=chosen===it.a;m2Attempts++;
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");recordMiss("m2",m2Current.name,it);
+      m2Feedback.className="ai4-feedback bad";m2Feedback.innerHTML=`<strong>Check the source again and try again.</strong> ${it.ex}`;cue(false);return;
+    }
+    m2Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m2Answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m2",m2Current.name,it,"mission2FirstTryScore",m2Current.practice);m2SessionScore=m2Current.practice?m2SessionScore+pts:activityTotal("m2",m2Current.name);
+    m2Feedback.className="ai4-feedback good";m2Feedback.innerHTML=`<strong>Feed verified.${pts?` · +${pts}`:""}</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m2Index===m2Current.items.length-1?"Clear feed module →":"Next feed checkpoint →";next.addEventListener("click",()=>{m2Index++;m2Attempts=0;m2Feedback.textContent="";m2Feedback.className="ai4-feedback";renderM2();});m2Feedback.appendChild(document.createElement("br"));m2Feedback.appendChild(next);updateUI();
   }
 
   function completeM2Activity() {
-    state.mission2Completed[m2Current.name]=true; save(); const i=M2_ORDER.indexOf(m2Current.name); const next=i<M2_ORDER.length-1?`${m2Meta[M2_ORDER[i+1]][0]} is now unlocked.`:"Mission 2 is complete. Override the Algorithm is ready.";
-    m2Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m2Meta[m2Current.name][0]} cleared</h3><p>Activity score: ${m2SessionScore}. ${next}</p></div>`; m2Feedback.textContent=""; updateUI();
+    if(!m2Current.practice) state.mission2Completed[m2Current.name]=true;save();
+    const i=M2_ORDER.indexOf(m2Current.name);const next=m2Current.practice?"Your original score and unlocks were not changed.":(i<M2_ORDER.length-1?`${m2Meta[M2_ORDER[i+1]][0]} is now unlocked.`:"Mission 2 is complete. Override the Algorithm is ready.");
+    m2Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m2Meta[m2Current.name][0]} ${m2Current.practice?"practice complete":"cleared"}</h3><p>${m2Current.practice?"Practice score":"Activity score"}: ${m2SessionScore}. ${next}</p></div>`;m2Feedback.textContent="";updateUI();
   }
 
 
@@ -826,8 +898,11 @@
   function startM3(name) {
     if (!M2_ORDER.every(a=>state.mission2Completed[a])) return;
     if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
-    m3Current={name,items:shuffle(m3ItemsFor(name))}; m3Index=0; m3Attempts=0; m3SessionScore=0; state.mission3Started=true; save();
-    m3WorkspaceTitle.textContent=m3Meta[name][0]; m3WorkspaceIntro.textContent=m3Meta[name][1]; m3Feedback.textContent=""; m3Feedback.className="ai4-feedback"; renderM3();
+    const prep=prepareActivity("m3",name,m3ItemsFor(name),!!state.mission3Completed[name]);
+    m3Current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; m3Index=0; m3Attempts=0; m3SessionScore=prep.practice?0:activityTotal("m3",name); state.mission3Started=true; save();
+    m3WorkspaceTitle.textContent=m3Meta[name][0]; m3WorkspaceIntro.textContent=prep.practice?"Practice replay — original score and unlocks are protected.":m3Meta[name][1]; m3Feedback.textContent=""; m3Feedback.className="ai4-feedback";
+    if(!prep.practice && m3Current.items.length===0){ completeM3Activity(); return; }
+    renderM3();
   }
 
   function renderM3() {
@@ -843,15 +918,21 @@
   }
 
   function answerM3(e) {
-    const it=m3Current.items[m3Index], chosen=decodeURIComponent(e.currentTarget.dataset.m3Answer), good=chosen===it.a; m3Attempts++;
-    m3Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m3Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
-    if(good){const pts=m3Attempts===1?10:6;m3SessionScore+=pts;state.mission3FirstTryScore+=pts;m3Feedback.className="ai4-feedback good";m3Feedback.innerHTML=`<strong>Human review check passed.</strong> ${it.ex}`;cue(true);}else{m3Feedback.className="ai4-feedback bad";m3Feedback.innerHTML=`<strong>Re-check the case details.</strong> ${it.ex}`;cue(false);}
-    save(); const next=document.createElement("button"); next.type="button"; next.className="ai4-primary ai4-next"; next.textContent=m3Index===m3Current.items.length-1?"Clear override module →":"Next override checkpoint →"; next.addEventListener("click",()=>{m3Index++;m3Attempts=0;m3Feedback.textContent="";m3Feedback.className="ai4-feedback";renderM3();}); m3Feedback.appendChild(document.createElement("br")); m3Feedback.appendChild(next); updateUI();
+    const it=m3Current.items[m3Index],chosen=decodeURIComponent(e.currentTarget.dataset.m3Answer),good=chosen===it.a;m3Attempts++;
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");recordMiss("m3",m3Current.name,it);
+      m3Feedback.className="ai4-feedback bad";m3Feedback.innerHTML=`<strong>Re-check the case details and try again.</strong> ${it.ex}`;cue(false);return;
+    }
+    m3Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m3Answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m3",m3Current.name,it,"mission3FirstTryScore",m3Current.practice);m3SessionScore=m3Current.practice?m3SessionScore+pts:activityTotal("m3",m3Current.name);
+    m3Feedback.className="ai4-feedback good";m3Feedback.innerHTML=`<strong>Human review check passed.${pts?` · +${pts}`:""}</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m3Index===m3Current.items.length-1?"Clear override module →":"Next override checkpoint →";next.addEventListener("click",()=>{m3Index++;m3Attempts=0;m3Feedback.textContent="";m3Feedback.className="ai4-feedback";renderM3();});m3Feedback.appendChild(document.createElement("br"));m3Feedback.appendChild(next);updateUI();
   }
 
   function completeM3Activity() {
-    state.mission3Completed[m3Current.name]=true; save(); const i=M3_ORDER.indexOf(m3Current.name); const next=i<M3_ORDER.length-1?`${m3Meta[M3_ORDER[i+1]][0]} is now unlocked.`:"Mission 3 is complete. Evidence Scanner is ready.";
-    m3Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m3Meta[m3Current.name][0]} cleared</h3><p>Activity score: ${m3SessionScore}. ${next}</p></div>`; m3Feedback.textContent=""; updateUI();
+    if(!m3Current.practice) state.mission3Completed[m3Current.name]=true;save();
+    const i=M3_ORDER.indexOf(m3Current.name);const next=m3Current.practice?"Your original score and unlocks were not changed.":(i<M3_ORDER.length-1?`${m3Meta[M3_ORDER[i+1]][0]} is now unlocked.`:"Mission 3 is complete. Evidence Scanner is ready.");
+    m3Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m3Meta[m3Current.name][0]} ${m3Current.practice?"practice complete":"cleared"}</h3><p>${m3Current.practice?"Practice score":"Activity score"}: ${m3SessionScore}. ${next}</p></div>`;m3Feedback.textContent="";updateUI();
   }
 
 
@@ -859,8 +940,11 @@
   function startM4(name) {
     if (!M3_ORDER.every(a=>state.mission3Completed[a])) return;
     if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
-    m4Current={name,items:shuffle(m4ItemsFor(name))};m4Index=0;m4Attempts=0;m4SessionScore=0;state.mission4Started=true;save();
-    m4WorkspaceTitle.textContent=m4Meta[name][0];m4WorkspaceIntro.textContent=m4Meta[name][1];m4Feedback.textContent="";m4Feedback.className="ai4-feedback";renderM4();
+    const prep=prepareActivity("m4",name,m4ItemsFor(name),!!state.mission4Completed[name]);
+    m4Current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; m4Index=0; m4Attempts=0; m4SessionScore=prep.practice?0:activityTotal("m4",name); state.mission4Started=true; save();
+    m4WorkspaceTitle.textContent=m4Meta[name][0]; m4WorkspaceIntro.textContent=prep.practice?"Practice replay — original score and unlocks are protected.":m4Meta[name][1]; m4Feedback.textContent=""; m4Feedback.className="ai4-feedback";
+    if(!prep.practice && m4Current.items.length===0){ completeM4Activity(); return; }
+    renderM4();
   }
 
   function renderM4() {
@@ -875,22 +959,31 @@
 
   function answerM4(e) {
     const it=m4Current.items[m4Index],chosen=decodeURIComponent(e.currentTarget.dataset.m4Answer),good=chosen===it.a;m4Attempts++;
-    m4Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m4Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
-    if(good){const pts=m4Attempts===1?10:6;m4SessionScore+=pts;state.mission4FirstTryScore+=pts;m4Feedback.className="ai4-feedback good";m4Feedback.innerHTML=`<strong>Evidence verified.</strong> ${it.ex}`;cue(true);}else{m4Feedback.className="ai4-feedback bad";m4Feedback.innerHTML=`<strong>Re-scan the evidence.</strong> ${it.ex}`;cue(false);}
-    save();const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m4Index===m4Current.items.length-1?"Clear evidence module →":"Next evidence checkpoint →";next.addEventListener("click",()=>{m4Index++;m4Attempts=0;m4Feedback.textContent="";m4Feedback.className="ai4-feedback";renderM4();});m4Feedback.appendChild(document.createElement("br"));m4Feedback.appendChild(next);updateUI();
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");recordMiss("m4",m4Current.name,it);
+      m4Feedback.className="ai4-feedback bad";m4Feedback.innerHTML=`<strong>Re-scan the evidence and try again.</strong> ${it.ex}`;cue(false);return;
+    }
+    m4Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m4Answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m4",m4Current.name,it,"mission4FirstTryScore",m4Current.practice);m4SessionScore=m4Current.practice?m4SessionScore+pts:activityTotal("m4",m4Current.name);
+    m4Feedback.className="ai4-feedback good";m4Feedback.innerHTML=`<strong>Evidence verified.${pts?` · +${pts}`:""}</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m4Index===m4Current.items.length-1?"Clear evidence module →":"Next evidence checkpoint →";next.addEventListener("click",()=>{m4Index++;m4Attempts=0;m4Feedback.textContent="";m4Feedback.className="ai4-feedback";renderM4();});m4Feedback.appendChild(document.createElement("br"));m4Feedback.appendChild(next);updateUI();
   }
 
   function completeM4Activity() {
-    state.mission4Completed[m4Current.name]=true;save();const i=M4_ORDER.indexOf(m4Current.name);const next=i<M4_ORDER.length-1?`${m4Meta[M4_ORDER[i+1]][0]} is now unlocked.`:"Mission 4 is complete. Certainty Calibration is ready.";
-    m4Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m4Meta[m4Current.name][0]} cleared</h3><p>Activity score: ${m4SessionScore}. ${next}</p></div>`;m4Feedback.textContent="";updateUI();
+    if(!m4Current.practice) state.mission4Completed[m4Current.name]=true;save();
+    const i=M4_ORDER.indexOf(m4Current.name);const next=m4Current.practice?"Your original score and unlocks were not changed.":(i<M4_ORDER.length-1?`${m4Meta[M4_ORDER[i+1]][0]} is now unlocked.`:"Mission 4 is complete. Certainty Calibration is ready.");
+    m4Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m4Meta[m4Current.name][0]} ${m4Current.practice?"practice complete":"cleared"}</h3><p>${m4Current.practice?"Practice score":"Activity score"}: ${m4SessionScore}. ${next}</p></div>`;m4Feedback.textContent="";updateUI();
   }
 
 
   function startM5(name) {
     if (!M4_ORDER.every(a=>state.mission4Completed[a])) return;
     if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
-    m5Current={name,items:shuffle(m5ItemsFor(name))};m5Index=0;m5Attempts=0;m5SessionScore=0;state.mission5Started=true;save();
-    m5WorkspaceTitle.textContent=m5Meta[name][0];m5WorkspaceIntro.textContent=m5Meta[name][1];m5Feedback.textContent='';m5Feedback.className='ai4-feedback';renderM5();
+    const prep=prepareActivity("m5",name,m5ItemsFor(name),!!state.mission5Completed[name]);
+    m5Current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; m5Index=0; m5Attempts=0; m5SessionScore=prep.practice?0:activityTotal("m5",name); state.mission5Started=true; save();
+    m5WorkspaceTitle.textContent=m5Meta[name][0]; m5WorkspaceIntro.textContent=prep.practice?"Practice replay — original score and unlocks are protected.":m5Meta[name][1]; m5Feedback.textContent=""; m5Feedback.className="ai4-feedback";
+    if(!prep.practice && m5Current.items.length===0){ completeM5Activity(); return; }
+    renderM5();
   }
 
   function meterFor(it) {
@@ -910,25 +1003,31 @@
 
   function answerM5(e) {
     const it=m5Current.items[m5Index],chosen=decodeURIComponent(e.currentTarget.dataset.m5Answer),good=chosen===it.a;m5Attempts++;
-    m5Screen.querySelectorAll('.ai4-option').forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m5Answer);if(v===it.a)btn.classList.add('correct');else if(btn===e.currentTarget)btn.classList.add('wrong');});
-    let calibration=good?'WELL CALIBRATED':'RECALIBRATE', cls=good?'good':'warn';
-    if(!good && (chosen==='TOO CERTAIN'||/prove|always|definitely|must replace|infallible|every patient/i.test(chosen))){calibration='TOO CERTAIN';cls='warn';}
-    else if(!good && chosen==='TOO WEAK'){calibration='TOO WEAK';cls='low';}
-    if(good){const pts=m5Attempts===1?10:6;m5SessionScore+=pts;state.mission5FirstTryScore+=pts;m5Feedback.className='ai4-feedback good';m5Feedback.innerHTML=`<span class="ai4-calibration-result ${cls}">✓ ${calibration}</span><br><strong>Certainty matched to evidence.</strong> ${it.ex}`;cue(true);}else{m5Feedback.className='ai4-feedback bad';m5Feedback.innerHTML=`<span class="ai4-calibration-result ${cls}">⚠ ${calibration}</span><br><strong>Recalibrate the claim.</strong> ${it.ex}`;cue(false);}
-    save();const next=document.createElement('button');next.type='button';next.className='ai4-primary ai4-next';next.textContent=m5Index===m5Current.items.length-1?'Clear calibration module →':'Next calibration checkpoint →';next.addEventListener('click',()=>{m5Index++;m5Attempts=0;m5Feedback.textContent='';m5Feedback.className='ai4-feedback';renderM5();});m5Feedback.appendChild(document.createElement('br'));m5Feedback.appendChild(next);updateUI();
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");recordMiss("m5",m5Current.name,it);
+      m5Feedback.className="ai4-feedback bad";m5Feedback.innerHTML=`<strong>Recalibrate the claim and try again.</strong> ${it.ex}`;cue(false);return;
+    }
+    m5Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m5Answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m5",m5Current.name,it,"mission5FirstTryScore",m5Current.practice);m5SessionScore=m5Current.practice?m5SessionScore+pts:activityTotal("m5",m5Current.name);
+    m5Feedback.className="ai4-feedback good";m5Feedback.innerHTML=`<strong>Certainty matched to evidence.${pts?` · +${pts}`:""}</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m5Index===m5Current.items.length-1?"Clear calibration module →":"Next calibration checkpoint →";next.addEventListener("click",()=>{m5Index++;m5Attempts=0;m5Feedback.textContent="";m5Feedback.className="ai4-feedback";renderM5();});m5Feedback.appendChild(document.createElement("br"));m5Feedback.appendChild(next);updateUI();
   }
 
   function completeM5Activity() {
-    state.mission5Completed[m5Current.name]=true;save();const i=M5_ORDER.indexOf(m5Current.name);const next=i<M5_ORDER.length-1?`${m5Meta[M5_ORDER[i+1]][0]} is now unlocked.`:'Mission 5 is complete. Accountability Board is ready.';
-    m5Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m5Meta[m5Current.name][0]} cleared</h3><p>Activity score: ${m5SessionScore}. ${next}</p></div>`;m5Feedback.textContent='';updateUI();
+    if(!m5Current.practice) state.mission5Completed[m5Current.name]=true;save();
+    const i=M5_ORDER.indexOf(m5Current.name);const next=m5Current.practice?"Your original score and unlocks were not changed.":(i<M5_ORDER.length-1?`${m5Meta[M5_ORDER[i+1]][0]} is now unlocked.`:"Mission 5 is complete. Accountability Board is ready.");
+    m5Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m5Meta[m5Current.name][0]} ${m5Current.practice?"practice complete":"cleared"}</h3><p>${m5Current.practice?"Practice score":"Activity score"}: ${m5SessionScore}. ${next}</p></div>`;m5Feedback.textContent="";updateUI();
   }
 
 
   function startM6(name) {
-    if(!M5_ORDER.every(a=>state.mission5Completed[a])) return;
-    if(musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
-    m6Current={name,items:shuffle(m6ItemsFor(name))};m6Index=0;m6Attempts=0;m6SessionScore=0;state.mission6Started=true;save();
-    m6WorkspaceTitle.textContent=m6Meta[name][0];m6WorkspaceIntro.textContent=m6Meta[name][1];m6Feedback.textContent="";m6Feedback.className="ai4-feedback";renderM6();
+    if (!M5_ORDER.every(a=>state.mission5Completed[a])) return;
+    if (musicOn && (!clinicalVideo || clinicalVideo.paused)) startMusicPlayback();
+    const prep=prepareActivity("m6",name,m6ItemsFor(name),!!state.mission6Completed[name]);
+    m6Current={name,items:prep.items,practice:prep.practice,bucket:prep.bucket}; m6Index=0; m6Attempts=0; m6SessionScore=prep.practice?0:activityTotal("m6",name); state.mission6Started=true; save();
+    m6WorkspaceTitle.textContent=m6Meta[name][0]; m6WorkspaceIntro.textContent=prep.practice?"Practice replay — original score and unlocks are protected.":m6Meta[name][1]; m6Feedback.textContent=""; m6Feedback.className="ai4-feedback";
+    if(!prep.practice && m6Current.items.length===0){ completeM6Activity(); return; }
+    renderM6();
   }
 
   function renderM6() {
@@ -942,14 +1041,20 @@
 
   function answerM6(e) {
     const it=m6Current.items[m6Index],chosen=decodeURIComponent(e.currentTarget.dataset.m6Answer),good=chosen===it.a;m6Attempts++;
-    m6Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m6Answer);if(v===it.a)btn.classList.add("correct");else if(btn===e.currentTarget)btn.classList.add("wrong");});
-    if(good){const pts=m6Attempts===1?10:6;m6SessionScore+=pts;state.mission6FirstTryScore+=pts;m6Feedback.className="ai4-feedback good";m6Feedback.innerHTML=`<strong>Argument function verified.</strong> ${it.ex}`;cue(true);}else{m6Feedback.className="ai4-feedback bad";m6Feedback.innerHTML=`<strong>Re-check the function or the source.</strong> ${it.ex}`;cue(false);}
-    save();const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m6Index===m6Current.items.length-1?"Clear board stage →":"Next board checkpoint →";next.addEventListener("click",()=>{m6Index++;m6Attempts=0;m6Feedback.textContent="";m6Feedback.className="ai4-feedback";renderM6();});m6Feedback.appendChild(document.createElement("br"));m6Feedback.appendChild(next);updateUI();
+    if(!good){
+      e.currentTarget.disabled=true;e.currentTarget.classList.add("wrong");recordMiss("m6",m6Current.name,it);
+      m6Feedback.className="ai4-feedback bad";m6Feedback.innerHTML=`<strong>Re-check the function or source and try again.</strong> ${it.ex}`;cue(false);return;
+    }
+    m6Screen.querySelectorAll(".ai4-option").forEach(btn=>{btn.disabled=true;const v=decodeURIComponent(btn.dataset.m6Answer);if(v===it.a)btn.classList.add("correct");});
+    const pts=awardActivity("m6",m6Current.name,it,"mission6FirstTryScore",m6Current.practice);m6SessionScore=m6Current.practice?m6SessionScore+pts:activityTotal("m6",m6Current.name);
+    m6Feedback.className="ai4-feedback good";m6Feedback.innerHTML=`<strong>Argument function verified.${pts?` · +${pts}`:""}</strong> ${it.ex}`;cue(true);save();
+    const next=document.createElement("button");next.type="button";next.className="ai4-primary ai4-next";next.textContent=m6Index===m6Current.items.length-1?"Clear board stage →":"Next board checkpoint →";next.addEventListener("click",()=>{m6Index++;m6Attempts=0;m6Feedback.textContent="";m6Feedback.className="ai4-feedback";renderM6();});m6Feedback.appendChild(document.createElement("br"));m6Feedback.appendChild(next);updateUI();
   }
 
   function completeM6Activity() {
-    state.mission6Completed[m6Current.name]=true;save();const i=M6_ORDER.indexOf(m6Current.name);const next=i<M6_ORDER.length-1?`${m6Meta[M6_ORDER[i+1]][0]} is now unlocked.`:"Mission 6 is complete. Your Accountability Brief and the final Day 4 clearance are ready.";
-    m6Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m6Meta[m6Current.name][0]} cleared</h3><p>Activity score: ${m6SessionScore}. ${next}</p></div>`;m6Feedback.textContent="";updateUI();
+    if(!m6Current.practice) state.mission6Completed[m6Current.name]=true;save();
+    const i=M6_ORDER.indexOf(m6Current.name);const next=m6Current.practice?"Your original score and unlocks were not changed.":(i<M6_ORDER.length-1?`${m6Meta[M6_ORDER[i+1]][0]} is now unlocked.`:"Mission 6 is complete. Your Accountability Brief and the final Day 4 clearance are ready.");
+    m6Screen.innerHTML=`<div class="ai4-waiting"><span aria-hidden="true">✅</span><h3>${m6Meta[m6Current.name][0]} ${m6Current.practice?"practice complete":"cleared"}</h3><p>${m6Current.practice?"Practice score":"Activity score"}: ${m6SessionScore}. ${next}</p></div>`;m6Feedback.textContent="";updateUI();
   }
 
 

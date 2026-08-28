@@ -1,4 +1,4 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v55-grammar-pronunciation-20260824";
+const CACHE_NAME = "mrs-lecomte-medical-english-v56-fgsm3-stability-20260828";
 
 const APP_SHELL = [
   "./",
@@ -18,6 +18,7 @@ const APP_SHELL = [
   "./fgsm3-day3.html",
   "./fgsm3-day4.html",
   "./fgsm3-day5.html",
+  "./conference-rescue.html",
   "./games.html",
   "./flashcards.html",
   "./notebook.html",
@@ -59,7 +60,6 @@ const APP_SHELL = [
   "./styles-v45.css",
   "./styles-v46.css",
   "./styles-v47.css",
-  "./styles-v48.css",
   "./styles-v49.css",
   "./styles-v50.css",
   "./styles-v51.css",
@@ -151,6 +151,26 @@ self.addEventListener("fetch", event => {
           return (await caches.match(request, {ignoreSearch: true})) ||
                  (await caches.match("./index.html"));
         })
+    );
+    return;
+  }
+
+  const isCodeAsset = /\.(?:js|css)$/i.test(url.pathname);
+
+  // JavaScript and CSS are network-first so bug fixes deployed to GitHub Pages
+  // are picked up immediately when the device is online. The cached copy remains
+  // available as an offline fallback. Other static assets stay cache-first.
+  if (isCodeAsset) {
+    event.respondWith(
+      fetch(request)
+        .then(response => {
+          if (response && response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(request, {ignoreSearch: true}))
     );
     return;
   }

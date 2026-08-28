@@ -2322,12 +2322,18 @@
       return;
     }
     window.speechSynthesis.cancel();
+    if (els.music) els.music.volume = 0.18;
+    const duckMusic = !!(musicOn && els.music && !els.music.paused);
+    if (duckMusic) els.music.volume = 0.05;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-GB";
     utterance.rate = 0.94;
     utterance.pitch = 1;
     const voice = chooseBritishVoice();
     if (voice) utterance.voice = voice;
+    const restore = () => { if (els.music) els.music.volume = 0.18; };
+    utterance.onend = restore;
+    utterance.onerror = restore;
     window.speechSynthesis.speak(utterance);
   }
 
