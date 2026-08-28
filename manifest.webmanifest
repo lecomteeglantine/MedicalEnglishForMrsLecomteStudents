@@ -2,7 +2,7 @@
   "id": "./",
   "name": "Medical English for Mrs Lecomte's Students",
   "short_name": "Medical English",
-  "description": "Medical English dictionary, flashcards, notebook, games and course resources created by Mrs Lecomte for her students.",
+  "description": "Medical English games, vocabulary and course activities for Mrs Lecomte's students, with privacy-friendly local progress.",
   "lang": "en",
   "dir": "ltr",
   "start_url": "./index.html",

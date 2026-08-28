@@ -10,6 +10,8 @@
   const exportBtn = document.getElementById("exportNotebook");
   const importInput = document.getElementById("importNotebook");
   const clearBtn = document.getElementById("clearNotebook");
+  const exportAllBtn = document.getElementById("exportAllProgress");
+  const importAllInput = document.getElementById("importAllProgress");
 
   function escapeHTML(value) {
     return String(value ?? "")
@@ -129,6 +131,35 @@
       alert("This file is not a valid Medical English notebook export.");
     } finally {
       importInput.value = "";
+    }
+  });
+
+
+  exportAllBtn?.addEventListener("click", () => {
+    const payload = data.exportAllStudyData();
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "mrs-lecomte-medical-english-full-backup.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  importAllInput?.addEventListener("change", async () => {
+    const file = importAllInput.files?.[0];
+    if (!file) return;
+    try {
+      const payload = JSON.parse(await file.text());
+      const restored = data.importAllStudyData(payload);
+      alert(`${restored} saved study settings restored. Reloading the page now.`);
+      location.reload();
+    } catch (_) {
+      alert("This file is not a valid Medical English full backup.");
+    } finally {
+      importAllInput.value = "";
     }
   });
 

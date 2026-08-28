@@ -13,6 +13,11 @@
   <meta name="description" content="Personal Medical English vocabulary notebook for Mrs Lecomte's students.">
   <title>My Notebook · Medical English for Mrs Lecomte's Students</title>
   <link rel="stylesheet" href="styles-v8.css">
+  <link rel="canonical" href="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/notebook.html">
+  <meta property="og:title" content="My Notebook · Medical English for Mrs Lecomte&#x27;s Students">
+  <meta property="og:description" content="Personal Medical English vocabulary notebook for Mrs Lecomte&#x27;s students.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/notebook.html">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to my notebook</a>
@@ -53,10 +58,17 @@
       <div class="notebook-actions">
         <a class="primary-link small-primary" href="flashcards.html?source=notebook">🃏 Revise my notebook</a>
         <a class="secondary-btn tool-link-btn" href="dictionary.html">＋ Add words</a>
-        <button id="exportNotebook" class="secondary-btn" type="button">⇩ Export</button>
-        <label class="secondary-btn import-label">⇧ Import<input id="importNotebook" type="file" accept=".json,application/json"></label>
+        <button id="exportNotebook" class="secondary-btn" type="button">⇩ Export notebook</button>
+        <label class="secondary-btn import-label">⇧ Import notebook<input id="importNotebook" type="file" accept=".json,application/json"></label>
+        <button id="exportAllProgress" class="secondary-btn" type="button">💾 Backup all progress</button>
+        <label class="secondary-btn import-label">↥ Restore all progress<input id="importAllProgress" type="file" accept=".json,application/json"></label>
         <button id="clearNotebook" class="danger-btn" type="button">Clear notebook</button>
       </div>
+    </section>
+
+    <section class="notebook-privacy" aria-labelledby="backupHeading">
+      <div>💾</div>
+      <div><h2 id="backupHeading">Move your progress to another device</h2><p><strong>Backup all progress</strong> includes your notebook, flashcards, game scores, FGSM3 mission progress and accessibility preferences. The JSON file stays with you; the site does not upload it anywhere.</p></div>
     </section>
 
     <section id="notebookEmpty" class="notebook-empty" hidden>

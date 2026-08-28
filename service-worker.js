@@ -1,6 +1,10 @@
-const CACHE_NAME = "mrs-lecomte-medical-english-v56-fgsm3-stability-20260828";
+const CACHE_PREFIX = "mrs-lecomte-medical-english-";
+const CORE_CACHE = `${CACHE_PREFIX}v57-core-20260828`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v57-runtime-20260828`;
 
-const APP_SHELL = [
+// Keep the first install deliberately small. Large videos, music and course images
+// are cached only after the learner actually opens them.
+const CORE_SHELL = [
   "./",
   "./index.html",
   "./dictionary.html",
@@ -8,17 +12,6 @@ const APP_SHELL = [
   "./fgsm3.html",
   "./grammar.html",
   "./pronunciation.html",
-  "./fgsm2-day1.html",
-  "./fgsm2-day2.html",
-  "./fgsm2-day3.html",
-  "./fgsm2-day4.html",
-  "./fgsm2-day5.html",
-  "./fgsm3-day1.html",
-  "./fgsm3-day2.html",
-  "./fgsm3-day3.html",
-  "./fgsm3-day4.html",
-  "./fgsm3-day5.html",
-  "./conference-rescue.html",
   "./games.html",
   "./flashcards.html",
   "./notebook.html",
@@ -27,78 +20,12 @@ const APP_SHELL = [
   "./404.html",
   "./styles-v8.css",
   "./styles-v9.css",
-  "./styles-v10.css",
-  "./styles-v12.css",
-  "./styles-v13.css",
-  "./styles-v14.css",
-  "./styles-v15.css",
-  "./styles-v16.css",
-  "./styles-v17.css",
-  "./styles-v18.css",
   "./styles-v19.css",
-  "./styles-v20.css",
-  "./styles-v21.css",
-  "./styles-v22.css",
-  "./styles-v23.css",
-  "./styles-v24.css",
-  "./styles-v25.css",
-  "./styles-v26.css",
-  "./styles-v27.css",
-  "./styles-v28.css",
   "./styles-v29.css",
-  "./styles-v31.css",
-  "./styles-v32.css",
-  "./styles-v33.css",
-  "./styles-v34.css",
-  "./styles-v35.css",
-  "./styles-v36.css",
   "./styles-v37.css",
-  "./styles-v41.css",
-  "./styles-v42.css",
-  "./styles-v43.css",
-  "./styles-v44.css",
-  "./styles-v45.css",
-  "./styles-v46.css",
   "./styles-v47.css",
-  "./styles-v49.css",
-  "./styles-v50.css",
-  "./styles-v51.css",
-  "./styles-v52.css",
-  "./styles-v53.css",
   "./styles-v54.css",
   "./styles-v55.css",
-  "./review-v55.js",
-  "./fgsm3-day5-game.js",
-  "./fgsm3-day1-game.js",
-  "./fgsm3-day2-game.js",
-  "./fgsm3-day3-game.js",
-  "./fgsm3-day4-game.js",
-  "./assets/fgsm3/day1/images/fgsm3-day1-control-room.webp",
-  "./assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp",
-  "./assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp",
-  "./assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp",
-  "./assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp",
-  "./assets/fgsm3/day1/music/fgsm3-day1-control-room-theme.mp3",
-  "./assets/fgsm3/day2/images/fgsm3-day2-departure-lounge.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-london-nhs-reception.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-newyork-insurance-desk.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-toronto-medicare-clinic.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-sydney-gp-consultation.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-wellington-hospital-alert.png",
-  "./assets/fgsm3/day2/images/fgsm3-day2-dublin-workforce-meeting.png",
-  "./assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3",
-  "./assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4",
-  "./assets/fgsm3/day3/images/day3-field-clinical.webp",
-  "./assets/fgsm3/day3/images/day3-humanitarian-archive.webp",
-  "./assets/fgsm3/day3/images/day3-displacement-context.webp",
-  "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
-  "./assets/fgsm3/day3/music/day3-field-briefing-suno.mp3",
-  "./assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4",
-  "./assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp",
-  "./assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3",
-  "./assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp",
-  "./assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4",
-  "./assets/fgsm3/day5/music/day5-streaming-greenlight-room-suno.mp3",
   "./app.js",
   "./home.js",
   "./games.js",
@@ -116,8 +43,8 @@ const APP_SHELL = [
 
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(APP_SHELL))
+    caches.open(CORE_CACHE)
+      .then(cache => cache.addAll(CORE_SHELL))
       .then(() => self.skipWaiting())
   );
 });
@@ -126,11 +53,22 @@ self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
       .then(keys => Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+        keys
+          .filter(key => key.startsWith(CACHE_PREFIX) && ![CORE_CACHE, RUNTIME_CACHE].includes(key))
+          .map(key => caches.delete(key))
       ))
       .then(() => self.clients.claim())
   );
 });
+
+async function putRuntime(request, response) {
+  if (!response || !response.ok || response.status === 206) return response;
+  try {
+    const cache = await caches.open(RUNTIME_CACHE);
+    await cache.put(request, response.clone());
+  } catch (_) {}
+  return response;
+}
 
 self.addEventListener("fetch", event => {
   const request = event.request;
@@ -139,53 +77,63 @@ self.addEventListener("fetch", event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
+  // Browsers use Range requests for seeking in audio/video. Passing them directly
+  // to the network avoids broken partial-response caching and scrubber failures.
+  if (request.headers.has("range")) {
+    event.respondWith(fetch(request));
+    return;
+  }
+
   if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          return (await caches.match(request, {ignoreSearch: true})) ||
-                 (await caches.match("./index.html"));
-        })
-    );
+    event.respondWith((async () => {
+      try {
+        return await putRuntime(request, await fetch(request));
+      } catch (_) {
+        return (await caches.match(request, {ignoreSearch:true})) ||
+               (await caches.match("./index.html"));
+      }
+    })());
     return;
   }
 
-  const isCodeAsset = /\.(?:js|css)$/i.test(url.pathname);
+  const isCode = /\.(?:js|css|json|webmanifest)$/i.test(url.pathname);
+  const isMedia = /\.(?:mp4|mp3|m4a|wav|ogg|webm)$/i.test(url.pathname);
 
-  // JavaScript and CSS are network-first so bug fixes deployed to GitHub Pages
-  // are picked up immediately when the device is online. The cached copy remains
-  // available as an offline fallback. Other static assets stay cache-first.
-  if (isCodeAsset) {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          if (response && response.ok) {
-            const copy = response.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => caches.match(request, {ignoreSearch: true}))
-    );
+  // Code is network-first so fixes published on GitHub Pages are picked up quickly.
+  if (isCode) {
+    event.respondWith((async () => {
+      try {
+        return await putRuntime(request, await fetch(request));
+      } catch (_) {
+        return caches.match(request, {ignoreSearch:true});
+      }
+    })());
     return;
   }
 
-  event.respondWith(
-    caches.match(request, {ignoreSearch: true}).then(cached => {
-      if (cached) return cached;
+  // Large media is not proactively cached. If a browser requests the complete
+  // file, keep a runtime copy after a successful visit; Range requests bypass it.
+  if (isMedia) {
+    event.respondWith((async () => {
+      try {
+        return await putRuntime(request, await fetch(request));
+      } catch (_) {
+        return caches.match(request, {ignoreSearch:true});
+      }
+    })());
+    return;
+  }
 
-      return fetch(request).then(response => {
-        if (response && response.ok) {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-        }
-        return response;
-      });
-    })
-  );
+  // Images and other static assets: cache-first with a background refresh.
+  event.respondWith((async () => {
+    const cached = await caches.match(request, {ignoreSearch:true});
+    const network = fetch(request)
+      .then(response => putRuntime(request, response))
+      .catch(() => null);
+    if (cached) {
+      event.waitUntil(network);
+      return cached;
+    }
+    return (await network) || Response.error();
+  })());
 });

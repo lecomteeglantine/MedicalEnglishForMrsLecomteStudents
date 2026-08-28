@@ -16,7 +16,7 @@
     }
 
     if (appState && !online) {
-      appState.textContent = "Offline mode: cached learning resources remain available.";
+      appState.textContent = "Offline mode: previously opened learning resources remain available.";
     }
   }
 
@@ -32,7 +32,7 @@
 
         if (appState) {
           appState.textContent = navigator.onLine
-            ? "Offline access is prepared automatically after your first visit."
+            ? "Core offline access is ready. Course media is saved only after you open it, to avoid a large automatic download."
             : "Offline mode is active.";
         }
       } catch (_) {

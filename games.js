@@ -279,6 +279,7 @@
       index: 0,
       score: 0,
       total: Math.min(Number(el.count.value) || 10, Math.max(1, pool.length)),
+      queue: shuffled(pool).slice(0, Math.min(Number(el.count.value) || 10, Math.max(1, pool.length))),
       currentItem: null,
       answered: false
     };
@@ -312,7 +313,7 @@
     }
 
     state.answered = false;
-    state.currentItem = shuffled(state.pool)[0];
+    state.currentItem = state.queue?.[state.index] || shuffled(state.pool)[0];
     updateStats();
     setFeedback();
 
