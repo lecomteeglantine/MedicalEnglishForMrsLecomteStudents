@@ -996,7 +996,7 @@
   function readState() {
     try {
       const value = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      if (value && Number.isInteger(value.index)) return value;
+      if (value && Number.isInteger(value.index)) { if (value.completed) value.clearedOnce = true; return value; }
     } catch (_) {}
     return {index: 0, completed: false, mistakes: 0};
   }
@@ -1189,6 +1189,9 @@
       return;
     }
     speechSynthesis.cancel();
+    if (els.musicAudio) els.musicAudio.volume = 0.22;
+    const duckMusic = !!(audioPrefs.music && els.musicAudio && !els.musicAudio.paused);
+    if (duckMusic) els.musicAudio.volume = 0.06;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-GB";
     const voice = getUKVoice();
@@ -1196,8 +1199,9 @@
     utterance.rate = rate;
     utterance.pitch = 1.02;
     button?.classList.add("speaking");
-    utterance.onend = () => button?.classList.remove("speaking");
-    utterance.onerror = () => button?.classList.remove("speaking");
+    const restore = () => { button?.classList.remove("speaking"); if (els.musicAudio) els.musicAudio.volume = 0.22; };
+    utterance.onend = restore;
+    utterance.onerror = restore;
     speechSynthesis.speak(utterance);
   }
 
@@ -1376,7 +1380,7 @@
   }
 
   function renderClinicalProgress() {
-    if (!state.completed) {
+    if (!(state.completed || state.clearedOnce)) {
       els.m2Checkpoint.textContent = "0 / 5";
       els.m2Progress.style.width = "0%";
       els.m2Area.classList.add("is-locked");
@@ -1441,7 +1445,7 @@
 
   function renderClinicalCheckpoint() {
     renderClinicalProgress();
-    if (!state.completed) return;
+    if (!(state.completed || state.clearedOnce)) return;
     if (clinicalState.completed) return renderClinicalComplete();
 
     const cp = clinicalCheckpoints[clinicalState.index];
@@ -1562,7 +1566,7 @@
   }
 
   function startClinicalMission() {
-    if (!state.completed) return;
+    if (!(state.completed || state.clearedOnce)) return;
     if (clinicalState.completed) renderClinicalComplete();
     else renderClinicalCheckpoint();
     els.m2Area.scrollIntoView({behavior:"smooth", block:"start"});
@@ -1574,10 +1578,10 @@
     clinicalState = {index: 0, completed: false, mistakes: 0, lastReply: ""};
     saveClinicalState();
     renderClinicalProgress();
-    els.m2Instruction.textContent = state.completed
+    els.m2Instruction.textContent = (state.completed || state.clearedOnce)
       ? "Patient 01 is ready. Start broad, then narrow your questions as the history develops."
       : "Complete Mission 1 to unlock the clinical history.";
-    els.m2Screen.innerHTML = state.completed
+    els.m2Screen.innerHTML = (state.completed || state.clearedOnce)
       ? `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🩺</div><h3>Patient 01 is still connected</h3><p>The safe start is complete. Now find out what is happening without jumping to a diagnosis.</p></div>`
       : `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div>`;
     setClinicalFeedback();
@@ -3548,7 +3552,7 @@
     holder.querySelector("button").addEventListener("click", () => {
       state.index += 1;
       state.lastReply = "";
-      if (state.index >= checkpoints.length) state.completed = true;
+      if (state.index >= checkpoints.length) { state.completed = true; state.clearedOnce = true; state.replayOnly = false; }
       saveState();
       renderCheckpoint();
       els.screen.focus({preventScroll:true});
@@ -3575,7 +3579,7 @@
         </div>
       </div>`;
     setFeedback("<strong>Next:</strong> stay with Patient 01 and move into the clinical history: open questions, timeline, associated symptoms, warning signs and concerns.", "info");
-    document.getElementById("replayMission").addEventListener("click", resetMission);
+    document.getElementById("replayMission").addEventListener("click", replayMission1Only);
     document.getElementById("startMission2FromM1").addEventListener("click", startClinicalMission);
     unlockClinicalMission();
   }
@@ -3589,6 +3593,20 @@
     els.missionArea.scrollIntoView({behavior:"smooth", block:"start"});
     els.screen.focus({preventScroll:true});
     if (audioPrefs.music) syncMusic();
+  }
+
+  function replayMission1Only() {
+    // Replay Mission 1 as practice without erasing any later Day 1 progress.
+    // The downstream mission states and final score remain untouched.
+    state = {index: 0, completed: false, mistakes: 0, lastReply: "", replayOnly: true, clearedOnce: true};
+    saveState();
+    renderProgress();
+    els.instruction.textContent = "Replay Mission 1 for practice. Your later Day 1 progress is preserved.";
+    els.screen.innerHTML = `<div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📞</div><h3>Mission 1 practice replay</h3><p>Your later missions stay saved. Press Start Mission 1 when you are ready to practise the safe opening again.</p></div>`;
+    setFeedback("<strong>Practice replay:</strong> completing this replay will not erase or reset Missions 2–Final.", "info");
+    els.shiftStatus.textContent = "Mission 1 practice replay";
+    els.start.textContent = "Replay Mission 1 →";
+    els.start.focus();
   }
 
   function resetMission() {

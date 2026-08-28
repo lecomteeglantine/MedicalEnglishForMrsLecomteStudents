@@ -8,6 +8,10 @@
     criteriaDone:false,
     criteriaScore:0,
     criteriaFirstTry:0,
+    criteriaIndex:0,
+    criteriaOrder:[],
+    criteriaAnsweredIds:[],
+    criteriaWrongIds:[],
     mission1:false,
     realityDone:false,
     realityScore:0,
@@ -94,16 +98,16 @@
   ];
 
   const criteriaQuestions = [
-    {q:"A reviewer checks whether tests, investigations and procedures happen in a medically plausible way. What are they rating?",a:"Medical realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Medical realism covers clinical actions, timing, investigations and procedures."},
-    {q:"A scene gives one junior doctor every task while nurses and other professionals disappear. Which rating is most directly affected?",a:"Teamwork realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Teamwork realism asks whether professional roles, collaboration and handovers are represented credibly."},
-    {q:"A doctor explains uncertainty to a patient in clear language and checks understanding. Which category are you mainly rating?",a:"Communication",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"This is primarily about how clinicians communicate with patients."},
-    {q:"A patient's confidential result is discussed loudly in a public corridor. Which category is most directly involved?",a:"Ethics",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Confidentiality is an ethical issue, even though communication also matters."},
-    {q:"A cliffhanger makes you desperate to watch the next episode. Which score should capture that?",a:"Entertainment",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Entertainment measures storytelling value, pace and emotional engagement — not clinical accuracy."},
-    {q:"A surgeon is shown performing a complex operation with no visible team at all. Which review lens best checks whether roles are being simplified?",a:"Teamwork realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"The key issue here is the representation of professional roles and collaboration."},
-    {q:"A diagnosis appears almost instantly although the scene itself suggests several investigations would normally be needed. Which rating is most directly tested?",a:"Medical realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Timing and the plausibility of the diagnostic process belong under medical realism."},
-    {q:"A doctor gives bad news using unexplained jargon and never checks what the patient understood. What are you mainly rating?",a:"Communication",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"The central problem is how information is communicated to the patient."},
-    {q:"A patient undergoes a major procedure without any sign that consent has been discussed. Which category should trigger the strongest warning?",a:"Ethics",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Consent is a core ethical issue."},
-    {q:"A scene is medically plausible but slow and emotionally flat. Which score could still be low?",a:"Entertainment",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"A scene can be realistic and still be weak television. The two dimensions are deliberately separate."}
+    {id:"crit1",q:"A reviewer checks whether tests, investigations and procedures happen in a medically plausible way. What are they rating?",a:"Medical realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Medical realism covers clinical actions, timing, investigations and procedures."},
+    {id:"crit2",q:"A scene gives one junior doctor every task while nurses and other professionals disappear. Which rating is most directly affected?",a:"Teamwork realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Teamwork realism asks whether professional roles, collaboration and handovers are represented credibly."},
+    {id:"crit3",q:"A doctor explains uncertainty to a patient in clear language and checks understanding. Which category are you mainly rating?",a:"Communication",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"This is primarily about how clinicians communicate with patients."},
+    {id:"crit4",q:"A patient's confidential result is discussed loudly in a public corridor. Which category is most directly involved?",a:"Ethics",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Confidentiality is an ethical issue, even though communication also matters."},
+    {id:"crit5",q:"A cliffhanger makes you desperate to watch the next episode. Which score should capture that?",a:"Entertainment",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Entertainment measures storytelling value, pace and emotional engagement — not clinical accuracy."},
+    {id:"crit6",q:"A surgeon is shown performing a complex operation with no visible team at all. Which review lens best checks whether roles are being simplified?",a:"Teamwork realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"The key issue here is the representation of professional roles and collaboration."},
+    {id:"crit7",q:"A diagnosis appears almost instantly although the scene itself suggests several investigations would normally be needed. Which rating is most directly tested?",a:"Medical realism",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Timing and the plausibility of the diagnostic process belong under medical realism."},
+    {id:"crit8",q:"A doctor gives bad news using unexplained jargon and never checks what the patient understood. What are you mainly rating?",a:"Communication",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"The central problem is how information is communicated to the patient."},
+    {id:"crit9",q:"A patient undergoes a major procedure without any sign that consent has been discussed. Which category should trigger the strongest warning?",a:"Ethics",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"Consent is a core ethical issue."},
+    {id:"crit10",q:"A scene is medically plausible but slow and emotionally flat. Which score could still be low?",a:"Entertainment",opts:["Medical realism","Teamwork realism","Communication","Ethics","Entertainment"],ex:"A scene can be realistic and still be weak television. The two dimensions are deliberately separate."}
   ];
 
   const realityQuestions = [
@@ -294,7 +298,7 @@
     $("day5ProgressBar").style.width=`${done*20}%`;
     Object.keys(pilots).forEach(k=>{const el=$("pilotState"+k[0].toUpperCase()+k.slice(1)); if(el){const ok=state.pilots?.[k]?.submitted; el.textContent=ok?"REVIEWED":"NOT REVIEWED"; el.classList.toggle("is-done",!!ok);}});
     const start=$("startCriteriaCheck");
-    if(reviewed===4){start.disabled=false; start.textContent=state.criteriaDone?"✓ Review Criteria Check cleared":"Start Review Criteria Check →";} else {start.disabled=true; start.textContent=`🔒 Review ${4-reviewed} more pilot${4-reviewed===1?"":"s"}`;}
+    if(reviewed===4){start.disabled=!!state.criteriaDone; start.textContent=state.criteriaDone?"✓ Review Criteria Check cleared":"Start Review Criteria Check →";} else {start.disabled=true; start.textContent=`🔒 Review ${4-reviewed} more pilot${4-reviewed===1?"":"s"}`;}
 
     const complete=$("day5Mission1Complete");
     const m2Button=$("day5Mission2Button");
@@ -484,17 +488,30 @@
   }
 
   function startCriteria(){
-    currentQuestions=shuffle(criteriaQuestions).map(q=>({...q,opts:shuffle(q.opts)})); qIndex=0; state.criteriaScore=0; state.criteriaFirstTry=0; state.criteriaDone=false; qFirstAttempt=true; renderQuestion();
+    if(state.criteriaDone){ finishCriteria(); return; }
+    if(!Array.isArray(state.criteriaOrder)||state.criteriaOrder.length!==criteriaQuestions.length){
+      state.criteriaOrder=shuffle(criteriaQuestions.map(q=>q.id));
+      state.criteriaIndex=0; state.criteriaScore=0; state.criteriaFirstTry=0;
+      state.criteriaAnsweredIds=[]; state.criteriaWrongIds=[]; save();
+    }
+    renderQuestion();
+  }
+  function criterionItem(){
+    const id=state.criteriaOrder?.[state.criteriaIndex];
+    return criteriaQuestions.find(q=>q.id===id);
   }
   function renderQuestion(){
-    const item=currentQuestions[qIndex]; if(!item){finishCriteria();return;}
-    qLocked=false; qFirstAttempt=true;
+    const item=criterionItem(); if(!item){finishCriteria();return;}
+    qIndex=Number(state.criteriaIndex)||0;
+    qLocked=(state.criteriaAnsweredIds||[]).includes(item.id);
+    qFirstAttempt=!(state.criteriaWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="CRITERIA SCORE";
     $("day5Score").textContent=state.criteriaScore||0;
     $("stream5WorkspaceTitle").textContent="Review Criteria Check";
-    $("stream5WorkspaceIntro").textContent=`Checkpoint ${qIndex+1} of ${currentQuestions.length} · Identify the review lens.`;
+    $("stream5WorkspaceIntro").textContent=`Checkpoint ${qIndex+1} of ${criteriaQuestions.length} · Identify the review lens.`;
     $("stream5Feedback").innerHTML="";
-    $("stream5Screen").innerHTML=`<div class="stream5-question"><div class="stream5-question-meta"><span>BOARD TRAINING</span><b>${qIndex+1}/${currentQuestions.length}</b></div><h3>${esc(item.q)}</h3><div class="stream5-options">${item.opts.map((o,i)=>`<button type="button" class="stream5-option" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${esc(o)}</button>`).join("")}</div></div>`;
+    const opts=shuffle(item.opts);
+    $("stream5Screen").innerHTML=`<div class="stream5-question"><div class="stream5-question-meta"><span>BOARD TRAINING</span><b>${qIndex+1}/${criteriaQuestions.length}</b></div><h3>${esc(item.q)}</h3><div class="stream5-options">${opts.map((o,i)=>`<button type="button" class="stream5-option" data-opt="${esc(o)}"><span>${String.fromCharCode(65+i)}</span>${esc(o)}</button>`).join("")}</div></div>`;
     $("stream5Screen").querySelectorAll(".stream5-option").forEach(btn=>btn.addEventListener("click",()=>answer(btn,item)));
     $("stream5Screen").focus();
   }
@@ -502,17 +519,28 @@
     if(qLocked)return;
     const choice=btn.dataset.opt;
     if(choice===item.a){
-      qLocked=true; btn.classList.add("is-correct"); const pts=qFirstAttempt?10:6; state.criteriaScore += pts; if(qFirstAttempt) state.criteriaFirstTry += 1; save(); ping(760,.08);
+      qLocked=true; btn.classList.add("is-correct");
+      const already=(state.criteriaAnsweredIds||[]).includes(item.id);
+      const firstTry=!(state.criteriaWrongIds||[]).includes(item.id);
+      const pts=firstTry?10:6;
+      if(!already){
+        state.criteriaScore += pts;
+        if(firstTry) state.criteriaFirstTry += 1;
+        state.criteriaAnsweredIds=[...(state.criteriaAnsweredIds||[]),item.id];
+      }
+      save(); ping(760,.08);
       document.querySelector(".stream5-score-box span").textContent="CRITERIA SCORE";
       $("day5Score").textContent=state.criteriaScore;
-      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Correct · +${pts}</strong> ${esc(item.ex)} <button id="nextCriterion" class="stream5-inline-next" type="button">${qIndex===currentQuestions.length-1?"Finish check":"Next checkpoint →"}</button></div>`;
-      $("nextCriterion").addEventListener("click",()=>{qIndex++;renderQuestion();});
+      $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Correct · +${already?0:pts}</strong> ${esc(item.ex)} <button id="nextCriterion" class="stream5-inline-next" type="button">${qIndex===criteriaQuestions.length-1?"Finish check":"Next checkpoint →"}</button></div>`;
+      $("nextCriterion").addEventListener("click",()=>{state.criteriaIndex=(Number(state.criteriaIndex)||0)+1;save();renderQuestion();});
     } else {
-      qFirstAttempt=false; btn.classList.add("is-wrong"); btn.disabled=true; ping(220,.10); $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Not that lens.</strong> Try again — the distinction matters when you audit a scene later.</div>`;
+      qFirstAttempt=false; btn.classList.add("is-wrong"); btn.disabled=true;
+      if(!(state.criteriaWrongIds||[]).includes(item.id)) state.criteriaWrongIds=[...(state.criteriaWrongIds||[]),item.id];
+      save(); ping(220,.10); $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Not that lens.</strong> Try again — the distinction matters when you audit a scene later.</div>`;
     }
   }
   function finishCriteria(){
-    state.criteriaDone=true; state.mission1=true; save(); ping(880,.14);
+    state.criteriaDone=true; state.mission1=true; state.criteriaIndex=criteriaQuestions.length; save(); ping(880,.14);
     $("stream5WorkspaceTitle").textContent="Review Board training cleared";
     $("stream5WorkspaceIntro").textContent="You now have a common rating language for the four pilots.";
     document.querySelector(".stream5-score-box span").textContent="CRITERIA SCORE";
