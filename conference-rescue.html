@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#041728">
-<title>The Conference Rescue · Pronunciation Triage</title>
+<title>The Conference Rescue · 5-Stage Pronunciation Game</title>
 <style>
 :root{--bg:#041728;--panel:#08243b;--panel2:#0b304b;--teal:#2fd0c4;--teal2:#1ab6b0;--ink:#f6fbff;--muted:#b7c9d8;--line:rgba(173,218,236,.24);--good:#63d17e;--bad:#ff7b7b;--gold:#ffd269;--white:#fff;--shadow:0 20px 55px rgba(0,0,0,.32)}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 78% 0,#12395a 0,#061b2d 32%,#03111d 72%);color:var(--ink);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
@@ -20,7 +20,7 @@ button,a{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible
 .game{display:none;margin-top:16px}.game.show{display:block}.game-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px}.main-card,.side-card{border:1px solid var(--line);border-radius:22px;background:linear-gradient(160deg,rgba(13,48,75,.96),rgba(4,24,41,.96));box-shadow:var(--shadow)}.main-card{padding:22px}.side-card{padding:18px;position:sticky;top:12px;height:max-content}
 .qtop{display:flex;justify-content:space-between;gap:12px;align-items:center}.qcount{display:inline-flex;padding:8px 12px;border-radius:999px;background:#173f5e;font-weight:900}.word{text-align:center;font-size:clamp(42px,7vw,66px);font-weight:900;margin:12px 0 4px}.instruction{text-align:center;color:#d9e8f2;margin:0 0 15px}
 .visual{height:180px;border-radius:18px;overflow:hidden;background:#eaf2f5;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;margin-bottom:16px}.visual img{width:100%;height:100%;object-fit:contain;background:#f7f3ec}
-.options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.opt{min-height:108px;border:1px solid var(--line);background:linear-gradient(160deg,#0d324f,#071d31);color:#fff;border-radius:18px;padding:14px;display:grid;place-items:center;gap:8px;font-weight:900;transition:.15s transform,.15s border-color}.opt:hover{transform:translateY(-2px);border-color:#6cdef0}.opt .letter{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#2a8cca;font-size:22px}.opt .listen{font-size:25px}.opt.correct{border-color:var(--good);box-shadow:inset 0 0 0 2px rgba(99,209,126,.25)}.opt.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 2px rgba(255,123,123,.18)}.opt:disabled{opacity:.82;cursor:default;transform:none}
+.options{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.opt{min-height:126px;border:1px solid var(--line);background:linear-gradient(160deg,#0d324f,#071d31);color:#fff;border-radius:18px;padding:12px;display:grid;grid-template-rows:1fr auto;gap:10px;font-weight:900;transition:.15s transform,.15s border-color}.opt:hover{transform:translateY(-2px);border-color:#6cdef0}.opt-main{display:grid;place-items:center;gap:7px}.opt .letter{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#2a8cca;font-size:22px}.opt .listen{font-size:25px}.opt-listen,.opt-choose{width:100%;border:0;border-radius:12px;font:inherit;cursor:pointer}.opt-listen{min-height:76px;padding:8px;background:transparent;color:#fff;display:grid;place-items:center;gap:5px}.opt-listen:hover,.opt-listen:focus-visible{background:rgba(108,222,240,.10);outline:2px solid #6cdef0;outline-offset:2px}.opt-choose{padding:10px 8px;background:#f5efe4;color:#092238}.opt-choose:hover,.opt-choose:focus-visible{background:#fff;outline:2px solid #6cdef0;outline-offset:2px}.opt.correct{border-color:var(--good);box-shadow:inset 0 0 0 2px rgba(99,209,126,.25)}.opt.wrong{border-color:var(--bad);box-shadow:inset 0 0 0 2px rgba(255,123,123,.18)}.opt.is-answered{transform:none}.opt.is-answered .opt-listen,.opt.is-answered .opt-choose{cursor:default}.opt-pron{display:block;margin-top:4px;font-size:12px;color:#cfe3ef;font-weight:800}.opt-listen:disabled,.opt-choose:disabled{opacity:.68;cursor:default}
 .feedback{display:none;margin-top:14px;border-radius:18px;padding:18px;border:1px solid var(--line);background:#061b2d}.feedback.show{display:block}.feedback.good{border-color:rgba(99,209,126,.6)}.feedback.bad{border-color:rgba(255,123,123,.55)}.fb-title{font-size:24px;font-weight:900;margin:0 0 8px}.fb-title.good{color:var(--good)}.fb-title.bad{color:#ff9b9b}.target{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;font-size:20px}.target strong{font-size:31px}.stress{color:var(--teal);font-weight:900}.tip{margin:10px 0;padding:12px 14px;border-radius:14px;background:#0a2b43;color:#d9e9f3}.example{margin-top:12px;border-top:1px solid var(--line);padding-top:12px;font-size:18px;line-height:1.5}.post-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
 .progress-ring{width:118px;height:118px;border-radius:50%;display:grid;place-items:center;margin:0 auto 14px;background:conic-gradient(var(--teal) var(--pct,0%),rgba(255,255,255,.12) 0);position:relative}.progress-ring:after{content:"";position:absolute;inset:10px;border-radius:50%;background:#082238}.progress-ring span{position:relative;z-index:1;text-align:center;font-weight:900;font-size:26px}.progress-ring small{display:block;font-size:11px;color:var(--muted)}.scorebox{text-align:center;padding:12px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:12px 0}.scorebox b{font-size:38px;color:var(--teal)}.dots{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin:12px 0 18px}.dot{aspect-ratio:1;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-size:10px;color:var(--muted)}.dot.done{background:var(--teal);color:#001d25;border-color:var(--teal);font-weight:900}.dot.current{outline:2px solid var(--gold);outline-offset:2px}.side-card h3{font-size:14px;text-transform:uppercase;letter-spacing:.09em;margin:16px 0 8px}.topics{display:grid;gap:8px;color:#d7e5ee;font-size:13px}
 .finish{display:none;text-align:center;padding:28px}.finish.show{display:block}.finish h2{font-size:42px;margin:6px}.bigscore{font-size:70px;font-weight:900;color:var(--teal)}.nightmare{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0}.nightmare span{padding:8px 11px;border-radius:999px;background:#f5efe4;color:#102438;font-weight:900}
@@ -29,6 +29,31 @@ footer{text-align:center;color:#9fb4c4;font-size:12px;padding:28px 10px 10px;lin
 @media(max-width:900px){.roadmap{grid-template-columns:1fr 1fr}.game-grid{grid-template-columns:1fr}.side-card{position:static}.options{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.shell{padding:10px}.topbar{align-items:flex-start;flex-direction:column}.hero-copy{padding:24px 18px}.hero{min-height:390px;background-position:65% center}.roadmap{grid-template-columns:1fr}.options{grid-template-columns:1fr 1fr}.opt{min-height:94px}.main-card{padding:14px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Conference Rescue V2: real multi-stage progression */
+.stage-card{position:relative}
+.stage-card .stage-state{display:block;margin-top:8px;font-style:normal;font-size:10px;letter-spacing:.12em;font-weight:900;color:#7dd3fc}
+.stage-card.unlocked{cursor:pointer;outline:none}
+.stage-card.unlocked:hover,.stage-card.unlocked:focus{transform:translateY(-2px);border-color:rgba(45,212,191,.65);box-shadow:0 10px 26px rgba(0,0,0,.2)}
+.stage-card.done{border-color:rgba(45,212,191,.5);background:linear-gradient(180deg,rgba(16,185,129,.13),rgba(255,255,255,.035))}
+.stage-card.done .stage-state{color:#6ee7b7}
+.stage-card.active .stage-state{color:#fbbf24}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}.stage-card.locked{cursor:not-allowed}.stage-card:focus-visible{outline:3px solid #7dd3fc;outline-offset:3px}
+.advanced-stage,.advanced-finish,.all-finish{margin-top:20px}
+.advanced-head{display:flex;gap:18px;align-items:flex-start;justify-content:space-between}
+.advanced-head h2,.advanced-finish h2,.all-finish h2{margin:.25em 0 .35em}
+.advanced-head p{color:var(--muted);max-width:70ch;line-height:1.6;margin:.2em 0 0}
+.advanced-score{min-width:120px;text-align:center;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px;background:rgba(255,255,255,.04)}
+.advanced-score span{display:block;font-size:9px;letter-spacing:.12em;color:var(--muted);font-weight:900}.advanced-score b{display:inline-block;font-size:28px;color:#fff;margin-top:5px}.advanced-score small{color:var(--muted);font-weight:800}
+.advanced-progress{margin:20px 0 18px}.advanced-progress>span{display:block;color:#cbdce8;font-size:12px;font-weight:900;margin-bottom:7px}.advanced-bar{height:8px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}.advanced-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2dd4bf,#38bdf8);border-radius:999px;transition:width .25s}
+.advanced-prompt{font-size:clamp(1.35rem,3vw,2rem);font-weight:900;color:#fff;line-height:1.25;padding:18px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.1)}
+.advanced-prompt small{display:block;margin-top:8px;font-size:12px;color:var(--muted);font-weight:700;line-height:1.5}
+.advanced-audio{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:14px 0}.advanced-audio span{font-size:12px;color:var(--muted)}
+.advanced-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}.advanced-option{min-height:72px;border-radius:16px;border:1px solid rgba(255,255,255,.12);background:#102b3a;color:#fff;padding:14px;text-align:left;font:inherit;font-weight:850;cursor:pointer;transition:.18s}.advanced-option:hover,.advanced-option:focus{transform:translateY(-1px);border-color:#38bdf8}.advanced-option.correct{border-color:#34d399;background:rgba(16,185,129,.18)}.advanced-option.wrong{border-color:#fb7185;background:rgba(244,63,94,.17)}.advanced-option:disabled{cursor:default;opacity:1;transform:none}
+.stage-summary{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:18px 0}.stage-summary span{padding:8px 11px;border-radius:999px;background:#f5efe4;color:#102438;font-weight:900;font-size:12px}
+.overall-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:22px 0}.overall-grid article{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px;background:rgba(255,255,255,.045);text-align:center}.overall-grid b{display:block;font-size:22px;color:#fff}.overall-grid span{font-size:10px;color:var(--muted);font-weight:900;letter-spacing:.08em}
+@media(max-width:700px){.advanced-options{grid-template-columns:1fr}.advanced-head{flex-direction:column}.advanced-score{align-self:stretch}.overall-grid{grid-template-columns:1fr 1fr}.overall-grid article:last-child{grid-column:1/-1}}
+
 </style>
 </head>
 <body>
@@ -52,11 +77,11 @@ footer{text-align:center;color:#9fb4c4;font-size:12px;padding:28px 10px 10px;lin
   </section>
 
   <section class="roadmap" aria-label="Conference Rescue stages">
-    <div class="stage-card active"><span class="stage-num">1</span><b>Pronunciation Triage</b><small>Key medical words and phrases from this week.</small></div>
-    <div class="stage-card locked"><span class="stage-num">2</span><b>TH Emergency</b><small>/θ/ and /ð/ in scientific English.</small></div>
-    <div class="stage-card locked"><span class="stage-num">3</span><b>Stress Scanner</b><small>Find the stressed syllable.</small></div>
-    <div class="stage-card locked"><span class="stage-num">4</span><b>Intonation & Chunking</b><small>Sound natural and easy to follow.</small></div>
-    <div class="stage-card locked"><span class="stage-num">5</span><b>30 Seconds to Stage</b><small>Final integrated soundcheck.</small></div>
+    <div class="stage-card active" id="roadmapStage1" data-stage="1" role="button" tabindex="0" aria-describedby="stageHelp1"><span class="stage-num">1</span><b>Pronunciation Triage</b><small>Key medical words and phrases from this week.</small><em class="stage-state">ACTIVE</em><span class="sr-only stage-access-help" id="stageHelp1">Stage 1 is available.</span></div>
+    <div class="stage-card locked" id="roadmapStage2" data-stage="2" role="button" tabindex="0" aria-disabled="true" aria-describedby="stageHelp2"><span class="stage-num">2</span><b>TH Emergency</b><small>/θ/ and /ð/ in scientific English.</small><em class="stage-state">LOCKED</em><span class="sr-only stage-access-help" id="stageHelp2">Complete Stage 1 first to unlock Stage 2.</span></div>
+    <div class="stage-card locked" id="roadmapStage3" data-stage="3" role="button" tabindex="0" aria-disabled="true" aria-describedby="stageHelp3"><span class="stage-num">3</span><b>Stress Scanner</b><small>Find the stressed syllable.</small><em class="stage-state">LOCKED</em><span class="sr-only stage-access-help" id="stageHelp3">Complete Stage 2 first to unlock Stage 3.</span></div>
+    <div class="stage-card locked" id="roadmapStage4" data-stage="4" role="button" tabindex="0" aria-disabled="true" aria-describedby="stageHelp4"><span class="stage-num">4</span><b>Intonation & Chunking</b><small>Sound natural and easy to follow.</small><em class="stage-state">LOCKED</em><span class="sr-only stage-access-help" id="stageHelp4">Complete Stage 3 first to unlock Stage 4.</span></div>
+    <div class="stage-card locked" id="roadmapStage5" data-stage="5" role="button" tabindex="0" aria-disabled="true" aria-describedby="stageHelp5"><span class="stage-num">5</span><b>30 Seconds to Stage</b><small>Final integrated soundcheck.</small><em class="stage-state">LOCKED</em><span class="sr-only stage-access-help" id="stageHelp5">Complete Stage 4 first to unlock Stage 5.</span></div>
   </section>
 
   <main class="game" id="game" tabindex="-1">
@@ -64,7 +89,7 @@ footer{text-align:center;color:#9fb4c4;font-size:12px;padding:28px 10px 10px;lin
       <section class="main-card" aria-live="polite">
         <div class="qtop"><span class="qcount" id="qCount">Question 1 of 16</span><span class="eyebrow">Stage 1 · Pronunciation Triage</span></div>
         <div class="word" id="word">kidney</div>
-        <p class="instruction">Listen to A, B, C and D. Then choose the pronunciation you would use in your presentation.</p>
+        <p class="instruction">Listen to A, B, C and D as many times as you need. Listening does <strong>not</strong> submit an answer. Then tap <strong>Choose A, B, C or D</strong>.</p>
         <div class="visual"><img id="visual" alt="Medical visual for the current pronunciation item"></div>
         <div class="options" id="options"></div>
         <div class="feedback" id="feedback"></div>
@@ -84,8 +109,44 @@ footer{text-align:center;color:#9fb4c4;font-size:12px;padding:28px 10px 10px;lin
       <div class="eyebrow">Stage 1 cleared</div><h2>Pronunciation Triage complete</h2>
       <div class="bigscore" id="finalScore">0 / 16</div><p id="finalMessage"></p>
       <h3>Your Nightmare List</h3><p>Ten items drawn from this stage. Check them again before your final article presentation.</p><div class="nightmare" id="nightmare"></div>
-      <div class="hero-actions" style="justify-content:center"><button class="btn primary" id="replayBtn">↻ Replay Stage 1</button><a class="btn ghost" href="fgsm3-day4.html">← Back to Day 4</a></div>
+      <div class="hero-actions" style="justify-content:center"><button class="btn primary" id="continueStage2">Continue to Stage 2 →</button><button class="btn" id="replayBtn">↻ Replay Stage 1</button><a class="btn ghost" href="fgsm3-day4.html">← Back to Day 4</a></div>
       <p style="margin-top:18px;color:var(--muted)">Next: <strong style="color:#fff">TH Emergency</strong> — /θ/, /ð/, <em>health</em>, <em>the studies</em>, <em>the authors</em>, <em>three methods</em> and more.</p>
+    </section>
+
+    <section class="main-card advanced-stage" id="advancedStage" hidden aria-live="polite">
+      <div class="advanced-head">
+        <div><div class="eyebrow" id="advancedEyebrow">Stage 2</div><h2 id="advancedTitle">TH Emergency</h2><p id="advancedIntro"></p></div>
+        <div class="advanced-score"><span>FIRST-TRY SCORE</span><b id="advancedScore">0</b><small id="advancedScoreTotal">/ 10</small></div>
+      </div>
+      <div class="advanced-progress"><span id="advancedCount">Question 1 of 10</span><div class="advanced-bar"><i id="advancedBar"></i></div></div>
+      <div class="advanced-prompt" id="advancedPrompt"></div>
+      <div class="advanced-audio" id="advancedAudioWrap"><button class="btn" id="advancedListen" type="button">🔊 Hear the phrase</button><span>Listening never submits an answer.</span></div>
+      <div class="advanced-options" id="advancedOptions"></div>
+      <div class="feedback" id="advancedFeedback"></div>
+    </section>
+
+    <section class="main-card advanced-finish" id="advancedFinish" hidden aria-live="polite">
+      <div class="eyebrow" id="advancedFinishEyebrow">Stage cleared</div>
+      <h2 id="advancedFinishTitle">Stage complete</h2>
+      <div class="bigscore" id="advancedFinalScore">0 / 10</div>
+      <p id="advancedFinalMessage"></p>
+      <div class="stage-summary" id="advancedSummary"></div>
+      <div class="hero-actions" style="justify-content:center">
+        <button class="btn primary" id="advancedContinue">Continue →</button>
+        <button class="btn" id="advancedReplay">↻ Replay this stage</button>
+        <a class="btn ghost" href="fgsm3-day4.html">← Back to Day 4</a>
+      </div>
+    </section>
+
+    <section class="main-card all-finish" id="allFinish" hidden aria-live="polite">
+      <div class="eyebrow">ALL 5 STAGES CLEARED</div>
+      <h2>🎤 You are conference ready</h2>
+      <p>You have completed the full Day 4 pronunciation rescue: medical terms, TH sounds, word stress, chunking, intonation and a final integrated soundcheck.</p>
+      <div class="overall-grid" id="overallGrid"></div>
+      <div class="hero-actions" style="justify-content:center">
+        <button class="btn" id="restartAll">↻ Restart all 5 stages</button>
+        <a class="btn primary" href="fgsm3-day4.html">Back to Day 4 →</a>
+      </div>
     </section>
   </main>
 
@@ -99,13 +160,115 @@ const IMAGES={"heart": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDA
 const letters=['A','B','C','D'];
 let idx=0,score=0,answered=false,soundOn=true,musicOn=false;
 const key='conferenceRescueStage1V1';
+const allKey='conferenceRescueAllStagesV2';
+const PROGRESS_SCHEMA_VERSION=5;
+const STAGES={
+  2:{title:'TH Emergency',intro:'Hear each word or phrase, then identify the TH sound. /θ/ is voiceless as in think; /ð/ is voiced as in this.',questions:[
+    {prompt:'health',say:'health',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:0,explain:'health ends with the voiceless TH /θ/.'},
+    {prompt:'this study',say:'this study',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:1,explain:'this begins with the voiced TH /ð/.'},
+    {prompt:'three methods',say:'three methods',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:0,explain:'three and methods both use voiceless /θ/.'},
+    {prompt:'the authors',say:'the authors',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:2,explain:'the begins with voiced /ð/ and authors contains voiceless /θ/: both TH sounds are present.'},
+    {prompt:'therapy',say:'therapy',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:0,explain:'therapy begins with voiceless /θ/.'},
+    {prompt:'although',say:'although',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:1,explain:'although contains the voiced TH /ð/.'},
+    {prompt:'the theory',say:'the theory',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:2,explain:'the begins with /ð/ and theory begins with /θ/.'},
+    {prompt:'these therapies',say:'these therapies',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:2,explain:'these uses /ð/ and therapies uses /θ/.'},
+    {prompt:'healthy patients',say:'healthy patients',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:0,explain:'healthy uses the voiceless TH /θ/.'},
+    {prompt:'further research',say:'further research',opts:['/θ/ only','/ð/ only','both /θ/ and /ð/'],correct:1,explain:'further contains the voiced TH /ð/.'}
+  ]},
+  3:{title:'Stress Scanner',intro:'Choose the syllable that carries the main stress. Then hear the whole word again before moving on.',questions:[
+    {prompt:'hypertension',say:'hypertension',opts:['HY-per-ten-sion','hy-per-TEN-sion','hy-per-ten-SION'],correct:1,explain:'hy-per-TEN-sion — the main stress is on TEN.'},
+    {prompt:'cardiovascular',say:'cardiovascular',opts:['CAR-di-o-vas-cu-lar','car-di-o-VAS-cu-lar','car-di-o-vas-cu-LAR'],correct:1,explain:'car-di-o-VAS-cu-lar — the main stress is on VAS.'},
+    {prompt:'diagnosis',say:'diagnosis',opts:['DI-ag-no-sis','di-AG-no-sis','di-ag-NO-sis'],correct:2,explain:'di-ag-NO-sis — the main stress is on NO.'},
+    {prompt:'neurological',say:'neurological',opts:['NEU-ro-lo-gi-cal','neu-ro-LOG-i-cal','neu-ro-lo-GI-cal'],correct:1,explain:'neu-ro-LOG-i-cal — the main stress is on LOG.'},
+    {prompt:'medication',say:'medication',opts:['MED-i-ca-tion','med-i-CA-tion','med-i-ca-TION'],correct:1,explain:'med-i-CA-tion — the main stress is on CA.'},
+    {prompt:'population',say:'population',opts:['POP-u-la-tion','pop-U-la-tion','pop-u-LA-tion'],correct:2,explain:'pop-u-LA-tion — the main stress is on LA.'},
+    {prompt:'clinical',say:'clinical',opts:['CLIN-i-cal','clin-I-cal','clin-i-CAL'],correct:0,explain:'CLIN-i-cal — stress the first syllable.'},
+    {prompt:'analysis',say:'analysis',opts:['AN-a-ly-sis','a-NAL-y-sis','a-na-LY-sis'],correct:1,explain:'a-NAL-y-sis — the main stress is on NAL.'},
+    {prompt:'significant',say:'significant',opts:['SIG-ni-fi-cant','sig-NIF-i-cant','sig-ni-fi-CANT'],correct:1,explain:'sig-NIF-i-cant — the main stress is on NIF.'},
+    {prompt:'regulation',say:'regulation',opts:['REG-u-la-tion','reg-U-la-tion','reg-u-LA-tion'],correct:2,explain:'reg-u-LA-tion — the main stress is on LA.'}
+  ]},
+  4:{title:'Intonation & Chunking',intro:'Choose the delivery pattern that makes the scientific message easiest to follow. Slash marks show natural thought groups.',questions:[
+    {prompt:'In this study, we examined 120 patients with chronic kidney disease.',say:'In this study, we examined one hundred and twenty patients with chronic kidney disease.',opts:['In this study / we examined 120 patients / with chronic kidney disease.','In / this study we / examined 120 / patients with chronic / kidney disease.','In this study we examined / 120 patients with / chronic kidney disease.'],correct:0,explain:'Chunk by meaning: framing phrase / main action / patient group.'},
+    {prompt:'The results suggest that the treatment may reduce pain.',say:'The results suggest that the treatment may reduce pain.',opts:['The results / suggest that the treatment / may reduce pain.','The results suggest / that the treatment may reduce pain.','The / results suggest that / the treatment may / reduce pain.'],correct:1,explain:'Keep “The results suggest” together, then deliver the cautious claim.'},
+    {prompt:'However, the sample size was relatively small.',say:'However, the sample size was relatively small.',opts:['However / the sample size was relatively small.','However the sample / size was relatively / small.','However the sample size was / relatively / small.'],correct:0,explain:'A short pause after However clearly signals contrast.'},
+    {prompt:'First, I’ll describe the methods; then, I’ll present the main results.',say:'First, I will describe the methods. Then, I will present the main results.',opts:['First / I’ll describe the methods / then / I’ll present the main results.','First I’ll / describe the methods then I’ll / present the main results.','First I’ll describe / the methods then / I’ll present / the main results.'],correct:0,explain:'Separate the signposts First and then from the two content units.'},
+    {prompt:'Our findings are promising, but further research is needed.',say:'Our findings are promising, but further research is needed.',opts:['Our findings are promising / but further research is needed.','Our findings / are promising but further / research is needed.','Our / findings are promising but / further research / is needed.'],correct:0,explain:'Pause at the contrast: promising / but further research is needed.'},
+    {prompt:'Did the intervention improve quality of life?',say:'Did the intervention improve quality of life?',opts:['Use a gentle rise at the end.','Use a strong fall at the end.','Keep completely flat intonation.'],correct:0,explain:'A yes/no question normally takes a gentle final rise.'},
+    {prompt:'The study shows a significant reduction in blood pressure.',say:'The study shows a significant reduction in blood pressure.',opts:['Use a controlled fall at the end.','Use a question-like rise at the end.','Rise strongly on every content word.'],correct:0,explain:'A finished statement normally closes with a controlled fall.'},
+    {prompt:'Three factors may explain these results: age, treatment duration, and baseline severity.',say:'Three factors may explain these results: age, treatment duration, and baseline severity.',opts:['Small rises on early list items, then a fall on the final item.','A fall on every item in the list.','A strong rise only on the final item.'],correct:0,explain:'Lists commonly rise on non-final items and fall on the last one.'}
+  ]},
+  5:{title:'30 Seconds to Stage',intro:'Final integrated soundcheck. These questions mix medical pronunciation, TH, stress, chunking and intonation.',questions:[
+    {prompt:'kidney',say:'kidney',opts:['Short /ɪ/ in the first syllable: KID-ney','Long /iː/: KEED-ney','Stress the second syllable: kid-NEY'],correct:0,explain:'kidney begins with the short /ɪ/ vowel and first-syllable stress.'},
+    {prompt:'heart',say:'heart',opts:['British /hɑːt/','/hɜːt/ like hurt','/hæt/ like hat'],correct:0,explain:'In standard British English, heart uses the long /ɑː/ vowel.'},
+    {prompt:'the authors',say:'the authors',opts:['Both /ð/ and /θ/: the + authors.','Only voiced /ð/.','Only voiceless /θ/.'],correct:0,explain:'the begins with voiced /ð/; authors contains voiceless /θ/, so the phrase uses both TH sounds.'},
+    {prompt:'method',say:'method',opts:['The TH is voiceless /θ/.','The TH is voiced /ð/.','The letters TH are silent.'],correct:0,explain:'method contains voiceless /θ/.'},
+    {prompt:'diagnosis',say:'diagnosis',opts:['DI-ag-no-sis','di-AG-no-sis','di-ag-NO-sis'],correct:2,explain:'The main stress is on NO: di-ag-NO-sis.'},
+    {prompt:'significant',say:'significant',opts:['SIG-ni-fi-cant','sig-NIF-i-cant','sig-ni-fi-CANT'],correct:1,explain:'The main stress is on NIF: sig-NIF-i-cant.'},
+    {prompt:'However, the sample size was relatively small.',say:'However, the sample size was relatively small.',opts:['However / the sample size was relatively small.','However the sample / size was relatively / small.','However the sample size / was relatively / small.'],correct:0,explain:'Pause after the discourse marker However.'},
+    {prompt:'Did the intervention improve quality of life?',say:'Did the intervention improve quality of life?',opts:['Gentle final rise','Strong final fall','Completely flat delivery'],correct:0,explain:'A yes/no question normally has a gentle final rise.'},
+    {prompt:'Our findings are promising, but further research is needed.',say:'Our findings are promising, but further research is needed.',opts:['Our findings are promising / but further research is needed.','Our findings / are promising but further / research is needed.','Our findings are / promising but / further research is / needed.'],correct:0,explain:'Chunk the sentence around the contrast introduced by but.'},
+    {prompt:'Which delivery sounds most conference-ready?',say:'The results suggest that the treatment may reduce pain.',opts:['Clear content-word stress, meaningful chunks and a calm final fall.','Equal stress on every word and no pauses.','Very fast delivery with a strong rise at the end.'],correct:0,explain:'Scientific delivery should foreground meaning, not speed or equal stress.'}
+  ]}
+};
+function freshProgress(){return {schemaVersion:PROGRESS_SCHEMA_VERSION,currentStage:1,stages:{1:{idx:0,score:0,done:false},2:{idx:0,score:0,done:false},3:{idx:0,score:0,done:false},4:{idx:0,score:0,done:false},5:{idx:0,score:0,done:false}}}}
+let allProgress=freshProgress();
+function stageTotal(n){return n===1?QUESTIONS.length:STAGES[n].questions.length}
+function clampInt(value,min,max){const n=Number(value);return Number.isFinite(n)?Math.min(max,Math.max(min,Math.trunc(n))):min}
+function normaliseProgress(raw){
+  const clean=freshProgress();
+  const source=raw&&typeof raw==='object'?raw:{};
+  const sourceStages=source.stages&&typeof source.stages==='object'?source.stages:{};
+  for(let n=1;n<=5;n++){
+    const total=stageTotal(n),st=sourceStages[n]||sourceStages[String(n)]||{};
+    let idxValue=clampInt(st.idx,0,total),scoreValue=clampInt(st.score,0,total);
+    // Preserve a valid old score even if an earlier build accidentally reset its question index.
+    idxValue=Math.max(idxValue,Math.min(scoreValue,total));
+    let doneValue=Boolean(st.done)||idxValue>=total;
+    if(doneValue)idxValue=total;
+    clean.stages[n]={idx:idxValue,score:scoreValue,done:doneValue};
+  }
+  // Repair old replay/version states: activity in a later stage proves all earlier stages were cleared.
+  let furthestTouched=1;
+  for(let n=1;n<=5;n++){const st=clean.stages[n];if(st.done||st.idx>0||st.score>0)furthestTouched=n}
+  for(let n=1;n<furthestTouched;n++){const total=stageTotal(n);clean.stages[n].done=true;clean.stages[n].idx=total}
+  // Keep completion sequential even if an old build stored an impossible state.
+  for(let n=2;n<=5;n++){if(clean.stages[n].done&&!clean.stages[n-1].done){clean.stages[n-1].done=true;clean.stages[n-1].idx=stageTotal(n-1)}}
+  let resume=1;
+  if(clean.stages[5].done)resume=5;
+  else{for(let n=1;n<=5;n++){resume=n;if(!clean.stages[n].done)break}}
+  // If the student had already begun a later unlocked stage, resume there.
+  for(let n=2;n<=5;n++){if(clean.stages[n].idx>0&&!clean.stages[n].done&&clean.stages[n-1].done)resume=Math.max(resume,n)}
+  clean.currentStage=clampInt(resume,1,5);
+  clean.schemaVersion=PROGRESS_SCHEMA_VERSION;
+  return clean;
+}
+function loadAllProgress(){
+  let candidate=null;
+  try{candidate=JSON.parse(localStorage.getItem(allKey)||'null')}catch(e){}
+  if(!(candidate&&candidate.stages)){
+    try{
+      const legacy=JSON.parse(localStorage.getItem(key)||'null');
+      if(legacy){candidate=freshProgress();candidate.stages[1]={idx:clampInt(legacy.idx,0,QUESTIONS.length),score:clampInt(legacy.score,0,QUESTIONS.length),done:Boolean(legacy.done)||Number(legacy.idx)>=QUESTIONS.length}}
+    }catch(e){}
+  }
+  allProgress=normaliseProgress(candidate||freshProgress());
+  idx=allProgress.stages[1].idx;score=allProgress.stages[1].score;
+  saveAllProgress();
+}
+function saveAllProgress(){try{allProgress.schemaVersion=PROGRESS_SCHEMA_VERSION;localStorage.setItem(allKey,JSON.stringify(allProgress))}catch(e){}}
+
 const $=s=>document.querySelector(s);
 const toastEl=$('#toast');let toastTimer;
 function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2400)}
 function britishVoice(){const vs=speechSynthesis.getVoices();return vs.find(v=>/^en-GB$/i.test(v.lang))||vs.find(v=>/^en(-|_)?GB/i.test(v.lang))||vs.find(v=>/^en/i.test(v.lang))||null}
+const BASE_MUSIC_VOLUME=.18,DUCKED_MUSIC_VOLUME=.06;
+let speechRunId=0;
+function restoreMusicVolume(runId){if(runId!==speechRunId)return;if(typeof music!=='undefined')music.volume=BASE_MUSIC_VOLUME}
+function cancelSpeech(){speechRunId++;if('speechSynthesis' in window)speechSynthesis.cancel();if(typeof music!=='undefined')music.volume=BASE_MUSIC_VOLUME}
 function speak(text,rate=.82){
   if(!soundOn){toast('Sound is OFF. Turn it on to hear the pronunciation.');return}
   if(!('speechSynthesis' in window)){toast('Speech audio is not available in this browser.');return}
+  const runId=++speechRunId;
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(text);
   const v=britishVoice();
@@ -113,28 +276,82 @@ function speak(text,rate=.82){
   u.lang=v?.lang||'en-GB';
   u.rate=rate;
   u.pitch=1;
-  const previousVolume=music.volume;
-  if(musicOn && !music.paused) music.volume=.06;
-  const restore=()=>{ if(musicOn && !music.paused) music.volume=previousVolume||.18; };
+  if(musicOn && !music.paused)music.volume=DUCKED_MUSIC_VOLUME;
+  const restore=()=>restoreMusicVolume(runId);
   u.onend=restore;
   u.onerror=restore;
   speechSynthesis.speak(u);
 }
 if('speechSynthesis' in window){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices()}
-function save(){try{localStorage.setItem(key,JSON.stringify({idx,score,done:idx>=QUESTIONS.length}))}catch(e){}}
-function reset(){idx=0;score=0;answered=false;save();$('#finish').classList.remove('show');$('#quizLayout').style.display='grid';render()}
+function save(){if(!stage1ReplayMode){allProgress.stages[1]={idx,score,done:idx>=QUESTIONS.length};if(allProgress.stages[1].done&&allProgress.currentStage<2)allProgress.currentStage=2;saveAllProgress();try{localStorage.setItem(key,JSON.stringify({idx,score,done:idx>=QUESTIONS.length}))}catch(e){}}applyRoadmap();updateStartButton()}
+function reset(){idx=0;score=0;answered=false;stage1ReplayMode=true;$('#finish').classList.remove('show');$('#advancedStage').hidden=true;$('#advancedFinish').hidden=true;$('#allFinish').hidden=true;$('#quizLayout').style.display='grid';$('#game').classList.add('show');applyRoadmap();updateStartButton();render()}
 function renderDots(){const root=$('#dots');root.innerHTML='';QUESTIONS.forEach((q,i)=>{const d=document.createElement('span');d.className='dot'+(i<idx?' done':'')+(i===idx?' current':'');d.textContent=i+1;root.appendChild(d)})}
-function render(){const q=QUESTIONS[idx];if(!q)return finish();answered=false;$('#qCount').textContent=`Question ${idx+1} of ${QUESTIONS.length}`;$('#word').textContent=q.word;$('#visual').src=IMAGES[q.img]||IMAGES.results;$('#visual').alt=`Medical visual for ${q.word}`;$('#score').textContent=score;$('#progressNum').textContent=idx+1;$('#ring').style.setProperty('--pct',((idx)/QUESTIONS.length*100)+'%');renderDots();const root=$('#options');root.innerHTML='';q.opts.forEach((opt,i)=>{const b=document.createElement('button');b.className='opt';b.type='button';b.setAttribute('aria-label',`Play option ${letters[i]}`);b.innerHTML=`<span class="letter">${letters[i]}</span><span class="listen">🔊</span><span>Play ${letters[i]}</span>`;b.addEventListener('click',()=>{if(answered)return;speak(opt[0]);setTimeout(()=>choose(i),520)});root.appendChild(b)});$('#feedback').className='feedback';$('#feedback').innerHTML=''}
-function choose(chosen){if(answered)return;answered=true;const q=QUESTIONS[idx],good=chosen===q.correct;if(good)score++;const btns=[...document.querySelectorAll('.opt')];btns.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===chosen&&i!==q.correct)b.classList.add('wrong');b.querySelector('span:last-child').textContent=q.opts[i][1]});const fb=$('#feedback');fb.className='feedback show '+(good?'good':'bad');fb.innerHTML=`<div class="fb-title ${good?'good':'bad'}">${good?'✓ CONFERENCE READY!':'⚠ PRONUNCIATION ALERT'}</div><div class="target"><strong>${q.word}</strong><span>${q.ipa}</span><span class="stress">${q.stress}</span></div><div class="tip">💡 ${q.tip}</div><div class="example"><b>Example in context</b><br>${q.example}</div><div class="post-actions"><button class="btn" id="again">🔊 Hear the correct word</button><button class="btn" id="context">🎤 Hear the sentence</button><button class="btn primary" id="next">${idx+1<QUESTIONS.length?'Next question →':'Finish Stage 1 →'}</button></div>`;$('#again').onclick=()=>speak(q.opts[q.correct][0],.78);$('#context').onclick=()=>speak(q.example,.86);$('#next').onclick=()=>{idx++;save();if(idx<QUESTIONS.length)render();else finish()};$('#score').textContent=score;save()}
-function finish(){$('#quizLayout').style.display='none';const f=$('#finish');f.classList.add('show');$('#finalScore').textContent=`${score} / ${QUESTIONS.length}`;const pct=score/QUESTIONS.length;$('#finalMessage').textContent=pct>=.88?'Excellent. Your conference soundcheck is strong — now keep that accuracy when you speak at full speed.':pct>=.7?'Solid work. A few words still need another pass before your presentation.':'Useful warning: several high-frequency words still need attention. Replay the stage and listen closely.';const list=[...QUESTIONS].sort(()=>Math.random()-.5).slice(0,10);$('#nightmare').innerHTML=list.map(q=>`<span>${q.word}</span>`).join('');$('#ring').style.setProperty('--pct','100%');try{localStorage.setItem(key,JSON.stringify({idx:QUESTIONS.length,score,done:true}))}catch(e){};f.scrollIntoView({behavior:'smooth',block:'start'})}
-$('#startBtn').onclick=()=>{$('#game').classList.add('show');$('#game').focus();render();$('#game').scrollIntoView({behavior:'smooth',block:'start'})};
+function render(){const q=QUESTIONS[idx];if(!q)return finish();answered=false;$('#qCount').textContent=`Question ${idx+1} of ${QUESTIONS.length}`;$('#word').textContent=q.word;$('#visual').src=IMAGES[q.img]||IMAGES.results;$('#visual').alt=`Medical visual for ${q.word}`;$('#score').textContent=score;$('#progressNum').textContent=idx+1;$('#ring').style.setProperty('--pct',((idx)/QUESTIONS.length*100)+'%');renderDots();const root=$('#options');root.innerHTML='';q.opts.forEach((opt,i)=>{const card=document.createElement('div');card.className='opt';card.dataset.option=i;card.innerHTML=`<button class="opt-listen" type="button" aria-label="Listen to option ${letters[i]}"><span class="opt-main"><span class="letter">${letters[i]}</span><span class="listen" aria-hidden="true">🔊</span><span>Listen ${letters[i]}</span></span></button><button class="opt-choose" type="button" aria-label="Choose option ${letters[i]}">Choose ${letters[i]}</button>`;const listen=card.querySelector('.opt-listen');const chooseBtn=card.querySelector('.opt-choose');listen.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(answered)return;speak(opt[0])});chooseBtn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(answered)return;choose(i)});root.appendChild(card)});$('#feedback').className='feedback';$('#feedback').innerHTML=''}
+function choose(chosen){if(answered)return;answered=true;const q=QUESTIONS[idx],good=chosen===q.correct;if(good)score++;if(!stage1ReplayMode){const persistedIdx=Math.min(idx+1,QUESTIONS.length);allProgress.stages[1]={idx:persistedIdx,score,done:persistedIdx>=QUESTIONS.length};if(allProgress.stages[1].done&&allProgress.currentStage<2)allProgress.currentStage=2;saveAllProgress();try{localStorage.setItem(key,JSON.stringify({idx:persistedIdx,score,done:persistedIdx>=QUESTIONS.length}))}catch(e){};applyRoadmap();updateStartButton()}const cards=[...document.querySelectorAll('.opt')];cards.forEach((card,i)=>{card.classList.add('is-answered');if(i===q.correct)card.classList.add('correct');if(i===chosen&&i!==q.correct)card.classList.add('wrong');card.querySelectorAll('button').forEach(btn=>btn.disabled=true);const pron=document.createElement('span');pron.className='opt-pron';pron.textContent=q.opts[i][1];card.appendChild(pron)});const fb=$('#feedback');fb.className='feedback show '+(good?'good':'bad');fb.innerHTML=`<div class="fb-title ${good?'good':'bad'}">${good?'✓ CONFERENCE READY!':'⚠ PRONUNCIATION ALERT'}</div><div class="target"><strong>${q.word}</strong><span>${q.ipa}</span><span class="stress">${q.stress}</span></div><div class="tip">💡 ${q.tip}</div><div class="example"><b>Example in context</b><br>${q.example}</div><div class="post-actions"><button class="btn" id="again">🔊 Hear the correct word</button><button class="btn" id="context">🎤 Hear the sentence</button><button class="btn primary" id="next">${idx+1<QUESTIONS.length?'Next question →':'Finish Stage 1 →'}</button></div>`;$('#again').onclick=()=>speak(q.opts[q.correct][0],.78);$('#context').onclick=()=>speak(q.example,.86);$('#next').onclick=()=>{idx++;save();if(idx<QUESTIONS.length)render();else finish()};$('#score').textContent=score}
+function finish(){
+  $('#quizLayout').style.display='none';$('#advancedStage').hidden=true;$('#advancedFinish').hidden=true;$('#allFinish').hidden=true;
+  const f=$('#finish');f.classList.add('show');$('#finalScore').textContent=`${score} / ${QUESTIONS.length}`;
+  const pct=score/QUESTIONS.length;$('#finalMessage').textContent=pct>=.88?'Excellent. Your conference soundcheck is strong — now keep that accuracy when you speak at full speed.':pct>=.7?'Solid work. A few words still need another pass before your presentation.':'Useful warning: several high-frequency words still need attention. Replay the stage and listen closely.';
+  const list=[...QUESTIONS].sort(()=>Math.random()-.5).slice(0,10);$('#nightmare').innerHTML=list.map(q=>`<span>${q.word}</span>`).join('');$('#ring').style.setProperty('--pct','100%');
+  idx=QUESTIONS.length;if(stage1ReplayMode){stage1ReplayMode=false;applyRoadmap();updateStartButton()}else{allProgress.stages[1]={idx,score,done:true};if(allProgress.currentStage<2)allProgress.currentStage=2;save()}f.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function stageUnlocked(n){return n===1||allProgress.stages[n-1]?.done}
+function applyRoadmap(){
+  for(let n=1;n<=5;n++){
+    const card=$(`#roadmapStage${n}`);if(!card)continue;const done=!!allProgress.stages[n]?.done;const unlocked=stageUnlocked(n);const active=Number(allProgress.currentStage)===n&&!done;
+    card.classList.toggle('locked',!unlocked);card.classList.toggle('unlocked',unlocked);card.classList.toggle('done',done);card.classList.toggle('active',active);
+    card.setAttribute('aria-disabled',unlocked?'false':'true');card.tabIndex=0;
+    const state=card.querySelector('.stage-state');if(state)state.textContent=done?'CLEARED':active?'ACTIVE':unlocked?'READY':'LOCKED';
+    const help=card.querySelector('.stage-access-help');if(help)help.textContent=done?`Stage ${n} is cleared. Activate to review it.`:unlocked?`Stage ${n} is available. Activate to open it.`:`Complete Stage ${n-1} first to unlock Stage ${n}.`;
+  }
+}
+function updateStartButton(){
+  const n=Math.min(5,Math.max(1,Number(allProgress.currentStage)||1));const st=allProgress.stages[n];
+  if(allProgress.stages[5]?.done){$('#startBtn').textContent='✓ View final result';return}
+  if(n===1){$('#startBtn').textContent=st.idx>0?`▶ Resume Stage 1 · Question ${Math.min(st.idx+1,QUESTIONS.length)}`:'▶ Start Stage 1'}
+  else{$('#startBtn').textContent=`▶ Resume Stage ${n} · ${STAGES[n].title}`}
+}
+let stage1ReplayMode=false;
+let activeStage=2,advancedIdx=0,advancedScore=0,advancedAnswered=false,advancedReplayMode=false;
+function hideAllGamePanels(){
+  $('#quizLayout').style.display='none';$('#finish').classList.remove('show');$('#advancedStage').hidden=true;$('#advancedFinish').hidden=true;$('#allFinish').hidden=true;
+}
+function startStage1(){hideAllGamePanels();$('#game').classList.add('show');if(idx>=QUESTIONS.length){finish()}else{$('#quizLayout').style.display='grid';render();$('#game').scrollIntoView({behavior:'smooth',block:'start'})}}
+function openStage(n){
+  if(n===1){stage1ReplayMode=false;const st=allProgress.stages[1];idx=Math.min(Number(st.idx)||0,QUESTIONS.length);score=Number(st.score)||0;answered=false;saveAllProgress();applyRoadmap();updateStartButton();startStage1();return}
+  if(!stageUnlocked(n)){toast(`Stage ${n} is still locked.`);return}
+  activeStage=n;advancedReplayMode=false;if(n>Number(allProgress.currentStage||1))allProgress.currentStage=n;const st=allProgress.stages[n];advancedIdx=Math.min(Number(st.idx)||0,STAGES[n].questions.length);advancedScore=Number(st.score)||0;advancedAnswered=false;saveAllProgress();applyRoadmap();updateStartButton();hideAllGamePanels();$('#game').classList.add('show');
+  if(st.done||advancedIdx>=STAGES[n].questions.length){finishAdvanced()}else{renderAdvanced();$('#advancedStage').hidden=false;$('#advancedStage').scrollIntoView({behavior:'smooth',block:'start'})}
+}
+function renderAdvanced(){
+  const data=STAGES[activeStage],q=data.questions[advancedIdx];if(!q)return finishAdvanced();advancedAnswered=false;$('#advancedStage').hidden=false;$('#advancedFinish').hidden=true;$('#advancedEyebrow').textContent=`Stage ${activeStage} of 5`;$('#advancedTitle').textContent=data.title;$('#advancedIntro').textContent=data.intro;$('#advancedScore').textContent=advancedScore;$('#advancedScoreTotal').textContent=`/ ${data.questions.length}`;$('#advancedCount').textContent=`Question ${advancedIdx+1} of ${data.questions.length}`;$('#advancedBar').style.width=`${advancedIdx/data.questions.length*100}%`;$('#advancedPrompt').innerHTML=`${q.prompt}<small>Choose only after you have listened or thought it through.</small>`;$('#advancedListen').onclick=e=>{e.preventDefault();e.stopPropagation();speak(q.say,.8)};
+  const root=$('#advancedOptions');root.innerHTML='';q.opts.forEach((opt,i)=>{const b=document.createElement('button');b.type='button';b.className='advanced-option';b.textContent=`${letters[i]}. ${opt}`;b.onclick=e=>{e.preventDefault();e.stopPropagation();chooseAdvanced(i)};root.appendChild(b)});$('#advancedFeedback').className='feedback';$('#advancedFeedback').innerHTML='';
+}
+function chooseAdvanced(chosen){
+  if(advancedAnswered)return;advancedAnswered=true;const data=STAGES[activeStage],q=data.questions[advancedIdx],good=chosen===q.correct;if(good)advancedScore++;if(!advancedReplayMode){const persistedIdx=Math.min(advancedIdx+1,data.questions.length);allProgress.stages[activeStage]={idx:persistedIdx,score:advancedScore,done:persistedIdx>=data.questions.length};if(allProgress.stages[activeStage].done&&activeStage<5&&allProgress.currentStage<=activeStage)allProgress.currentStage=activeStage+1;saveAllProgress();applyRoadmap();updateStartButton()}const btns=[...document.querySelectorAll('.advanced-option')];btns.forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add('correct');if(i===chosen&&i!==q.correct)b.classList.add('wrong')});const fb=$('#advancedFeedback');fb.className='feedback show '+(good?'good':'bad');fb.innerHTML=`<div class="fb-title ${good?'good':'bad'}">${good?'✓ READY':'⚠ CHECK IT AGAIN'}</div><div class="tip">💡 ${q.explain}</div><div class="post-actions"><button class="btn" id="advancedHearAgain">🔊 Hear it again</button><button class="btn primary" id="advancedNext">${advancedIdx+1<data.questions.length?'Next question →':'Clear this stage →'}</button></div>`;$('#advancedHearAgain').onclick=()=>speak(q.say,.78);$('#advancedNext').onclick=()=>{advancedIdx++;if(!advancedReplayMode){allProgress.stages[activeStage]={idx:advancedIdx,score:advancedScore,done:advancedIdx>=data.questions.length};saveAllProgress()}if(advancedIdx<data.questions.length){renderAdvanced()}else{finishAdvanced()}};$('#advancedScore').textContent=advancedScore;
+}
+function finishAdvanced(){
+  const data=STAGES[activeStage],total=data.questions.length;hideAllGamePanels();const wasReplay=advancedReplayMode;advancedReplayMode=false;if(!wasReplay){allProgress.stages[activeStage]={idx:total,score:advancedScore||Number(allProgress.stages[activeStage].score)||0,done:true};advancedScore=allProgress.stages[activeStage].score;if(activeStage<5&&allProgress.currentStage<=activeStage)allProgress.currentStage=activeStage+1;if(activeStage===5)allProgress.currentStage=5;saveAllProgress()}applyRoadmap();updateStartButton();
+  if(activeStage===5){showOverallFinish();return}
+  const f=$('#advancedFinish');f.hidden=false;$('#advancedFinishEyebrow').textContent=`Stage ${activeStage} cleared`;$('#advancedFinishTitle').textContent=`${data.title} complete`;$('#advancedFinalScore').textContent=`${advancedScore} / ${total}`;const pct=advancedScore/total;$('#advancedFinalMessage').textContent=pct>=.85?'Excellent control. Keep the same accuracy when you speak at normal presentation speed.':pct>=.65?'Good progress. Replay any weak items before your article presentation.':'This stage identified useful targets. A replay will help before you present.';$('#advancedSummary').innerHTML=data.questions.slice(0,5).map(q=>`<span>${q.prompt}</span>`).join('');$('#advancedContinue').textContent=`Continue to Stage ${activeStage+1} →`;$('#advancedContinue').onclick=()=>openStage(activeStage+1);$('#advancedReplay').onclick=()=>{advancedReplayMode=true;advancedIdx=0;advancedScore=0;advancedAnswered=false;hideAllGamePanels();$('#game').classList.add('show');renderAdvanced();$('#advancedStage').hidden=false;$('#advancedStage').scrollIntoView({behavior:'smooth',block:'start'})};f.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function showOverallFinish(){
+  hideAllGamePanels();$('#allFinish').hidden=false;const totals={1:QUESTIONS.length,2:STAGES[2].questions.length,3:STAGES[3].questions.length,4:STAGES[4].questions.length,5:STAGES[5].questions.length};$('#overallGrid').innerHTML=[1,2,3,4,5].map(n=>`<article><span>STAGE ${n}</span><b>${allProgress.stages[n].score} / ${totals[n]}</b></article>`).join('');$('#allFinish').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function startOrResume(){
+  $('#game').classList.add('show');$('#game').focus();if(allProgress.stages[5]?.done){showOverallFinish();return}const n=Number(allProgress.currentStage)||1;if(n===1)startStage1();else openStage(n)
+}
+$('#startBtn').onclick=startOrResume;
 $('#replayBtn').onclick=reset;
-$('#soundToggle').onclick=e=>{soundOn=!soundOn;e.currentTarget.classList.toggle('on',soundOn);e.currentTarget.setAttribute('aria-pressed',soundOn);e.currentTarget.querySelector('.state').textContent=soundOn?'ON':'OFF';if(!soundOn&&'speechSynthesis'in window)speechSynthesis.cancel()};
+$('#soundToggle').onclick=e=>{soundOn=!soundOn;e.currentTarget.classList.toggle('on',soundOn);e.currentTarget.setAttribute('aria-pressed',soundOn);e.currentTarget.querySelector('.state').textContent=soundOn?'ON':'OFF';if(!soundOn)cancelSpeech()};
 const music=$('#music');
-music.volume=.18;
-$('#musicToggle').onclick=async e=>{musicOn=!musicOn;const b=e.currentTarget;if(musicOn){try{await music.play();b.classList.add('on');b.setAttribute('aria-pressed','true');b.querySelector('.state').textContent='ON'}catch(err){musicOn=false;b.classList.remove('on');b.setAttribute('aria-pressed','false');b.querySelector('.state').textContent='OFF';toast('The soundtrack could not start. Check your browser audio permissions.')}}else{music.pause();b.classList.remove('on');b.setAttribute('aria-pressed','false');b.querySelector('.state').textContent='OFF'}};
-music.addEventListener('error',()=>{if(musicOn)toast('The soundtrack could not start. Check your browser audio permissions.')});
-renderDots();
+music.volume=BASE_MUSIC_VOLUME;
+$('#musicToggle').onclick=async e=>{musicOn=!musicOn;const b=e.currentTarget;music.volume=BASE_MUSIC_VOLUME;if(musicOn){try{await music.play();b.classList.add('on');b.setAttribute('aria-pressed','true');b.querySelector('.state').textContent='ON'}catch(err){musicOn=false;music.volume=BASE_MUSIC_VOLUME;b.classList.remove('on');b.setAttribute('aria-pressed','false');b.querySelector('.state').textContent='OFF';toast('The soundtrack could not start. Check your browser audio permissions.')}}else{music.pause();music.volume=BASE_MUSIC_VOLUME;b.classList.remove('on');b.setAttribute('aria-pressed','false');b.querySelector('.state').textContent='OFF'}};
+music.addEventListener('error',()=>{music.volume=BASE_MUSIC_VOLUME;if(musicOn)toast('The soundtrack could not start. Check your browser audio permissions.')});
+$('#continueStage2').onclick=()=>openStage(2);
+$('#restartAll').onclick=()=>{cancelSpeech();allProgress=freshProgress();idx=0;score=0;answered=false;stage1ReplayMode=false;advancedReplayMode=false;try{localStorage.removeItem(key)}catch(e){};saveAllProgress();applyRoadmap();updateStartButton();hideAllGamePanels();$('#game').classList.remove('show');$('#home').scrollIntoView({behavior:'smooth',block:'start'})};
+for(let n=1;n<=5;n++){const card=$(`#roadmapStage${n}`);if(!card)continue;const go=()=>{if(stageUnlocked(n)){openStage(n);return}toast(`Complete Stage ${n-1} first to unlock Stage ${n}.`)};card.addEventListener('click',go);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}})}
+loadAllProgress();$('#score').textContent=score;applyRoadmap();updateStartButton();renderDots();
 </script>
 </body>
 </html>
