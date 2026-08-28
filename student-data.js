@@ -122,6 +122,37 @@
     return safeNotebook.length;
   }
 
+
+  const SITE_KEY_RE = /^(mrsLecomte|conferenceRescue)/;
+
+  function exportAllStudyData() {
+    const storage = {};
+    for (let i = 0; i < localStorage.length; i += 1) {
+      const key = localStorage.key(i);
+      if (key && SITE_KEY_RE.test(key)) storage[key] = localStorage.getItem(key);
+    }
+    return {
+      format: "MrsLecomteMedicalEnglishFullBackup",
+      version: 1,
+      exportedAt: new Date().toISOString(),
+      storage
+    };
+  }
+
+  function importAllStudyData(payload) {
+    if (!payload || payload.format !== "MrsLecomteMedicalEnglishFullBackup" || !payload.storage || typeof payload.storage !== "object") {
+      throw new Error("Invalid full backup file.");
+    }
+    let count = 0;
+    Object.entries(payload.storage).forEach(([key, value]) => {
+      if (!SITE_KEY_RE.test(key) || typeof value !== "string") return;
+      localStorage.setItem(key, value);
+      count += 1;
+    });
+    window.dispatchEvent(new CustomEvent("medicalNotebookChanged"));
+    return count;
+  }
+
   window.MedicalStudentData = {
     KEYS,
     getNotebook,
@@ -136,6 +167,8 @@
     markFlash,
     clearFlashProgress,
     exportData,
-    importData
+    importData,
+    exportAllStudyData,
+    importAllStudyData
   };
 })();

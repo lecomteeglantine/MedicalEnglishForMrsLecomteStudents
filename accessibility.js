@@ -213,9 +213,69 @@
     }
   });
 
-  document.querySelectorAll(".main-nav a.active").forEach(link => {
-    link.setAttribute("aria-current", "page");
-  });
+  function setActiveNavigation() {
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    let target = file;
+    if (/^fgsm3-day[1-5]\.html$/.test(file) || file === "conference-rescue.html") target = "fgsm3.html";
+    if (/^fgsm2-day[1-5]\.html$/.test(file)) target = "fgsm2.html";
+    if (file === "notebook.html") target = "dictionary.html";
+    if (file === "flashcards.html") target = "games.html";
+
+    document.querySelectorAll(".main-nav a").forEach(link => {
+      const href = (link.getAttribute("href") || "").split("#")[0].split("?")[0].toLowerCase();
+      const active = href === target || (target === "index.html" && (href === "./" || href === "index.html"));
+      link.classList.toggle("active", active);
+      if (active) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    });
+  }
+
+  const lockStyle = document.createElement("style");
+  lockStyle.textContent = `.a11y-lock-proxy{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}.a11y-lock-proxy:focus{position:fixed!important;left:16px!important;top:16px!important;width:min(560px,calc(100vw - 32px))!important;height:auto!important;overflow:visible!important;z-index:10001!important;padding:12px 14px!important;border:3px solid #ffbf47!important;border-radius:10px!important;background:#fff!important;color:#111!important;font-weight:800!important;box-shadow:0 8px 30px rgba(0,0,0,.28)!important}`;
+  document.head.appendChild(lockStyle);
+  let lockProxyCounter = 0;
+
+  function explainLockedControls() {
+    document.querySelectorAll("button").forEach(button => {
+      const text = (button.textContent || "").trim();
+      const locked = button.disabled && (
+        /LOCKED|🔒|Complete Mission|Complete Stage/i.test(text) ||
+        /activity-card|mission/i.test(button.className || "")
+      );
+
+      const existingId = button.dataset.a11yLockProxy;
+      const existing = existingId ? document.getElementById(existingId) : null;
+      if (!locked) {
+        existing?.remove();
+        delete button.dataset.a11yLockProxy;
+        return;
+      }
+
+      const reason = button.getAttribute("aria-label") || text || "Locked activity";
+      const message = `${reason}. Complete the previous activity or mission to unlock it.`;
+      button.setAttribute("title", message);
+      if (existing) {
+        existing.textContent = message;
+        existing.setAttribute("aria-label", message);
+        return;
+      }
+
+      const proxy = document.createElement("span");
+      proxy.id = `a11yLockProxy${++lockProxyCounter}`;
+      proxy.className = "a11y-lock-proxy";
+      proxy.tabIndex = 0;
+      proxy.setAttribute("role", "note");
+      proxy.setAttribute("aria-label", message);
+      proxy.textContent = message;
+      button.dataset.a11yLockProxy = proxy.id;
+      button.insertAdjacentElement("afterend", proxy);
+    });
+  }
+
+  setActiveNavigation();
+  explainLockedControls();
+  const lockObserver = new MutationObserver(() => explainLockedControls());
+  lockObserver.observe(document.body, {subtree:true, childList:true, attributes:true, attributeFilter:["disabled"]});
 
   updateExistingCategoryButtons();
 
