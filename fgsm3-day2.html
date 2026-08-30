@@ -1,796 +1,288 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
-  <meta name="theme-color" content="#0b3b45">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Medical English">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 2 · Global Health Passport</title>
-  <link rel="stylesheet" href="styles-v29.css">
-  <link rel="canonical" href="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day2.html">
-  <meta property="og:title" content="FGSM3 · Day 2 · Global Health Passport">
-  <meta property="og:description" content="Global Health Passport — FGSM3 Day 2 healthcare systems game for Mrs Lecomte&#x27;s students.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day2.html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08263a">
+<meta name="description" content="FGSM3 Day 2 – Healthcare Systems World Tour for Mrs Lecomte's students">
+<title>FGSM3 Day 2 · Healthcare Systems World Tour</title>
+<style>
+:root{
+  --ink:#112331;--muted:#536775;--paper:#f5f2e9;--card:#fffdf7;--navy:#08263a;--navy2:#123f5a;
+  --gold:#d8a948;--teal:#157a7a;--green:#277554;--red:#9f3c38;--blue:#2f5f8f;--line:#d7d1c2;
+  --shadow:0 12px 32px rgba(8,38,58,.13);--radius:18px;--focus:#ffbf47;--touch:46px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;color:var(--ink);background:linear-gradient(180deg,#e9eef0 0,#f5f2e9 14rem,#f5f2e9 100%);font:17px/1.55 Arial,Helvetica,sans-serif;overflow-x:hidden}
+button,input,select,textarea{font:inherit}
+button{min-height:var(--touch);cursor:pointer}
+button:disabled{cursor:not-allowed;opacity:.55}
+a{color:#0b5d78}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:4px solid var(--focus);outline-offset:3px}
+.skip{position:fixed;left:12px;top:-80px;z-index:9999;background:#fff;color:#000;padding:12px 16px;border-radius:8px;box-shadow:var(--shadow)}
+.skip:focus{top:12px}
+.sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+header{background:radial-gradient(circle at 82% 16%,rgba(216,169,72,.3),transparent 22rem),linear-gradient(135deg,#071f31,#0d3b56 55%,#0b5363);color:#fff;padding:18px clamp(16px,4vw,52px) 30px;border-bottom:5px solid var(--gold)}
+.topbar{max-width:1240px;margin:auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.brand{display:flex;gap:12px;align-items:center;font-weight:800;letter-spacing:.02em}.brand-badge{width:42px;height:42px;border:2px solid #fff;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1)}
+.navlinks{display:flex;gap:8px;flex-wrap:wrap}.navlinks a{color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.32);padding:8px 12px;border-radius:999px;font-weight:700;font-size:.9rem;min-height:44px;display:inline-flex;align-items:center}.navlinks a:hover{background:#fff;color:var(--navy)}
+.hero{max-width:1240px;margin:28px auto 0;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.55fr);gap:24px;align-items:end}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);font-size:.82rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+h1{font-size:clamp(2rem,5vw,4.35rem);line-height:.98;margin:.55rem 0 1rem;max-width:850px}.lede{font-size:clamp(1rem,2.2vw,1.25rem);max-width:780px;color:#e7f1f5;margin:0}
+.build-card{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);border-radius:16px;padding:16px;backdrop-filter:blur(8px)}.build-card strong{display:block;color:#ffe29b}.build-card small{display:block;margin-top:4px;color:#d6e6ec}
+.controlbar{position:sticky;top:0;z-index:50;background:rgba(245,242,233,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);box-shadow:0 5px 16px rgba(0,0,0,.05)}
+.controls{max-width:1240px;margin:auto;padding:10px clamp(12px,4vw,30px);display:flex;align-items:center;gap:10px;flex-wrap:wrap}.controls button{border:1px solid #b6b0a3;background:#fff;padding:8px 12px;border-radius:12px;font-weight:800;color:var(--ink)}.controls button[aria-pressed="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+.progress-wrap{margin-left:auto;min-width:min(330px,100%);display:flex;align-items:center;gap:9px}.progress-wrap progress{width:100%;height:13px;accent-color:var(--teal)}.score-chip{white-space:nowrap;font-weight:800;font-size:.92rem}
+main{max-width:1240px;margin:0 auto;padding:24px clamp(12px,4vw,30px) 70px}
+.route-shell{background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin-bottom:22px}.route-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:10px}.route-title h2{font-size:1.05rem;margin:0}.route{display:grid;grid-template-columns:repeat(11,minmax(88px,1fr));gap:8px;overflow-x:auto;padding:3px 2px 10px;scrollbar-width:thin}.stop{border:1px solid #c8c1b2;background:#fbfaf5;border-radius:12px;padding:9px 7px;text-align:center;min-height:70px;display:grid;place-items:center;gap:2px;color:#334957;font-weight:800}.stop .mini{font-size:.72rem;font-weight:700;color:#637581}.stop.done{background:#edf8f2;border-color:#8ebfa6;color:#155b3c}.stop.current{background:#e8f4f6;border:2px solid var(--teal);color:#0c5d61}.stop.locked{background:#efede7;color:#7c7a73}.stamp{font-size:1.05rem}
+.stage{display:none}.stage.active{display:block;animation:stageIn .25s ease}.stage-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(270px,.8fr);gap:20px;align-items:center;margin-bottom:18px}.stage-head h2{font-size:clamp(1.7rem,4vw,3rem);line-height:1.05;margin:.35rem 0}.stage-head p{color:var(--muted);max-width:720px}
+.kicker{text-transform:uppercase;letter-spacing:.12em;font-weight:900;color:var(--teal);font-size:.77rem}
+.photo{position:relative;min-height:250px;border-radius:18px;overflow:hidden;background:linear-gradient(135deg,#174a62,#7aa1a1);box-shadow:var(--shadow)}.photo img{width:100%;height:100%;min-height:250px;position:absolute;inset:0;object-fit:cover;display:block}.photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(5,24,35,.58))}.photo figcaption{position:absolute;left:14px;right:14px;bottom:12px;z-index:2;color:#fff;font-weight:800;text-shadow:0 1px 6px #000}.photo.is-fallback:before{content:attr(data-fallback);position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;color:#fff;font-size:1.3rem;font-weight:900}
+.dashboard{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.38fr);gap:18px}.mission-card,.fact-card,.source-card,.finish-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 24px rgba(8,38,58,.07)}.mission-card{padding:clamp(16px,3vw,28px)}.fact-card{padding:18px;align-self:start;position:sticky;top:86px}.fact-card h3,.source-card h3{margin-top:0}.fact-list{margin:0;padding-left:20px}.fact-list li+li{margin-top:8px}
+.qmeta{display:flex;justify-content:space-between;gap:12px;align-items:center;color:var(--muted);font-size:.9rem;font-weight:700;margin-bottom:10px}.qprompt{font-size:clamp(1.15rem,2.5vw,1.45rem);font-weight:900;line-height:1.35;margin:.35rem 0 1rem}.quote{border-left:4px solid var(--gold);padding:12px 15px;background:#fff8e8;border-radius:0 10px 10px 0;color:#3d4650;margin:10px 0 16px}.options{display:grid;gap:10px}.option{width:100%;text-align:left;border:1px solid #c9c3b6;background:#fff;border-radius:13px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;color:var(--ink)}.option:hover:not(:disabled){border-color:var(--teal);background:#f1fbfb}.option.correct{background:#e8f6ee;border-color:#5a9d77}.option.wrong{background:#fbeceb;border-color:#b75a55}.option .letter{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:#e8edf0;display:grid;place-items:center;font-size:.85rem;font-weight:900}.option.correct .letter{background:#277554;color:#fff}.option.wrong .letter{background:#9f3c38;color:#fff}
+.feedback{min-height:64px;margin-top:16px;padding:12px 14px;border-radius:12px;background:#eef3f5;border-left:4px solid var(--blue)}.feedback.good{background:#eaf6ef;border-left-color:var(--green)}.feedback.bad{background:#fff0ee;border-left-color:var(--red)}.next-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}.primary,.secondary{border:0;border-radius:12px;padding:10px 16px;font-weight:900}.primary{background:var(--navy);color:#fff}.primary:hover{background:#104c6e}.secondary{background:#e7ecee;color:#173847}.voice-btn{border:1px solid #aeb8bd;background:#fff;border-radius:999px;padding:7px 11px;min-height:var(--touch);font-weight:800}
+.source-card{padding:15px 18px;margin-top:18px}.source-card details{margin-top:8px}.source-card summary{cursor:pointer;font-weight:900}.source-links{display:grid;gap:8px;margin-top:10px}.source-links a{word-break:break-word}
+/* Integrated visual scenes for language stages */
+.scene{min-height:250px;border-radius:18px;overflow:hidden;position:relative;box-shadow:var(--shadow);color:#fff;padding:20px;background:#0f3145}.scene:before{content:"";position:absolute;inset:0;opacity:.55;pointer-events:none}.scene>*{position:relative;z-index:2}
+.sound-scene{background:radial-gradient(circle at 20% 25%,#2c8a89 0 9%,transparent 10%),linear-gradient(135deg,#08263a,#155d68)}.sound-scene:before{background:repeating-linear-gradient(90deg,transparent 0 20px,rgba(255,255,255,.1) 21px 23px,transparent 24px 38px)}.wave{height:95px;display:flex;gap:6px;align-items:center;justify-content:center;margin:20px 0}.wave i{display:block;width:8px;border-radius:99px;background:#f1d381;animation:pulse 1.5s ease-in-out infinite}.wave i:nth-child(1),.wave i:nth-child(9){height:20px}.wave i:nth-child(2),.wave i:nth-child(8){height:46px}.wave i:nth-child(3),.wave i:nth-child(7){height:75px}.wave i:nth-child(4),.wave i:nth-child(6){height:38px}.wave i:nth-child(5){height:92px}
+.passive-scene{background:linear-gradient(135deg,#142b39,#335d67)}.passive-lane{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-top:28px}.lab-box{padding:18px;border:1px solid rgba(255,255,255,.32);border-radius:12px;background:rgba(255,255,255,.08);min-height:105px}.arrow{font-size:2rem;color:#f1d381}.policy-scene{background:linear-gradient(135deg,#342a3f,#584567)}.podiums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-items:end;margin-top:24px}.podium{min-height:112px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.25);border-radius:12px 12px 4px 4px;display:grid;place-items:center;text-align:center;padding:12px;font-weight:900}.podium:nth-child(2){min-height:150px}.mystery-scene{background:radial-gradient(circle at 70% 35%,rgba(218,169,72,.24),transparent 20%),linear-gradient(135deg,#141e2d,#263f53)}.radar{width:150px;height:150px;border-radius:50%;border:2px solid #75b7b5;position:absolute;right:22px;bottom:22px;background:repeating-radial-gradient(circle,transparent 0 24px,rgba(117,183,181,.25) 25px 26px)}.radar:before{content:"";position:absolute;left:50%;top:50%;width:68px;height:2px;background:#f2d17c;transform-origin:left center;animation:sweep 3s linear infinite}.dossier{width:min(62%,460px);background:#e9dfc2;color:#283743;padding:18px;border-radius:6px;transform:rotate(-1.5deg);box-shadow:0 10px 25px rgba(0,0,0,.2);margin-top:22px}.dossier strong{font-family:Georgia,serif;font-size:1.25rem}.redact{display:block;height:8px;background:#283743;margin:10px 0;border-radius:1px}.redact.short{width:65%}
+.video-card{background:#091c28;border-radius:16px;padding:12px;color:#fff;margin:14px 0}.video-card video{display:block;width:100%;max-height:430px;border-radius:10px;background:#000}.transcript{background:#f1f5f6;color:var(--ink);border-radius:12px;padding:14px;margin-top:10px}.transcript summary{font-weight:900;cursor:pointer}
+.forum-note{background:#fff7df;border:1px solid #e4c56f;border-radius:12px;padding:12px 14px;margin-bottom:16px}.oral-card{border:1px dashed #8398a4;background:#f6fafb;border-radius:12px;padding:14px;margin-top:14px}.oral-card strong{display:block;margin-bottom:6px}
+.stage-complete{padding:20px;border:2px solid #89b99f;background:#f0faf4;border-radius:14px;margin-top:16px}.stage-complete h3{margin-top:0;color:#18583c}.stamp-big{font-size:2.4rem}
+.finish-card{padding:clamp(20px,4vw,38px);text-align:center;background:radial-gradient(circle at 50% 0,#fff8d9,#fffdf7 45%)}.finish-card h2{font-size:clamp(2rem,5vw,3.6rem);margin:.3rem 0}.score-big{font-size:clamp(2.6rem,8vw,5rem);font-weight:900;color:var(--navy);line-height:1}.passport-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:18px 0}.passport-stamp{padding:8px 10px;border:2px solid var(--teal);border-radius:50%;font-weight:900;color:var(--teal);transform:rotate(-3deg);background:#fff}.privacy{font-size:.86rem;color:var(--muted);max-width:900px;margin:28px auto 0;text-align:center}
+footer{background:#071f31;color:#dbe8ee;padding:24px;text-align:center;border-top:4px solid var(--gold)}footer a{color:#fff}
+@keyframes stageIn{from{opacity:.25;transform:translateY(6px)}to{opacity:1;transform:none}}@keyframes pulse{50%{transform:scaleY(.65)}}@keyframes sweep{to{transform:rotate(360deg)}}
+@media(max-width:920px){.hero,.stage-head,.dashboard{grid-template-columns:1fr}.fact-card{position:static;top:auto}.photo,.scene{min-height:225px}.progress-wrap{margin-left:0;flex:1 1 100%}.controls{gap:8px}.route{grid-template-columns:repeat(11,100px)}}
+@media(max-width:520px){body{font-size:16px}.navlinks{display:none}header{padding-left:14px;padding-right:14px}.hero{margin-top:18px}.build-card{font-size:.88rem}.controlbar{position:static}.controls button{flex:1 1 140px}.route-shell{padding:11px}.mission-card{padding:15px}.qprompt{font-size:1.14rem}.option{padding:11px}.stage-head{gap:12px}.photo{min-height:205px}.photo img{min-height:205px}.podiums{grid-template-columns:1fr}.podium,.podium:nth-child(2){min-height:72px}.passive-lane{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.dossier{width:76%}.radar{width:120px;height:120px;right:8px}.next-row>*{width:100%}}
+@media(max-width:340px){main{padding-left:8px;padding-right:8px}.route-shell{border-radius:12px}.controls{padding-left:8px;padding-right:8px}.mission-card{padding:12px}.option .letter{flex-basis:25px;width:25px;height:25px}.photo,.scene{border-radius:13px}.dossier{width:90%}.radar{opacity:.5}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}}
+@media(forced-colors:active){.option,.mission-card,.fact-card,.route-shell{border:2px solid CanvasText}.option.correct,.option.wrong{forced-color-adjust:none}}
+</style>
 </head>
-<body class="passport-body">
-  <a class="skip-link" href="#main">Skip to main content</a>
-
-  <header class="topbar">
-    <a class="brand" href="index.html">
-      <span class="brand-mark" aria-hidden="true">🩺</span>
-      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
-    </a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="dictionary.html">Dictionary</a>
-      <a href="fgsm2.html">FGSM2</a>
-      <a href="fgsm3.html">FGSM3</a>
-      <a href="grammar.html">Grammar</a>
-      <a href="pronunciation.html">Pronunciation</a>
-      <a href="games.html">Games</a>
-    </nav>
-  </header>
-
-  <main id="main" class="passport-main">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a><span aria-hidden="true">›</span>
-      <a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span>
-      <span aria-current="page">Day 2</span>
-    </nav>
-
-    <section class="passport-hero" aria-labelledby="passportTitle">
-      <div class="passport-hero-grid"></div>
-      <div class="passport-hero-copy">
-        <p class="passport-overline">FGSM3 · DAY 2 GAME</p>
-        <h1 id="passportTitle">Global Health<br>Passport</h1>
-        <p class="passport-lead">Six systems. Six destinations. One medical journey.</p>
-        <p class="passport-intro">Join the Global Medical Exchange programme and learn what healthcare systems mean for real patients: who pays, who provides care, who is covered and what patients pay themselves.</p>
-        <div class="passport-hero-actions">
-          <button id="startPassport" class="passport-primary" type="button">Enter Departure Lounge →</button>
-          <a class="passport-ghost" href="#route-map">View route</a>
-        </div>
-      </div>
-
-      <div class="passport-document" aria-label="Global Health Passport card">
-        <div class="passport-document-top">
-          <span>GLOBAL MEDICAL EXCHANGE</span>
-          <strong>HEALTH PASSPORT</strong>
-        </div>
-        <div class="passport-document-body">
-          <div class="passport-emblem" aria-hidden="true">⚕</div>
-          <dl>
-            <div><dt>Holder</dt><dd>Medical Student</dd></div>
-            <div><dt>Status</dt><dd>International Medical Observer</dd></div>
-            <div><dt>Destinations</dt><dd>06</dd></div>
-            <div><dt>Clearance</dt><dd id="passportClearance">Not issued</dd></div>
-          </dl>
-        </div>
-        <div class="passport-machine-line" aria-hidden="true">MED&lt;&lt;GLOBAL&lt;HEALTH&lt;PASSPORT&lt;&lt;FGSM3&lt;&lt;02</div>
-      </div>
-    </section>
-
-    <section class="passport-toolbar" aria-label="Day 2 game controls">
-      <div>
-        <strong>Travel controls</strong>
-        <span>Your progress stays on this device.</span>
-      </div>
-      <div class="passport-toolbar-actions">
-        <button id="day2SoundToggle" class="passport-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
-        <button id="day2MusicToggle" class="passport-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
-        <button id="resetDay2Progress" class="passport-reset" type="button">Reset Day 2</button>
-      </div>
-      <p id="day2AudioStatus" class="passport-status-text" role="status" aria-live="polite"></p>
-    </section>
-
-    <section id="route-map" class="passport-route" aria-labelledby="routeTitle">
-      <div class="passport-section-heading">
-        <p class="section-kicker">YOUR ROUTE</p>
-        <h2 id="routeTitle">Six healthcare systems to unlock</h2>
-        <p>Each stop has a different challenge. Complete the current destination to receive its passport stamp and unlock the next leg of the journey.</p>
-      </div>
-
-      <div class="passport-destinations" aria-label="Global Health Passport destinations">
-        <article id="routeUk" class="destination-card destination-next">
-          <span class="destination-flag" aria-hidden="true">🇬🇧</span>
-          <div><small>STOP 01</small><strong>London</strong><span>NHS · Beveridge model</span></div>
-          <b id="routeUkStatus">NEXT</b>
-        </article>
-        <article id="routeUs" class="destination-card destination-locked">
-          <span class="destination-flag" aria-hidden="true">🇺🇸</span>
-          <div><small>STOP 02</small><strong>New York</strong><span>Insurance Maze</span></div>
-          <b id="routeUsStatus">LOCKED</b>
-        </article>
-        <article id="routeCa" class="destination-card destination-locked">
-          <span class="destination-flag" aria-hidden="true">🇨🇦</span>
-          <div><small>STOP 03</small><strong>Toronto</strong><span>Medicare</span></div>
-          <b id="routeCaStatus">LOCKED</b>
-        </article>
-        <article id="routeAu" class="destination-card destination-locked">
-          <span class="destination-flag" aria-hidden="true">🇦🇺</span>
-          <div><small>STOP 04</small><strong>Sydney</strong><span>Bulk Billing</span></div>
-          <b id="routeAuStatus">LOCKED</b>
-        </article>
-        <article id="routeNz" class="destination-card destination-locked">
-          <span class="destination-flag" aria-hidden="true">🇳🇿</span>
-          <div><small>STOP 05</small><strong>Wellington</strong><span>Health System Alert</span></div>
-          <b id="routeNzStatus">LOCKED</b>
-        </article>
-        <article id="routeIe" class="destination-card destination-locked">
-          <span class="destination-flag" aria-hidden="true">🇮🇪</span>
-          <div><small>STOP 06</small><strong>Dublin</strong><span>Workforce Emergency</span></div>
-          <b id="routeIeStatus">LOCKED</b>
-        </article>
-      </div>
-    </section>
-
-    <section id="departureArea" class="passport-mission" aria-labelledby="departureTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">DEPARTURE LOUNGE · PASSPORT CONTROL</p>
-          <h2 id="departureTitle">What makes a healthcare system?</h2>
-          <p id="departureInstruction">Before travelling, prove you know the four questions that help you decode any healthcare system.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>CHECK</span>
-          <strong id="departureCheckpoint">0 / 4</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="departureProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="departure-board">
-        <div class="departure-board-head">
-          <span>GLOBAL MEDICAL EXCHANGE</span>
-          <strong>DEPARTURES</strong>
-          <time>DAY 2</time>
-        </div>
-        <div class="departure-board-row"><span>GME 101</span><strong>LONDON</strong><em id="departureBoardStatus">CHECK-IN</em></div>
-        <div class="departure-board-row muted"><span>GME 202</span><strong>NEW YORK</strong><em>LOCKED</em></div>
-        <div class="departure-board-row muted"><span>GME 303</span><strong>TORONTO</strong><em>LOCKED</em></div>
-      </div>
-
-      <figure class="passport-photo-card departure-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-departure-lounge.webp" alt="Sunlit airport departure lounge with travellers waiting near an international departures board." decoding="async" width="1672" height="941">
-        <figcaption>Departure Lounge · Your Day 2 mission begins here.</figcaption>
-      </figure>
-
-      <div id="departureScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🛂</span>
-          <h3>Passport not issued yet</h3>
-          <p>Enter the Departure Lounge to begin your international rotation.</p>
-        </div>
-      </div>
-      <div id="departureFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="londonArea" class="passport-mission passport-london is-locked" aria-labelledby="londonTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 01 · LONDON</p>
-          <h2 id="londonTitle">NHS Arrival</h2>
-          <p id="londonInstruction">Complete Passport Control to board your first flight.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>LONDON CHECK</span>
-          <strong id="londonCheckpoint">0 / 9</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="londonProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="london-brief">
-        <div class="london-roundel" aria-hidden="true"><span>UK</span></div>
-        <div>
-          <span class="passport-case-kicker">🇬🇧 UNITED KINGDOM · THE NHS</span>
-          <strong>First assignment: understand access before advising a visiting patient.</strong>
-          <p>The NHS is a Beveridge-style system: publicly funded, mostly publicly provided and universal. Your job is to decode funding, access, the private sector, patient pathways and current pressures.</p>
-        </div>
-        <button id="startLondon" class="passport-primary" type="button" disabled>London locked</button>
-      </div>
-
-      <div class="nhs-facts" aria-label="NHS briefing categories">
-        <span><small>MODEL</small><strong>Beveridge</strong></span>
-        <span><small>RUN BY</small><strong>NHS / government</strong></span>
-        <span><small>COVERAGE</small><strong>Universal</strong></span>
-        <span><small>SPEND</small><strong>≈ 10–11% GDP</strong></span>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-london-nhs-reception.webp" alt="Modern GP surgery reception and waiting room in the United Kingdom." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>London · NHS arrival briefing.</figcaption>
-      </figure>
-
-      <div id="londonScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🔒</span>
-          <h3>London gate closed</h3>
-          <p>Complete the Departure Lounge checks first.</p>
-        </div>
-      </div>
-      <div id="londonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="newYorkArea" class="passport-mission passport-new-york is-locked" aria-labelledby="newYorkTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 02 · NEW YORK</p>
-          <h2 id="newYorkTitle">The Insurance Maze</h2>
-          <p id="newYorkInstruction">Clear London to unlock your US assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>NEW YORK CHECK</span>
-          <strong id="newYorkCheckpoint">0 / 11</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="newYorkProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="us-brief">
-        <div class="us-card-visual" aria-hidden="true">
-          <span>HEALTH PLAN</span>
-          <strong>MEMBER ID</strong>
-          <small>NETWORK · COST · COVERAGE</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">🇺🇸 UNITED STATES · MIXED, PRIVATE-LED</span>
-          <strong>Second assignment: decode insurance before you can explain access.</strong>
-          <p>Most people are covered through employer insurance. Medicare and Medicaid cover specific groups, but coverage is not universal and private insurance remains central.</p>
-        </div>
-        <button id="startNewYork" class="passport-primary" type="button" disabled>New York locked</button>
-      </div>
-
-      <div class="us-facts" aria-label="US healthcare briefing categories">
-        <span><small>MODEL</small><strong>Mixed · private-led</strong></span>
-        <span><small>PUBLIC PROGRAMMES</small><strong>Medicare + Medicaid</strong></span>
-        <span><small>COVERAGE</small><strong>Not universal</strong></span>
-        <span><small>SPEND</small><strong>≈ 17% GDP</strong></span>
-      </div>
-
-      <div class="insurance-terms" aria-label="US insurance vocabulary preview">
-        <article><span>PREMIUM</span><p>Monthly payment for insurance.</p></article>
-        <article><span>DEDUCTIBLE</span><p>What you pay yourself before insurance starts paying.</p></article>
-        <article><span>CO-PAY</span><p>A fixed fee per visit or drug.</p></article>
-        <article><span>OUT-OF-NETWORK</span><p>A provider without an agreement with your insurer — usually more expensive.</p></article>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-newyork-insurance-desk.webp" alt="Hospital reception desk where a patient is showing a card to a staff member." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>New York · Insurance desk and access checkpoints.</figcaption>
-      </figure>
-
-      <div id="newYorkScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🔒</span>
-          <h3>New York gate closed</h3>
-          <p>Collect your NHS Navigator stamp first.</p>
-        </div>
-      </div>
-      <div id="newYorkFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="torontoArea" class="passport-mission passport-toronto is-locked" aria-labelledby="torontoTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 03 · TORONTO</p>
-          <h2 id="torontoTitle">Medicare — but not THAT Medicare</h2>
-          <p id="torontoInstruction">Clear New York to unlock your Canadian assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>TORONTO CHECK</span>
-          <strong id="torontoCheckpoint">0 / 11</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="torontoProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="canada-brief">
-        <div class="canada-card-visual" aria-hidden="true">
-          <span>CANADA</span>
-          <strong>MEDICARE</strong>
-          <small>PUBLIC HEALTH INSURANCE</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">🇨🇦 CANADA · SINGLE-PAYER PUBLIC INSURANCE</span>
-          <strong>Third assignment: same word as the US — completely different system.</strong>
-          <p>Hospital and physician care are universally covered under public provincial plans. Prescription drugs, dental care and vision are not necessarily included, so supplementary private insurance still matters.</p>
-        </div>
-        <button id="startToronto" class="passport-primary" type="button" disabled>Toronto locked</button>
-      </div>
-
-      <div class="canada-facts" aria-label="Canadian healthcare briefing categories">
-        <span><small>MODEL</small><strong>Single-payer</strong></span>
-        <span><small>RUN BY</small><strong>Provinces</strong></span>
-        <span><small>COVERAGE</small><strong>Universal · hospital + MD</strong></span>
-        <span><small>SPEND</small><strong>≈ 11–12% GDP</strong></span>
-      </div>
-
-      <div class="canada-coverage" aria-label="Canada coverage preview">
-        <article class="covered"><span>✓ COVERED</span><strong>Hospital care</strong><p>Publicly covered when medically necessary.</p></article>
-        <article class="covered"><span>✓ COVERED</span><strong>Physician care</strong><p>Universal under provincial public insurance.</p></article>
-        <article class="variable"><span>? NOT ALWAYS</span><strong>Prescription drugs</strong><p>Often outside universal Medicare coverage.</p></article>
-        <article class="variable"><span>? NOT ALWAYS</span><strong>Dental &amp; vision</strong><p>Often supported through supplementary cover.</p></article>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-toronto-medicare-clinic.webp" alt="Warm, modern Canadian clinic environment with a nurse speaking to a patient." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>Toronto · Public insurance with a patient-centred feel.</figcaption>
-      </figure>
-
-      <div id="torontoScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🔒</span>
-          <h3>Toronto gate closed</h3>
-          <p>Collect your Insurance Decoder stamp first.</p>
-        </div>
-      </div>
-      <div id="torontoFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="sydneyArea" class="passport-mission passport-sydney is-locked" aria-labelledby="sydneyTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 04 · SYDNEY</p>
-          <h2 id="sydneyTitle">The Bulk Billing Challenge</h2>
-          <p id="sydneyInstruction">Clear Toronto to unlock your Australian assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>SYDNEY CHECK</span>
-          <strong id="sydneyCheckpoint">0 / 11</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="sydneyProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="australia-brief">
-        <div class="australia-card-visual" aria-hidden="true">
-          <span>AUSTRALIA</span>
-          <strong>MEDICARE</strong>
-          <small>PUBLIC + PRIVATE TIER</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">🇦🇺 AUSTRALIA · UNIVERSAL PUBLIC INSURANCE + PRIVATE TIER</span>
-          <strong>Fourth assignment: work out when the patient pays — and when Medicare pays the doctor directly.</strong>
-          <p>Public hospital care is free, GP visits and medicines are subsidised, and private cover plays a substantial role alongside Medicare. Your key challenge is to decode bulk billing, gap fees and the PBS.</p>
-        </div>
-        <button id="startSydney" class="passport-primary" type="button" disabled>Sydney locked</button>
-      </div>
-
-      <div class="australia-facts" aria-label="Australian healthcare briefing categories">
-        <span><small>MODEL</small><strong>Universal + private tier</strong></span>
-        <span><small>RUN BY</small><strong>Medicare + states</strong></span>
-        <span><small>COVERAGE</small><strong>Universal</strong></span>
-        <span><small>SPEND</small><strong>≈ 10% GDP</strong></span>
-      </div>
-
-      <div class="bulk-billing-preview" aria-label="Australia healthcare vocabulary preview">
-        <article><span>MEDICARE LEVY</span><strong>Funding</strong><p>A dedicated tax on income that helps fund Medicare.</p></article>
-        <article><span>BULK BILLING</span><strong>No patient payment</strong><p>The doctor bills Medicare directly, so the patient pays nothing for that visit.</p></article>
-        <article><span>GAP FEE</span><strong>Out-of-pocket</strong><p>The extra amount a patient pays above the Medicare rebate.</p></article>
-        <article><span>PBS</span><strong>Medicines</strong><p>The Pharmaceutical Benefits Scheme subsidises medicines.</p></article>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-sydney-gp-consultation.webp" alt="Doctor and patient talking in a bright consultation room in Australia." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>Sydney · GP consultation, Medicare and patient pathways.</figcaption>
-      </figure>
-
-      <div id="sydneyScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🔒</span>
-          <h3>Sydney gate closed</h3>
-          <p>Collect your Medicare Specialist stamp first.</p>
-        </div>
-      </div>
-      <div id="sydneyFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="finalSArea" class="passport-mission passport-final-s is-locked" aria-labelledby="finalSTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">TRANSIT TRAINING BAY · PRONUNCIATION</p>
-          <h2 id="finalSTitle">Final -s Sound Check</h2>
-          <p id="finalSInstruction">Clear Sydney to unlock your communication check before the flight to Wellington.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>SOUND CHECK</span>
-          <strong id="finalSCheckpoint">0 / 12</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="finalSProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="final-s-brief">
-        <div class="final-s-gate" aria-hidden="true">
-          <span>TRANSIT GATE T2</span>
-          <strong>FINAL -S</strong>
-          <small>/ɪz/ · /s/ · /z/</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">🔊 COMMUNICATION CHECK · HEALTHCARE ENGLISH</span>
-          <strong>Listen to the ending, then classify the final -s sound.</strong>
-          <p>The spelling stays visible for accessibility. Focus on the final sound before <em>-s</em>, not on the letter itself. You can hear each word and a short healthcare sentence before answering.</p>
-        </div>
-        <button id="startFinalS" class="passport-primary" type="button" disabled>Training Bay locked</button>
-      </div>
-
-      <div class="final-s-rule-grid" aria-label="Final s pronunciation rules">
-        <article class="final-s-rule"><span>/ɪz/</span><strong>Extra syllable</strong><p>After s, z, sh, ch or ge sounds: <em>doses, analyses, cases</em>.</p></article>
-        <article class="final-s-rule"><span>/s/</span><strong>Voiceless ending</strong><p>After p, t, k or f sounds: <em>results, patients, groups</em>.</p></article>
-        <article class="final-s-rule"><span>/z/</span><strong>Voiced ending</strong><p>After other voiced sounds: <em>findings, values, methods</em>.</p></article>
-      </div>
-
-      <div id="finalSScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting">
-          <span aria-hidden="true">🔒</span>
-          <h3>Communication gate closed</h3>
-          <p>Collect your Bulk Billing Expert stamp first.</p>
-        </div>
-      </div>
-      <div id="finalSFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="wellingtonArea" class="passport-mission passport-wellington is-locked" aria-labelledby="wellingtonTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 05 · WELLINGTON</p>
-          <h2 id="wellingtonTitle">Health System Alert</h2>
-          <p id="wellingtonInstruction">Clear the Final -s Training Bay to unlock your New Zealand assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>WELLINGTON CHECK</span>
-          <strong id="wellingtonCheckpoint">0 / 13</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="wellingtonProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="nz-alert-brief">
-        <div class="nz-alert-badge" aria-hidden="true">
-          <span>HEALTH SYSTEM ALERT</span>
-          <strong>WELLINGTON</strong>
-          <small>NZ · STOP 05</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">🇳🇿 NEW ZEALAND · HEALTH NZ / TE WHATU ORA</span>
-          <strong>First decode the system. Then analyse a real leadership crisis reported by RNZ.</strong>
-          <p>New Zealand has universal public cover, free public hospital care, subsidised GP visits with common co-payments, and ACC no-fault injury cover. Your second task is to separate what the RNZ clip reports from political claims and information it does not give.</p>
-        </div>
-        <button id="startWellington" class="passport-primary" type="button" disabled>Wellington locked</button>
-      </div>
-
-      <div class="nz-facts" aria-label="New Zealand healthcare briefing categories">
-        <span><small>MODEL</small><strong>Tax-funded · public</strong></span>
-        <span><small>RUN BY</small><strong>Health NZ / Te Whatu Ora</strong></span>
-        <span><small>COVERAGE</small><strong>Universal</strong></span>
-        <span><small>SPEND</small><strong>≈ 9–10% GDP</strong></span>
-      </div>
-
-      <div class="nz-video-card">
-        <div>
-          <video id="nzLeadershipVideo" controls preload="metadata" playsinline aria-label="New Zealand's health leadership crisis — The Detail, RNZ">
-            <source src="assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4" type="video/mp4">
-            Your browser cannot play this video. Use the text alternative beside it.
-          </video>
-        </div>
-        <div class="nz-video-copy">
-          <span class="nz-source-chip">▶ RNZ · THE DETAIL</span>
-          <h3>New Zealand's health leadership crisis</h3>
-          <p>Watch the 1 min 23 clip before the crisis checkpoints. The game never depends on sound alone: a text alternative summarises the context, but <strong>Not Given</strong> still means the clip does not state the information.</p>
-          <details>
-            <summary>Read the accessible briefing</summary>
-            <p>The clip reports a succession of senior departures from New Zealand's health leadership. It places these departures against a background of staff shortages, long waits in emergency departments, for GPs and for scans, and hospital “near misses”. It also reports an opposition claim that senior figures are being pushed out and blamed for government failures. The clip does not give an exact number of resignations.</p>
-          </details>
-        </div>
-      </div>
-
-      <div class="nz-crisis-strip" aria-label="Wellington mission phases">
-        <article><span>PHASE 1</span><strong>Decode the system</strong><p>Health NZ, funding, access, ACC and private cover.</p></article>
-        <article><span>PHASE 2</span><strong>Verify the news feed</strong><p>True · False · Not Given from the RNZ clip.</p></article>
-        <article><span>PHASE 3</span><strong>Classify the evidence</strong><p>Reported fact/context · political claim · not stated.</p></article>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-wellington-hospital-alert.webp" alt="Hospital team talking urgently in a clinical corridor." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>Wellington · Health-system alert and staff pressure.</figcaption>
-      </figure>
-
-      <div id="wellingtonScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Wellington alert locked</h3><p>Clear the Final -s Training Bay first.</p></div>
-      </div>
-      <div id="wellingtonFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="dublinArea" class="passport-mission passport-dublin is-locked" aria-labelledby="dublinTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">STOP 06 · DUBLIN</p>
-          <h2 id="dublinTitle">Workforce Emergency</h2>
-          <p id="dublinInstruction">Clear Wellington to unlock Ireland's health-system and workforce-planning assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>DUBLIN CHECK</span>
-          <strong id="dublinCheckpoint">0 / 14</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="dublinProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="ie-brief">
-        <div class="ie-pass-card" aria-hidden="true">
-          <span>GLOBAL HEALTH PASSPORT</span>
-          <strong>🇮🇪 DUBLIN</strong>
-          <small>WORKFORCE ASSIGNMENT · STOP 06</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">IRELAND · HSE · SLÁINTECARE</span>
-          <strong>Decode a mixed two-tier system, then investigate Ireland's plan to expand the healthcare workforce.</strong>
-          <p>First understand access, the medical card, private insurance and Sláintecare. Then move to the workforce dashboard: 612 extra annual healthcare-training places, designed to strengthen the domestic pipeline and address staffing shortages.</p>
-        </div>
-        <button id="startDublin" class="passport-primary" type="button" disabled>Dublin locked</button>
-      </div>
-
-      <div class="ie-facts" aria-label="Ireland healthcare briefing categories">
-        <span><small>MODEL</small><strong>Mixed · two-tier</strong></span>
-        <span><small>RUN BY</small><strong>HSE</strong></span>
-        <span><small>ACCESS</small><strong>Universal · some charges</strong></span>
-        <span><small>REFORM</small><strong>Sláintecare</strong></span>
-      </div>
-
-      <div class="ie-system-grid">
-        <article>
-          <span class="ie-card-tag">ACCESS DECODER</span>
-          <h3>What does “two-tier” mean?</h3>
-          <p>Public and private access exist side by side. Many people pay to see a GP; a means-tested medical card gives free GP and hospital care to lower-income patients.</p>
-        </article>
-        <article>
-          <span class="ie-card-tag">REFORM TRACK</span>
-          <h3>Sláintecare</h3>
-          <p>The reform plan aims to move Ireland towards universal, single-tier care and reduce inequalities between public and private access.</p>
-        </article>
-      </div>
-
-      <div class="ie-workforce-board" aria-labelledby="workforceBoardTitle">
-        <div class="ie-board-head">
-          <div>
-            <span class="nz-source-chip">📰 IRISH TIMES · 21 AUGUST 2026</span>
-            <h3 id="workforceBoardTitle">612 extra annual healthcare places</h3>
-            <p>Practice reading the policy announcement as a workforce dashboard rather than a list of numbers.</p>
-          </div>
-          <div class="ie-total"><strong>612</strong><span>extra places / year</span></div>
-        </div>
-        <div class="ie-bars" aria-label="Extra annual healthcare education places by field">
-          <div class="ie-bar-row"><span>Nursing &amp; midwifery</span><div><i style="--w:100%"></i></div><strong>268</strong></div>
-          <div class="ie-bar-row"><span>Pharmacy</span><div><i style="--w:56.3%"></i></div><strong>151</strong></div>
-          <div class="ie-bar-row"><span>Veterinary medicine</span><div><i style="--w:29.9%"></i></div><strong>80</strong></div>
-          <div class="ie-bar-row"><span>Medicine</span><div><i style="--w:29.1%"></i></div><strong>78</strong></div>
-          <div class="ie-bar-row"><span>Dentistry</span><div><i style="--w:13.1%"></i></div><strong>35</strong></div>
-        </div>
-        <p class="passport-small-note">The article describes this as the largest expansion of healthcare education places in the State's history.</p>
-      </div>
-
-      <div class="ie-mission-strip" aria-label="Dublin mission phases">
-        <article><span>PHASE 1</span><strong>Access Decoder</strong><p>HSE, Sláintecare, medical card, two-tier access and private cover.</p></article>
-        <article><span>PHASE 2</span><strong>Workforce Dashboard</strong><p>Read the 612-place expansion and interpret the distribution.</p></article>
-        <article><span>PHASE 3</span><strong>Pipeline Strategy</strong><p>Workforce gap, burnout, domestic training, recruitment abroad and retention.</p></article>
-      </div>
-
-      <figure class="passport-photo-card system-photo">
-        <img src="assets/fgsm3/day2/images/fgsm3-day2-dublin-workforce-meeting.webp" alt="Healthcare professionals gathered around charts and workforce planning data in a meeting room." loading="lazy" decoding="async" width="1672" height="941">
-        <figcaption>Dublin · Workforce planning and training expansion.</figcaption>
-      </figure>
-
-      <div id="dublinScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Dublin assignment locked</h3><p>Clear Wellington first.</p></div>
-      </div>
-      <div id="dublinFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-
-
-    <section id="passiveArea" class="passport-mission passport-passive is-locked" aria-labelledby="passiveTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">LANGUAGE IMMIGRATION DESK · PASSIVE CONTROL</p>
-          <h2 id="passiveTitle">Clear your scientific English</h2>
-          <p id="passiveInstruction">Complete Dublin before presenting your research language for inspection.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>LANGUAGE CHECK</span>
-          <strong id="passiveCheckpoint">0 / 12</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="passiveProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="passive-brief">
-        <div class="passive-control-card" aria-hidden="true">
-          <span>GLOBAL MEDICAL EXCHANGE</span>
-          <strong>📐 LANGUAGE CONTROL</strong>
-          <b>PASSIVE CLEARANCE</b>
-          <small>RESEARCH COMMUNICATION · DAY 2</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">WHY THE PASSIVE?</span>
-          <strong>In a research talk, the focus is often on what was done, measured, found or reported — not on who did it.</strong>
-          <p>Your checkpoint covers the three forms from the Day 2 Presentation Check-in: present simple passive, past simple passive and present perfect passive. Use them naturally where they fit the research message.</p>
-        </div>
-        <button id="startPassive" class="passport-primary" type="button" disabled>Language Desk locked</button>
-      </div>
-
-      <div class="passive-tense-grid" aria-label="Three passive forms used in research presentations">
-        <article><span>PRESENT SIMPLE</span><strong>Routine / method</strong><code>Data are collected at each visit.</code><p>am / is / are + past participle</p></article>
-        <article><span>PAST SIMPLE</span><strong>Completed study action</strong><code>240 patients were recruited.</code><p>was / were + past participle</p></article>
-        <article><span>PRESENT PERFECT</span><strong>Past research linked to now</strong><code>Similar results have been reported before.</code><p>has / have been + past participle</p></article>
-      </div>
-
-      <div class="passive-helper">
-        <div class="passive-helper-intro">
-          <span>PAST PARTICIPLE CHECK</span>
-          <h3>Your verb bank</h3>
-          <p>You need the past participle to build the passive. Some are regular; some have to be remembered.</p>
-        </div>
-        <div class="passive-verb-bank" aria-label="Past participle helper">
-          <span>conduct → conducted</span><span>measure → measured</span><span>analyse → analysed</span><span>reduce → reduced</span><span>carry out → carried out</span>
-          <span>show → shown</span><span>find → found</span><span>give → given</span><span>take → taken</span><span>choose → chosen</span>
-        </div>
-      </div>
-
-      <div class="passive-mission-strip" aria-label="Passive Control Desk phases">
-        <article><span>PHASE 1</span><strong>Tense scan</strong><p>Recognise present, past and present perfect passive in research English.</p></article>
-        <article><span>PHASE 2</span><strong>Rewrite for focus</strong><p>Move from active to passive when the process or result matters more than the agent.</p></article>
-        <article><span>PHASE 3</span><strong>Participle clearance</strong><p>Choose the correct past participle and finish with a three-tense research check.</p></article>
-      </div>
-
-      <div id="passiveScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Language Control locked</h3><p>Collect the Workforce Planner stamp in Dublin first.</p></div>
-      </div>
-      <div id="passiveFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-
-
-    <section id="forumArea" class="passport-mission passport-forum is-locked" aria-labelledby="forumTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">GLOBAL HEALTH FORUM · POLICY &amp; EVIDENCE</p>
-          <h2 id="forumTitle">Argue the policy — not the person</h2>
-          <p id="forumInstruction">Complete Passive Control before entering the international policy forum.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>FORUM CHECK</span>
-          <strong id="forumCheckpoint">0 / 12</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="forumProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="forum-brief">
-        <div class="forum-pass" aria-hidden="true">
-          <span>GLOBAL MEDICAL EXCHANGE</span>
-          <strong>🏛️ HEALTH POLICY FORUM</strong>
-          <b>EVIDENCE PASS</b>
-          <small>ARGUE · SUPPORT · NUANCE · WEIGH</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">YOUR BRIEF</span>
-          <strong>Three controversial statements. No compulsory opinion.</strong>
-          <p>You are not being scored on whether you agree or disagree. You are being scored on whether the language is clear, the evidence actually comes from Day 2, and the conclusion reflects the trade-off rather than overclaiming.</p>
-        </div>
-        <button id="startForum" class="passport-primary" type="button" disabled>Forum locked</button>
-      </div>
-
-      <div class="forum-guardrail">
-        <span aria-hidden="true">⚖️</span>
-        <div><strong>Evidence rule</strong><p>The course documents provide facts, examples and competing pressures. They do not prove that one policy position is automatically correct. The game therefore rewards evidence use, nuance and argument structure — not a political viewpoint.</p></div>
-      </div>
-
-      <div class="forum-resolutions" aria-label="Three Day 2 healthcare debate resolutions">
-        <article><span>RESOLUTION 01</span><strong>“A tax-funded system is fairer than an insurance-based one — even if it means longer waits.”</strong><p>Compare coverage, patient cost and access pressures across systems already visited.</p></article>
-        <article><span>RESOLUTION 02</span><strong>“The best way to fix staff shortages is to train more people at home, not to recruit doctors and nurses from abroad.”</strong><p>Use Ireland's workforce expansion and the limits of what the sources actually establish.</p></article>
-        <article><span>RESOLUTION 03</span><strong>“Healthcare works better when patients pay a small fee — a co-payment — to see a doctor.”</strong><p>Use New Zealand and Ireland to discuss patient charges without inventing unsupported benefits.</p></article>
-      </div>
-
-      <div class="forum-language-grid" aria-label="Useful language for the policy forum">
-        <article><b>POSITION</b><span>My position is that… · The heart of the matter is…</span></article>
-        <article><b>EVIDENCE</b><span>The figures show that… · A clear example is…</span></article>
-        <article><b>NUANCE / REBUTTAL</b><span>To some extent… · Admittedly…, but… · I take that point, yet…</span></article>
-        <article><b>WEIGH / CONCLUDE</b><span>On balance… · Taking everything into account… · The key trade-off is…</span></article>
-      </div>
-
-      <div id="forumScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Forum chamber locked</h3><p>Clear the Passive Control Desk first.</p></div>
-      </div>
-      <div id="forumFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-
-
-    <section id="finalArea" class="passport-mission passport-mystery is-locked" aria-labelledby="finalTitle">
-      <div class="passport-mission-header">
-        <div>
-          <p class="section-kicker">FINAL · MYSTERY DESTINATION</p>
-          <h2 id="finalTitle">One sealed assignment. Ten mixed checkpoints.</h2>
-          <p id="finalInstruction">Clear the Global Health Forum to receive your final confidential assignment.</p>
-        </div>
-        <div class="passport-progress-card" aria-live="polite">
-          <span>FINAL CHECK</span>
-          <strong id="finalCheckpoint">0 / 10</strong>
-          <div class="passport-progress-track" aria-hidden="true"><span id="finalProgressBar"></span></div>
-        </div>
-      </div>
-
-      <div class="mystery-brief">
-        <div class="mystery-envelope" aria-hidden="true">
-          <span>GLOBAL MEDICAL EXCHANGE</span>
-          <strong>CONFIDENTIAL</strong>
-          <b>DESTINATION CLASSIFIED</b>
-          <small>OPEN AFTER FORUM CLEARANCE</small>
-        </div>
-        <div>
-          <span class="passport-case-kicker">FINAL ASSIGNMENT</span>
-          <strong>You will not be told which skill is being tested.</strong>
-          <p>One of the six destinations will be selected at random. Use clues from the whole day to identify the system, interpret access and vocabulary, compare countries, handle pronunciation and scientific English, and judge claims carefully.</p>
-        </div>
-        <button id="startFinal" class="passport-primary" type="button" disabled>Final locked</button>
-      </div>
-
-      <div class="mystery-rules" aria-label="Mystery Destination rules">
-        <article><span>01</span><strong>Destination hidden</strong><p>The country is selected at random and stays classified at the start.</p></article>
-        <article><span>02</span><strong>Skills mixed</strong><p>No grammar, vocabulary or pronunciation labels tell you what is coming next.</p></article>
-        <article><span>03</span><strong>Evidence matters</strong><p>Choose only what the Day 2 materials support. Avoid absolute claims.</p></article>
-        <article><span>04</span><strong>No timer</strong><p>A first-try answer earns 10 points; a corrected answer earns 6.</p></article>
-      </div>
-
-      <div class="mystery-sealed-grid" aria-hidden="true">
-        <span>?</span><span>?</span><span>?</span><span>?</span><span>?</span><span>?</span>
-      </div>
-
-      <div id="finalScreen" class="passport-screen" tabindex="-1">
-        <div class="passport-waiting"><span aria-hidden="true">🔒</span><h3>Final assignment sealed</h3><p>Clear the Global Health Forum first.</p></div>
-      </div>
-      <div id="finalFeedback" class="passport-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section class="passport-stamps" aria-labelledby="stampsTitle">
-      <div class="passport-section-heading compact">
-        <p class="section-kicker">YOUR PASSPORT</p>
-        <h2 id="stampsTitle">Stamps collected</h2>
-      </div>
-      <div class="stamp-grid">
-        <div id="stampDeparture" class="passport-stamp stamp-empty"><span>🛂</span><strong>Passport Issued</strong><small>Departure Lounge</small></div>
-        <div id="stampUk" class="passport-stamp stamp-empty"><span>🇬🇧</span><strong>NHS Navigator</strong><small>London</small></div>
-        <div id="stampUs" class="passport-stamp stamp-empty"><span>🇺🇸</span><strong>Insurance Decoder</strong><small>New York</small></div>
-        <div id="stampCa" class="passport-stamp stamp-empty"><span>🇨🇦</span><strong>Medicare Specialist</strong><small>Toronto</small></div>
-        <div id="stampAu" class="passport-stamp stamp-empty"><span>🇦🇺</span><strong>Bulk Billing Expert</strong><small>Sydney</small></div>
-        <div id="stampFinalS" class="passport-stamp stamp-empty"><span>🔊</span><strong>Clear Communicator</strong><small>Final -s Lab</small></div>
-        <div id="stampNz" class="passport-stamp stamp-empty"><span>🇳🇿</span><strong>System Crisis Analyst</strong><small>Wellington</small></div>
-        <div id="stampIe" class="passport-stamp stamp-empty"><span>🇮🇪</span><strong>Workforce Planner</strong><small>Dublin</small></div>
-        <div id="stampPassive" class="passport-stamp stamp-empty"><span>📐</span><strong>Passive Control Cleared</strong><small>Language Desk</small></div>
-        <div id="stampForum" class="passport-stamp stamp-empty"><span>🏛️</span><strong>Policy Advocate</strong><small>Global Health Forum</small></div>
-        <div id="stampFinal" class="passport-stamp stamp-empty"><span>⭐</span><strong>Passport Complete</strong><small id="stampFinalLevel">Final Assignment</small></div>
-      </div>
-    </section>
-
-    <section id="day2Completion" class="passport-coming passport-day2-finale" aria-labelledby="comingTitle">
-      <div>
-        <p class="section-kicker">FINAL CLEARANCE</p>
-        <h2 id="comingTitle">Your Mystery Destination is still sealed.</h2>
-        <p id="comingText">Complete the Global Health Forum, then open the final assignment. One random destination and ten mixed checkpoints stand between you and a completed Global Health Passport.</p>
-      </div>
-      <div id="comingIcons" class="passport-coming-icons" aria-hidden="true">⭐ · 🛂</div>
-    </section>
-  </main>
-
-  <audio id="day2Music" class="passport-audio" loop preload="none">
-    <source src="assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3" type="audio/mpeg">
-  </audio>
-
-  <footer class="site-footer">
-    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
-    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
-    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Game progress is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
-  </footer>
-
-  <script src="fgsm3-day2-game.js" defer></script>
-  <script src="pwa.js" defer></script>
-  <script src="accessibility.js" defer></script>
+<body>
+<a class="skip" href="#game">Skip to the game</a>
+<header>
+  <div class="topbar">
+    <div class="brand"><span class="brand-badge" aria-hidden="true">✚</span><span>Medical English · Mrs Lecomte's students</span></div>
+    <nav class="navlinks" aria-label="Main navigation"><a href="fgsm3.html">FGSM3</a><a href="dictionary.html">Dictionary</a><a href="pronunciation.html">Pronunciation</a><a href="games.html">Games</a></nav>
+  </div>
+  <div class="hero">
+    <div><span class="eyebrow">Day 2 · Individual world tour</span><h1>Healthcare Systems World Tour</h1><p class="lede">Six systems. Two language control rooms. One policy forum. One mystery destination. Build a reliable comparison without turning complex healthcare systems into stereotypes.</p></div>
+    <aside class="build-card" aria-label="Build information"><strong>AUDITED BUILD · DAY 2 FINAL · R2</strong><small>DAY2-AUDITED-FINAL-R2-20260830</small><small>Current-source review · robust save · mobile/accessibility patch</small></aside>
+  </div>
+</header>
+<div class="controlbar">
+  <div class="controls">
+    <button type="button" id="voiceToggle" aria-pressed="true">🔊 Voice &amp; effects ON</button>
+    <button type="button" id="musicToggle" aria-pressed="false">🎵 Music OFF</button>
+    <button type="button" id="resetButton">↺ Reset Day 2</button>
+    <div class="progress-wrap"><progress id="globalProgress" max="10" value="0" aria-label="Journey progress"></progress><span class="score-chip" id="scoreChip">0 / 0 pts</span></div>
+  </div>
+</div>
+<audio id="day2Music" preload="metadata" loop src="assets/fgsm3/day2/music/fgsm3-day2-departure-lounge-theme.mp3"></audio>
+<main id="game" tabindex="-1">
+  <div id="liveStatus" class="sr-only" role="status" aria-live="polite"></div>
+  <section class="route-shell" aria-labelledby="routeHeading"><div class="route-title"><h2 id="routeHeading">Your passport route</h2><span id="routeStatus">Departure lounge</span></div><div class="route" id="route"></div></section>
+  <div id="stageHost"></div>
+  <p class="privacy">Progress is stored only in this browser using local storage. No student name, answer or score is sent to Mrs Lecomte or to a third-party analytics service.</p>
+</main>
+<footer><strong>For Mrs Lecomte's students</strong><br><small>Pedagogical content and site created by Eglantine Lecomte, with the assistance of ChatGPT. · Sources checked 30 August 2026.</small></footer>
+<script>
+(() => {
+'use strict';
+const BUILD='DAY2-AUDITED-FINAL-R2-20260830';
+const STORAGE_KEY='mrsLecomteFgsm3Day2PassportR2';
+const OLD_KEY='mrsLecomteFgsm3Day2PassportV20';
+const SCHEMA=2;
+const A='assets/fgsm3/day2/images/';
+const stageDefs=[
+ {id:'departure',short:'Depart',title:'Departure Lounge',icon:'🛫',kind:'departure'},
+ {id:'uk',short:'London',title:'London · United Kingdom',icon:'🇬🇧',image:A+'london-nhs-reception.png',caption:'NHS reception · London',fallback:'London · NHS reception'},
+ {id:'us',short:'New York',title:'New York · United States',icon:'🇺🇸',image:A+'newyork-insurance-desk.png',caption:'Insurance desk · New York',fallback:'New York · insurance desk'},
+ {id:'canada',short:'Toronto',title:'Toronto · Canada',icon:'🇨🇦',image:A+'toronto-medicare-clinic.png',caption:'Medicare clinic · Toronto',fallback:'Toronto · Medicare clinic'},
+ {id:'australia',short:'Sydney',title:'Sydney · Australia',icon:'🇦🇺',image:A+'sydney-gp-consultation.png',caption:'GP consultation · Sydney',fallback:'Sydney · GP consultation'},
+ {id:'sLab',short:'Final -s',title:'Final -s Training Bay',icon:'🔉',kind:'sound'},
+ {id:'nz',short:'Wellington',title:'Wellington · New Zealand',icon:'🇳🇿',image:A+'wellington-hospital-alert.png',caption:'Health system briefing · Wellington',fallback:'Wellington · health system briefing'},
+ {id:'ireland',short:'Dublin',title:'Dublin · Ireland',icon:'🇮🇪',image:A+'dublin-workforce-meeting.png',caption:'Workforce meeting · Dublin',fallback:'Dublin · workforce meeting'},
+ {id:'passive',short:'Passive',title:'Passive Control',icon:'⚙️',kind:'passive'},
+ {id:'forum',short:'Policy',title:'Health Policy Forum',icon:'🏛️',kind:'policy'},
+ {id:'mystery',short:'Mystery',title:'Mystery Destination',icon:'🧭',kind:'mystery'}
+];
+const sources={
+ uk:[['ONS · UK Health Accounts 2024 and 2025','https://www.ons.gov.uk/peoplepopulationandcommunity/healthandsocialcare/healthcaresystem/bulletins/ukhealthaccounts/latest'],['NHS · Help with health costs','https://www.nhs.uk/nhs-services/help-with-health-costs/']],
+ us:[['US Census Bureau · Health Insurance Coverage in the United States: 2024','https://www.census.gov/library/publications/2025/demo/p60-288.html'],['HealthCare.gov · Premium, deductible and out-of-pocket costs','https://www.healthcare.gov/choose-a-plan/your-total-costs/']],
+ canada:[['Health Canada · Canada Health Act','https://www.canada.ca/en/health-canada/services/health-care-system/canada-health-care-system-medicare/canada-health-act.html'],['Health Canada · National pharmacare bilateral agreements','https://www.canada.ca/en/health-canada/corporate/transparency/health-agreements/national-pharmacare-bilateral-agreements.html']],
+ australia:[['Australian Government · Public hospitals','https://www.health.gov.au/topics/hospital-care/about/public-hospitals'],['PBS · About the Pharmaceutical Benefits Scheme','https://www.pbs.gov.au/info/about-the-pbs']],
+ nz:[['Ministry of Health NZ · Primary-care capitation reweighting','https://www.health.govt.nz/strategies-initiatives/programmes-and-initiatives/primary-and-community-health-care/capitation-reweighting'],['ACC · What we do','https://www.acc.co.nz/about-us/who-we-are/what-we-do'],['RNZ · The Detail: Is NZ’s health leadership in crisis? · 18 Feb 2025','https://www.rnz.co.nz/news/thedetail/542183/the-detail-is-nz-s-health-leadership-in-crisis']],
+ ireland:[['HSE · What a medical card covers','https://www2.hse.ie/services/schemes-allowances/medical-cards/about-the-medical-card/what-it-covers/'],['HSE · GP visit cards','https://www2.hse.ie/services/schemes-allowances/gp-visit-cards/gp-visit-cards/'],['Higher Education Authority · 612 additional annual places · 21 Aug 2026','https://hea.ie/2026/08/21/minister-lawless-announces-largest-expansion-of-healthcare-education-places-in-state-history/']]
+};
+const banks={
+ uk:{intro:'Start with what the NHS does — and what the headline figures do not mean.',facts:['The NHS is predominantly tax-funded and offers broad universal access.','Most NHS care is free at the point of use, but charges can apply to some services and differ across the UK.','ONS estimates total UK healthcare expenditure at 11.4% of GDP in 2025; that figure is broader than NHS spending.'],qs:[
+  q('Which description is the safest summary of the NHS?',['A mainly tax-funded system providing broad universal access','A single private insurer chosen by employers','A system in which every service is free in every UK nation'],0,'The NHS is predominantly publicly financed. Avoid the absolute claim that every service is always free.'),
+  q('In the ONS UK Health Accounts, total healthcare expenditure represented approximately…',['8.0% of GDP in 2025','11.4% of GDP in 2025','18.5% of GDP in 2025'],1,'ONS gives a provisional 2025 estimate of 11.4% of GDP.'),
+  q('TRUE / FALSE / NOT GIVEN: “The ONS 11.4% figure is exactly the same thing as NHS spending.”',['True','False','Not given'],1,'False. ONS explicitly warns that its health-accounts measure is broader and is not equivalent to NHS spending.'),
+  q('Which statement avoids an overgeneralisation?',['Nobody ever pays anything for healthcare in the UK.','Most NHS care is free at the point of use, while some charges can apply.','Every UK resident pays the same prescription charge.'],1,'Correct. Prescription, dental and eye-care charging arrangements are not identical across the UK.'),
+  q('A classmate says: “Universal system = no private healthcare exists.” Best response?',['Correct: private care is prohibited.','Not necessarily: universal public coverage can coexist with private care.','Correct: universal means one provider owns every clinic.'],1,'Universal access describes coverage, not the complete absence of a private sector.')
+ ]},
+ us:{intro:'Decode insurance language before comparing the system.',facts:['In 2024, 92.0% of people had health insurance for some or all of the year; 8.0% were uninsured for the entire year.','Employment-based insurance was the most common subtype, covering 53.8% for some or all of 2024.','Premium, deductible, copayment, coinsurance and out-of-pocket maximum describe different costs.'],qs:[
+  q('According to the latest Census figures used here, what share had health insurance for some or all of 2024?',['About 62%','About 78%','92.0%'],2,'92.0%, or about 310 million people.'),
+  q('The most common subtype of US health coverage in 2024 was…',['employment-based insurance','Medicare','Medicaid'],0,'Employment-based insurance covered 53.8% for some or all of the year.'),
+  q('A deductible is…',['the monthly price of keeping insurance','an amount paid for covered services before the plan starts paying as specified','the maximum a hospital may charge'],1,'A deductible is not the premium. It is the amount paid toward covered services before plan payments begin under the plan rules.'),
+  q('Which pairing is accurate?',['Medicare → primarily a federal programme including older adults and certain eligible people; Medicaid → joint federal/state coverage for eligible low-income groups','Medicare → employer-only insurance; Medicaid → tourist insurance','Medicare and Medicaid are names for deductibles'],0,'The programmes are distinct public coverage routes; do not reduce the US system to private insurance only.'),
+  q('TRUE / FALSE / NOT GIVEN: “A Marketplace out-of-pocket maximum includes the monthly premium.”',['True','False','Not given'],1,'False. HealthCare.gov states that premiums are not included in the out-of-pocket maximum.')
+ ]},
+ canada:{intro:'Canada has national principles, but provinces and territories run their own insurance plans.',facts:['The Canada Health Act sets federal conditions; provinces and territories administer their plans.','Insured medically necessary hospital and physician services are provided without patient charges under the Act.','Prescription drug, dental, vision and other coverage varies; national pharmacare is being implemented through agreements rather than covering every drug nationwide.'],qs:[
+  q('Who administers most public health insurance plans in Canada?',['The federal government alone','Provinces and territories','Employers only'],1,'Provinces and territories administer their plans within federal Canada Health Act conditions.'),
+  q('Under the Canada Health Act, insured health services centrally include…',['medically necessary hospital and physician services','every prescription drug and every dental treatment','only emergency care'],0,'The federal Act centres on medically necessary hospital, physician and certain surgical-dental services.'),
+  q('Which statement about medicines, dental and vision care is most accurate?',['They are all identically covered nationwide.','Coverage can vary by province/territory and population group.','They are banned from public funding.'],1,'Extra services and eligibility vary across provinces and territories.'),
+  q('In 2026, describing national pharmacare as merely “a proposed future plan” is…',['accurate','outdated: agreements are already implementing free/low-cost coverage for selected diabetes and contraception products in participating jurisdictions','accurate because Canada has no public drug programmes'],1,'The federal framework is already in implementation through bilateral agreements, while broader drug coverage remains mixed.'),
+  q('TRUE / FALSE / NOT GIVEN: “A publicly insured Canadian service must always be delivered in a government-owned building.”',['True','False','Not given'],1,'False. Public insurance and provider ownership are different questions; publicly funded care can be delivered by different provider types subject to the rules.')
+ ]},
+ australia:{intro:'Separate Medicare, public hospitals, the PBS and private insurance.',facts:['Medicare-card holders can choose free treatment as public patients in public hospitals.','The Pharmaceutical Benefits Scheme (PBS) subsidises many medicines.','Private insurance can cover some private-patient costs; it coexists with Medicare.'],qs:[
+  q('A Medicare-card holder choosing treatment as a public patient in a public hospital generally receives that hospital care…',['free of charge','only after buying private insurance','only after paying an annual US-style deductible'],0,'Australian Government guidance says public hospital services are free of charge for public patients with Medicare eligibility.'),
+  q('What does PBS stand for in this context?',['Private Billing Service','Pharmaceutical Benefits Scheme','Public Bed Standard'],1,'The PBS subsidises listed medicines.'),
+  q('From 1 January 2026, the general patient co-payment for most PBS medicines is capped at up to…',['A$25.00','A$250.00','There is never any patient co-payment'],0,'The PBS page states up to A$25.00 for most general patients in 2026, with a lower concessional rate.'),
+  q('Which comparison is safest?',['Private insurance completely replaces Medicare for everyone.','Medicare and private insurance can coexist; private cover may help with private-patient costs.','Australia has no public hospital system.'],1,'Australia has a mixed public/private structure rather than an either/or system.'),
+  q('TRUE / FALSE / NOT GIVEN: “Every person treated in an Australian public hospital is automatically a public patient.”',['True','False','Not given'],1,'False. Eligible patients can elect to be treated as private patients in public hospitals.')
+ ]},
+ sLab:{intro:'Listen to the final sound — not to the spelling of the plural or third-person ending.',facts:['/s/ after a final voiceless sound such as /p t k f θ/.','/z/ after most other voiced sounds and vowels.','/ɪz/ after sibilant sounds such as /s z ʃ ʒ tʃ dʒ/.'],qs:[
+  soundQ('patients','/s/','The base word ends in /t/, so the final -s is /s/.'),soundQ('doctors','/z/','The base word ends in voiced /ə(r)/, so the ending is /z/.'),soundQ('nurses','/ɪz/','Nurse ends in /s/, a sibilant, so an extra syllable /ɪz/ is needed.'),soundQ('clinics','/s/','Clinic ends in /k/, so /s/.'),soundQ('hospitals','/z/','Hospital ends in voiced /l/, so /z/.'),soundQ('services','/ɪz/','Service ends in /s/, so /ɪz/.'),soundQ('methods','/z/','Method ends in voiced /d/, so /z/.'),soundQ('groups','/s/','Group ends in /p/, so /s/.'),soundQ('shortages','/ɪz/','Shortage ends in /dʒ/, so /ɪz/.'),soundQ('specialists','/s/','Specialist ends in /t/, so /s/.'),soundQ('resignations','/z/','Resignation ends in a voiced /n/, so /z/.'),soundQ('doses','/ɪz/','Dose ends in /z/, so /ɪz/.')
+ ]},
+ nz:{intro:'Wellington combines system facts with source literacy. The RNZ clip is always accompanied by a text alternative.',facts:['ACC is a no-fault accident-injury scheme that covers everyone in New Zealand, including visitors; it does not cover ordinary illness simply because treatment is needed.','General practice receives capitation funding, but not every adult GP visit is automatically free.','RNZ’s 18 February 2025 “The Detail” piece reported leadership departures, workforce shortages and access pressures.'],video:true,qs:[
+  q('ACC’s no-fault scheme primarily concerns…',['accidental injuries','all illnesses of any cause','private dental insurance only'],0,'ACC covers accidental injury; official guidance explicitly distinguishes this from illness and ageing-related conditions.'),
+  q('TRUE / FALSE / NOT GIVEN: “Every adult GP visit in New Zealand is free.”',['True','False','Not given'],1,'False. Primary care is subsidised through capitation and targeted schemes, but adult co-payments can still exist.'),
+  q('RNZ briefing: senior health leaders were described as leaving in quick succession.',['True','False','Not given'],0,'True. The report described major names “tumbling like dominoes” and a growing string of resignations.'),
+  q('RNZ briefing: the article reported waits for scans, GPs and emergency departments.',['True','False','Not given'],0,'True. Those access pressures are explicitly mentioned.'),
+  q('RNZ briefing: the article gave one definitive, verified reason shared by every departing leader.',['True','False','Not given'],1,'False. RNZ says the exact reasons are not completely clear; political interpretations are attributed rather than presented as settled fact.'),
+  q('RNZ briefing: the article states the exact total number of all health-sector resignations nationwide.',['True','False','Not given'],2,'Not given. It names senior departures and says the string is getting longer, but it does not supply a definitive nationwide total.'),
+  q('Which source label is correct for the Wellington media material?',['RNZ · The Detail, published 18 February 2025','New Zealand Census, 2026','A pharmaceutical company press release'],0,'The linked source is RNZ’s The Detail, dated 18 February 2025.')
+ ]},
+ ireland:{intro:'Dublin tests Ireland’s card-based entitlements and a very recent workforce-training announcement.',facts:['A medical card can cover GP visits, most prescribed medicines and public inpatient/outpatient services; prescription charges can still apply.','A GP visit card covers GP visits, but not medicines and all other services.','On 21 August 2026, the Higher Education Authority announced approved capacity for 612 additional students every year across nursing/midwifery, medicine, pharmacy, dentistry and veterinary medicine.'],qs:[
+  q('A medical card holder generally…',['pays the full private price for every GP visit','does not pay to see the GP and receives broader covered services, though some charges can still apply','automatically receives all private healthcare free'],1,'HSE guidance covers GP visits, most prescribed medicines and public inpatient/outpatient services, with some possible charges.'),
+  q('A GP visit card is best described as…',['free GP visits, while medicines and other services may still cost money','identical to private insurance','a card only for hospital staff'],0,'The HSE explicitly distinguishes the GP visit card from the broader medical card.'),
+  q('What exactly did the 21 August 2026 HEA announcement approve?',['612 extra practising doctors immediately','capacity for 612 additional students every year across several healthcare-related disciplines','612 extra hospital beds in Dublin'],1,'The announcement concerns annual higher-education capacity, not 612 immediate doctors or beds.'),
+  q('How many of the 612 annual places were specifically in medicine?',['78','268','612'],0,'The HEA breakdown gives 78 medicine places.'),
+  q('Which discipline was included in the 612 total?',['Veterinary medicine','Architecture','Law'],0,'Veterinary medicine accounted for 80 of the approved annual places.'),
+  q('TRUE / FALSE / NOT GIVEN: “At full rollout, the same measures are expected to support more than 2,600 additional students enrolled.”',['True','False','Not given'],0,'True. That is the HEA’s full-rollout estimate; it is different from the annual intake figure of 612.'),
+  q('Why is “Ireland created 612 new doctors” a misleading summary?',['Because 612 is a monthly figure','Because the places span multiple disciplines and refer to education capacity, not immediate qualified workforce','Because no announcement exists'],1,'Precisely: the policy increases training capacity across six discipline groups.')
+ ]},
+ passive:{intro:'Healthcare news often foregrounds the action or result. Choose a grammatically sound passive without changing the meaning.',facts:['Passive = form of BE + past participle.','Keep tense and meaning stable when transforming a sentence.','Use “by …” only when the agent matters.'],qs:[
+  q('Government approved measures creating capacity for 612 additional annual places. Best passive:',['Capacity for 612 additional annual places was approved through government measures.','612 annual places approved government.','Capacity has approve by 612 places.'],0,'Past simple passive: was + approved.'),
+  q('The HSE assesses eligibility for medical cards.',['Eligibility for medical cards is assessed by the HSE.','Eligibility assessed the HSE.','Medical cards are assess eligibility.'],0,'Present simple passive: is + assessed.'),
+  q('Provinces and territories administer the Canadian plans.',['The Canadian plans are administered by provinces and territories.','The Canadian plans administer provinces.','The plans were administering by provinces.'],0,'Present simple passive keeps the original tense.'),
+  q('The Australian Government subsidises many PBS medicines.',['Many PBS medicines are subsidised by the Australian Government.','Many PBS medicines subsidise the Government.','Many PBS medicines were subsidise.'],0,'Correct agreement and past participle: are subsidised.'),
+  q('The Census Bureau reported the 2024 insurance figures.',['The 2024 insurance figures were reported by the Census Bureau.','The figures are reported yesterday by Census.','The figures were report by Census.'],0,'Past simple passive: were reported.'),
+  q('RNZ reported a string of leadership departures in February 2025.',['A string of leadership departures was reported by RNZ in February 2025.','A string of departures were report RNZ.','RNZ was reported a string of departures.'],0,'Singular head noun “string” takes “was”; reported is the past participle.'),
+  q('Choose the sentence that avoids an unnecessary agent.',['Public hospital treatment is provided free of charge to eligible public patients.','Public hospital treatment is provided free of charge by somebody.','Somebody provides public hospital treatment free.'],0,'In policy descriptions, the result can matter more than an unspecified agent.'),
+  q('Which sentence is NOT passive?',['The plans are administered by provinces.','Eligibility is assessed.','Provinces administer the plans.'],2,'“Provinces administer the plans” is active voice.')
+ ]},
+ forum:{intro:'There is no hidden “correct political opinion” here. Choose a defensible policy position, then use evidence and acknowledge a trade-off.',facts:['A policy choice can be defensible without being universally optimal.','Good arguments distinguish evidence from values and priorities.','Avoid absolute claims such as “always”, “never” and “solves everything” unless the evidence truly supports them.'],policy:true,qs:[
+  policyQ('Primary-care access is deteriorating and GP co-payments are a barrier for some patients. What would you defend?',['Make all GP visits free immediately, accepting the extra public cost and capacity risk.','Target larger subsidies at high-need/low-income patients while expanding capacity.','Keep co-payments but cap them and protect specific groups; invest the savings in workforce.'],['A universal approach prioritises financial access, but you still need to address capacity and fiscal trade-offs.','A targeted approach can concentrate resources, but you must explain eligibility, take-up and gaps.','A capped mixed approach may preserve revenue, but you must justify who still pays and how much.']),
+  policyQ('A country announces hundreds of additional healthcare-training places. What is the strongest policy claim?',['Training expansion is a plausible long-term workforce measure, but it does not instantly solve shortages.','The announcement guarantees every vacancy will disappear next year.','Local training can never matter because migration is the only workforce solution.'],['Strong: the claim is cautious about time lags and the difference between training capacity and immediate staffing.','This overclaims. Education places do not become qualified staff immediately and retention still matters.','This is another absolute claim. Migration can matter, but training and retention can also be part of a workforce strategy.'],[0]),
+  policyQ('Should private providers have a role inside a universal system?',['Yes, if contracts protect access, quality and accountability.','No, because any private delivery automatically destroys universal coverage.','Possibly, but only after comparing cost, capacity, equity and regulation in the specific system.'],['Defensible: delivery model and financing model are not the same thing; conditions matter.','This is too absolute to count as evidence-aware reasoning.','Defensible and explicitly comparative: the answer makes the trade-offs visible.'],[0,2]),
+  policyQ('A government wants broader medicine coverage but cannot fund every product at once. Which argument is evidence-aware?',['Phase coverage using transparent clinical/equity criteria, while stating who remains uncovered.','Call the policy “universal” from day one even if most medicines are still excluded.','Reject any staged programme because partial coverage can never improve access.'],['Strong: it states a criterion, a limit and a transparency requirement.','This language would misrepresent the actual scope of coverage.','Too absolute: staged coverage can still produce real benefits, though gaps must be acknowledged.'],[0])
+ ]},
+ mystery:{intro:'Your destination is selected once and saved. Complete every checkpoint; the destination question only unlocks at the end.',facts:['Three system clues identify one of the six destinations.','Language checkpoints reuse the skills from Day 2.','The final destination must match the clues — you cannot skip straight to the guess.'],mystery:true,qs:[]}
+};
+const mysteryProfiles={
+ uk:{name:'United Kingdom',city:'London',clues:['A tax-funded national service is central to this system.','Most care is free at the point of use, although some charges exist.','A 2025 ONS estimate puts total healthcare expenditure at 11.4% of GDP.'],evidence:['NHS','11.4% total health expenditure','some NHS charges']},
+ us:{name:'United States',city:'New York',clues:['Employment-based insurance is the most common coverage subtype in the latest Census data used here.','Deductibles, copayments and coinsurance are core insurance vocabulary.','Medicare and Medicaid coexist with private coverage.'],evidence:['employment-based coverage','deductible','Medicare + Medicaid']},
+ canada:{name:'Canada',city:'Toronto',clues:['Provinces and territories administer public insurance plans under federal conditions.','The Canada Health Act protects access to insured hospital and physician services without patient charges.','Drug, dental and vision coverage is less uniform than core insured services.'],evidence:['provincial plans','Canada Health Act','variable drug/dental coverage']},
+ australia:{name:'Australia',city:'Sydney',clues:['Medicare-card holders can choose free public-patient hospital treatment.','A national scheme subsidises many prescription medicines.','Private hospital cover coexists with Medicare.'],evidence:['Medicare','PBS','public/private mix']},
+ nz:{name:'New Zealand',city:'Wellington',clues:['A no-fault accident-injury scheme covers everyone in the country, including visitors.','GP care is subsidised but is not automatically free for every adult.','The Wellington media briefing came from RNZ’s The Detail.'],evidence:['ACC','GP co-payments','RNZ']},
+ ireland:{name:'Ireland',city:'Dublin',clues:['Medical cards and GP visit cards create different entitlements.','A 21 August 2026 announcement approved 612 additional annual training places across several disciplines.','The HSE administers key public services and schemes.'],evidence:['medical card','612 annual places','HSE']}
+};
+function q(prompt,choices,correct,explain,extra={}){return {type:'mcq',prompt,choices,correct:[correct],explain,...extra}}
+function soundQ(word,sound,explain){return {type:'sound',prompt:`Choose the final -s sound in “${word}”.`,voice:word,choices:['/s/','/z/','/ɪz/'],correct:[['/s/','/z/','/ɪz/'].indexOf(sound)],explain}}
+function policyQ(prompt,choices,feedback,acceptable=[0,1,2]){return {type:'policy',prompt,choices,correct:acceptable,policyFeedback:feedback,explain:'In the forum, the aim is defensible, evidence-aware reasoning rather than a pre-selected ideology.'}}
+function makeMysteryQuestions(profile){
+ const allNames=Object.values(mysteryProfiles).map(p=>p.name);
+ return [
+  q('CLUE 1 · Which statement belongs in your case file?',[profile.clues[0],decoy(profile,0),decoy(profile,1)],0,'Clue recorded. Keep it — do not guess from one clue alone.',{clue:true}),
+  q('LANGUAGE CHECK · “patients” ends with which -s sound?',['/s/','/z/','/ɪz/'],0,'Patient ends in /t/, so patients ends /s/.'),
+  q('CLUE 2 · Select the second verified clue.',[decoy(profile,2),profile.clues[1],decoy(profile,3)],1,'Second clue recorded.',{clue:true}),
+  q('SOURCE CHECK · If a source does not state a number, the statement “the exact number was 47” should usually be…',['True','False','Not given'],2,'Not given: absence of a stated number is not evidence that 47 is false.'),
+  q('CLUE 3 · Select the final system clue.',[decoy(profile,4),decoy(profile,5),profile.clues[2]],2,'Third clue recorded. Your destination should now be evidence-based.',{clue:true}),
+  q('PASSIVE CHECK · Choose the correct passive.',['Eligibility is assessed according to the scheme rules.','Eligibility assess by the rules.','Eligibility is assess according rules.'],0,'Correct: is + assessed.'),
+  q('COMPARISON CHECK · Which sentence is appropriately cautious?',['This system is always the best.','This system removes every access problem.','This system may reduce one barrier, but access also depends on capacity and eligibility.'],2,'Good comparisons avoid unsupported absolutes.'),
+  q('EVIDENCE CHECK · Which claim is safest?',['One headline proves the whole system is failing.','A current official source can verify a rule or figure, while a news report may provide a specific case or debate.','News and government sources are interchangeable.'],1,'Different source types answer different questions.'),
+  q(`DOSSIER CHECK · Which evidence tag belongs to this destination?`,[profile.evidence[0],wrongEvidence(profile),anotherWrongEvidence(profile)],0,'Evidence tag matched.'),
+  q('FINAL DESTINATION · Where are you?',shuffleNames(allNames,profile.name),-1,'Destination confirmed.',{destination:profile.name})
+ ];
+}
+function decoy(profile,n){const pool=[];for(const p of Object.values(mysteryProfiles)){if(p!==profile) pool.push(...p.clues)}return pool[(n*3+profile.name.length)%pool.length]}
+function wrongEvidence(profile){const pool=Object.values(mysteryProfiles).filter(p=>p!==profile);return pool[profile.name.length%pool.length].evidence[1]}
+function anotherWrongEvidence(profile){const pool=Object.values(mysteryProfiles).filter(p=>p!==profile);return pool[(profile.name.length+2)%pool.length].evidence[2]}
+function shuffleNames(names,correct){const arr=[...names];let seed=correct.length*17;for(let i=arr.length-1;i>0;i--){seed=(seed*9301+49297)%233280;const j=seed%(i+1);[arr[i],arr[j]]=[arr[j],arr[i]]}arr.correctIndex=arr.indexOf(correct);return arr}
+const defaultState=()=>({schema:SCHEMA,build:BUILD,started:false,current:'departure',voice:true,music:false,mysteryId:null,missions:{}});
+let state=loadState();
+let answerLock=false;
+let voices=[];
+const host=document.getElementById('stageHost'),route=document.getElementById('route'),live=document.getElementById('liveStatus'),progress=document.getElementById('globalProgress'),scoreChip=document.getElementById('scoreChip'),routeStatus=document.getElementById('routeStatus');
+const voiceToggle=document.getElementById('voiceToggle'),musicToggle=document.getElementById('musicToggle'),music=document.getElementById('day2Music');
+function getMission(id){const bank=banks[id];const len=bank?.qs?.length||0;const raw=state.missions[id]||{};const complete=raw.complete===true;const rawIndex=Number(raw.index);const validPartial=Number.isInteger(rawIndex)&&rawIndex>=0&&rawIndex<len;const index=complete?len:(validPartial?rawIndex:0);const score=clampInt(raw.score,0,complete?len:index);const missed=safeIndices(raw.missed,len).filter(n=>complete||n<=index);return state.missions[id]={index,score,missed,complete,forumChoices:Array.isArray(raw.forumChoices)?raw.forumChoices.slice(0,len):[]}}
+function safeIndices(v,len){return [...new Set(Array.isArray(v)?v.filter(n=>Number.isInteger(n)&&n>=0&&n<len):[])]}
+function clampInt(v,min,max){v=Number(v);return Number.isInteger(v)?Math.max(min,Math.min(max,v)):min}
+function loadState(){
+ let raw=null;try{raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null')}catch(_){raw=null}
+ const s=defaultState();
+ if(raw&&raw.schema===SCHEMA&&raw.build===BUILD){s.started=raw.started===true;s.voice=raw.voice!==false;s.music=false;s.current=stageDefs.some(x=>x.id===raw.current)?raw.current:'departure';s.mysteryId=mysteryProfiles[raw.mysteryId]?raw.mysteryId:null;s.missions=raw.missions&&typeof raw.missions==='object'?raw.missions:{};return s}
+ if(raw&&raw.schema===SCHEMA){s.started=raw.started===true;s.voice=raw.voice!==false;s.music=false;s.mysteryId=mysteryProfiles[raw.mysteryId]?raw.mysteryId:null;for(const [id,m] of Object.entries(raw.missions||{})){if(banks[id]&&m&&m.complete===true)s.missions[id]={complete:true,index:999,score:0,missed:[]}}}
+ // Safe migration: keep only fully completed legacy stops; discard partial indices/scores that may no longer map to audited questions.
+ try{const old=JSON.parse(localStorage.getItem(OLD_KEY)||'null');if(old&&typeof old==='object'){s.started=!!old.started;const legacyMap={uk:'uk',us:'us',canada:'canada',australia:'australia',sLab:'sLab',nz:'nz',ireland:'ireland',passive:'passive',forum:'forum',mystery:'mystery'};for(const [legacy,id] of Object.entries(legacyMap)){const flag=old[legacy+'Complete']===true||old[legacy]?.complete===true;if(flag)s.missions[id]={complete:true,index:999,score:0,missed:[]}}}}
+ catch(_){}
+ return s;
+}
+function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}catch(_){announce('Progress could not be saved in this browser.')}}
+function enforceState(){
+ if(!state.started){state.current='departure';return}
+ let firstIncomplete=null,gap=false;for(let i=1;i<stageDefs.length;i++){const id=stageDefs[i].id;let m=getMission(id);const len=banks[id]?.qs?.length||0;if(gap&&m.complete){state.missions[id]=m={index:0,score:0,missed:[],complete:false,forumChoices:[]}}if(m.complete){m.index=len;continue}if(!firstIncomplete)firstIncomplete=id;gap=true}
+ if(!firstIncomplete)firstIncomplete='mystery';const allowedIndex=stageDefs.findIndex(s=>s.id===firstIncomplete);const currentIndex=stageDefs.findIndex(s=>s.id===state.current);if(currentIndex<1||currentIndex>allowedIndex)state.current=firstIncomplete;
+}
+function isUnlocked(id){const idx=stageDefs.findIndex(s=>s.id===id);if(idx===0)return true;if(!state.started)return false;for(let i=1;i<idx;i++)if(!getMission(stageDefs[i].id).complete)return false;return true}
+function isDone(id){return id==='departure'?state.started:getMission(id).complete}
+function stageScore(){let score=0,max=0;for(const s of stageDefs.slice(1)){const b=banks[s.id];if(!b?.qs)continue;max+=b.qs.length;score+=getMission(s.id).score}return {score,max}}
+function completedCount(){return stageDefs.slice(1).filter(s=>isDone(s.id)).length}
+function updateChrome(){
+ progress.value=completedCount();const sc=stageScore();scoreChip.textContent=`${sc.score} / ${sc.max} pts`;routeStatus.textContent=stageDefs.find(s=>s.id===state.current)?.title||'';
+ voiceToggle.setAttribute('aria-pressed',String(state.voice));voiceToggle.textContent=state.voice?'🔊 Voice & effects ON':'🔇 Voice & effects OFF';musicToggle.setAttribute('aria-pressed',String(state.music));musicToggle.textContent=state.music?'🎵 Music ON':'🎵 Music OFF';
+ route.innerHTML='';for(const s of stageDefs){const btn=document.createElement('button');btn.type='button';btn.className='stop';const unlocked=isUnlocked(s.id),done=isDone(s.id),current=state.current===s.id;btn.classList.toggle('locked',!unlocked);btn.classList.toggle('done',done);btn.classList.toggle('current',current);btn.disabled=!unlocked;btn.setAttribute('aria-current',current?'step':'false');btn.innerHTML=`<span class="stamp" aria-hidden="true">${done?'✅':s.icon}</span><span>${s.short}</span><span class="mini">${done?'Stamped':unlocked?'Open':'Locked'}</span>`;btn.addEventListener('click',()=>{state.current=s.id;save();render();document.getElementById('stageHeading')?.focus()});route.appendChild(btn)}
+}
+function render(){enforceState();save();updateChrome();const def=stageDefs.find(s=>s.id===state.current)||stageDefs[0];host.innerHTML='';const section=document.createElement('section');section.className='stage active';section.id='stage-'+def.id;section.setAttribute('aria-labelledby','stageHeading');if(def.id==='departure')renderDeparture(section,def);else if(def.id==='mystery'&&getMission('mystery').complete)renderFinish(section);else renderMission(section,def);host.appendChild(section)}
+function visual(def){if(def.image){return `<figure class="photo" data-fallback="${esc(def.fallback)}"><img src="${esc(def.image)}" alt="${esc(def.caption)}" loading="eager" decoding="async" onerror="this.style.display='none';this.parentElement.classList.add('is-fallback')"><figcaption>${esc(def.caption)}</figcaption></figure>`}if(def.kind==='sound')return `<div class="scene sound-scene" aria-label="Pronunciation control room illustration"><strong>FINAL -S · SOUND GATE</strong><div class="wave" aria-hidden="true">${'<i></i>'.repeat(9)}</div><p>Listen to the last sound of the base word.</p></div>`;if(def.kind==='passive')return `<div class="scene passive-scene" aria-label="Passive voice control room illustration"><strong>ACTIVE → PASSIVE CONTROL</strong><div class="passive-lane"><div class="lab-box">AGENT<br><b>Government / HSE / provinces</b></div><div class="arrow" aria-hidden="true">→</div><div class="lab-box">FOCUS<br><b>places / eligibility / plans</b></div></div></div>`;if(def.kind==='policy')return `<div class="scene policy-scene" aria-label="Health policy forum illustration"><strong>HEALTH POLICY FORUM</strong><div class="podiums"><div class="podium">ACCESS</div><div class="podium">EQUITY<br>vs<br>CAPACITY</div><div class="podium">COST</div></div></div>`;return `<div class="scene mystery-scene" aria-label="Mystery destination dossier illustration"><div class="dossier"><strong>CONFIDENTIAL ROUTE FILE</strong><span class="redact"></span><span class="redact short"></span><p>Destination: ███████</p></div><div class="radar" aria-hidden="true"></div></div>`}
+function renderDeparture(section,def){section.innerHTML=`<div class="stage-head"><div><span class="kicker">Mission 00</span><h2 id="stageHeading" tabindex="-1">Departure Lounge</h2><p>Your passport is empty. The route is deliberately locked: London → New York → Toronto → Sydney → final -s lab → Wellington → Dublin → Passive Control → Health Policy Forum → Mystery Destination.</p></div><figure class="photo" data-fallback="Departure lounge"><img src="${A}fgsm3-day2-departure-lounge.png" alt="International healthcare systems departure lounge" onerror="this.style.display='none';this.parentElement.classList.add('is-fallback')"><figcaption>Healthcare Systems World Tour · Departure</figcaption></figure></div><div class="dashboard"><div class="mission-card"><span class="kicker">Before you board</span><h3>Three rules</h3><ol><li><strong>First-attempt scoring:</strong> if you miss a question, you can correct it and continue, but that point cannot be farmed later.</li><li><strong>Source discipline:</strong> False and Not Given are not the same. A missing fact is not automatically false.</li><li><strong>Policy discipline:</strong> complex systems have trade-offs. The forum rewards evidence-aware reasoning, not a political answer key.</li></ol><div class="next-row"><button type="button" class="primary" id="startJourney">Stamp passport & start in London</button></div><div class="feedback" id="departureFeedback">All progress stays on this device.</div></div><aside class="fact-card"><h3>Audio controls</h3><p><strong>Voice & effects</strong> controls speech synthesis and feedback sounds. <strong>Music</strong> is separate and never autoplays.</p><p>If speech synthesis is unavailable, every spoken item is also visible as text.</p></aside></div>`;section.querySelector('#startJourney').addEventListener('click',()=>{state.started=true;state.current='uk';save();cue('success');announce('Passport stamped. London unlocked.');render();document.getElementById('stageHeading')?.focus()})}
+function renderMission(section,def){const bank=banks[def.id],m=getMission(def.id);if(m.complete){renderCompletedMission(section,def,bank,m);return}const i=Math.min(m.index,bank.qs.length-1),item=bank.qs[i];section.innerHTML=`<div class="stage-head"><div><span class="kicker">Mission ${String(stageDefs.indexOf(def)).padStart(2,'0')}</span><h2 id="stageHeading" tabindex="-1">${esc(def.title)}</h2><p>${esc(bank.intro)}</p></div>${visual(def)}</div><div class="dashboard"><div><div class="mission-card" id="missionCard"><div class="qmeta"><span>Checkpoint ${i+1} / ${bank.qs.length}</span><span>First-attempt score: ${m.score}</span></div><div class="qprompt" id="questionPrompt" tabindex="-1">${esc(item.prompt)}</div>${item.voice?`<button class="voice-btn" type="button" id="speakQuestion">▶ Hear “${esc(item.voice)}”</button>`:''}<div class="options" id="options" role="group" aria-labelledby="questionPrompt"></div><div class="feedback" id="feedback" role="status" aria-live="polite">Choose an answer.</div><div class="next-row"><span id="attemptNote">A correction lets you continue; points are first-attempt only.</span><button class="primary" type="button" id="nextQuestion" hidden>Next checkpoint →</button></div></div>${bank.video?videoBlock():''}${bank.policy?`<div class="forum-note"><strong>Forum rule:</strong> where several positions are defensible, the game does not impose a political preference. Feedback identifies the trade-off you would need to defend aloud.</div>`:''}${sourceBlock(def.id)}</div><aside class="fact-card"><h3>Boarding brief</h3><ul class="fact-list">${bank.facts.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></aside></div>`;
+ const opts=section.querySelector('#options'),feedback=section.querySelector('#feedback'),next=section.querySelector('#nextQuestion');let choices=item.choices,correct=item.correct;if(item.destination){correct=[choices.correctIndex]}
+ choices.forEach((text,idx)=>{const b=document.createElement('button');b.type='button';b.className='option';b.innerHTML=`<span class="letter" aria-hidden="true">${String.fromCharCode(65+idx)}</span><span>${esc(text)}</span>`;b.addEventListener('click',()=>answer(section,def,bank,m,item,idx,correct,b));opts.appendChild(b)});
+ section.querySelector('#speakQuestion')?.addEventListener('click',()=>speak(item.voice));next.addEventListener('click',()=>advance(def,bank,m));if(bank.policy&&m.forumChoices[i]!=null){feedback.textContent='This forum checkpoint is already recorded.'}
+}
+function answer(section,def,bank,m,item,idx,correct,button){if(answerLock||section.querySelector('#options')?.dataset.locked==='true')return;answerLock=true;const options=[...section.querySelectorAll('.option')],feedback=section.querySelector('#feedback'),next=section.querySelector('#nextQuestion'),firstMiss=!m.missed.includes(m.index);const accepted=correct.includes(idx);if(item.type==='policy'){
+  m.forumChoices[m.index]=idx;options.forEach(b=>b.disabled=true);button.classList.add(accepted?'correct':'wrong');section.querySelector('#options').dataset.locked='true';feedback.className='feedback '+(accepted?'good':'bad');feedback.textContent=item.policyFeedback?.[idx]||item.explain;if(accepted&&firstMiss)m.score++;if(!accepted&&!m.missed.includes(m.index))m.missed.push(m.index);next.hidden=false;cue(accepted?'success':'error');save();answerLock=false;return}
+ if(accepted){options.forEach((b,j)=>{b.disabled=true;if(correct.includes(j))b.classList.add('correct')});section.querySelector('#options').dataset.locked='true';feedback.className='feedback good';feedback.textContent=(firstMiss?'Correct. ':'Corrected. No first-attempt point this time. ')+item.explain;if(firstMiss)m.score++;next.hidden=false;cue('success');save();announce('Correct.');}
+ else{button.classList.add('wrong');button.disabled=true;if(!m.missed.includes(m.index))m.missed.push(m.index);feedback.className='feedback bad';feedback.textContent='Not quite. Try again. '+(item.type==='sound'?'Say the base word slowly and identify its final sound.':'Check exactly what the source or grammar rule supports.');cue('error');save();announce('Not correct. Try again.')}
+ answerLock=false;
+}
+function advance(def,bank,m){if(m.index<bank.qs.length-1){m.index++;save();render();document.getElementById('questionPrompt')?.focus?.()}else{m.complete=true;m.index=bank.qs.length;save();cue('stamp');announce(def.title+' completed. Passport stamped.');render();document.getElementById('stageHeading')?.focus()}}
+function renderCompletedMission(section,def,bank,m){const idx=stageDefs.indexOf(def),nextDef=stageDefs[idx+1];section.innerHTML=`<div class="stage-head"><div><span class="kicker">Mission complete</span><h2 id="stageHeading" tabindex="-1">${esc(def.title)}</h2><p>Your answers are locked for scoring. You can review the key facts here without earning duplicate points.</p></div>${visual(def)}</div><div class="stage-complete"><div class="stamp-big" aria-hidden="true">✅</div><h3>Passport stamped</h3><p>First-attempt score: <strong>${m.score} / ${bank.qs.length}</strong>.</p>${nextDef?`<button class="primary" type="button" id="continueRoute">Continue to ${esc(nextDef.title)} →</button>`:''}</div>${sourceBlock(def.id)}`;section.querySelector('#continueRoute')?.addEventListener('click',()=>{state.current=nextDef.id;if(nextDef.id==='mystery'&&!state.mysteryId){state.mysteryId=chooseMystery();banks.mystery.qs=makeMysteryQuestions(mysteryProfiles[state.mysteryId]);}save();render();document.getElementById('stageHeading')?.focus()})}
+function renderFinish(section){const m=getMission('mystery'),sc=stageScore();section.innerHTML=`<div class="finish-card"><span class="kicker">Journey complete</span><h2 id="stageHeading" tabindex="-1">Day 2 cleared</h2><div class="score-big">${sc.score}/${sc.max}</div><p>first-attempt points</p><div class="passport-row">${stageDefs.slice(1).map(s=>`<span class="passport-stamp">${s.icon} ${esc(s.short)}</span>`).join('')}</div><p>You completed six healthcare-system stops, a final -s lab, passive control, a policy forum and the mystery destination.</p><div class="oral-card"><strong>30-second exit briefing</strong>Choose two systems. State one similarity, one difference, and one caution about oversimplifying the comparison.</div><div class="next-row" style="justify-content:center"><a class="primary" href="fgsm3.html" style="text-decoration:none;display:inline-flex;align-items:center">Back to FGSM3</a><button class="secondary" type="button" id="reviewRoute">Review passport</button></div></div>`;section.querySelector('#reviewRoute')?.addEventListener('click',()=>{state.current='uk';save();render()})}
+function sourceBlock(id){const arr=sources[id];if(!arr)return'';return `<div class="source-card"><details><summary>Sources checked for this stop</summary><div class="source-links">${arr.map(([t,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t)} ↗</a>`).join('')}</div></details></div>`}
+function videoBlock(){return `<div class="video-card"><strong>Wellington media briefing · local RNZ clip</strong><video controls preload="metadata" playsinline aria-describedby="rnzAlternative"><source src="assets/fgsm3/day2/video/fgsm3-day2-nz-leadership-crisis-rnz.mp4" type="video/mp4">Your browser cannot play this video.</video><details class="transcript" id="rnzAlternative"><summary>Text alternative / source briefing</summary><p>RNZ’s <em>The Detail</em> (18 February 2025) describes rapid departures among senior health leaders and reports shortages and waits for scans, GP appointments and emergency care. Political claims about why leaders left are attributed to opposition figures and commentators; RNZ also notes that the exact reasons for departures are not fully clear. The article does not provide one definitive nationwide total of resignations.</p><p><a href="https://www.rnz.co.nz/news/thedetail/542183/the-detail-is-nz-s-health-leadership-in-crisis" target="_blank" rel="noopener noreferrer">Open the original RNZ article ↗</a></p></details></div>`}
+function chooseMystery(){const ids=Object.keys(mysteryProfiles);try{const a=new Uint32Array(1);crypto.getRandomValues(a);return ids[a[0]%ids.length]}catch(_){return ids[Math.floor(Math.random()*ids.length)]}}
+function ensureMystery(){if(!state.mysteryId||!mysteryProfiles[state.mysteryId])state.mysteryId=chooseMystery();banks.mystery.qs=makeMysteryQuestions(mysteryProfiles[state.mysteryId])}
+function speak(text){if(!state.voice){announce('Voice and effects are off.');return}if(!('speechSynthesis'in window)){announce('Speech synthesis is unavailable; the word is visible on screen.');return}window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='en-GB';const list=voices.length?voices:speechSynthesis.getVoices();u.voice=list.find(v=>/en-GB/i.test(v.lang)&&/natural|premium|enhanced/i.test(v.name))||list.find(v=>/en-GB/i.test(v.lang))||list.find(v=>/^en/i.test(v.lang))||null;const wasPlaying=!music.paused;if(wasPlaying)music.volume=.16;u.onend=u.onerror=()=>{if(wasPlaying)music.volume=.32};speechSynthesis.speak(u)}
+function cue(type){if(!state.voice||!window.AudioContext)return;try{const C=window.AudioContext||window.webkitAudioContext,ctx=new C(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.connect(gain);gain.connect(ctx.destination);osc.type='sine';osc.frequency.value=type==='error'?170:type==='stamp'?660:460;gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.06,ctx.currentTime+.015);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+.13);osc.start();osc.stop(ctx.currentTime+.14);setTimeout(()=>ctx.close().catch(()=>{}),240)}catch(_){} }
+function announce(text){live.textContent='';requestAnimationFrame(()=>{live.textContent=text})}
+function esc(v){return String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+voiceToggle.addEventListener('click',()=>{state.voice=!state.voice;if(!state.voice&&'speechSynthesis'in window)speechSynthesis.cancel();save();updateChrome();announce(state.voice?'Voice and effects on.':'Voice and effects off.')});
+music.volume=.32;musicToggle.addEventListener('click',async()=>{if(state.music){state.music=false;music.pause();}else{state.music=true;try{await music.play()}catch(_){state.music=false;announce('Music could not start. The game continues without music.')}}save();updateChrome()});music.addEventListener('error',()=>{state.music=false;updateChrome();announce('Music file is unavailable. The game continues without music.')});
+document.getElementById('resetButton').addEventListener('click',()=>{if(!confirm('Reset all Day 2 progress on this device?'))return;try{localStorage.removeItem(STORAGE_KEY)}catch(_){}if('speechSynthesis'in window)speechSynthesis.cancel();music.pause();state=defaultState();ensureMystery();save();render();announce('Day 2 progress reset.')});
+if('speechSynthesis'in window){voices=speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=()=>{voices=speechSynthesis.getVoices()}}
+window.addEventListener('beforeunload',()=>{if('speechSynthesis'in window)speechSynthesis.cancel()});
+window.addEventListener('online',()=>announce('Connection restored.'));window.addEventListener('offline',()=>announce('Offline. Previously cached media may still work.'));
+if('serviceWorker'in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js',{scope:'./',updateViaCache:'none'}).then(r=>r.update().catch(()=>{})).catch(()=>{}))}
+ensureMystery();enforceState();save();render();
+})();
+</script>
 </body>
 </html>
