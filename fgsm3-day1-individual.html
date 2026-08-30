@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="theme-color" content="#0c2d66">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Medical English">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Individual Activity — Teleconsultation Control Room, FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
+  <title>FGSM3 · Day 1 · Individual Activity · Teleconsultation Control Room</title>
+  <link rel="stylesheet" href="styles-v19.css">
+  <link rel="canonical" href="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day1-individual.html">
+  <style>
+    .day1-mode-bar{max-width:1180px;margin:16px auto 0;padding:0 18px}
+    .day1-mode-inner{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-radius:16px;background:#eaf3ff;border:1px solid #bdd5f5;color:#0c2d66}
+    .day1-mode-inner strong{display:block;font-size:.86rem;letter-spacing:.05em;text-transform:uppercase}
+    .day1-mode-inner span{font-size:.82rem}
+    .day1-mode-back{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border-radius:999px;background:#0c2d66;color:#fff;text-decoration:none;font-weight:800;font-size:.82rem;white-space:nowrap}
+    @media(max-width:650px){.day1-mode-inner{align-items:flex-start;flex-direction:column}.day1-mode-back{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true">🩺</span>
+      <span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span>
+    </a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="dictionary.html">Dictionary</a>
+      <a href="fgsm2.html">FGSM2</a>
+      <a href="fgsm3.html">FGSM3</a>
+      <a href="grammar.html">Grammar</a>
+      <a href="pronunciation.html">Pronunciation</a>
+      <a href="games.html">Games</a>
+    </nav>
+  </header>
+  <div class="day1-mode-bar">
+    <div class="day1-mode-inner">
+      <div><strong>👤 Individual activity</strong><span>You are in the Teleconsultation Control Room. Complete this activity on your own.</span></div>
+      <a class="day1-mode-back" href="fgsm3-day1.html">← Change activity</a>
+    </div>
+  </div>
+  <main id="main" class="day1-game-main">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">›</span>
+      <a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span>
+      <a href="fgsm3-day1.html">Day 1</a><span aria-hidden="true">›</span>
+      <span aria-current="page">Individual activity</span>
+    </nav>
+    <section class="tcr-hero" aria-labelledby="day1Title">
+      <img class="tcr-hero-image" src="assets/fgsm3/day1/images/fgsm3-day1-control-room.webp" alt="A realistic teleconsultation workstation with several patient video calls displayed on medical monitors." decoding="async" width="1600" height="900">
+      <div class="tcr-hero-overlay"></div>
+      <div class="tcr-hero-copy">
+        <p class="eyebrow">FGSM3 · DAY 1 · INDIVIDUAL ACTIVITY</p>
+        <h1 id="day1Title">Teleconsultation<br>Control Room</h1>
+        <p>Your first shift starts here. Connect safely, communicate professionally and keep control of the consultation.</p>
+        <div class="tcr-hero-actions">
+          <button id="startMission" class="tcr-primary" type="button">Start Mission 1 →</button>
+          <a class="tcr-secondary-link" href="#mission-map">View mission map</a>
+        </div>
+      </div>
+      <div class="tcr-status-card" aria-label="Day 1 game status">
+        <span class="tcr-status-dot" aria-hidden="true"></span>
+        <div><strong>SHIFT STATUS</strong><span id="shiftStatus">Ready to start</span></div>
+      </div>
+    </section>
+    <section class="tcr-toolbar" aria-label="Game audio controls">
+      <div class="tcr-toolbar-title"><strong>Control Room Audio</strong><span>Separate controls for speech/sound and background music.</span></div>
+      <div class="tcr-toolbar-controls">
+        <button id="soundToggle" class="tcr-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
+        <button id="musicToggle" class="tcr-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
+        <button id="resetDay1Progress" class="tcr-reset" type="button">Reset Day 1</button>
+      </div>
+      <p id="audioStatus" class="tcr-audio-status" role="status" aria-live="polite"></p>
+      <audio id="controlRoomMusic" loop preload="none">
+        <source src="assets/fgsm3/day1/music/fgsm3-day1-control-room-theme.mp3" type="audio/mpeg">
+      </audio>
+    </section>
+    <section class="tcr-briefing" aria-labelledby="briefingTitle">
+      <div class="tcr-briefing-copy">
+        <p class="section-kicker">TODAY'S SHIFT</p>
+        <h2 id="briefingTitle">Four patients are waiting.</h2>
+        <p>Mission 1 focuses on the first minutes of a safe video consultation. You will prepare your station, connect to Patient 01, confirm identity, protect privacy and obtain verbal consent.</p>
+      </div>
+      <div class="patient-strip" aria-label="Patients waiting today">
+        <article id="patientMini1" class="patient-mini active-patient">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient01-headache.webp" alt="Patient 01 on a home video consultation, looking concerned." loading="lazy" decoding="async" width="1448" height="1086">
+          <div><strong>Patient 01</strong><span>Headache + dizziness</span><small>Calling now</small></div>
+        </article>
+        <article id="patientMini2" class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient02-ankle.webp" alt="Patient 02 seated at home with an injured ankle visible during a video consultation." loading="lazy" decoding="async" width="1536" height="1024">
+          <div><strong>Patient 02</strong><span>Twisted ankle</span><small>Waiting</small></div>
+        </article>
+        <article id="patientMini3" class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient03-fatigue.webp" alt="Patient 03 at home during a video consultation, appearing tired and concerned." loading="lazy" decoding="async" width="1536" height="1024">
+          <div><strong>Patient 03</strong><span>Fatigue + weight loss</span><small>Waiting</small></div>
+        </article>
+        <article id="patientMini4" class="patient-mini">
+          <img src="assets/fgsm3/day1/images/fgsm3-day1-patient04-medication.webp" alt="Patient 04 at home during a video consultation, resting a hand on her abdomen." loading="lazy" decoding="async" width="1536" height="1024">
+          <div><strong>Patient 04</strong><span>New medication + nausea</span><small>Waiting</small></div>
+        </article>
+      </div>
+    </section>
+    <section id="missionArea" class="tcr-mission" aria-labelledby="missionTitle">
+      <div class="tcr-mission-header">
+        <div>
+          <p class="section-kicker">MISSION 1 · SAFE START</p>
+          <h2 id="missionTitle">Start the call properly</h2>
+          <p id="missionInstruction">Press <strong>Start Mission 1</strong> when you are ready.</p>
+        </div>
+        <div class="mission-progress-card" aria-live="polite">
+          <span>CHECKPOINT</span><strong id="checkpointNumber">0 / 5</strong>
+          <div class="mission-progress-track" aria-hidden="true"><span id="missionProgressBar"></span></div>
+        </div>
+      </div>
+      <div id="missionScreen" class="mission-screen" tabindex="-1">
+        <div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">📞</div><h3>Incoming video consultation</h3><p>Patient 01 is waiting. Prepare your station before connecting.</p></div>
+      </div>
+      <div id="missionFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="mission2Area" class="tcr-mission is-locked" aria-labelledby="mission2Title">
+      <div class="tcr-mission-header">
+        <div><p class="section-kicker">MISSION 2 · ASK THE RIGHT QUESTIONS</p><h2 id="mission2Title">Explore the headache safely</h2><p id="mission2Instruction">Complete Mission 1 to unlock the clinical history.</p></div>
+        <div class="mission-progress-card" aria-live="polite"><span>CHECKPOINT</span><strong id="mission2CheckpointNumber">0 / 5</strong><div class="mission-progress-track" aria-hidden="true"><span id="mission2ProgressBar"></span></div></div>
+      </div>
+      <div class="mission2-case-brief" aria-label="Patient 01 case brief">
+        <div><span class="case-brief-kicker">PATIENT 01 · HEADACHE + DIZZINESS</span><strong>Your aim</strong><p>Start broad, then clarify onset, frequency, associated symptoms, severity, warning signs, previous episodes and the patient's concern.</p></div>
+        <button id="startMission2" class="tcr-primary" type="button" disabled>Mission 2 locked</button>
+      </div>
+      <div id="mission2Screen" class="mission-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Clinical history locked</h3><p>Open the consultation safely first. Mission 2 will unlock automatically when Mission 1 is complete.</p></div></div>
+      <div id="mission2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="audioLabArea" class="tcr-mission audio-lab-section is-locked" aria-labelledby="audioLabTitle">
+      <div class="tcr-mission-header">
+        <div><p class="section-kicker">TRAINING BAY · -ED AUDIO LAB</p><h2 id="audioLabTitle">Hear the ending. Choose the sound.</h2><p id="audioLabInstruction">Complete Mission 2 to unlock pronunciation training.</p></div>
+        <div class="mission-progress-card" aria-live="polite"><span>TRAINING CHECK</span><strong id="audioLabCheckpointNumber">0 / 13</strong><div class="mission-progress-track" aria-hidden="true"><span id="audioLabProgressBar"></span></div></div>
+      </div>
+      <div class="audio-lab-brief"><div class="audio-lab-brief-icon" aria-hidden="true">🎧</div><div><span class="case-brief-kicker">PRONUNCIATION · /ɪd/ · /t/ · /d/</span><strong>Clinical English first. Research English next.</strong><p>Listen if you want to, read the transcript, then classify the <em>-ed</em> ending. There is no timer and audio is never required to complete the lab.</p></div><button id="startAudioLab" class="tcr-primary" type="button" disabled>Audio Lab locked</button></div>
+      <div id="audioLabScreen" class="mission-screen audio-lab-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Training Bay locked</h3><p>Finish the clinical history with Patient 01 first. The pronunciation lab will unlock automatically.</p></div></div>
+      <div id="audioLabFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="timelineArea" class="tcr-mission timeline-section is-locked" aria-labelledby="timelineTitle">
+      <div class="tcr-mission-header">
+        <div><p class="section-kicker">LANGUAGE BAY · TIMELINE CHECK</p><h2 id="timelineTitle">Past event or experience up to now?</h2><p id="timelineInstruction">Complete the -ed Audio Lab to unlock the timeline monitor.</p></div>
+        <div class="mission-progress-card" aria-live="polite"><span>TIMELINE CHECK</span><strong id="timelineCheckpointNumber">0 / 8</strong><div class="mission-progress-track" aria-hidden="true"><span id="timelineProgressBar"></span></div></div>
+      </div>
+      <div class="timeline-brief"><div class="timeline-brief-icon" aria-hidden="true">🕒</div><div><span class="case-brief-kicker">PATIENT 01 · HEADACHE HISTORY</span><strong>Keep the clinical timeline clear.</strong><p>Use the Past Simple for a finished event or specific past time. Use the Present Perfect when the past situation is connected to now.</p></div><button id="startTimeline" class="tcr-primary" type="button" disabled>Timeline Check locked</button></div>
+      <div id="timelineScreen" class="mission-screen timeline-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Timeline monitor locked</h3><p>Complete the pronunciation Training Bay first. Patient 01's history will then reopen for a grammar check.</p></div></div>
+      <div id="timelineFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="patient2Area" class="tcr-mission patient2-section is-locked" aria-labelledby="patient2Title">
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 4 · PATIENT 02</p><h2 id="patient2Title">Ankle injury on camera</h2><p id="patient2Instruction">Complete the Timeline Check to take the next call.</p></div><div class="mission-progress-card" aria-live="polite"><span>CALL CHECK</span><strong id="patient2CheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient2ProgressBar"></span></div></div></div>
+      <div class="patient2-brief"><div class="patient2-brief-icon" aria-hidden="true">🦶</div><div><span class="case-brief-kicker">PATIENT 02 · TWISTED ANKLE</span><strong>Use the camera — but know its limits.</strong><p>The patient twisted an ankle while exercising two days ago. It is swollen and painful, but they can still walk. Explore the injury, use video appropriately and decide what needs an in-person assessment.</p></div><button id="startPatient2" class="tcr-primary" type="button" disabled>Patient 02 locked</button></div>
+      <div id="patient2Screen" class="mission-screen patient2-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 02 is waiting</h3><p>Finish the Timeline Check with Patient 01 first. The next video call will unlock automatically.</p></div></div>
+      <div id="patient2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="onlineDecisionArea" class="tcr-mission online-decision-section is-locked" aria-labelledby="onlineDecisionTitle">
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 5 · CONTROL-ROOM DECISIONS</p><h2 id="onlineDecisionTitle">Online or Face-to-Face?</h2><p id="onlineDecisionInstruction">Complete Patient 02 to unlock the decision desk.</p></div><div class="mission-progress-card" aria-live="polite"><span>CASE DECISION</span><strong id="onlineDecisionCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="onlineDecisionProgressBar"></span></div></div></div>
+      <div class="online-decision-brief"><div class="online-decision-brief-icon" aria-hidden="true">🖥️</div><div><span class="case-brief-kicker">REMOTE CONSULTATION · SAFE NEXT STEPS</span><strong>Decide what video can safely do — and when it is not enough.</strong><p>For each fictional case, choose the most appropriate next step for this training scenario. The aim is not to diagnose: it is to recognise the limits of remote assessment and communicate the plan clearly.</p></div><button id="startOnlineDecision" class="tcr-primary" type="button" disabled>Decision desk locked</button></div>
+      <div id="onlineDecisionScreen" class="mission-screen online-decision-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Decision desk locked</h3><p>Finish Patient 02 first. The next control-room task will unlock automatically.</p></div></div>
+      <div id="onlineDecisionFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="patient3Area" class="tcr-mission patient3-section is-locked" aria-labelledby="patient3Title">
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 6 · PATIENT 03</p><h2 id="patient3Title">Listen before you conclude</h2><p id="patient3Instruction">Complete the Online or Face-to-Face decision desk to take Patient 03's call.</p></div><div class="mission-progress-card" aria-live="polite"><span>HISTORY CHECK</span><strong id="patient3CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient3ProgressBar"></span></div></div></div>
+      <div class="patient3-brief"><div class="patient3-brief-icon" aria-hidden="true">🧪</div><div><span class="case-brief-kicker">PATIENT 03 · FATIGUE + WEIGHT LOSS + DIZZINESS</span><strong>Take a fuller history without jumping to a diagnosis.</strong><p>The patient has felt unusually tired for several weeks, has lost weight without trying and sometimes feels dizzy. Explore symptoms, background, impact and concern, then explain why further assessment is needed.</p></div><button id="startPatient3" class="tcr-primary" type="button" disabled>Patient 03 locked</button></div>
+      <div id="patient3Screen" class="mission-screen patient3-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 03 is waiting</h3><p>Finish the decision desk first. The next video call will unlock automatically.</p></div></div>
+      <div id="patient3Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="patient4Area" class="tcr-mission patient4-section is-locked" aria-labelledby="patient4Title">
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 7 · PATIENT 04</p><h2 id="patient4Title">Medication side effects: clarify before you advise</h2><p id="patient4Instruction">Complete Patient 03 to take Patient 04's call.</p></div><div class="mission-progress-card" aria-live="polite"><span>MEDICATION CHECK</span><strong id="patient4CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient4ProgressBar"></span></div></div></div>
+      <div class="patient4-brief"><div class="patient4-brief-icon" aria-hidden="true">💊</div><div><span class="case-brief-kicker">PATIENT 04 · NEW MEDICATION + NAUSEA / UPSET STOMACH</span><strong>Do not jump from “new medicine” to “definite side effect”.</strong><p>The patient started a new medicine a few days ago and has developed nausea and an upset stomach. Clarify the medication, dose and timing, screen for warning signs, address the patient's wish to stop it and agree a safe review plan.</p></div><button id="startPatient4" class="tcr-primary" type="button" disabled>Patient 04 locked</button></div>
+      <div id="patient4Screen" class="mission-screen patient4-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 04 is waiting</h3><p>Finish Patient 03 first. The medication review will unlock automatically.</p></div></div>
+      <div id="patient4Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="researchArea" class="tcr-mission research-section is-locked" aria-labelledby="researchTitle">
+      <div class="tcr-mission-header"><div><p class="section-kicker">TRAINING BAY · RESEARCH COMMS TERMINAL</p><h2 id="researchTitle">Turn results into clear research English</h2><p id="researchInstruction">Complete Patient 04 to unlock the research terminal.</p></div><div class="mission-progress-card" aria-live="polite"><span>RESEARCH CHECK</span><strong id="researchCheckpointNumber">0 / 9</strong><div class="mission-progress-track" aria-hidden="true"><span id="researchProgressBar"></span></div></div></div>
+      <div class="research-brief"><div class="research-brief-icon" aria-hidden="true">📊</div><div><span class="case-brief-kicker">SCIENTIFIC ARTICLE PRESENTATION</span><strong>Methods in the past. Passive when it helps. Comparisons that say exactly what the data show.</strong><p>Move through three consoles: Methods Log, Research Verb Bank and Results Dashboard. The comparison figures in this game are fictional practice data, not results from your own article.</p></div><button id="startResearch" class="tcr-primary" type="button" disabled>Research Terminal locked</button></div>
+      <div id="researchScreen" class="mission-screen research-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Research terminal locked</h3><p>Finish Patient 04 first. The scientific-presentation training will unlock automatically.</p></div></div>
+      <div id="researchFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="closeSafelyArea" class="tcr-mission close-section is-locked" aria-labelledby="closeSafelyTitle">
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 8 · CLOSE SAFELY</p><h2 id="closeSafelyTitle">Finish the call as professionally as you started it</h2><p id="closeSafelyInstruction">Complete the Research Comms Terminal to unlock Close Safely.</p></div><div class="mission-progress-card" aria-live="polite"><span>CLOSING CHECK</span><strong id="closeSafelyCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="closeSafelyProgressBar"></span></div></div></div>
+      <div class="close-brief"><div class="close-brief-icon" aria-hidden="true">✅</div><div><span class="case-brief-kicker">SUMMARISE · PLAN · CHECK · SAFETY-NET · CLOSE</span><strong>A consultation is not finished when you stop asking questions.</strong><p>The patient should leave knowing what you understood, what happens next and what to do if symptoms worsen. Finish with one final opportunity for questions.</p></div><button id="startCloseSafely" class="tcr-primary" type="button" disabled>Close Safely locked</button></div>
+      <div id="closeSafelyScreen" class="mission-screen close-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Close Safely locked</h3><p>Finish the Research Comms Terminal first.</p></div></div>
+      <div id="closeSafelyFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="finalShiftArea" class="tcr-mission final-shift-section is-locked" aria-labelledby="finalShiftTitle">
+      <div class="tcr-mission-header"><div><p class="section-kicker">FINAL · LIVE SHIFT</p><h2 id="finalShiftTitle">One complete teleconsultation</h2><p id="finalShiftInstruction">Complete Close Safely to unlock your final shift.</p></div><div class="mission-progress-card" aria-live="polite"><span>LIVE CALL</span><strong id="finalShiftCheckpointNumber">0 / 10</strong><div class="mission-progress-track" aria-hidden="true"><span id="finalShiftProgressBar"></span></div></div></div>
+      <div class="final-shift-brief"><div class="final-shift-brief-icon" aria-hidden="true">★</div><div><span class="case-brief-kicker">FINAL CASE · RANDOM ALLOCATION</span><strong>No isolated drill: manage the call from connection to closing.</strong><p>The Control Room will assign one of today's four fictional patients. Your final report scores five areas: opening, clinical questioning, communication, online safety and closing. No timer. Audio remains optional.</p></div><button id="startFinalShift" class="tcr-primary" type="button" disabled>Final Live Shift locked</button></div>
+      <div id="finalShiftScreen" class="mission-screen final-shift-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Final Live Shift locked</h3><p>Finish Close Safely first. Your final patient will then be allocated automatically.</p></div></div>
+      <div id="finalShiftFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="mission-map" class="mission-map" aria-labelledby="missionMapTitle">
+      <div class="mission-map-heading"><p class="section-kicker">DAY 1 · GAME ROADMAP</p><h2 id="missionMapTitle">What the Control Room will revise</h2><p>Day 1 will mix clinical communication with the pronunciation and grammar work from class.</p></div>
+      <div class="mission-map-grid">
+        <article class="mission-map-card live"><span>01</span><div><strong>Safe Start</strong><small>Connection · identity · privacy · verbal consent</small></div><b>LIVE</b></article>
+        <article id="missionMap2" class="mission-map-card"><span>02</span><div><strong>Ask the Right Questions</strong><small>Open questions · symptom exploration · concerns</small></div><b>LOCKED</b></article>
+        <article id="audioLabMap" class="mission-map-card"><span>LAB</span><div><strong>-ed Audio Lab</strong><small>/ɪd/ · /t/ · /d/ in medical and research verbs</small></div><b>LOCKED</b></article>
+        <article id="timelineMap" class="mission-map-card"><span>03</span><div><strong>Timeline Check</strong><small>Past Simple · Present Perfect in the consultation</small></div><b>LOCKED</b></article>
+        <article id="patient2Map" class="mission-map-card"><span>04</span><div><strong>Patient 02 · Ankle Injury</strong><small>Camera skills · injury questions · visible swelling</small></div><b>LOCKED</b></article>
+        <article id="onlineMap" class="mission-map-card"><span>05</span><div><strong>Online or Face-to-Face?</strong><small>Limits of video · safe next steps</small></div><b>LOCKED</b></article>
+        <article id="patient3Map" class="mission-map-card"><span>06</span><div><strong>Patient 03 · Fatigue</strong><small>Fatigue · weight loss · dizziness · further assessment</small></div><b>LOCKED</b></article>
+        <article id="patient4Map" class="mission-map-card"><span>07</span><div><strong>Patient 04 · Medication</strong><small>New medication · nausea · side effects · review plan</small></div><b>LOCKED</b></article>
+        <article id="researchMap" class="mission-map-card"><span>R</span><div><strong>Research Comms Terminal</strong><small>Past passive · research verbs · comparisons</small></div><b>LOCKED</b></article>
+        <article id="closeSafelyMap" class="mission-map-card"><span>08</span><div><strong>Close Safely</strong><small>Summarising · follow-up · safety-netting</small></div><b>LOCKED</b></article>
+        <article id="finalShiftMap" class="mission-map-card final"><span>★</span><div><strong>The Live Shift</strong><small>Complete teleconsultation challenge</small></div><b>FINAL</b></article>
+      </div>
+    </section>
+    <section class="tcr-accessibility-note"><span aria-hidden="true">♿</span><p><strong>Accessible by design:</strong> audio is optional, every patient reply has a transcript, the mission works with keyboard or touch, and there is no time limit. Use the Accessibility button for text size, spacing, contrast, reduced motion and reading support.</p></section>
+  </main>
+  <footer class="site-footer">
+    <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
+    <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
+    <p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Game progress and preferences are stored locally in your browser on this device. No patient data should ever be entered into the site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p>
+  </footer>
+  <script src="fgsm3-day1-game.js"></script>
+  <script src="pwa.js" defer></script>
+  <script src="accessibility.js" defer></script>
+</body>
+</html>
