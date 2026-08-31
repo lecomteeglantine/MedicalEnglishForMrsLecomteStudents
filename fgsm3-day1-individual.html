@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
   <meta name="theme-color" content="#0c2d66">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,8 +11,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Individual Activity — Teleconsultation Control Room, FGSM3 Day 1 Medical English game for Mrs Lecomte's students.">
   <title>FGSM3 · Day 1 · Individual Activity · Teleconsultation Control Room</title>
-  <link rel="stylesheet" href="styles-v19.css?v=day1-r4">
+  <link rel="stylesheet" href="styles-v19.css?v=day1-r5">
   <style id="fgsm3-day1-individual-mobile-fix">
+.tcr-hero-image,.station-visual-card img{max-width:100%;}
 @media(max-width:800px){
   .mission-complete-card{min-width:0;max-width:100%}
   .online-summary-grid{width:100%;min-width:0;max-width:100%;margin:1rem 0;box-sizing:border-box}
@@ -55,7 +56,7 @@
   </header>
   <div class="day1-mode-bar">
     <div class="day1-mode-inner">
-      <div><strong>👤 Individual activity</strong><span>You are in the Teleconsultation Control Room. Complete this activity on your own.</span><small class="day1-build-badge">AUDITED BUILD · INDIVIDUAL R4 FINAL</small></div>
+      <div><strong>👤 Individual activity</strong><span>You are in the Teleconsultation Control Room. Complete this activity on your own.</span><small class="day1-build-badge">AUDITED BUILD · INDIVIDUAL R5 FINAL PATCH</small></div>
       <a class="day1-mode-back" href="fgsm3-day1.html">← Change activity</a>
     </div>
   </div>
@@ -84,7 +85,7 @@
       </div>
     </section>
     <section class="tcr-toolbar" aria-label="Game audio controls">
-      <div class="tcr-toolbar-title"><strong>Control Room Audio</strong><span>Separate controls for patient voice / sound effects and background music.</span><small class="day1-version-check">DAY1-INDIVIDUAL-R4-FINAL-20260830</small></div>
+      <div class="tcr-toolbar-title"><strong>Control Room Audio</strong><span>Separate controls for patient voice / sound effects and background music.</span><small class="day1-version-check">DAY1-INDIVIDUAL-R5-FINALPATCH-20260831</small></div>
       <div class="tcr-toolbar-controls">
         <button id="soundToggle" class="tcr-toggle" type="button" aria-pressed="true">🔊 Voice &amp; effects ON</button>
         <button id="musicToggle" class="tcr-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
@@ -127,7 +128,7 @@
           <h2 id="missionTitle">Start the call properly</h2>
           <p id="missionInstruction">Press <strong>Start Mission 1</strong> when you are ready.</p>
         </div>
-        <div class="mission-progress-card" aria-live="polite">
+        <div class="mission-progress-card">
           <span>CHECKPOINT</span><strong id="checkpointNumber">0 / 5</strong>
           <div class="mission-progress-track" aria-hidden="true"><span id="missionProgressBar"></span></div>
         </div>
@@ -141,7 +142,7 @@
     <section id="mission2Area" class="tcr-mission is-locked" aria-labelledby="mission2Title">
       <div class="tcr-mission-header">
         <div><p class="section-kicker">MISSION 2 · ASK THE RIGHT QUESTIONS</p><h2 id="mission2Title">Explore the headache safely</h2><p id="mission2Instruction">Complete Mission 1 to unlock the clinical history.</p></div>
-        <div class="mission-progress-card" aria-live="polite"><span>CHECKPOINT</span><strong id="mission2CheckpointNumber">0 / 5</strong><div class="mission-progress-track" aria-hidden="true"><span id="mission2ProgressBar"></span></div></div>
+        <div class="mission-progress-card"><span>CHECKPOINT</span><strong id="mission2CheckpointNumber">0 / 5</strong><div class="mission-progress-track" aria-hidden="true"><span id="mission2ProgressBar"></span></div></div>
       </div>
       <div class="mission2-case-brief" aria-label="Patient 01 case brief">
         <div><span class="case-brief-kicker">PATIENT 01 · HEADACHE + DIZZINESS</span><strong>Your aim</strong><p>Start broad, then clarify onset, frequency, associated symptoms, severity, warning signs, previous episodes and the patient's concern.</p></div>
@@ -154,7 +155,7 @@
     <section id="audioLabArea" class="tcr-mission audio-lab-section is-locked" aria-labelledby="audioLabTitle">
       <div class="tcr-mission-header">
         <div><p class="section-kicker">TRAINING BAY · -ED AUDIO LAB</p><h2 id="audioLabTitle">Hear the ending. Choose the sound.</h2><p id="audioLabInstruction">Complete Mission 2 to unlock pronunciation training.</p></div>
-        <div class="mission-progress-card" aria-live="polite"><span>TRAINING CHECK</span><strong id="audioLabCheckpointNumber">0 / 13</strong><div class="mission-progress-track" aria-hidden="true"><span id="audioLabProgressBar"></span></div></div>
+        <div class="mission-progress-card"><span>TRAINING CHECK</span><strong id="audioLabCheckpointNumber">0 / 13</strong><div class="mission-progress-track" aria-hidden="true"><span id="audioLabProgressBar"></span></div></div>
       </div>
       <div class="audio-lab-brief"><div class="audio-lab-brief-icon" aria-hidden="true">🎧</div><div><span class="case-brief-kicker">PRONUNCIATION · /ɪd/ · /t/ · /d/</span><strong>Clinical English first. Research English next.</strong><p>Listen if you want to, read the transcript, then classify the <em>-ed</em> ending. There is no timer and audio is never required to complete the lab.</p></div><button id="startAudioLab" class="tcr-primary" type="button" disabled>Audio Lab locked</button></div>
       <div id="audioLabScreen" class="mission-screen audio-lab-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Training Bay locked</h3><p>Finish the clinical history with Patient 01 first. The pronunciation lab will unlock automatically.</p></div></div>
@@ -164,7 +165,7 @@
     <section id="timelineArea" class="tcr-mission timeline-section is-locked" aria-labelledby="timelineTitle">
       <div class="tcr-mission-header">
         <div><p class="section-kicker">LANGUAGE BAY · TIMELINE CHECK</p><h2 id="timelineTitle">Past event or experience up to now?</h2><p id="timelineInstruction">Complete the -ed Audio Lab to unlock the timeline monitor.</p></div>
-        <div class="mission-progress-card" aria-live="polite"><span>TIMELINE CHECK</span><strong id="timelineCheckpointNumber">0 / 8</strong><div class="mission-progress-track" aria-hidden="true"><span id="timelineProgressBar"></span></div></div>
+        <div class="mission-progress-card"><span>TIMELINE CHECK</span><strong id="timelineCheckpointNumber">0 / 8</strong><div class="mission-progress-track" aria-hidden="true"><span id="timelineProgressBar"></span></div></div>
       </div>
       <div class="timeline-brief"><div class="timeline-brief-icon" aria-hidden="true">🕒</div><div><span class="case-brief-kicker">PATIENT 01 · HEADACHE HISTORY</span><strong>Keep the clinical timeline clear.</strong><p>Use the Past Simple for a finished event or specific past time. Use the Present Perfect when the past situation is connected to now.</p></div><button id="startTimeline" class="tcr-primary" type="button" disabled>Timeline Check locked</button></div>
       <div id="timelineScreen" class="mission-screen timeline-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Timeline monitor locked</h3><p>Complete the pronunciation Training Bay first. Patient 01's history will then reopen for a grammar check.</p></div></div>
@@ -172,49 +173,49 @@
     </section>
 
     <section id="patient2Area" class="tcr-mission patient2-section is-locked" aria-labelledby="patient2Title">
-      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 4 · PATIENT 02</p><h2 id="patient2Title">Ankle injury on camera</h2><p id="patient2Instruction">Complete the Timeline Check to take the next call.</p></div><div class="mission-progress-card" aria-live="polite"><span>CALL CHECK</span><strong id="patient2CheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient2ProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 4 · PATIENT 02</p><h2 id="patient2Title">Ankle injury on camera</h2><p id="patient2Instruction">Complete the Timeline Check to take the next call.</p></div><div class="mission-progress-card"><span>CALL CHECK</span><strong id="patient2CheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient2ProgressBar"></span></div></div></div>
       <div class="patient2-brief"><div class="patient2-brief-icon" aria-hidden="true">🦶</div><div><span class="case-brief-kicker">PATIENT 02 · TWISTED ANKLE</span><strong>Use the camera — but know its limits.</strong><p>The patient twisted an ankle while exercising two days ago. It is swollen and painful, but they can still walk. Explore the injury, use video appropriately and decide what needs an in-person assessment.</p></div><button id="startPatient2" class="tcr-primary" type="button" disabled>Patient 02 locked</button></div>
       <div id="patient2Screen" class="mission-screen patient2-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 02 is waiting</h3><p>Finish the Timeline Check with Patient 01 first. The next video call will unlock automatically.</p></div></div>
       <div id="patient2Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="onlineDecisionArea" class="tcr-mission online-decision-section is-locked" aria-labelledby="onlineDecisionTitle">
-      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 5 · CONTROL-ROOM DECISIONS</p><h2 id="onlineDecisionTitle">Online or Face-to-Face?</h2><p id="onlineDecisionInstruction">Complete Patient 02 to unlock the decision desk.</p></div><div class="mission-progress-card" aria-live="polite"><span>CASE DECISION</span><strong id="onlineDecisionCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="onlineDecisionProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 5 · CONTROL-ROOM DECISIONS</p><h2 id="onlineDecisionTitle">Online or Face-to-Face?</h2><p id="onlineDecisionInstruction">Complete Patient 02 to unlock the decision desk.</p></div><div class="mission-progress-card"><span>CASE DECISION</span><strong id="onlineDecisionCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="onlineDecisionProgressBar"></span></div></div></div>
       <div class="online-decision-brief"><div class="online-decision-brief-icon" aria-hidden="true">🖥️</div><div><span class="case-brief-kicker">REMOTE CONSULTATION · SAFE NEXT STEPS</span><strong>Decide what video can safely do — and when it is not enough.</strong><p>For each fictional case, choose the most appropriate next step for this training scenario. The aim is not to diagnose: it is to recognise the limits of remote assessment and communicate the plan clearly.</p></div><button id="startOnlineDecision" class="tcr-primary" type="button" disabled>Decision desk locked</button></div>
       <div id="onlineDecisionScreen" class="mission-screen online-decision-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Decision desk locked</h3><p>Finish Patient 02 first. The next control-room task will unlock automatically.</p></div></div>
       <div id="onlineDecisionFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="patient3Area" class="tcr-mission patient3-section is-locked" aria-labelledby="patient3Title">
-      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 6 · PATIENT 03</p><h2 id="patient3Title">Listen before you conclude</h2><p id="patient3Instruction">Complete the Online or Face-to-Face decision desk to take Patient 03's call.</p></div><div class="mission-progress-card" aria-live="polite"><span>HISTORY CHECK</span><strong id="patient3CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient3ProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 6 · PATIENT 03</p><h2 id="patient3Title">Listen before you conclude</h2><p id="patient3Instruction">Complete the Online or Face-to-Face decision desk to take Patient 03's call.</p></div><div class="mission-progress-card"><span>HISTORY CHECK</span><strong id="patient3CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient3ProgressBar"></span></div></div></div>
       <div class="patient3-brief"><div class="patient3-brief-icon" aria-hidden="true">🧪</div><div><span class="case-brief-kicker">PATIENT 03 · FATIGUE + WEIGHT LOSS + DIZZINESS</span><strong>Take a fuller history without jumping to a diagnosis.</strong><p>The patient has felt unusually tired for several weeks, has lost weight without trying and sometimes feels dizzy. Explore symptoms, background, impact and concern, then explain why further assessment is needed.</p></div><button id="startPatient3" class="tcr-primary" type="button" disabled>Patient 03 locked</button></div>
       <div id="patient3Screen" class="mission-screen patient3-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 03 is waiting</h3><p>Finish the decision desk first. The next video call will unlock automatically.</p></div></div>
       <div id="patient3Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="patient4Area" class="tcr-mission patient4-section is-locked" aria-labelledby="patient4Title">
-      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 7 · PATIENT 04</p><h2 id="patient4Title">Medication side effects: clarify before you advise</h2><p id="patient4Instruction">Complete Patient 03 to take Patient 04's call.</p></div><div class="mission-progress-card" aria-live="polite"><span>MEDICATION CHECK</span><strong id="patient4CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient4ProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 7 · PATIENT 04</p><h2 id="patient4Title">Medication side effects: clarify before you advise</h2><p id="patient4Instruction">Complete Patient 03 to take Patient 04's call.</p></div><div class="mission-progress-card"><span>MEDICATION CHECK</span><strong id="patient4CheckpointNumber">0 / 7</strong><div class="mission-progress-track" aria-hidden="true"><span id="patient4ProgressBar"></span></div></div></div>
       <div class="patient4-brief"><div class="patient4-brief-icon" aria-hidden="true">💊</div><div><span class="case-brief-kicker">PATIENT 04 · NEW MEDICATION + NAUSEA / UPSET STOMACH</span><strong>Do not jump from “new medicine” to “definite side effect”.</strong><p>The patient started a new medicine a few days ago and has developed nausea and an upset stomach. Clarify the medication, dose and timing, screen for warning signs, address the patient's wish to stop it and agree a safe review plan.</p></div><button id="startPatient4" class="tcr-primary" type="button" disabled>Patient 04 locked</button></div>
       <div id="patient4Screen" class="mission-screen patient4-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Patient 04 is waiting</h3><p>Finish Patient 03 first. The medication review will unlock automatically.</p></div></div>
       <div id="patient4Feedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="researchArea" class="tcr-mission research-section is-locked" aria-labelledby="researchTitle">
-      <div class="tcr-mission-header"><div><p class="section-kicker">TRAINING BAY · RESEARCH COMMS TERMINAL</p><h2 id="researchTitle">Turn results into clear research English</h2><p id="researchInstruction">Complete Patient 04 to unlock the research terminal.</p></div><div class="mission-progress-card" aria-live="polite"><span>RESEARCH CHECK</span><strong id="researchCheckpointNumber">0 / 9</strong><div class="mission-progress-track" aria-hidden="true"><span id="researchProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">TRAINING BAY · RESEARCH COMMS TERMINAL</p><h2 id="researchTitle">Turn results into clear research English</h2><p id="researchInstruction">Complete Patient 04 to unlock the research terminal.</p></div><div class="mission-progress-card"><span>RESEARCH CHECK</span><strong id="researchCheckpointNumber">0 / 9</strong><div class="mission-progress-track" aria-hidden="true"><span id="researchProgressBar"></span></div></div></div>
       <div class="research-brief"><div class="research-brief-icon" aria-hidden="true">📊</div><div><span class="case-brief-kicker">SCIENTIFIC ARTICLE PRESENTATION</span><strong>Methods in the past. Passive when it helps. Comparisons that say exactly what the data show.</strong><p>Move through three consoles: Methods Log, Research Verb Bank and Results Dashboard. The comparison figures in this game are fictional practice data, not results from your own article.</p></div><button id="startResearch" class="tcr-primary" type="button" disabled>Research Terminal locked</button></div>
       <div id="researchScreen" class="mission-screen research-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Research terminal locked</h3><p>Finish Patient 04 first. The scientific-presentation training will unlock automatically.</p></div></div>
       <div id="researchFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="closeSafelyArea" class="tcr-mission close-section is-locked" aria-labelledby="closeSafelyTitle">
-      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 8 · CLOSE SAFELY</p><h2 id="closeSafelyTitle">Finish the call as professionally as you started it</h2><p id="closeSafelyInstruction">Complete the Research Comms Terminal to unlock Close Safely.</p></div><div class="mission-progress-card" aria-live="polite"><span>CLOSING CHECK</span><strong id="closeSafelyCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="closeSafelyProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">MISSION 8 · CLOSE SAFELY</p><h2 id="closeSafelyTitle">Finish the call as professionally as you started it</h2><p id="closeSafelyInstruction">Complete the Research Comms Terminal to unlock Close Safely.</p></div><div class="mission-progress-card"><span>CLOSING CHECK</span><strong id="closeSafelyCheckpointNumber">0 / 6</strong><div class="mission-progress-track" aria-hidden="true"><span id="closeSafelyProgressBar"></span></div></div></div>
       <div class="close-brief"><div class="close-brief-icon" aria-hidden="true">✅</div><div><span class="case-brief-kicker">SUMMARISE · PLAN · CHECK · SAFETY-NET · CLOSE</span><strong>A consultation is not finished when you stop asking questions.</strong><p>The patient should leave knowing what you understood, what happens next and what to do if symptoms worsen. Finish with one final opportunity for questions.</p></div><button id="startCloseSafely" class="tcr-primary" type="button" disabled>Close Safely locked</button></div>
       <div id="closeSafelyScreen" class="mission-screen close-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Close Safely locked</h3><p>Finish the Research Comms Terminal first.</p></div></div>
       <div id="closeSafelyFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
     </section>
 
     <section id="finalShiftArea" class="tcr-mission final-shift-section is-locked" aria-labelledby="finalShiftTitle">
-      <div class="tcr-mission-header"><div><p class="section-kicker">FINAL · LIVE SHIFT</p><h2 id="finalShiftTitle">One complete teleconsultation</h2><p id="finalShiftInstruction">Complete Close Safely to unlock your final shift.</p></div><div class="mission-progress-card" aria-live="polite"><span>LIVE CALL</span><strong id="finalShiftCheckpointNumber">0 / 10</strong><div class="mission-progress-track" aria-hidden="true"><span id="finalShiftProgressBar"></span></div></div></div>
+      <div class="tcr-mission-header"><div><p class="section-kicker">FINAL · LIVE SHIFT</p><h2 id="finalShiftTitle">One complete teleconsultation</h2><p id="finalShiftInstruction">Complete Close Safely to unlock your final shift.</p></div><div class="mission-progress-card"><span>LIVE CALL</span><strong id="finalShiftCheckpointNumber">0 / 10</strong><div class="mission-progress-track" aria-hidden="true"><span id="finalShiftProgressBar"></span></div></div></div>
       <div class="final-shift-brief"><div class="final-shift-brief-icon" aria-hidden="true">★</div><div><span class="case-brief-kicker">FINAL CASE · RANDOM ALLOCATION</span><strong>No isolated drill: manage the call from connection to closing.</strong><p>The Control Room will assign one of today's four fictional patients. Your final report scores five areas: opening, clinical questioning, communication, online safety and closing. No timer. Audio remains optional.</p></div><button id="startFinalShift" class="tcr-primary" type="button" disabled>Final Live Shift locked</button></div>
       <div id="finalShiftScreen" class="mission-screen final-shift-screen" tabindex="-1"><div class="mission-waiting"><div class="mission-waiting-icon" aria-hidden="true">🔒</div><h3>Final Live Shift locked</h3><p>Finish Close Safely first. Your final patient will then be allocated automatically.</p></div></div>
       <div id="finalShiftFeedback" class="mission-feedback" role="status" aria-live="polite"></div>
@@ -246,27 +247,46 @@
   <script id="fgsm3-day1-individual-locked-js">
 (() => {
   "use strict";
-  console.info("FGSM3 Day 1 Individual", "DAY1-INDIVIDUAL-R4-FINAL-20260830", "clean hero + isolated R4 save schema");
-  const STORAGE_KEY = "mrsLecomteFGSM3Day1ControlRoomR4";
-  const STORAGE_M2_KEY = "mrsLecomteFGSM3Day1Mission2R4";
-  const AUDIO_KEY = "mrsLecomteFGSM3Day1AudioR4";
-  const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabR4";
-  const STORAGE_TIMELINE_KEY = "mrsLecomteFGSM3Day1TimelineCheckR4";
-  const STORAGE_PATIENT2_KEY = "mrsLecomteFGSM3Day1Patient2R4";
-  const STORAGE_ONLINE_DECISION_KEY = "mrsLecomteFGSM3Day1OnlineDecisionR4";
-  const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3R4";
-  const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4R4";
-  const STORAGE_RESEARCH_KEY = "mrsLecomteFGSM3Day1ResearchCommsR4";
-  const STORAGE_CLOSE_KEY = "mrsLecomteFGSM3Day1CloseSafelyR4";
-  const STORAGE_FINAL_KEY = "mrsLecomteFGSM3Day1FinalLiveShiftR4";
-  const SAVE_SCHEMA = 4;
-  const BUILD_ID = "DAY1-INDIVIDUAL-R4-FINAL-20260830";
+  console.info("FGSM3 Day 1 Individual", "DAY1-INDIVIDUAL-R5-FINALPATCH-20260831", "audited R5 save/scoring/content patch");
+  const STORAGE_KEY = "mrsLecomteFGSM3Day1ControlRoomR5";
+  const STORAGE_M2_KEY = "mrsLecomteFGSM3Day1Mission2R5";
+  const AUDIO_KEY = "mrsLecomteFGSM3Day1AudioR5";
+  const STORAGE_AUDIO_LAB_KEY = "mrsLecomteFGSM3Day1EdAudioLabR5";
+  const STORAGE_TIMELINE_KEY = "mrsLecomteFGSM3Day1TimelineCheckR5";
+  const STORAGE_PATIENT2_KEY = "mrsLecomteFGSM3Day1Patient2R5";
+  const STORAGE_ONLINE_DECISION_KEY = "mrsLecomteFGSM3Day1OnlineDecisionR5";
+  const STORAGE_PATIENT3_KEY = "mrsLecomteFGSM3Day1Patient3R5";
+  const STORAGE_PATIENT4_KEY = "mrsLecomteFGSM3Day1Patient4R5";
+  const STORAGE_RESEARCH_KEY = "mrsLecomteFGSM3Day1ResearchCommsR5";
+  const STORAGE_CLOSE_KEY = "mrsLecomteFGSM3Day1CloseSafelyR5";
+  const STORAGE_FINAL_KEY = "mrsLecomteFGSM3Day1FinalLiveShiftR5";
+  const SAVE_SCHEMA = 5;
+  const BUILD_ID = "DAY1-INDIVIDUAL-R5-FINALPATCH-20260831";
+  const LEGACY_KEYS = {
+    [STORAGE_KEY]: ["mrsLecomteFGSM3Day1ControlRoomR4","mrsLecomteFGSM3Day1ControlRoomV1"],
+    [STORAGE_M2_KEY]: ["mrsLecomteFGSM3Day1Mission2R4","mrsLecomteFGSM3Day1Mission2V1"],
+    [AUDIO_KEY]: ["mrsLecomteFGSM3Day1AudioR4","mrsLecomteFGSM3Day1AudioV1"],
+    [STORAGE_AUDIO_LAB_KEY]: ["mrsLecomteFGSM3Day1EdAudioLabR4","mrsLecomteFGSM3Day1EdAudioLabV1"],
+    [STORAGE_TIMELINE_KEY]: ["mrsLecomteFGSM3Day1TimelineCheckR4","mrsLecomteFGSM3Day1TimelineCheckV1"],
+    [STORAGE_PATIENT2_KEY]: ["mrsLecomteFGSM3Day1Patient2R4","mrsLecomteFGSM3Day1Patient2V1"],
+    [STORAGE_ONLINE_DECISION_KEY]: ["mrsLecomteFGSM3Day1OnlineDecisionR4","mrsLecomteFGSM3Day1OnlineDecisionV1"],
+    [STORAGE_PATIENT3_KEY]: ["mrsLecomteFGSM3Day1Patient3R4","mrsLecomteFGSM3Day1Patient3V1"],
+    [STORAGE_PATIENT4_KEY]: ["mrsLecomteFGSM3Day1Patient4R4","mrsLecomteFGSM3Day1Patient4V1"],
+    [STORAGE_RESEARCH_KEY]: ["mrsLecomteFGSM3Day1ResearchCommsR4","mrsLecomteFGSM3Day1ResearchCommsV1"],
+    [STORAGE_CLOSE_KEY]: ["mrsLecomteFGSM3Day1CloseSafelyR4","mrsLecomteFGSM3Day1CloseSafelyV1"],
+    [STORAGE_FINAL_KEY]: ["mrsLecomteFGSM3Day1FinalLiveShiftR4","mrsLecomteFGSM3Day1FinalLiveShiftV1"]
+  };
 
-  // V38: randomise answer positions without changing which answer is correct.
-  function shuffled(array) {
+  // R5: keep answer positions varied but stable across reloads for a given checkpoint.
+  function shuffled(array, salt = "") {
     const copy = [...array];
+    const fingerprint = copy.map(item => typeof item === "string" ? item : (item.id || item.text || item.sound || item.label || JSON.stringify(item))).join("|");
+    let seed = 2166136261;
+    const source = `${BUILD_ID}|${salt}|${fingerprint}`;
+    for (let i = 0; i < source.length; i += 1) { seed ^= source.charCodeAt(i); seed = Math.imul(seed, 16777619); }
+    const rand = () => { seed += 0x6D2B79F5; let t = seed; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
     for (let i = copy.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const j = Math.floor(rand() * (i + 1));
       [copy[i], copy[j]] = [copy[j], copy[i]];
     }
     return copy;
@@ -375,9 +395,9 @@
       id: "severity",
       title: "Checkpoint 4 · Check severity and warning signs",
       instruction: "Choose the safest sequence of questions.",
-      patientReply: "Usually about six out of ten. I haven't fainted, and I haven't noticed any weakness or trouble speaking.",
+      patientReply: "Usually about six out of ten. It didn't start suddenly or unusually severely, and I haven't fainted or noticed weakness, trouble speaking or new vision problems.",
       options: [
-        {text:"First ask how severe the pain is from 0 to 10, then ask about fainting, weakness or trouble speaking.", correct:true},
+        {text:"First ask how severe the pain is and whether it started suddenly or unusually severely; then ask about fainting, weakness, trouble speaking or new vision problems.", correct:true},
         {text:"Ask whether the pain is annoying and move straight to treatment.", correct:false},
         {text:"Tell the patient it sounds harmless because she is still able to talk.", correct:false}
       ]
@@ -396,15 +416,15 @@
   ];
 
   const edAudioItems = [
-    {word:"stimulated", sound:"/ɪd/", source:"Being a Doctor", sentence:"Emergency medicine kept the doctor stimulated.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
-    {word:"pushed", sound:"/t/", source:"Being a Doctor", sentence:"Junior doctors were pushed forward in the regional hospital.", reason:"The base word ends in the voiceless /ʃ/ sound, so -ed is pronounced /t/."},
+    {word:"stimulated", sound:"/ɪd/", source:"Being a Doctor", sentence:"The simulation stimulated discussion about patient safety.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
+    {word:"pushed", sound:"/t/", source:"Being a Doctor", sentence:"Junior doctors were pushed to take on more responsibility in the regional hospital.", reason:"The base word ends in the voiceless /ʃ/ sound, so -ed is pronounced /t/."},
     {word:"trained", sound:"/d/", source:"Being a Doctor", sentence:"She trained as a kidney specialist.", reason:"The base word ends in the voiced /n/ sound, so -ed is pronounced /d/."},
     {word:"provided", sound:"/ɪd/", source:"Being a Doctor", sentence:"The patient was provided with clear follow-up advice.", reason:"The base word ends in a /d/ sound, so -ed adds an extra syllable: /ɪd/."},
     {word:"worked", sound:"/t/", source:"Being a Doctor", sentence:"He worked in a regional hospital.", reason:"The base word ends in the voiceless /k/ sound, so -ed is pronounced /t/."},
-    {word:"surprised", sound:"/d/", source:"Being a Doctor", sentence:"She was surprised by the variety of medicine.", reason:"The base word ends in a voiced sound, so -ed is pronounced /d/."},
+    {word:"surprised", sound:"/d/", source:"Being a Doctor", sentence:"She was surprised by the variety of cases she encountered.", reason:"The base word ends in a voiced sound, so -ed is pronounced /d/."},
     {word:"appreciated", sound:"/ɪd/", source:"Being a Doctor", sentence:"The patients appreciated the doctor's support.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
     {word:"finished", sound:"/t/", source:"Being a Doctor", sentence:"She finished medical school before starting work.", reason:"The base word ends in the voiceless /ʃ/ sound, so -ed is pronounced /t/."},
-    {word:"loved", sound:"/d/", source:"Being a Doctor", sentence:"The doctor loved the breadth of general medicine.", reason:"The base word ends in the voiced /v/ sound, so -ed is pronounced /d/."},
+    {word:"loved", sound:"/d/", source:"Being a Doctor", sentence:"The doctor loved the variety of general medicine.", reason:"The base word ends in the voiced /v/ sound, so -ed is pronounced /d/."},
     {word:"recruited", sound:"/ɪd/", source:"Research talk", sentence:"Two hundred and forty patients were recruited.", reason:"The base word ends in a /t/ sound, so -ed adds an extra syllable: /ɪd/."},
     {word:"assessed", sound:"/t/", source:"Research talk", sentence:"The patients were assessed at follow-up.", reason:"The base word ends in the voiceless /s/ sound, so -ed is pronounced /t/."},
     {word:"measured", sound:"/d/", source:"Research talk", sentence:"Blood pressure was measured weekly.", reason:"The base word ends in a voiced sound, so -ed is pronounced /d/."}
@@ -555,7 +575,7 @@
       id:"plan",
       title:"Checkpoint 6 · Make a safe plan",
       instruction:"The patient asks whether an X-ray is needed. Choose the safest next step for this exercise.",
-      patientReply:"All right. In the meantime, what should I do if the pain or swelling gets worse?",
+      patientReply:"All right. That makes sense. I’d like to have it checked properly.",
       options:[
         {text:"I can't examine the ankle fully over video, so I'd like to arrange a face-to-face assessment. That assessment can help decide whether further tests such as an X-ray are needed.", correct:true},
         {text:"You definitely need an X-ray, so go straight to hospital.", correct:false},
@@ -597,7 +617,7 @@
       instruction:"The patient has described fatigue and unintentional weight loss. Continue the history without turning it into a diagnosis quiz.",
       patientReply:"Sometimes I feel dizzy as well, especially when I stand up quickly. I haven't actually fainted.",
       options:[
-        {text:"Have you noticed any other symptoms?", correct:true},
+        {text:"Apart from the fatigue and weight loss, have you noticed any other symptoms?", correct:true},
         {text:"You aren't getting dizzy as well, are you?", correct:false},
         {text:"Does this mean you have low blood pressure?", correct:false}
       ],
@@ -645,7 +665,7 @@
       instruction:"Close this stage of the consultation with a clear plan and safety-netting.",
       patientReply:"All right. That makes sense. Thank you for explaining what happens next.",
       options:[
-        {text:"Based on what you've told me, I'd like to arrange further assessment and some blood tests. If your symptoms get significantly worse, seek urgent medical advice.", correct:true},
+        {text:"Based on what you've told me, I'd like to arrange further assessment. Depending on that assessment, tests such as blood tests may be appropriate. If your symptoms get significantly worse, seek urgent medical advice.", correct:true},
         {text:"I'll order some tests, but there is no need for any further assessment.", correct:false},
         {text:"Wait another month and see if the symptoms disappear on their own.", correct:false}
       ],
@@ -671,13 +691,13 @@
       id:"medicine-dose-timing",
       title:"Checkpoint 2 · Clarify the medication",
       instruction:"Before discussing side effects, what information do you need?",
-      patientReply:"It was prescribed for my blood pressure. I take one tablet every morning. I haven't changed the dose, and the nausea usually starts not long after I take it.",
+      patientReply:"I have the box here and can read the name and dose to you. It was prescribed for my blood pressure. I take one tablet every morning, and the nausea usually starts not long after I take it.",
       options:[
-        {text:"What is the medication for, what dose are you taking, when did you start it, and when do the symptoms occur in relation to each dose?", correct:true},
+        {text:"What is the name of the medication, what is it for, what dose are you taking, when did you start it, and when do the symptoms occur in relation to each dose?", correct:true},
         {text:"The exact medication and dose do not matter if the stomach symptoms are mild.", correct:false},
         {text:"Just tell me whether you take it in the morning or evening.", correct:false}
       ],
-      feedback:"Medication name or purpose, dose, start date and symptom timing are basic safety information before you advise about treatment."
+      feedback:"Medication name, purpose, dose, start date and symptom timing are basic safety information before you advise about treatment."
     },
     {
       id:"symptoms-warning-signs",
@@ -979,12 +999,12 @@
       title:"Checkpoint 2 · Explain the next step",
       instruction:"The history needs further assessment. Which closing sentence gives a clear plan without overpromising?",
       options:[
-        {text:"Based on what you've told me, I'd like to arrange some further tests and examine you in person.", correct:true},
+        {text:"Based on what you've told me, I'd like to arrange an in-person assessment. We can then decide whether any further tests are needed.", correct:true},
         {text:"I'm sure the blood tests will tell us exactly what is wrong.", correct:false},
         {text:"There's probably nothing serious, so just wait and see.", correct:false}
       ],
       feedback:"Explain what happens next and keep uncertainty honest. Further tests or an in-person examination may be the next step without guaranteeing a diagnosis.",
-      model:"Based on what you've told me, I'd like to arrange some further tests and examine you in person.",
+      model:"Based on what you've told me, I'd like to arrange an in-person assessment. We can then decide whether any further tests are needed.",
       patientReply:"Okay. I'm glad there is a clear next step."
     },
     {
@@ -1067,7 +1087,7 @@
         {skill:"opening",title:"Open safely",instruction:"The call connects. Choose the best opening before discussing symptoms.",options:[{text:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name, date of birth and where you're calling from today, check that you're somewhere private, and ask if you're happy to continue by video?",correct:true},{text:"Hello. I have your notes, so tell me about the headaches straight away.",correct:false},{text:"Hi Eleanor. The connection looks fine, so we can skip the formalities.",correct:false}],model:"Hello, I'm Dr Taylor. Can you hear and see me clearly? Before we start, can I confirm your full name, date of birth and where you're calling from today, check that you're somewhere private, and ask if you're happy to continue by video?",patientReply:"Yes, I can hear you. I'm Eleanor Reed, born on the fourteenth of May nineteen eighty-four. I'm at home in Bristol, I'm alone, and I'm happy to continue by video.",feedback:"A safe start covers connection, identity/location, privacy and agreement to video before clinical information is discussed."},
         {skill:"clinical",title:"Invite the story",instruction:"Now invite the patient to explain the main problem without suggesting a diagnosis.",options:[{text:"What brings you in today?",correct:true},{text:"So this is probably a migraine — how long have you had migraines?",correct:false},{text:"Are the headaches caused by stress?",correct:false}],model:"What brings you in today?",patientReply:"I've been having headaches for the past few days.",feedback:"Start broad. The patient should be able to describe the main problem in their own words."},
         {skill:"clinical",title:"Build the timeline",instruction:"Choose the follow-up that best distinguishes onset from an ongoing problem.",options:[{text:"When did the headaches start, and how often have you had them since then?",correct:true},{text:"Did the headaches start recently?",correct:false},{text:"Have you always had headaches every day?",correct:false}],model:"When did the headaches start, and how often have you had them since then?",patientReply:"They started four days ago. I've had one every day since then.",feedback:"The Past Simple locates the start; the Present Perfect links the continuing experience to now."},
-        {skill:"clinical",title:"Explore safely",instruction:"You need associated symptoms, severity and useful warning information. Choose the strongest next move.",options:[{text:"Have you noticed any other symptoms? How severe is the pain from 0 to 10? Have you fainted or noticed weakness or trouble speaking?",correct:true},{text:"The headaches are frequent, so let's move straight to treatment.",correct:false},{text:"You can still speak normally, so there can't be any warning signs.",correct:false}],model:"Have you noticed any other symptoms? How severe is the pain from 0 to 10? Have you fainted or noticed weakness or trouble speaking?",patientReply:"Sometimes I feel dizzy, especially when I stand up quickly. The pain is about six out of ten. I haven't fainted, and I haven't noticed weakness or trouble speaking.",feedback:"Clarify associated symptoms and severity rather than jumping from one symptom to a conclusion."},
+        {skill:"clinical",title:"Explore safely",instruction:"You need associated symptoms, severity and useful warning information. Choose the strongest next move.",options:[{text:"Have you noticed any other symptoms? How severe is the pain? Did it start suddenly or unusually severely? Any fainting, weakness, trouble speaking or new vision problems?",correct:true},{text:"The headaches are frequent, so let's move straight to treatment.",correct:false},{text:"You can still speak normally, so there can't be any warning signs.",correct:false}],model:"Have you noticed any other symptoms? How severe is the pain? Did it start suddenly or unusually severely? Any fainting, weakness, trouble speaking or new vision problems?",patientReply:"Sometimes I feel dizzy, especially when I stand up quickly. The pain is about six out of ten. It didn't start suddenly, and I haven't fainted or noticed weakness, trouble speaking or new vision problems.",feedback:"Clarify associated symptoms, severity and key warning features rather than jumping from one symptom to a conclusion. This training prompt is not an exhaustive red-flag checklist."},
         {skill:"communication",title:"Hear the concern",instruction:"The patient says she is worried this may be serious. Choose the response that acknowledges the concern without overpromising.",options:[{text:"I can see why you're worried. I'd like to understand this properly before we decide what should happen next.",correct:true},{text:"Don't worry — it doesn't sound serious.",correct:false},{text:"We can't discuss worries until we have a diagnosis.",correct:false}],model:"I can see why you're worried. I'd like to understand this properly before we decide what should happen next.",patientReply:"Thank you. I just want to know whether I need to be checked in person.",feedback:"Empathy means acknowledging the concern while keeping the level of certainty appropriate to the information available."},
         {skill:"safety",title:"State the video limit",instruction:"The pattern is different from the patient's usual headaches. Choose the safest explanation of what video cannot do.",options:[{text:"I can't examine you fully over video, so I think it would be best to assess you in person and consider further tests.",correct:true},{text:"The video picture is clear, so an in-person examination won't add anything.",correct:false},{text:"Because the pattern is different, I can tell you exactly what the cause is.",correct:false}],model:"I can't examine you fully over video, so I think it would be best to assess you in person and consider further tests.",patientReply:"All right. That makes sense.",feedback:"Be explicit about the limitation of remote assessment and avoid claiming a diagnosis from the video call."},
         {skill:"safety",title:"Agree the plan",instruction:"Choose the clearest next-step language.",options:[{text:"Based on what you've told me, I'd like to arrange a face-to-face assessment. We can then decide whether any further tests are needed.",correct:true},{text:"I'm ordering every possible test now because we need to rule out everything.",correct:false},{text:"Let's wait indefinitely and see what happens.",correct:false}],model:"Based on what you've told me, I'd like to arrange a face-to-face assessment. We can then decide whether any further tests are needed.",patientReply:"Okay. I'd prefer to have it checked properly.",feedback:"A good plan is concrete but does not pretend that tests or a diagnosis have already been decided."},
@@ -1104,7 +1124,7 @@
         {skill:"clinical",title:"Check the background",instruction:"Choose the broadest useful background check without sounding like a diagnosis checklist.",options:[{text:"I'd also like to ask about your sleep, appetite, any medical conditions, medication and whether you've been ill recently.",correct:true},{text:"You probably have an infection. Have you had one recently?",correct:false},{text:"Medication isn't relevant to tiredness, so we can skip that.",correct:false}],model:"I'd also like to ask about your sleep, appetite, any medical conditions, medication and whether you've been ill recently.",patientReply:"My sleep hasn't been great, my appetite is lower than usual, and I'm not taking any new medication. I haven't had a recent illness that I know of.",feedback:"A structured background check supports safe reasoning without anchoring on one explanation."},
         {skill:"communication",title:"Explore the concern",instruction:"The patient says the weight loss is worrying. Choose the most appropriate response.",options:[{text:"I can see why you're worried. What were you hoping we could do today?",correct:true},{text:"Don't worry — weight loss is often nothing serious.",correct:false},{text:"There's no point discussing worries until the tests are done.",correct:false}],model:"I can see why you're worried. What were you hoping we could do today?",patientReply:"I was hoping you could tell me whether I need blood tests or to be examined.",feedback:"Explore the patient's concern and expectation rather than dismissing either."},
         {skill:"safety",title:"Recognise the limit of video",instruction:"Choose the safest way to explain why the call cannot be the whole assessment.",options:[{text:"There are several possible explanations, and I can't assess everything safely over video, so I'd like to arrange further assessment.",correct:true},{text:"I can diagnose the cause from the symptoms you've described.",correct:false},{text:"Because you don't look very ill on camera, no further assessment is needed.",correct:false}],model:"There are several possible explanations, and I can't assess everything safely over video, so I'd like to arrange further assessment.",patientReply:"Okay. I'd rather have it checked properly.",feedback:"Explain uncertainty honestly and make the strength of the plan match the information available."},
-        {skill:"safety",title:"Make the plan clear",instruction:"Choose the clearest next step without promising a diagnosis.",options:[{text:"Based on what you've told me, I'd like to arrange a face-to-face assessment and some further tests, including blood tests, so we can understand this better.",correct:true},{text:"The blood tests will definitely tell us exactly what is wrong.",correct:false},{text:"Let's do nothing unless the tiredness becomes unbearable.",correct:false}],model:"Based on what you've told me, I'd like to arrange a face-to-face assessment and some further tests, including blood tests, so we can understand this better.",patientReply:"All right. That sounds like a sensible next step.",feedback:"The plan can mention further assessment and tests while keeping uncertainty explicit."},
+        {skill:"safety",title:"Make the plan clear",instruction:"Choose the clearest next step without promising a diagnosis.",options:[{text:"Based on what you've told me, I'd like to arrange further assessment. Depending on that assessment, tests such as blood tests may be appropriate.",correct:true},{text:"The blood tests will definitely tell us exactly what is wrong.",correct:false},{text:"Let's do nothing unless the tiredness becomes unbearable.",correct:false}],model:"Based on what you've told me, I'd like to arrange further assessment. Depending on that assessment, tests such as blood tests may be appropriate.",patientReply:"All right. That sounds like a sensible next step.",feedback:"The plan can mention further assessment and tests while keeping uncertainty explicit."},
         {skill:"communication",title:"Summarise",instruction:"Choose the summary that shows what you heard and what matters to the patient.",options:[{text:"So, you've felt unusually tired for several weeks, you've lost weight without trying and sometimes feel dizzy. Your appetite is lower, and you're worried about why this is happening. Have I understood that correctly?",correct:true},{text:"So, you have a serious underlying condition causing weight loss.",correct:false},{text:"So, you're tired and dizzy. That's enough information.",correct:false}],model:"So, you've felt unusually tired for several weeks, you've lost weight without trying and sometimes feel dizzy. Your appetite is lower, and you're worried about why this is happening. Have I understood that correctly?",patientReply:"Yes, that's right.",feedback:"Summarise the evidence and concern, not an unconfirmed explanation."},
         {skill:"closing",title:"Check understanding",instruction:"After explaining assessment and blood tests, choose the best check.",options:[{text:"Does that plan make sense? Is there anything you'd like me to go over again?",correct:true},{text:"You understand what blood tests are, don't you?",correct:false},{text:"The plan is straightforward, so there is no need to check.",correct:false}],model:"Does that plan make sense? Is there anything you'd like me to go over again?",patientReply:"Yes, I understand. I know what the next steps are.",feedback:"Checking understanding is part of shared planning."},
         {skill:"closing",title:"Safety-net and close",instruction:"Choose the best final line.",options:[{text:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",correct:true},{text:"The tests are booked, so you don't need to seek help even if things change.",correct:false},{text:"We'll know everything after the blood test. Goodbye.",correct:false}],model:"If your symptoms get significantly worse, seek urgent medical advice. Is there anything else you'd like to ask before we finish?",patientReply:"No, thank you. That's everything for now.",feedback:"A plan for tests does not replace safety-netting while the patient is waiting."}
@@ -1257,21 +1277,38 @@
     return typeof value === "string" ? value.slice(0, max) : "";
   }
 
-  function readRaw(key) {
+  function parseStored(key) {
     try {
-      const value = JSON.parse(localStorage.getItem(key));
-      if (!value || typeof value !== "object") return null;
-      if (value.schema !== SAVE_SCHEMA) return null;
-      return value;
+      const raw = localStorage.getItem(key);
+      if (!raw) return null;
+      const value = JSON.parse(raw);
+      return value && typeof value === "object" ? value : null;
     } catch (_) { return null; }
   }
 
-  function normalState(raw, total, extra = {}) {
+  function readRaw(key) {
+    const current = parseStored(key);
+    if (current?.schema === SAVE_SCHEMA) return current;
+    for (const legacyKey of (LEGACY_KEYS[key] || [])) {
+      const legacy = parseStored(legacyKey);
+      if (legacy) return legacy;
+    }
+    return null;
+  }
+
+  function purgeLegacySaves() {
+    try {
+      Object.values(LEGACY_KEYS).flat().forEach(key => localStorage.removeItem(key));
+    } catch (_) {}
+  }
+
+  function normalState(raw, total, extra = {}, allowEndPending = false) {
     const value = raw && typeof raw === "object" ? raw : {};
     const completed = value.completed === true;
+    const incompleteMax = allowEndPending ? total : Math.max(0, total - 1);
     const result = {
       schema: SAVE_SCHEMA,
-      index: completed ? total : finiteInt(value.index, 0, 0, total),
+      index: completed ? total : finiteInt(value.index, 0, 0, incompleteMax),
       completed,
       mistakes: finiteInt(value.mistakes, 0, 0, 999),
       ...extra
@@ -1304,7 +1341,7 @@
 
   function readAudioLabState() {
     const value = readRaw(STORAGE_AUDIO_LAB_KEY) || {};
-    const result = normalState(value, edAudioItems.length, {bonusDone:value.bonusDone === true});
+    const result = normalState(value, edAudioItems.length, {bonusDone:value.bonusDone === true}, true);
     if (result.completed) result.bonusDone = true;
     return result;
   }
@@ -1350,13 +1387,21 @@
     const value = readRaw(STORAGE_FINAL_KEY) || {};
     const validIds = new Set(finalCases.map(c => c.id));
     const caseId = validIds.has(value.caseId) ? value.caseId : "";
-    const itemCount = caseId ? (finalCases.find(c => c.id === caseId)?.items.length || 10) : 10;
+    const caseData = caseId ? finalCases.find(c => c.id === caseId) : null;
+    const itemCount = caseData?.items.length || 10;
+    const completed = value.completed === true;
+    const completedCount = completed ? itemCount : finiteInt(value.index, 0, 0, Math.max(0, itemCount - 1));
+    const completedItems = caseData ? caseData.items.slice(0, completedCount) : [];
     const skillPoints = {};
-    ["opening","clinical","communication","safety","closing"].forEach(k => { skillPoints[k] = finiteInt(value.skillPoints?.[k], 0, 0, itemCount * 10); });
-    const result = normalState(value, itemCount, {
+    ["opening","clinical","communication","safety","closing"].forEach(k => {
+      const max = completedItems.filter(item => item.skill === k).length * 10;
+      skillPoints[k] = finiteInt(value.skillPoints?.[k], 0, 0, max);
+    });
+    const derivedPoints = Object.values(skillPoints).reduce((sum, n) => sum + n, 0);
+    const result = normalState({...value,index:completedCount}, itemCount, {
       caseId,
-      points: finiteInt(value.points, 0, 0, itemCount * 10),
-      currentMissed: value.currentMissed === true,
+      points: finiteInt(derivedPoints, 0, 0, completedCount * 10),
+      currentMissed: value.currentMissed === true && !completed,
       skillPoints
     });
     if (!caseId && (result.index > 0 || result.completed)) return defaultFinalState();
@@ -1412,8 +1457,9 @@
       if (audioContext.state === "suspended") audioContext.resume().catch(() => {});
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
-      osc.type = kind === "error" ? "sawtooth" : "sine";
-      osc.frequency.value = kind === "error" ? 190 : 620;
+      const negative = kind === "error" || kind === "warn";
+      osc.type = negative ? "sawtooth" : "sine";
+      osc.frequency.value = negative ? 190 : 620;
       gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.045, audioContext.currentTime + 0.015);
       gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.16);
@@ -1424,7 +1470,7 @@
   }
 
   function getUKVoice() {
-    if (!("speechSynthesis" in window)) return null;
+    if (!("speechSynthesis" in window) || typeof window.SpeechSynthesisUtterance !== "function") return null;
     const voices = speechSynthesis.getVoices();
     return voices.find(v => /^en-GB$/i.test(v.lang)) ||
       voices.find(v => /en[-_]GB/i.test(v.lang)) ||
@@ -1444,7 +1490,7 @@
       showAudioStatus("Voice & effects are OFF. The transcript remains available below.");
       return;
     }
-    if (!("speechSynthesis" in window)) {
+    if (!("speechSynthesis" in window) || typeof window.SpeechSynthesisUtterance !== "function") {
       showAudioStatus("Speech playback is not supported by this browser. Use the transcript instead.");
       return;
     }
@@ -1565,7 +1611,7 @@
     setFeedback();
 
     if (cp.type === "multi") {
-      const displayOptions = shuffled(cp.options);
+      const displayOptions = shuffled(cp.options, cp.id);
       els.screen.innerHTML = `
         <div class="mission-grid-layout">
           <div class="station-check-card">
@@ -1593,6 +1639,10 @@
         const correct = new Set(cp.options.filter(o => o.correct).map(o => o.id));
         const exact = selected.size === correct.size && [...correct].every(id => selected.has(id));
         if (exact) {
+          state.index += 1;
+          state.lastReply = "";
+          if (state.index >= checkpoints.length) { state.completed = true; state.clearedOnce = true; state.replayOnly = false; }
+          saveState();
           beep("ok");
           setFeedback("<strong>✓ Station ready.</strong> Good lighting, a reliable connection and tested equipment reduce avoidable communication problems.", "correct");
           advanceButton("Connect to Patient 01 →");
@@ -1606,7 +1656,7 @@
       return;
     }
 
-    const displayOptions = shuffled(cp.options);
+    const displayOptions = shuffled(cp.options, cp.id);
     els.screen.innerHTML = `
       <div class="consultation-checkpoint">
         ${patientPanel(state.lastReply || "")}
@@ -1628,7 +1678,9 @@
         els.screen.querySelectorAll("[data-choice]").forEach(btn => { btn.disabled = true; });
         if (opt.correct) {
           button.classList.add("correct-choice");
-          state.lastReply = cp.patientReply;
+          state.index += 1;
+          state.lastReply = "";
+          if (state.index >= checkpoints.length) { state.completed = true; state.clearedOnce = true; state.replayOnly = false; }
           saveState();
           beep("ok");
           setFeedback(`<strong>✓ Good choice.</strong> ${feedbackFor(cp.id)}`, "correct");
@@ -1640,7 +1692,7 @@
               <small>Transcript</small>
             </div>`);
           wireReplyButtons(cp.patientReply);
-          advanceButton(state.index === checkpoints.length - 1 ? "Complete Mission 1 →" : "Next checkpoint →");
+          advanceButton(state.completed ? "Complete Mission 1 →" : "Next checkpoint →");
         } else {
           button.classList.add("wrong-choice");
           state.mistakes += 1;
@@ -1722,7 +1774,7 @@
       open: "Do not begin by naming the diagnosis for the patient. Start with a broad, neutral question.",
       onset: "Ask for a precise starting point and how often the symptom has occurred. Avoid vague or leading wording.",
       associated: "Use a neutral question first. A negative tag question can push the patient towards the answer you expect.",
-      severity: "Do not minimise symptoms or move straight to treatment. Check severity and relevant warning signs first.",
+      severity: "Do not minimise symptoms or move straight to treatment. Check severity and relevant warning signs first. This is a focused language-training screen, not an exhaustive red-flag checklist.",
       "history-concern": "Do not assume this episode is the same as previous headaches, and do not ignore what the patient is worried about."
     };
     return map[id] || "Choose the clearest, safest and least leading question.";
@@ -1737,7 +1789,7 @@
     els.m2Instruction.textContent = cp.instruction;
     setClinicalFeedback();
 
-    const displayOptions = shuffled(cp.options);
+    const displayOptions = shuffled(cp.options, cp.id);
     els.m2Screen.innerHTML = `
       <div class="consultation-checkpoint">
         ${patientPanel(clinicalState.lastReply || "")}
@@ -1763,7 +1815,9 @@
 
         if (opt.correct) {
           button.classList.add("correct-choice");
-          clinicalState.lastReply = cp.patientReply;
+          clinicalState.index += 1;
+          clinicalState.lastReply = "";
+          if (clinicalState.index >= clinicalCheckpoints.length) clinicalState.completed = true;
           saveClinicalState();
           beep("ok");
           setClinicalFeedback(`<strong>✓ Good question.</strong> ${clinicalFeedbackFor(cp.id)}`, "correct");
@@ -1776,7 +1830,7 @@
               <small>Transcript</small>
             </div>`);
           wireReplyButtons(cp.patientReply, els.m2Screen);
-          advanceClinicalButton(clinicalState.index === clinicalCheckpoints.length - 1 ? "Complete Mission 2 →" : "Ask the next question →");
+          advanceClinicalButton(clinicalState.completed ? "Complete Mission 2 →" : "Ask the next question →");
         } else {
           button.classList.add("wrong-choice");
           clinicalState.mistakes += 1;
@@ -1811,10 +1865,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.m2Feedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      clinicalState.index += 1;
-      clinicalState.lastReply = "";
-      if (clinicalState.index >= clinicalCheckpoints.length) clinicalState.completed = true;
-      saveClinicalState();
       renderClinicalCheckpoint();
       els.m2Screen.focus({preventScroll:true});
     });
@@ -1964,7 +2014,7 @@
               {sound:"/ɪd/", note:"extra syllable"},
               {sound:"/t/", note:"voiceless ending"},
               {sound:"/d/", note:"voiced ending"}
-            ]).map(choice => `<button class="ed-sound-choice" type="button" data-ed-sound="${choice.sound}"><span>${choice.sound}</span><small>${choice.note}</small></button>`).join("")}
+            ], item.word).map(choice => `<button class="ed-sound-choice" type="button" data-ed-sound="${choice.sound}"><span>${choice.sound}</span><small>${choice.note}</small></button>`).join("")}
           </div>
           <div class="ed-rule-strip"><strong>Rule:</strong> after <code>/t/</code> or <code>/d/</code> → <code>/ɪd/</code>; after a voiceless sound → <code>/t/</code>; after a voiced sound → <code>/d/</code>.</div>
         </article>
@@ -1981,9 +2031,11 @@
         els.audioLabScreen.querySelectorAll("[data-ed-sound]").forEach(btn => { btn.disabled = true; });
         if (chosen === item.sound) {
           button.classList.add("correct-choice");
+          audioLabState.index += 1;
+          saveAudioLabState();
           beep("ok");
           setAudioLabFeedback(`<strong>✓ ${escapeHTML(item.word)} → ${escapeHTML(item.sound)}</strong> ${escapeHTML(item.reason)}`, "correct");
-          advanceAudioLabButton(audioLabState.index === edAudioItems.length - 1 ? "Extra-syllable check →" : "Next word →");
+          advanceAudioLabButton(audioLabState.index >= edAudioItems.length ? "Extra-syllable check →" : "Next word →");
         } else {
           button.classList.add("wrong-choice");
           audioLabState.mistakes += 1;
@@ -2007,8 +2059,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.audioLabFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      audioLabState.index += 1;
-      saveAudioLabState();
       renderAudioLabItem();
       els.audioLabScreen.focus({preventScroll:true});
     });
@@ -2198,7 +2248,7 @@
     els.timelineInstruction.textContent = `Timeline check ${number}: choose the tense that matches the clinical time reference.`;
     setTimelineFeedback();
 
-    const displayOptions = shuffled(item.options.map((text, originalIndex) => ({ text, correct: originalIndex === item.correct })));
+    const displayOptions = shuffled(item.options.map((text, originalIndex) => ({ text, correct: originalIndex === item.correct })), item.prompt);
     els.timelineScreen.innerHTML = `
       <div class="timeline-shell">
         <article class="timeline-patient-card">
@@ -2233,11 +2283,14 @@
         els.timelineScreen.querySelectorAll("[data-timeline-choice]").forEach(btn => { btn.disabled = true; });
         if (chosen.correct) {
           button.classList.add("correct-choice");
+          timelineState.index += 1;
+          if (timelineState.index >= timelineItems.length) timelineState.completed = true;
+          saveTimelineState();
           beep("ok");
           setTimelineFeedback(`<strong>✓ ${escapeHTML(item.tense)}.</strong> ${escapeHTML(item.explanation)} <button class="inline-listen-correct" type="button">🔊 Hear it</button>`, "correct");
           const inlineListen = els.timelineFeedback.querySelector(".inline-listen-correct");
           inlineListen?.addEventListener("click", () => speak(item.voiceText, inlineListen, 0.88));
-          advanceTimelineButton(number === timelineItems.length ? "Complete Timeline Check →" : "Next timeline clue →");
+          advanceTimelineButton(timelineState.completed ? "Complete Timeline Check →" : "Next timeline clue →");
         } else {
           button.classList.add("wrong-choice");
           timelineState.mistakes += 1;
@@ -2261,9 +2314,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.timelineFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      timelineState.index += 1;
-      if (timelineState.index >= timelineItems.length) timelineState.completed = true;
-      saveTimelineState();
       renderTimelineItem();
       els.timelineScreen.focus({preventScroll:true});
     });
@@ -2425,7 +2475,7 @@
     els.patient2Checkpoint.textContent = `${patient2State.index} / ${patient2Items.length}`;
     els.patient2Progress.style.width = `${(patient2State.index / patient2Items.length) * 100}%`;
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, item.id || item.title);
     els.patient2Screen.innerHTML = `<div class="p2-shell">
       ${patient2VideoPanel(patient2State.lastReply || "")}
       <article class="p2-decision-card">
@@ -2449,7 +2499,9 @@
         els.patient2Screen.querySelectorAll("[data-p2-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
-          patient2State.lastReply = item.patientReply;
+          patient2State.index += 1;
+          patient2State.lastReply = "";
+          if (patient2State.index >= patient2Items.length) patient2State.completed = true;
           savePatient2State();
           beep("ok");
           setPatient2Feedback(`<strong>✓ Good call.</strong> ${escapeHTML(item.feedback)}`, "correct");
@@ -2464,7 +2516,7 @@
             listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
             if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
           }
-          advancePatient2Button(number === patient2Items.length ? "Complete Patient 02 →" : "Continue consultation →");
+          advancePatient2Button(patient2State.completed ? "Complete Patient 02 →" : "Continue consultation →");
         } else {
           button.classList.add("wrong-choice");
           patient2State.mistakes += 1;
@@ -2485,10 +2537,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.patient2Feedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      patient2State.index += 1;
-      patient2State.lastReply = "";
-      if (patient2State.index >= patient2Items.length) patient2State.completed = true;
-      savePatient2State();
       renderPatient2Item();
       els.patient2Screen.focus({preventScroll:true});
     });
@@ -2629,7 +2677,7 @@
     els.onlineDecisionProgress.style.width = `${(onlineDecisionState.index / onlineDecisionCases.length) * 100}%`;
     setOnlineDecisionFeedback();
 
-    const displayOptions = shuffled(onlineDecisionOptions);
+    const displayOptions = shuffled(onlineDecisionOptions, item.id);
     els.onlineDecisionScreen.innerHTML = `<div class="online-decision-shell">
       <article class="online-case-card">
         <div class="online-case-top"><span class="online-case-icon" aria-hidden="true">${item.icon}</span><div><span>${escapeHTML(item.label)}</span><h3>${escapeHTML(item.title)}</h3></div></div>
@@ -2651,11 +2699,14 @@
         els.onlineDecisionScreen.querySelectorAll("[data-online-choice]").forEach(btn => { btn.disabled = true; });
         if (choice === item.correct) {
           button.classList.add("correct-choice");
+          onlineDecisionState.index += 1;
+          if (onlineDecisionState.index >= onlineDecisionCases.length) onlineDecisionState.completed = true;
+          saveOnlineDecisionState();
           beep("ok");
           setOnlineDecisionFeedback(`<div class="online-feedback-inner"><div><strong>✓ Safe decision.</strong> ${escapeHTML(item.explanation)}</div><div class="useful-phrase"><span>USEFUL LANGUAGE</span><p>“${escapeHTML(item.phrase)}”</p><button class="online-phrase-listen" type="button">🔊 Listen</button></div></div>`, "correct");
           const listen = els.onlineDecisionFeedback.querySelector(".online-phrase-listen");
           listen?.addEventListener("click", () => speak(item.phrase, listen, 0.92));
-          advanceOnlineDecisionButton(number === onlineDecisionCases.length ? "Complete decision desk →" : "Next case →");
+          advanceOnlineDecisionButton(onlineDecisionState.completed ? "Complete decision desk →" : "Next case →");
         } else {
           button.classList.add("wrong-choice");
           onlineDecisionState.mistakes += 1;
@@ -2676,9 +2727,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.onlineDecisionFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      onlineDecisionState.index += 1;
-      if (onlineDecisionState.index >= onlineDecisionCases.length) onlineDecisionState.completed = true;
-      saveOnlineDecisionState();
       renderOnlineDecisionCase();
       els.onlineDecisionScreen.focus({preventScroll:true});
     });
@@ -2838,7 +2886,7 @@
     els.patient3Checkpoint.textContent = `${patient3State.index} / ${patient3Items.length}`;
     els.patient3Progress.style.width = `${(patient3State.index / patient3Items.length) * 100}%`;
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, item.id || item.title);
     els.patient3Screen.innerHTML = `<div class="p3-shell">
       ${patient3VideoPanel(patient3State.lastReply || "")}
       <article class="p3-decision-card">
@@ -2862,7 +2910,9 @@
         els.patient3Screen.querySelectorAll("[data-p3-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
-          patient3State.lastReply = item.patientReply;
+          patient3State.index += 1;
+          patient3State.lastReply = "";
+          if (patient3State.index >= patient3Items.length) patient3State.completed = true;
           savePatient3State();
           beep("ok");
           setPatient3Feedback(`<strong>✓ Good history-taking.</strong> ${escapeHTML(item.feedback)}`, "correct");
@@ -2875,7 +2925,7 @@
             listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
             if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
           }
-          advancePatient3Button(number === patient3Items.length ? "Complete Patient 03 →" : "Continue consultation →");
+          advancePatient3Button(patient3State.completed ? "Complete Patient 03 →" : "Continue consultation →");
         } else {
           button.classList.add("wrong-choice");
           patient3State.mistakes += 1;
@@ -2896,10 +2946,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.patient3Feedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      patient3State.index += 1;
-      patient3State.lastReply = "";
-      if (patient3State.index >= patient3Items.length) patient3State.completed = true;
-      savePatient3State();
       renderPatient3Item();
       els.patient3Screen.focus({preventScroll:true});
     });
@@ -3056,7 +3102,7 @@
     els.patient4Checkpoint.textContent = `${patient4State.index} / ${patient4Items.length}`;
     els.patient4Progress.style.width = `${(patient4State.index / patient4Items.length) * 100}%`;
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, item.id || item.title);
     els.patient4Screen.innerHTML = `<div class="p4-shell">
       ${patient4VideoPanel(patient4State.lastReply || "")}
       <article class="p4-decision-card">
@@ -3080,7 +3126,9 @@
         els.patient4Screen.querySelectorAll("[data-p4-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
-          patient4State.lastReply = item.patientReply;
+          patient4State.index += 1;
+          patient4State.lastReply = "";
+          if (patient4State.index >= patient4Items.length) patient4State.completed = true;
           savePatient4State();
           beep("ok");
           setPatient4Feedback(`<strong>✓ Safe medication communication.</strong> ${escapeHTML(item.feedback)}`, "correct");
@@ -3093,7 +3141,7 @@
             listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
             if (audioPrefs.sound) window.setTimeout(() => speak(item.patientReply, listen, 0.9), 180);
           }
-          advancePatient4Button(number === patient4Items.length ? "Complete Patient 04 →" : "Continue medication review →");
+          advancePatient4Button(patient4State.completed ? "Complete Patient 04 →" : "Continue medication review →");
         } else {
           button.classList.add("wrong-choice");
           patient4State.mistakes += 1;
@@ -3114,10 +3162,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.patient4Feedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      patient4State.index += 1;
-      patient4State.lastReply = "";
-      if (patient4State.index >= patient4Items.length) patient4State.completed = true;
-      savePatient4State();
       renderPatient4Item();
       els.patient4Screen.focus({preventScroll:true});
     });
@@ -3264,7 +3308,7 @@
     els.researchCheckpoint.textContent = `${researchState.index} / ${researchItems.length}`;
     els.researchProgress.style.width = `${(researchState.index / researchItems.length) * 100}%`;
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, item.id || item.title);
     els.researchScreen.innerHTML = `<div class="research-shell">
       ${researchTerminalPanel(item, number)}
       <article class="research-decision-card">
@@ -3282,13 +3326,15 @@
         els.researchScreen.querySelectorAll("[data-research-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
-          beep("ok");
-          researchState.lastModel = item.model;
+          researchState.index += 1;
+          researchState.lastModel = "";
+          if (researchState.index >= researchItems.length) researchState.completed = true;
           saveResearchState();
+          beep("ok");
           setResearchFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="research-hear-model" type="button">🔊 Hear model sentence</button>`, "success");
           const listen = els.researchFeedback.querySelector(".research-hear-model");
           listen?.addEventListener("click", () => speak(item.model, listen, 0.92));
-          advanceResearchButton(number === researchItems.length ? "Complete Research Terminal →" : "Continue →");
+          advanceResearchButton(researchState.completed ? "Complete Research Terminal →" : "Continue →");
         } else {
           button.classList.add("wrong-choice");
           beep("warn");
@@ -3309,10 +3355,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.researchFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      researchState.index += 1;
-      researchState.lastModel = "";
-      if (researchState.index >= researchItems.length) researchState.completed = true;
-      saveResearchState();
       renderResearchItem();
       els.researchScreen.focus({preventScroll:true});
     });
@@ -3455,7 +3497,7 @@
     els.closeCheckpoint.textContent = `${closeState.index} / ${closeItems.length}`;
     els.closeProgress.style.width = `${(closeState.index / closeItems.length) * 100}%`;
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, item.id || item.title);
     els.closeScreen.innerHTML = `<div class="close-shell">
       ${closePatientPanel(item)}
       <article class="close-decision-card">
@@ -3479,15 +3521,17 @@
         els.closeScreen.querySelectorAll("[data-close-choice]").forEach(btn => { btn.disabled = true; });
         if (option.correct) {
           button.classList.add("correct-choice");
-          beep("ok");
-          closeState.lastModel = item.model;
-          closeState.lastReply = item.patientReply;
+          closeState.index += 1;
+          closeState.lastModel = "";
+          closeState.lastReply = "";
+          if (closeState.index >= closeItems.length) closeState.completed = true;
           saveCloseState();
+          beep("ok");
           setCloseFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="close-hear-model" type="button">🔊 Hear doctor line</button>`, "success");
           const hear = els.closeFeedback.querySelector(".close-hear-model");
           hear?.addEventListener("click", () => speak(item.model, hear, 0.9));
           renderClosePatientReply(item);
-          advanceCloseButton(number === closeItems.length ? "Complete Close Safely →" : "Continue →");
+          advanceCloseButton(closeState.completed ? "Complete Close Safely →" : "Continue →");
         } else {
           button.classList.add("wrong-choice");
           beep("warn");
@@ -3520,11 +3564,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.closeFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      closeState.index += 1;
-      closeState.lastModel = "";
-      closeState.lastReply = "";
-      if (closeState.index >= closeItems.length) closeState.completed = true;
-      saveCloseState();
       renderCloseItem();
       els.closeScreen.focus({preventScroll:true});
     });
@@ -3608,7 +3647,7 @@
 
   function finalSkillPercent(caseData, skill) {
     const max = finalSkillMax(caseData, skill);
-    return max ? Math.round(((finalState.skillPoints?.[skill] || 0) / max) * 100) : 0;
+    return max ? Math.min(100, Math.round(((finalState.skillPoints?.[skill] || 0) / max) * 100)) : 0;
   }
 
   function setFinalFeedback(html = "", type = "") {
@@ -3674,7 +3713,7 @@
     els.finalProgress.style.width = `${(finalState.index / caseData.items.length) * 100}%`;
     setFinalFeedback();
 
-    const displayOptions = shuffled(item.options);
+    const displayOptions = shuffled(item.options, `${caseData.id}|${finalState.index}|${item.title}`);
     els.finalScreen.innerHTML = `<div class="final-live-shell">
       ${finalPatientPanel(caseData)}
       <article class="final-decision-card">
@@ -3697,6 +3736,9 @@
           const earned = finalState.currentMissed ? 6 : 10;
           finalState.points += earned;
           finalState.skillPoints[item.skill] = (finalState.skillPoints[item.skill] || 0) + earned;
+          finalState.index += 1;
+          finalState.currentMissed = false;
+          if (finalState.index >= caseData.items.length) finalState.completed = true;
           saveFinalState();
           setFinalFeedback(`<strong>Correct.</strong> ${escapeHTML(item.feedback)} <button class="final-hear-model" type="button">🔊 Hear doctor line</button>`, "success");
           const hear = els.finalFeedback.querySelector(".final-hear-model");
@@ -3705,7 +3747,7 @@
           if (patientCard) patientCard.outerHTML = finalPatientPanel(caseData, item.patientReply);
           const listen = els.finalScreen.querySelector(".final-listen");
           listen?.addEventListener("click", () => speak(item.patientReply, listen, 0.9));
-          advanceFinalButton(number === caseData.items.length ? "Complete the Live Shift →" : "Continue the call →");
+          advanceFinalButton(finalState.completed ? "Complete the Live Shift →" : "Continue the call →");
         } else {
           button.classList.add("wrong-choice");
           beep("warn");
@@ -3727,11 +3769,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.finalFeedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      const caseData = currentFinalCase();
-      finalState.index += 1;
-      finalState.currentMissed = false;
-      if (caseData && finalState.index >= caseData.items.length) finalState.completed = true;
-      saveFinalState();
       renderFinalItem();
       els.finalScreen.focus({preventScroll:true});
     });
@@ -3835,10 +3872,6 @@
     holder.innerHTML = `<button class="tcr-primary" type="button">${escapeHTML(label)}</button>`;
     els.feedback.appendChild(holder);
     holder.querySelector("button").addEventListener("click", () => {
-      state.index += 1;
-      state.lastReply = "";
-      if (state.index >= checkpoints.length) { state.completed = true; state.clearedOnce = true; state.replayOnly = false; }
-      saveState();
       renderCheckpoint();
       els.screen.focus({preventScroll:true});
     });
@@ -3957,6 +3990,7 @@
     audioPrefs.music = false;
     els.musicAudio.pause();
     saveAudioPrefs();
+    purgeLegacySaves();
     resetMission();
     updateAudioButtons();
     showAudioStatus("Day 1 progress reset on this device.");
@@ -4028,8 +4062,8 @@
 })();
 
 </script>
-  <script src="pwa.js?v=day1-r4" defer></script>
-  <script src="accessibility.js?v=day1-r4" defer></script>
-<!-- DAY1-INDIVIDUAL-R4-FINAL-20260830 · game JS + music embedded; existing Day 1 images retained -->
+  <script src="pwa.js?v=day1-r5" defer></script>
+  <script src="accessibility.js?v=day1-r5" defer></script>
+<!-- DAY1-INDIVIDUAL-R5-FINALPATCH-20260831 · game JS + music embedded; existing Day 1 images retained -->
 </body>
 </html>
