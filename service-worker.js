@@ -1,9 +1,9 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v57-core-20260828`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v57-runtime-20260828`;
+const CORE_CACHE = `${CACHE_PREFIX}v58-core-day3-r5-20260831`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v58-runtime-day3-r5-20260831`;
 
-// Keep the first install deliberately small. Large videos, music and course images
-// are cached only after the learner actually opens them.
+// Keep the first install deliberately small. Large videos and music remain runtime-only.
+// Day 3 HTML and its small WebP illustrations are pre-cached so both activities can reopen offline.
 const CORE_SHELL = [
   "./",
   "./index.html",
@@ -18,6 +18,13 @@ const CORE_SHELL = [
   "./privacy.html",
   "./accessibility.html",
   "./404.html",
+  "./fgsm3-day3.html",
+  "./fgsm3-day3-go-bag.html",
+  "./fgsm3-day3-individual.html",
+  "./assets/fgsm3/day3/images/day3-displacement-context.webp",
+  "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
+  "./assets/fgsm3/day3/images/day3-humanitarian-archive.webp",
+  "./assets/fgsm3/day3/images/day3-field-clinical.webp",
   "./styles-v8.css",
   "./styles-v9.css",
   "./styles-v19.css",
