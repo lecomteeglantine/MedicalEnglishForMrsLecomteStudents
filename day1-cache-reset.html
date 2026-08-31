@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Day 1 cache recovery</title>
+<style>body{font-family:Arial,sans-serif;max-width:720px;margin:8vh auto;padding:24px;line-height:1.5;color:#0c2d66}button{font:inherit;font-weight:700;padding:12px 18px;border:0;border-radius:10px;background:#0c2d66;color:white;cursor:pointer}.box{padding:18px;border:1px solid #bdd5f5;border-radius:14px;background:#f5f9ff}</style></head>
+<body><div class="box"><h1>Day 1 cache recovery</h1><p id="status">Cleaning the old offline cache…</p><button id="retry" hidden>Open Day 1</button></div>
+<script>
+(async()=>{
+  const status=document.getElementById('status'), retry=document.getElementById('retry');
+  try {
+    if ('serviceWorker' in navigator) {
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if ('caches' in window) {
+      const keys=await caches.keys();
+      await Promise.all(keys.filter(k=>k.startsWith('mrs-lecomte-medical-english-')).map(k=>caches.delete(k)));
+    }
+    status.textContent='Old cache cleared. Opening the repaired Day 1 game…';
+    const target='fgsm3-day1-individual.html?fresh=DAY1-R7-'+Date.now();
+    setTimeout(()=>location.replace(target),500);
+  } catch(e) {
+    status.textContent='Automatic cleanup was blocked. Use the button below to open the repaired game.';
+    retry.hidden=false;
+    retry.onclick=()=>location.href='fgsm3-day1-individual.html?fresh=DAY1-R7-'+Date.now();
+  }
+})();
+</script></body></html>

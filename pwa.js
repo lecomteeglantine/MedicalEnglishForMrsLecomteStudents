@@ -30,8 +30,12 @@
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
       try {
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.filter(k => k.startsWith("mrs-lecomte-medical-english-") && !k.includes("v61-")).map(k => caches.delete(k)));
+        }
         const registration = await navigator.serviceWorker.register(
-          "./service-worker.js",
+          "./service-worker-v61.js",
           {scope: "./", updateViaCache: "none"}
         );
 
