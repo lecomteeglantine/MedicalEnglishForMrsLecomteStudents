@@ -1,479 +1,68 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#173e36">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Medical English">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte's students.">
-  <title>FGSM3 · Day 3 · Humanitarian Field Mission</title>
+  <meta name="theme-color" content="#173e36">
+  <meta name="description" content="FGSM3 Day 3 — choose between the individual Humanitarian Field Mission and the group MSF Go-Bag Challenge.">
+  <title>FGSM3 · Day 3 · Choose Your Activity</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="styles-v37.css">
   <link rel="canonical" href="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day3.html">
-  <meta property="og:title" content="FGSM3 · Day 3 · Humanitarian Field Mission">
-  <meta property="og:description" content="FGSM3 Day 3 — Humanitarian Field Mission, an interactive Medical English game for Mrs Lecomte&#x27;s students.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day3.html">
+  <style>
+    :root{--d3green:#173e36;--d3green2:#24695a;--d3red:#b33434;--d3red2:#d15045;--d3ink:#152520;--d3muted:#5f6e68;--d3line:#d6e1dc;--d3bg:#f3f7f5}
+    *{box-sizing:border-box}.day3-choice-main{max-width:1180px;margin:0 auto;padding:18px 18px 70px}
+    .day3-choice-hero{position:relative;overflow:hidden;min-height:320px;border-radius:28px;margin-top:10px;display:flex;align-items:flex-end;padding:34px;background:linear-gradient(105deg,rgba(15,47,41,.96),rgba(23,62,54,.70)),url('assets/fgsm3/day3/images/day3-displacement-context.webp') center/cover;color:#fff;box-shadow:0 24px 60px rgba(23,62,54,.22)}
+    .day3-choice-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.24));pointer-events:none}
+    .day3-choice-copy{position:relative;z-index:1;max-width:790px}.day3-choice-copy .eyebrow{margin:0 0 10px;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:#c9f0e4}
+    .day3-choice-copy h1{margin:0;font-size:clamp(2.1rem,6vw,4.3rem);line-height:.98;letter-spacing:-.045em;color:#fff}.day3-choice-copy p{max-width:720px;margin:16px 0 0;font-size:1.06rem;line-height:1.58;color:#edf8f4}
+    .choice-instruction{margin:24px auto 18px;text-align:center}.choice-instruction strong{display:block;font-size:clamp(1.25rem,3vw,1.7rem);color:var(--d3ink)}.choice-instruction span{display:block;margin-top:6px;color:var(--d3muted);font-size:.98rem}
+    .activity-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}.activity-card{position:relative;display:flex;flex-direction:column;min-height:470px;border-radius:28px;overflow:hidden;border:2px solid transparent;background:#fff;box-shadow:0 18px 46px rgba(25,60,48,.12);text-decoration:none;color:var(--d3ink);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    .activity-card:hover,.activity-card:focus-visible{transform:translateY(-4px);box-shadow:0 24px 58px rgba(25,60,48,.18);outline:none}.activity-card.group:hover,.activity-card.group:focus-visible{border-color:#1f8b70}.activity-card.individual:hover,.activity-card.individual:focus-visible{border-color:#c5534a}
+    .activity-image{height:205px;position:relative;background-size:cover;background-position:center}.activity-image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.5))}
+    .activity-card.group .activity-image{background-image:linear-gradient(0deg,rgba(18,91,73,.10),rgba(18,91,73,.10)),url('assets/fgsm3/day3/images/day3-humanitarian-archive.webp')}.activity-card.individual .activity-image{background-image:linear-gradient(0deg,rgba(117,36,36,.08),rgba(117,36,36,.08)),url('assets/fgsm3/day3/images/day3-field-clinical.webp')}
+    .activity-mode{position:absolute;top:16px;left:16px;z-index:2;display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;color:#fff;font-size:.76rem;font-weight:900;letter-spacing:.06em;text-transform:uppercase;box-shadow:0 5px 16px rgba(0,0,0,.18)}.group .activity-mode{background:var(--d3green2)}.individual .activity-mode{background:var(--d3red)}
+    .activity-people{position:absolute;right:16px;bottom:14px;z-index:2;padding:7px 10px;border-radius:10px;background:rgba(255,255,255,.95);font-weight:900;font-size:.8rem;color:#17283d}.activity-body{display:flex;flex-direction:column;flex:1;padding:24px}.activity-body h2{font-size:clamp(1.5rem,3vw,2rem);line-height:1.08;margin:0 0 10px;color:var(--d3ink)}.activity-body>p{margin:0;color:var(--d3muted);line-height:1.56}
+    .activity-points{display:grid;gap:8px;margin:18px 0 22px;padding:0;list-style:none;color:#32483f;font-size:.92rem}.activity-points li{display:flex;gap:8px;align-items:flex-start}.activity-points li::before{content:"✓";font-weight:900}.group .activity-points li::before{color:#168272}.individual .activity-points li::before{color:#bb4139}
+    .activity-cta{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 16px;border-radius:14px;color:#fff;font-weight:900;font-size:.95rem}.group .activity-cta{background:linear-gradient(135deg,var(--d3green),var(--d3green2))}.individual .activity-cta{background:linear-gradient(135deg,var(--d3red),var(--d3red2))}
+    .teacher-note{display:flex;gap:12px;align-items:flex-start;margin-top:24px;padding:16px 18px;border:1px solid #cbd9d1;border-radius:16px;background:#f8fbf9;color:#344a42}.teacher-note strong{display:block;margin-bottom:3px;color:#152520}.teacher-note span[aria-hidden]{font-size:1.4rem}.day3-choice-footer{text-align:center;margin-top:36px;color:#687970;font-size:.83rem}
+    @media(max-width:760px){.activity-grid{grid-template-columns:1fr}.day3-choice-hero{min-height:285px;padding:24px}.activity-card{min-height:auto}}
+    @media(prefers-reduced-motion:reduce){.activity-card{transition:none}.activity-card:hover,.activity-card:focus-visible{transform:none}}
+  </style>
 </head>
-<body class="field-body">
+<body>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="dictionary.html">Dictionary</a>
-      <a href="fgsm2.html">FGSM2</a>
-      <a href="fgsm3.html">FGSM3</a>
-      <a href="grammar.html">Grammar</a>
-      <a href="pronunciation.html">Pronunciation</a>
-      <a href="games.html">Games</a>
-    </nav>
+    <nav class="main-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a href="fgsm3.html">FGSM3</a><a href="grammar.html">Grammar</a><a href="pronunciation.html">Pronunciation</a><a href="games.html">Games</a></nav>
   </header>
-
-  <main id="main" class="field-main">
+  <main id="main" class="day3-choice-main">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span><span aria-current="page">Day 3</span></nav>
-
-    <section class="field-hero" aria-labelledby="fieldTitle">
-      <img class="field-hero-image" src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Doctors Without Borders clinician speaking with a patient in a field healthcare setting." decoding="async" width="1348" height="808">
-      <div class="field-hero-overlay" aria-hidden="true"></div>
-      <div class="field-hero-copy">
-        <p class="field-kicker">FGSM3 · DAY 3 GAME</p>
-        <h1 id="fieldTitle">Humanitarian Field Mission</h1>
-        <p class="field-subtitle">24 Hours to Respond</p>
-        <p class="field-lead">You have joined a humanitarian medical response team. Before entering the field, you must understand the situation, recognise the language of displacement and access, and complete your operational briefing.</p>
-        <button id="startFieldMission" class="field-primary" type="button">Start Mission 1 →</button>
-      </div>
-      <div class="field-status-card" aria-label="Day 3 mission card">
-        <span>FIELD ASSIGNMENT</span><strong>MISSION 01</strong><b>FIELD BRIEFING</b><small id="fieldClearance">Clearance pending</small>
-      </div>
+    <section class="day3-choice-hero" aria-labelledby="choiceTitle">
+      <div class="day3-choice-copy"><p class="eyebrow">FGSM3 · DAY 3 · HUMANITARIAN MEDICINE</p><h1 id="choiceTitle">Choose your activity</h1><p>Day 3 has two separate missions. Open only the activity assigned by Mrs Lecomte: work with 3–4 students on one shared device for the MSF Go-Bag Challenge, or work alone through the Humanitarian Field Mission.</p></div>
     </section>
-
-    <section class="field-toolbar" aria-label="Day 3 controls">
-      <div><strong>Mission controls</strong><span>Progress is stored only on this device.</span></div>
-      <div class="field-toolbar-actions">
-        <button id="day3SoundToggle" class="field-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
-        <button id="day3MusicToggle" class="field-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
-        <button id="resetDay3" class="field-reset" type="button">Reset Day 3</button>
-      </div>
-      <p id="day3AudioStatus" class="field-status-text" role="status" aria-live="polite"></p>
-    </section>
-
-    <section class="field-mission-board" aria-labelledby="missionBoardTitle">
-      <div class="field-heading"><p class="field-kicker dark">YOUR FIRST 24 HOURS</p><h2 id="missionBoardTitle">Mission 1 · Field Briefing</h2><p>Complete all four briefings to unlock the next field assignment. Audio is optional: every spoken element also appears as text.</p></div>
-      <div class="field-progress-card" aria-live="polite"><span>MISSION PROGRESS</span><strong id="missionProgressText">0 / 4</strong><div class="field-progress-track"><i id="missionProgressBar"></i></div></div>
-
-      <div class="field-activity-grid">
-        <button class="field-activity-card" data-activity="vocab" type="button"><span class="field-card-number">01</span><img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Illustrated humanitarian medical field setting." loading="lazy" decoding="async" width="852" height="640"><div><small>FIELD LANGUAGE</small><strong>Vocabulary Clearance</strong><p>Decode ten key words before the briefing starts.</p><b id="statusVocab">READY</b></div></button>
-        <button class="field-activity-card" data-activity="situation" type="button"><span class="field-card-number">02</span><img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Crowd and emergency response in a damaged urban setting." loading="lazy" decoding="async" width="1190" height="794"><div><small>SITUATION ROOM</small><strong>Build the Field Picture</strong><p>Connect reported details to the humanitarian situation.</p><b id="statusSituation">LOCKED</b></div></button>
-        <button class="field-activity-card" data-activity="video" type="button"><span class="field-card-number">03</span><img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="News interview frame with an MSF operations representative speaking from Lebanon." loading="lazy" decoding="async" width="1280" height="720"><div><small>SOURCE INTEL</small><strong>CNN / MSF Briefing</strong><p>Watch the supplied interview and extract the essentials.</p><b id="statusVideo">LOCKED</b></div></button>
-        <button class="field-activity-card" data-activity="signals" type="button"><span class="field-card-number">04</span><img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Field clinician and patient during a medical consultation." loading="lazy" decoding="async" width="1348" height="808"><div><small>FIELD ANALYSIS</small><strong>Read the Signals</strong><p>Interpret shelters, access, vulnerability and system capacity.</p><b id="statusSignals">LOCKED</b></div></button>
-      </div>
-    </section>
-
-    <section id="activityArea" class="field-workspace" aria-labelledby="workspaceTitle">
-      <div class="field-workspace-head"><div><p class="field-kicker dark">ACTIVE DESK</p><h2 id="workspaceTitle">Mission not started</h2><p id="workspaceIntro">Choose Start Mission 1 to open your first briefing.</p></div><div class="field-score-box"><span>FIRST-TRY SCORE</span><strong id="fieldScore">0</strong></div></div>
-      <div id="fieldScreen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">📋</span><h3>Awaiting field clearance</h3><p>Your first task is Vocabulary Clearance.</p></div></div>
-      <div id="fieldFeedback" class="field-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section class="field-source-card" aria-labelledby="sourceIntelTitle">
-      <div class="field-source-copy"><p class="field-kicker dark">SOURCE INTEL</p><h2 id="sourceIntelTitle">The interview used in your worksheet</h2><p>Emmanuel Massad of Doctors Without Borders speaks from southern Lebanon about displacement, overcrowded shelters, scarce basic needs and the difficulty of reaching people in unsafe areas.</p><details><summary>Accessible briefing</summary><p>The worksheet describes a humanitarian crisis in which hundreds of thousands of people have been displaced. Shelters are overcrowded, food, water and medical care are scarce, and access to some people in the south is too dangerous because of continuous strikes. The interview also raises concerns about the safety of medical teams and refugee camps.</p></details></div>
-      <video id="day3Video" controls preload="metadata" playsinline poster="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" aria-label="Doctors Without Borders interview on displacement and urgent medical needs in Lebanon"><source src="assets/fgsm3/day3/video/day3-msf-lebanon-cnn.mp4" type="video/mp4">Your browser cannot play this video.</video>
-    </section>
-
-    <section id="missionComplete" class="field-completion is-locked" aria-labelledby="missionCompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">✓</div>
-      <div><p class="field-kicker dark">MISSION 01 CLEARANCE</p><h2 id="missionCompleteTitle">Complete all four activities to unlock Mission 2.</h2><p id="missionCompleteText">Your field briefing is not complete yet.</p></div>
-      <button id="mission2Button" class="field-primary" type="button" disabled>🔒 Mission 2 · Triage Under Pressure</button>
-    </section>
-
-
-    <section id="mission2Area" class="triage-mission is-locked" aria-labelledby="mission2Title">
-      <div class="triage-hero">
-        <img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Clinician assessing a patient in a humanitarian field healthcare setting." loading="lazy" decoding="async" width="1348" height="808">
-        <div class="triage-hero-shade" aria-hidden="true"></div>
-        <div class="triage-hero-copy">
-          <p class="field-kicker">MISSION 02 · FIELD CLINIC</p>
-          <h2 id="mission2Title">Triage Under Pressure</h2>
-          <p class="triage-tagline">Identify what matters. Prioritise carefully. Communicate clearly.</p>
-          <p>Patients are arriving while access and supplies are under pressure. These fictional training scenarios practise <strong>English for prioritisation and contingency planning</strong>; they do not replace local clinical triage protocols.</p>
-          <button id="startMission2" class="field-primary" type="button" disabled>🔒 Complete Mission 1 first</button>
+    <div class="choice-instruction" aria-label="Activity choice instructions"><strong>Which activity are you doing?</strong><span>Check the number of students and use only the activity assigned to you.</span></div>
+    <section class="activity-grid" aria-label="Day 3 activity choices">
+      <a class="activity-card group" href="fgsm3-day3-go-bag.html" aria-label="Start the group activity: MSF Go-Bag Challenge">
+        <div class="activity-image"><span class="activity-mode">👥 Group activity</span><span class="activity-people">3–4 STUDENTS · 1 DEVICE</span></div>
+        <div class="activity-body"><h2>MSF Go-Bag Challenge</h2><p>Pack an emergency mission kit as a team. New information arrives in stages, so you must rethink your choices, protect the essentials and justify every trade-off.</p>
+          <ul class="activity-points"><li>Choose 10 items together from a clearly illustrated equipment bank</li><li>Adapt the bag as flooding, medical needs and access problems develop</li><li>Prioritise the final kit and prepare one short team briefing</li></ul>
+          <div class="activity-cta"><span>START GROUP CHALLENGE</span><span aria-hidden="true">→</span></div>
         </div>
-        <div class="triage-hero-score"><span>MISSION 2 SCORE</span><strong id="mission2Score">0 / 20</strong><small>first-attempt points</small></div>
-      </div>
-
-      <div class="triage-objectives" aria-label="Mission 2 objectives">
-        <div><span>01</span><strong>Extract</strong><p>Pick out the information a field handover really needs.</p></div>
-        <div><span>02</span><strong>Prioritise</strong><p>Choose the clearest immediate priority from the information given.</p></div>
-        <div><span>03</span><strong>Plan</strong><p>Respond to growing demand, access problems and delayed supplies.</p></div>
-        <div><span>04</span><strong>Communicate</strong><p>Use zero, first and <em>even if</em> conditionals accurately.</p></div>
-      </div>
-
-      <div class="triage-progress-card" aria-live="polite">
-        <span>MISSION 2 PROGRESS</span><strong id="mission2ProgressText">0 / 4</strong>
-        <div class="field-progress-track"><i id="mission2ProgressBar"></i></div>
-      </div>
-
-      <div class="triage-activity-grid">
-        <button class="triage-activity-card" data-m2-activity="incoming" type="button" disabled>
-          <span class="triage-card-number">01</span><img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Field clinician speaking with a patient." loading="lazy" decoding="async" width="1348" height="808">
-          <div><small>FIELD HANDOVER</small><strong>Incoming Patients</strong><p>Extract the key information from short fictional arrival reports.</p><b id="m2StatusIncoming">LOCKED</b></div>
-        </button>
-        <button class="triage-activity-card" data-m2-activity="priority" type="button" disabled>
-          <span class="triage-card-number">02</span><img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian healthcare setting with staff and patients." loading="lazy" decoding="async" width="852" height="640">
-          <div><small>PRIORITY BOARD</small><strong>What Comes First?</strong><p>Choose the most defensible immediate priority from limited information.</p><b id="m2StatusPriority">LOCKED</b></div>
-        </button>
-        <button class="triage-activity-card" data-m2-activity="resources" type="button" disabled>
-          <span class="triage-card-number">03</span><img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Emergency response in a damaged urban environment." loading="lazy" decoding="async" width="1190" height="794">
-          <div><small>CONTINGENCY DESK</small><strong>Resources Running Low</strong><p>Plan around increasing demand, difficult access and delayed supplies.</p><b id="m2StatusResources">LOCKED</b></div>
-        </button>
-        <button class="triage-activity-card" data-m2-activity="conditionals" type="button" disabled>
-          <span class="triage-card-number">04</span><img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="News interview frame used in the Day 3 humanitarian medicine lesson." loading="lazy" decoding="async" width="1280" height="720">
-          <div><small>RADIO LANGUAGE</small><strong>Conditional Comms</strong><p>Build clear operational messages with zero, first and <em>even if</em>.</p><b id="m2StatusConditionals">LOCKED</b></div>
-        </button>
-      </div>
-
-      <div id="mission2Workspace" class="triage-workspace" aria-labelledby="mission2WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">MISSION 02 · ACTIVE DESK</p><h2 id="mission2WorkspaceTitle">Triage desk locked</h2><p id="mission2WorkspaceIntro">Complete Mission 1 to open this assignment.</p></div>
-          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission2ActivityScore">0</strong></div>
+      </a>
+      <a class="activity-card individual" href="fgsm3-day3-individual.html" aria-label="Start the individual activity: Humanitarian Field Mission">
+        <div class="activity-image"><span class="activity-mode">👤 Individual activity</span><span class="activity-people">1 STUDENT · 1 DEVICE</span></div>
+        <div class="activity-body"><h2>Humanitarian Field Mission</h2><p>Work independently through the existing Day 3 mission: field briefing, triage, access and logistics, pronunciation, contingency planning, ethics and final mission clearance.</p>
+          <ul class="activity-points"><li>Complete the missions in order on your own device</li><li>Practise humanitarian vocabulary, conditionals and long-word stress</li><li>Finish the full individual mission and final briefing</li></ul>
+          <div class="activity-cta"><span>START INDIVIDUAL GAME</span><span aria-hidden="true">→</span></div>
         </div>
-        <div id="mission2Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🔒</span><h3>Mission 2 locked</h3><p>Complete Field Briefing first.</p></div></div>
-        <div id="mission2Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
+      </a>
     </section>
-
-    <section id="mission2Complete" class="field-completion triage-completion is-locked" aria-labelledby="mission2CompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">🩺</div>
-      <div><p class="field-kicker dark">MISSION 02 CLEARANCE</p><h2 id="mission2CompleteTitle">Triage Under Pressure is not cleared yet.</h2><p id="mission2CompleteText">Complete all four Mission 2 activities.</p></div>
-      <button id="mission3Button" class="field-primary" type="button" disabled>🔒 Mission 3 · Access Restricted</button>
-    </section>
-
-    <section id="mission3Area" class="access-mission is-locked" aria-labelledby="mission3Title">
-      <div class="access-hero">
-        <img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Emergency response in a damaged urban setting where access is difficult." loading="lazy" decoding="async" width="1190" height="794">
-        <div class="access-hero-shade" aria-hidden="true"></div>
-        <div class="access-hero-copy">
-          <p class="field-kicker">MISSION 03 · ACCESS &amp; LOGISTICS</p>
-          <h2 id="mission3Title">Access Restricted</h2>
-          <p class="access-tagline">When the route changes, the response has to change too.</p>
-          <p>The Day 3 source describes people who cannot be reached because the situation is too dangerous, and vulnerable people for whom evacuation is especially difficult. Your task is to describe access limits accurately, recognise who may be left behind, adapt basic supplies planning and use <em>even if</em> to communicate limits without overpromising.</p>
-          <button id="startMission3" class="field-primary" type="button" disabled>🔒 Complete Mission 2 first</button>
-        </div>
-        <div class="access-hero-score"><span>MISSION 3 SCORE</span><strong id="mission3Score">0 / 18</strong><small>first-attempt points</small></div>
-      </div>
-
-      <div class="access-objectives" aria-label="Mission 3 objectives">
-        <div><span>01</span><strong>Report access</strong><p>State clearly what can and cannot be reached from the information available.</p></div>
-        <div><span>02</span><strong>Protect inclusion</strong><p>Recognise people whose mobility or health makes evacuation harder.</p></div>
-        <div><span>03</span><strong>Adapt supplies</strong><p>Plan around blocked routes, overcrowding and delayed commodities.</p></div>
-        <div><span>04</span><strong>Communicate limits</strong><p>Use first conditional and <em>even if</em> without making impossible promises.</p></div>
-      </div>
-
-      <div class="access-progress-card" aria-live="polite">
-        <span>MISSION 3 PROGRESS</span><strong id="mission3ProgressText">0 / 4</strong>
-        <div class="field-progress-track"><i id="mission3ProgressBar"></i></div>
-      </div>
-
-      <div class="access-activity-grid">
-        <button class="access-activity-card" data-m3-activity="roads" type="button" disabled>
-          <span class="access-card-number">01</span><img src="assets/fgsm3/day3/images/day3-displacement-context.webp" alt="Damaged urban environment affecting humanitarian access." loading="lazy" decoding="async" width="1190" height="794">
-          <div><small>ACCESS DESK</small><strong>Road Access Alert</strong><p>Separate a real access limit from assumptions the source does not support.</p><b id="m3StatusRoads">LOCKED</b></div>
-        </button>
-        <button class="access-activity-card" data-m3-activity="vulnerable" type="button" disabled>
-          <span class="access-card-number">02</span><img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Field clinician speaking with a patient in a humanitarian healthcare setting." loading="lazy" decoding="async" width="1348" height="808">
-          <div><small>INCLUSION CHECK</small><strong>Who Gets Left Behind?</strong><p>Identify the groups the source says may find evacuation especially difficult.</p><b id="m3StatusVulnerable">LOCKED</b></div>
-        </button>
-        <button class="access-activity-card" data-m3-activity="supplies" type="button" disabled>
-          <span class="access-card-number">03</span><img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian healthcare setting with supplies and field staff." loading="lazy" decoding="async" width="852" height="640">
-          <div><small>LOGISTICS ROUTE</small><strong>Supply Route</strong><p>Respond carefully when shelter, water, food, medicines or access are under pressure.</p><b id="m3StatusSupplies">LOCKED</b></div>
-        </button>
-        <button class="access-activity-card" data-m3-activity="evenif" type="button" disabled>
-          <span class="access-card-number">04</span><img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="MSF interview frame from the Day 3 source video." loading="lazy" decoding="async" width="1280" height="720">
-          <div><small>LIMITS &amp; CAUTION</small><strong>Even If…</strong><p>Use conditional language to explain what may remain difficult despite a response.</p><b id="m3StatusEvenIf">LOCKED</b></div>
-        </button>
-      </div>
-
-      <div id="mission3Workspace" class="access-workspace" aria-labelledby="mission3WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">MISSION 03 · ACTIVE DESK</p><h2 id="mission3WorkspaceTitle">Access desk locked</h2><p id="mission3WorkspaceIntro">Complete Mission 2 to open this assignment.</p></div>
-          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission3ActivityScore">0</strong></div>
-        </div>
-        <div id="mission3Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🚧</span><h3>Mission 3 locked</h3><p>Complete Triage Under Pressure first.</p></div></div>
-        <div id="mission3Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="mission3Complete" class="field-completion access-completion is-locked" aria-labelledby="mission3CompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">🚧</div>
-      <div><p class="field-kicker dark">MISSION 03 CLEARANCE</p><h2 id="mission3CompleteTitle">Access Restricted is not cleared yet.</h2><p id="mission3CompleteText">Complete all four Mission 3 activities.</p></div>
-      <button id="mission4Button" class="field-primary" type="button" disabled>🔒 Mission 4 · Radio Stress Check</button>
-    </section>
-
-    <section id="mission4Area" class="radio-mission is-locked" aria-labelledby="mission4Title">
-      <div class="radio-hero">
-        <img src="assets/fgsm3/day3/images/day3-cnn-msf-poster.webp" alt="News interview frame used for the Day 3 humanitarian medicine lesson." loading="lazy" decoding="async" width="1280" height="720">
-        <div class="radio-hero-shade" aria-hidden="true"></div>
-        <div class="radio-hero-copy">
-          <p class="field-kicker">MISSION 04 · COMMUNICATION CLEARANCE</p>
-          <h2 id="mission4Title">Radio Stress Check</h2>
-          <p class="radio-tagline">Make the key syllable land clearly.</p>
-          <p>In long words, one syllable carries the main stress. This mission uses the word-stress patterns from your Day 3 worksheet and Presentation Check-in, then transfers them into short field and research messages.</p>
-          <button id="startMission4" class="field-primary" type="button" disabled>🔒 Complete Mission 3 first</button>
-        </div>
-        <div class="radio-hero-score"><span>MISSION 4 SCORE</span><strong id="mission4Score">0 / 20</strong><small>first-attempt points</small></div>
-      </div>
-
-      <div class="radio-rule-card">
-        <div class="radio-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-        <div><span>QUICK RULE</span><strong>One syllable is stressed: louder and longer.</strong><p>For words ending in <em>-tion / -sion / -cian</em>, your Presentation Check-in reminds you that the stress falls on the syllable immediately before the ending.</p></div>
-        <button id="hearStressRule" class="field-hear" type="button">🔊 Hear rule</button>
-      </div>
-
-      <div class="radio-word-bank" aria-label="Day 3 long-word practice bank">
-        <span>humanitarian</span><span>emergency</span><span>evacuation</span><span>catastrophic</span><span>population</span><span>commodities</span><span>coordination</span><span>communication</span><span>infrastructure</span><span>malnutrition</span><span>dehydration</span><span>sanitation</span><span>vaccination</span><span>deterioration</span><span>resuscitation</span>
-      </div>
-      <p class="radio-bank-note">This larger bank comes from your Day 3 speaking task. The scored checkpoints below use stress patterns explicitly supplied in the worksheet answer key or Presentation Check-in.</p>
-
-      <div class="radio-progress-card" aria-live="polite">
-        <span>MISSION 4 PROGRESS</span><strong id="mission4ProgressText">0 / 4</strong>
-        <div class="field-progress-track"><i id="mission4ProgressBar"></i></div>
-      </div>
-
-      <div class="radio-activity-grid">
-        <button class="radio-activity-card" data-m4-activity="scanner" type="button" disabled>
-          <span class="radio-card-number">01</span><div class="radio-card-icon" aria-hidden="true">🎚️</div>
-          <div><small>STRESS SCANNER</small><strong>Hear &amp; Mark</strong><p>Identify the main stress in six humanitarian practice words.</p><b id="m4StatusScanner">LOCKED</b></div>
-        </button>
-        <button class="radio-activity-card" data-m4-activity="rule" type="button" disabled>
-          <span class="radio-card-number">02</span><div class="radio-card-icon" aria-hidden="true">-TION</div>
-          <div><small>PATTERN CHECK</small><strong>-tion / -sion Rule</strong><p>Apply the stress rule from the Presentation Check-in.</p><b id="m4StatusRule">LOCKED</b></div>
-        </button>
-        <button class="radio-activity-card" data-m4-activity="research" type="button" disabled>
-          <span class="radio-card-number">03</span><div class="radio-card-icon" aria-hidden="true">🔬</div>
-          <div><small>PRESENTATION TRANSFER</small><strong>Research Words</strong><p>Practise the six long words marked in your scientific-talk check-in.</p><b id="m4StatusResearch">LOCKED</b></div>
-        </button>
-        <button class="radio-activity-card" data-m4-activity="transmission" type="button" disabled>
-          <span class="radio-card-number">04</span><div class="radio-card-icon" aria-hidden="true">📻</div>
-          <div><small>FINAL READBACK</small><strong>Radio Transmission</strong><p>Keep the correct stress patterns inside complete messages.</p><b id="m4StatusTransmission">LOCKED</b></div>
-        </button>
-      </div>
-
-      <div id="mission4Workspace" class="radio-workspace" aria-labelledby="mission4WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">MISSION 04 · RADIO DESK</p><h2 id="mission4WorkspaceTitle">Communication desk locked</h2><p id="mission4WorkspaceIntro">Complete Mission 3 to open this assignment.</p></div>
-          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission4ActivityScore">0</strong></div>
-        </div>
-        <div id="mission4Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">📻</span><h3>Radio Stress Check locked</h3><p>Complete Access Restricted first.</p></div></div>
-        <div id="mission4Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="mission4Complete" class="field-completion radio-completion is-locked" aria-labelledby="mission4CompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">📻</div>
-      <div><p class="field-kicker dark">MISSION 04 CLEARANCE</p><h2 id="mission4CompleteTitle">Radio Stress Check is not cleared yet.</h2><p id="mission4CompleteText">Complete all four Mission 4 activities.</p></div>
-      <button id="mission5Button" class="field-primary" type="button" disabled>🔒 Mission 5 · Emergency Contingency Plan</button>
-    </section>
-
-    <section id="mission5Area" class="contingency-mission is-locked" aria-labelledby="mission5Title">
-      <div class="contingency-hero">
-        <img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian field team and supplies in a temporary medical response setting." loading="lazy" decoding="async" width="852" height="640">
-        <div class="contingency-hero-shade" aria-hidden="true"></div>
-        <div class="contingency-hero-copy">
-          <p class="field-kicker">MISSION 05 · 24-HOUR PLANNING DESK</p>
-          <h2 id="mission5Title">Emergency Contingency Plan</h2>
-          <p class="contingency-tagline">Plan for what may happen next.</p>
-          <p>A severe flooding scenario from your Day 3 worksheet: patient arrivals have increased sharply, more people are expected, roads are becoming difficult to use, and medical supplies may be delayed. Build a clear 24-hour response using zero conditional, first conditional and <em>even if</em>.</p>
-          <button id="startMission5" class="field-primary" type="button" disabled>🔒 Complete Mission 4 first</button>
-        </div>
-        <div class="contingency-hero-score"><span>MISSION 5 SCORE</span><strong id="mission5Score">0 / 20</strong><small>first-attempt points</small></div>
-      </div>
-
-      <div class="contingency-source-card">
-        <div><span>WORKSHEET SCENARIO</span><strong>Severe flooding · next 24 hours</strong></div>
-        <ul>
-          <li>Patient numbers have increased sharply.</li>
-          <li>More people are expected to arrive.</li>
-          <li>Several roads are becoming difficult to use.</li>
-          <li>Medical supplies may be delayed.</li>
-        </ul>
-      </div>
-
-      <div class="contingency-language-strip" aria-label="Conditional language reminder">
-        <article><b>ZERO</b><strong>If + present, present</strong><span>General fact or method rule.</span></article>
-        <article><b>FIRST</b><strong>If + present, will / can / may</strong><span>Real future possibility or implication.</span></article>
-        <article><b>EVEN IF</b><strong>Concession / limit</strong><span>What remains true despite difficult conditions.</span></article>
-      </div>
-
-      <div class="contingency-progress-card" aria-live="polite">
-        <span>MISSION 5 PROGRESS</span><strong id="mission5ProgressText">0 / 4</strong>
-        <div class="field-progress-track"><i id="mission5ProgressBar"></i></div>
-      </div>
-
-      <div class="contingency-activity-grid">
-        <button class="contingency-activity-card" data-m5-activity="surge" type="button" disabled>
-          <span class="contingency-card-number">01</span><div class="contingency-card-icon" aria-hidden="true">👥</div>
-          <div><small>PATIENT SURGE</small><strong>More Patients Arrive</strong><p>Turn a rising caseload into a realistic first-conditional response.</p><b id="m5StatusSurge">LOCKED</b></div>
-        </button>
-        <button class="contingency-activity-card" data-m5-activity="access" type="button" disabled>
-          <span class="contingency-card-number">02</span><div class="contingency-card-icon" aria-hidden="true">🚧</div>
-          <div><small>ACCESS FAILURE</small><strong>Roads Become Difficult</strong><p>Adapt the response without promising access that may not be possible.</p><b id="m5StatusAccess">LOCKED</b></div>
-        </button>
-        <button class="contingency-activity-card" data-m5-activity="supplies" type="button" disabled>
-          <span class="contingency-card-number">03</span><div class="contingency-card-icon" aria-hidden="true">📦</div>
-          <div><small>SUPPLY DELAY</small><strong>Resources Run Low</strong><p>Use cautious operational language when supplies may be delayed or run out.</p><b id="m5StatusSupplies">LOCKED</b></div>
-        </button>
-        <button class="contingency-activity-card" data-m5-activity="continuity" type="button" disabled>
-          <span class="contingency-card-number">04</span><div class="contingency-card-icon" aria-hidden="true">🗂️</div>
-          <div><small>CONTINUITY PLAN</small><strong>Even If…</strong><p>Decide what the team can continue to do even if conditions deteriorate.</p><b id="m5StatusContinuity">LOCKED</b></div>
-        </button>
-      </div>
-
-      <div id="mission5Workspace" class="contingency-workspace" aria-labelledby="mission5WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">MISSION 05 · PLANNING DESK</p><h2 id="mission5WorkspaceTitle">Contingency desk locked</h2><p id="mission5WorkspaceIntro">Complete Mission 4 to open this assignment.</p></div>
-          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission5ActivityScore">0</strong></div>
-        </div>
-        <div id="mission5Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">🗂️</span><h3>Mission 5 locked</h3><p>Complete Radio Stress Check first.</p></div></div>
-        <div id="mission5Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="mission5Complete" class="field-completion contingency-completion is-locked" aria-labelledby="mission5CompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">📋</div>
-      <div><p class="field-kicker dark">MISSION 05 CLEARANCE</p><h2 id="mission5CompleteTitle">Emergency Contingency Plan is not cleared yet.</h2><p id="mission5CompleteText">Complete all four Mission 5 activities.</p></div>
-      <button id="mission6Button" class="field-primary" type="button" disabled>🔒 Mission 6 · Humanitarian Ethics Board</button>
-    </section>
-
-    <section id="mission6Area" class="ethics-mission is-locked" aria-labelledby="mission6Title">
-      <div class="ethics-hero">
-        <img src="assets/fgsm3/day3/images/day3-field-clinical.webp" alt="Medical and humanitarian staff discussing a field response together." loading="lazy" decoding="async" width="1348" height="808">
-        <div class="ethics-hero-shade" aria-hidden="true"></div>
-        <div class="ethics-hero-copy">
-          <p class="field-kicker">MISSION 06 · HUMANITARIAN ETHICS BOARD</p>
-          <h2 id="mission6Title">Make the case. Challenge it. Land it.</h2>
-          <p class="ethics-tagline">Your opinion is not being marked. Your argument is.</p>
-          <p>The Day 3 worksheet gives three difficult debate statements. This mission checks whether you can frame an issue, build a case, handle the other side and reach a nuanced position using the supplied debating language.</p>
-          <button id="startMission6" class="field-primary" type="button" disabled>🔒 Complete Mission 5 first</button>
-        </div>
-        <div class="ethics-hero-score"><span>MISSION 6 SCORE</span><strong id="mission6Score">0 / 20</strong><small>language &amp; argument structure</small></div>
-      </div>
-
-      <div class="ethics-statement-board" aria-label="The three debate statements from the Day 3 worksheet">
-        <article><span>BOARD QUESTION 01</span><p>“Humanitarian organisations like MSF should stay completely neutral and treat everyone the same — including fighters.”</p></article>
-        <article><span>BOARD QUESTION 02</span><p>“Rich countries have a duty to fund and staff humanitarian responses in conflict zones.”</p></article>
-        <article><span>BOARD QUESTION 03</span><p>“It is more effective to train and employ local health workers than to send international teams.”</p></article>
-      </div>
-
-      <div class="ethics-notice"><strong>⚖️ No opinion is marked right or wrong.</strong><span>The scored checkpoints assess rhetorical function, evidence language, concession, rebuttal and balanced conclusions.</span></div>
-
-      <div class="ethics-progress-card" aria-live="polite">
-        <span>MISSION 6 PROGRESS</span><strong id="mission6ProgressText">0 / 4</strong>
-        <div class="field-progress-track"><i id="mission6ProgressBar"></i></div>
-      </div>
-
-      <div class="ethics-activity-grid">
-        <button class="ethics-activity-card" data-m6-activity="frame" type="button" disabled>
-          <span class="ethics-card-number">01</span><div class="ethics-card-icon" aria-hidden="true">◉</div>
-          <div><small>STAGE 1</small><strong>Frame the Issue</strong><p>State the core question and appeal to principle without taking shortcuts.</p><b id="m6StatusFrame">LOCKED</b></div>
-        </button>
-        <button class="ethics-activity-card" data-m6-activity="case" type="button" disabled>
-          <span class="ethics-card-number">02</span><div class="ethics-card-icon" aria-hidden="true">▤</div>
-          <div><small>STAGE 2</small><strong>Build Your Case</strong><p>Give a reason, support it and make the consequence explicit.</p><b id="m6StatusCase">LOCKED</b></div>
-        </button>
-        <button class="ethics-activity-card" data-m6-activity="challenge" type="button" disabled>
-          <span class="ethics-card-number">03</span><div class="ethics-card-icon" aria-hidden="true">⇄</div>
-          <div><small>STAGE 3</small><strong>Handle the Other Side</strong><p>Anticipate, concede and rebut instead of ignoring objections.</p><b id="m6StatusChallenge">LOCKED</b></div>
-        </button>
-        <button class="ethics-activity-card" data-m6-activity="land" type="button" disabled>
-          <span class="ethics-card-number">04</span><div class="ethics-card-icon" aria-hidden="true">⚖</div>
-          <div><small>STAGE 4</small><strong>Land It</strong><p>Acknowledge complexity and finish with a clear, qualified position.</p><b id="m6StatusLand">LOCKED</b></div>
-        </button>
-      </div>
-
-      <div id="mission6Workspace" class="ethics-workspace" aria-labelledby="mission6WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">MISSION 06 · BOARDROOM</p><h2 id="mission6WorkspaceTitle">Ethics Board locked</h2><p id="mission6WorkspaceIntro">Complete Mission 5 to open this assignment.</p></div>
-          <div class="field-score-box"><span>ACTIVITY SCORE</span><strong id="mission6ActivityScore">0</strong></div>
-        </div>
-        <div id="mission6Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">⚖️</span><h3>Humanitarian Ethics Board locked</h3><p>Complete the Emergency Contingency Plan first.</p></div></div>
-        <div id="mission6Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="mission6Complete" class="field-completion ethics-completion is-locked" aria-labelledby="mission6CompleteTitle">
-      <div class="field-completion-badge" aria-hidden="true">⚖️</div>
-      <div><p class="field-kicker dark">MISSION 06 CLEARANCE</p><h2 id="mission6CompleteTitle">Humanitarian Ethics Board is not cleared yet.</h2><p id="mission6CompleteText">Complete all four argument stages.</p></div>
-      <button id="mission7Button" class="field-primary" type="button" disabled>🔒 FINAL · 24 Hours to Respond</button>
-    </section>
-
-    <section id="ethicsBoardBrief" class="ethics-board-brief is-locked" aria-labelledby="ethicsBriefTitle">
-      <div class="ethics-brief-head"><div><p class="field-kicker dark">UNSCORED SPEAKING TRANSFER</p><h2 id="ethicsBriefTitle">Your 60-second Board Brief</h2><p>Your viewpoint is yours. Use the structure below to prepare one spoken response.</p></div><button id="newEthicsPrompt" class="field-secondary" type="button">↻ New board question</button></div>
-      <blockquote id="ethicsPromptText">Complete Mission 6 to draw a board question.</blockquote>
-      <div class="ethics-stance-row" aria-label="Choose a position">
-        <button type="button" data-ethics-stance="Agree">Agree</button><button type="button" data-ethics-stance="Disagree">Disagree</button><button type="button" data-ethics-stance="Qualified / mixed position">Qualified / mixed</button>
-      </div>
-      <div id="ethicsBriefTemplate" class="ethics-brief-template">
-        <article><b>FRAME</b><span>At its heart, this is about… / The real question is whether…</span></article>
-        <article><b>BUILD</b><span>My main argument is that… / The evidence points to…</span></article>
-        <article><b>CHALLENGE</b><span>Admittedly… / Even so,…</span></article>
-        <article><b>LAND</b><span>On balance,… / All things considered, I’d argue…</span></article>
-      </div>
-      <p id="ethicsStanceStatus" class="ethics-stance-status">Choose any position. The site does not grade your opinion.</p>
-    </section>
-
-    <section id="mission7Area" class="final-mission is-locked" aria-labelledby="mission7Title">
-      <div class="final-hero">
-        <img src="assets/fgsm3/day3/images/day3-humanitarian-archive.webp" alt="Humanitarian medical response team working in a field setting." loading="lazy" decoding="async" width="852" height="640">
-        <div class="final-hero-shade" aria-hidden="true"></div>
-        <div class="final-hero-copy">
-          <p class="field-kicker">FINAL DAY 3 ASSIGNMENT</p>
-          <h2 id="mission7Title">24 Hours to Respond</h2>
-          <p class="final-tagline">One fictional crisis. Ten mixed checkpoints. Everything from Day 3.</p>
-          <p>You will be assigned one of four fictional humanitarian situations. The final checks <strong>English, source discipline and response communication</strong> — not clinical certification and not your political opinion.</p>
-          <button id="startMission7" class="field-primary" type="button" disabled>🔒 Complete Mission 6 first</button>
-        </div>
-        <div class="final-hero-score"><span>FINAL SCORE</span><strong id="mission7Score">0 / 100</strong><small>10 first try · 6 after correction</small></div>
-      </div>
-
-      <div class="final-scenario-strip" aria-live="polite">
-        <div class="final-scenario-icon" id="finalScenarioIcon" aria-hidden="true">⏱️</div>
-        <div><span>YOUR FIELD ASSIGNMENT</span><h3 id="finalScenarioTitle">Locked</h3><p id="finalScenarioBrief">Complete Mission 6 to receive your final scenario.</p></div>
-        <button id="hearFinalBrief" class="field-secondary" type="button" disabled>🔊 Hear briefing</button>
-      </div>
-
-      <div class="final-skill-ribbon" aria-label="Skills assessed in the final mission">
-        <span>Vocabulary</span><span>Situation</span><span>Access &amp; resources</span><span>Word stress</span><span>Conditionals</span><span>Safe reporting</span><span>Ethical reasoning</span>
-      </div>
-
-      <div class="final-progress-card" aria-live="polite">
-        <span>FINAL CHECKPOINTS</span><strong id="mission7ProgressText">0 / 10</strong>
-        <div class="field-progress-track"><i id="mission7ProgressBar"></i></div>
-      </div>
-
-      <div id="mission7Workspace" class="final-workspace" aria-labelledby="mission7WorkspaceTitle">
-        <div class="field-workspace-head">
-          <div><p class="field-kicker dark">FINAL · RESPONSE DESK</p><h2 id="mission7WorkspaceTitle">Final mission locked</h2><p id="mission7WorkspaceIntro">Clear the Humanitarian Ethics Board first.</p></div>
-          <div class="field-score-box"><span>CHECKPOINT</span><strong id="mission7Checkpoint">—</strong></div>
-        </div>
-        <div id="mission7Screen" class="field-screen" tabindex="-1"><div class="field-waiting"><span aria-hidden="true">⏱️</span><h3>Final assignment locked</h3><p>Complete Mission 6 to draw a field scenario.</p></div></div>
-        <div id="mission7Feedback" class="field-feedback" role="status" aria-live="polite"></div>
-      </div>
-
-      <section id="mission7Result" class="final-result is-locked" aria-labelledby="mission7ResultTitle">
-        <div class="final-result-badge" aria-hidden="true">✓</div>
-        <div class="final-result-copy"><p class="field-kicker dark">DAY 3 COMPLETE</p><h2 id="mission7ResultTitle">24-Hour Response complete</h2><p id="mission7ResultText">Your final report will appear here.</p><div id="mission7SkillBreakdown" class="final-skill-breakdown"></div></div>
-        <div class="final-result-actions"><button id="replayMission7" class="field-secondary" type="button">↻ Draw another scenario</button><a class="field-primary final-link" href="fgsm3.html">Back to FGSM3 →</a></div>
-      </section>
-    </section>
+    <aside class="teacher-note" aria-label="Important instruction"><span aria-hidden="true">💡</span><div><strong>Do not complete both activities.</strong>Mrs Lecomte will tell you whether you are working individually or in a group today.</div></aside>
+    <div class="day3-choice-footer">Medical English for Mrs Lecomte's Students · Created by Mrs Lecomte, with the help of ChatGPT.</div>
   </main>
-
-  <audio id="day3Music" loop preload="none"><source src="assets/fgsm3/day3/music/day3-field-briefing-suno.mp3" type="audio/mpeg"></audio>
-
-  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Game progress is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
-  <script src="fgsm3-day3-game.js" defer></script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
+  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
+  <script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
 </body>
 </html>
