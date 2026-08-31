@@ -16,7 +16,7 @@
     }
 
     if (appState && !online) {
-      appState.textContent = "Offline mode: previously opened learning resources remain available.";
+      appState.textContent = "Offline mode: core pages and small assets remain available. Large audio and video may require a connection.";
     }
   }
 
@@ -32,8 +32,8 @@
 
         if (appState) {
           appState.textContent = navigator.onLine
-            ? "Core offline access is ready. Course media is saved only after you open it, to avoid a large automatic download."
-            : "Offline mode is active.";
+            ? "Core offline access is ready. Large audio and video files may still require an internet connection."
+            : "Offline mode is active. Core pages are available; large audio and video may require a connection.";
         }
       } catch (_) {
         if (appState) {

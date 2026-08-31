@@ -1,6 +1,6 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v58-core-day3-r5-20260831`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v58-runtime-day3-r5-20260831`;
+const CORE_CACHE = `${CACHE_PREFIX}v59-core-day3-r5.1-20260831`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v59-runtime-day3-r5.1-20260831`;
 
 // Keep the first install deliberately small. Large videos and music remain runtime-only.
 // Day 3 HTML and its small WebP illustrations are pre-cached so both activities can reopen offline.
@@ -48,12 +48,29 @@ const CORE_SHELL = [
   "./icons/apple-touch-icon.png"
 ];
 
+const REQUIRED_SHELL = [
+  "./",
+  "./index.html",
+  "./fgsm3.html",
+  "./fgsm3-day3.html",
+  "./fgsm3-day3-go-bag.html",
+  "./fgsm3-day3-individual.html",
+  "./styles-v37.css",
+  "./pwa.js",
+  "./accessibility.js",
+  "./manifest.webmanifest"
+];
+
 self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CORE_CACHE)
-      .then(cache => cache.addAll(CORE_SHELL))
-      .then(() => self.skipWaiting())
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CORE_CACHE);
+    // Critical Day 3 shell: fail the install only if one of these files is missing.
+    await cache.addAll(REQUIRED_SHELL);
+    // Everything else is useful offline, but one optional asset must never block an update.
+    const optional = CORE_SHELL.filter(url => !REQUIRED_SHELL.includes(url));
+    await Promise.allSettled(optional.map(url => cache.add(url)));
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate", event => {
@@ -67,6 +84,17 @@ self.addEventListener("activate", event => {
       .then(() => self.clients.claim())
   );
 });
+
+
+async function fetchFresh(request) {
+  // Avoid serving a just-deployed HTML/JS/CSS file from the browser HTTP cache.
+  // If a browser does not accept the cache option here, fall back to a normal fetch.
+  try {
+    return await fetch(request, {cache: "no-store"});
+  } catch (_) {
+    return fetch(request);
+  }
+}
 
 async function putRuntime(request, response) {
   if (!response || !response.ok || response.status === 206) return response;
@@ -94,7 +122,7 @@ self.addEventListener("fetch", event => {
   if (request.mode === "navigate") {
     event.respondWith((async () => {
       try {
-        return await putRuntime(request, await fetch(request));
+        return await putRuntime(request, await fetchFresh(request));
       } catch (_) {
         return (await caches.match(request, {ignoreSearch:true})) ||
                (await caches.match("./index.html"));
@@ -110,7 +138,7 @@ self.addEventListener("fetch", event => {
   if (isCode) {
     event.respondWith((async () => {
       try {
-        return await putRuntime(request, await fetch(request));
+        return await putRuntime(request, await fetchFresh(request));
       } catch (_) {
         return caches.match(request, {ignoreSearch:true});
       }
