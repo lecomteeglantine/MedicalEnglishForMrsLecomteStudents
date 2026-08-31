@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b3b45">
+<meta name="description" content="FGSM3 Day 2 group activity: The Patient Test — build, test and reform a fictional healthcare system.">
+<title>FGSM3 · Day 2 Group Challenge · The Patient Test</title>
+<style>
+:root{
+  --ink:#102a2e;--muted:#5e7275;--deep:#0b3b45;--deep2:#105764;--paper:#f7f1e6;--card:#fffdf8;
+  --line:#d7d0c5;--accent:#d96b4c;--gold:#d7a84b;--green:#2f7d68;--amber:#b97921;--red:#a94b45;
+  --blue:#376f87;--shadow:0 18px 45px rgba(19,53,58,.12);--radius:22px;
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:linear-gradient(180deg,#edf5f2 0,#f8f2e7 36%,#f7f1e6 100%);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+button,input{font:inherit} button{cursor:pointer}.skip-link{position:absolute;left:-9999px;top:0}.skip-link:focus{left:1rem;top:1rem;z-index:999;background:#fff;padding:.8rem 1rem;border-radius:10px}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.65rem clamp(1rem,4vw,3rem);background:rgba(8,48,56,.96);color:#fff;box-shadow:0 3px 16px rgba(0,0,0,.14)}
+.brand{display:flex;align-items:center;gap:.65rem;color:#fff;text-decoration:none}.brand-mark{font-size:1.55rem}.brand strong{display:block;font-size:.98rem}.brand small{display:block;opacity:.78;font-size:.7rem}.main-nav{display:flex;gap:.3rem;flex-wrap:wrap}.main-nav a{color:#e8f4f0;text-decoration:none;padding:.45rem .62rem;border-radius:999px;font-size:.78rem}.main-nav a:hover,.main-nav a:focus{background:rgba(255,255,255,.12)}
+main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}.breadcrumb{display:flex;gap:.5rem;align-items:center;font-size:.82rem;color:var(--muted);margin-bottom:1rem}.breadcrumb a{color:var(--deep2)}
+.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0a3943 0%,#0d5560 58%,#173b46 100%);color:white;border-radius:30px;padding:clamp(1.6rem,4vw,3.2rem);box-shadow:var(--shadow);min-height:390px;display:grid;grid-template-columns:1.25fr .75fr;gap:2rem;align-items:center}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.13)}.hero:before{width:420px;height:420px;right:-120px;top:-140px}.hero:after{width:270px;height:270px;right:60px;bottom:-150px}.kicker{font-size:.74rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#f1c96d;margin:0 0 .5rem}.hero h1{font-family:Georgia,serif;font-size:clamp(2.6rem,6vw,5.2rem);line-height:.92;margin:.15rem 0 1rem;letter-spacing:-.035em}.hero .lead{max-width:680px;font-size:1.13rem;color:#e7f1ef}.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.35rem}
+.primary,.secondary,.ghost,.danger{border:0;border-radius:999px;padding:.82rem 1.05rem;font-weight:800}.primary{background:#f3c86a;color:#18363b}.primary:hover,.primary:focus{filter:brightness(.98);transform:translateY(-1px)}.secondary{background:var(--deep);color:white}.ghost{background:transparent;color:inherit;border:1px solid currentColor}.danger{background:#f7dfdc;color:#7e302c}.primary:disabled,.secondary:disabled,.ghost:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.hero-card{position:relative;z-index:2;background:#f6efdfe8;color:#17353b;padding:1.2rem;border-radius:18px;transform:rotate(1.6deg);box-shadow:0 20px 40px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.35)}.hero-card .stamp{display:inline-block;border:3px double #a84e46;color:#a84e46;padding:.35rem .55rem;font-weight:900;letter-spacing:.1em;transform:rotate(-5deg);margin-bottom:1rem}.hero-card dl{margin:0;display:grid;gap:.7rem}.hero-card dl div{display:grid;grid-template-columns:92px 1fr;border-bottom:1px dashed #c8bdad;padding-bottom:.55rem}.hero-card dt{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#6b7776}.hero-card dd{margin:0;font-weight:700}
+.toolbar{margin:1rem 0 1.4rem;background:rgba(255,255,255,.86);border:1px solid #dbe3df;border-radius:17px;padding:.75rem .9rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;box-shadow:0 8px 25px rgba(20,62,65,.06)}.toolbar p{margin:0;font-size:.82rem;color:var(--muted)}.toolbar-controls{display:flex;gap:.45rem;flex-wrap:wrap}.tiny-btn{border:1px solid #c8d4d1;background:white;color:var(--deep);border-radius:999px;padding:.52rem .7rem;font-size:.75rem;font-weight:800}
+.game-shell{display:none}.game-shell.active{display:block}.hud{position:sticky;top:62px;z-index:35;margin:1rem 0;background:rgba(247,241,230,.95);backdrop-filter:blur(8px);border:1px solid #d9d0c2;border-radius:18px;box-shadow:0 10px 28px rgba(34,61,57,.1);padding:.7rem;display:grid;grid-template-columns:130px repeat(5,1fr);gap:.5rem}.credits{background:var(--deep);color:white;border-radius:13px;padding:.55rem .7rem}.credits small,.metric small{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em}.credits strong{font-size:1.35rem}.metric{background:#fffdf8;border-radius:13px;padding:.5rem .65rem;border:1px solid #e4ddd1}.metric-row{display:flex;justify-content:space-between;gap:.4rem;align-items:baseline}.metric strong{font-size:.95rem}.bar{height:7px;background:#e9e4dc;border-radius:10px;overflow:hidden;margin-top:.35rem}.bar span{display:block;height:100%;width:50%;background:linear-gradient(90deg,#b86b47,#2f7d68);border-radius:10px;transition:width .35s ease}
+.phase-nav{display:flex;gap:.45rem;overflow:auto;padding:.25rem 0 .9rem;scrollbar-width:thin}.phase-pill{white-space:nowrap;border:1px solid #d5cec3;background:#f9f5ed;border-radius:999px;padding:.48rem .75rem;font-size:.72rem;font-weight:800;color:#6d7877}.phase-pill.current{background:var(--deep);color:white;border-color:var(--deep)}.phase-pill.done{background:#dcece5;color:#225f50;border-color:#bfd9ce}
+.panel{background:var(--card);border:1px solid #ddd5c8;border-radius:var(--radius);box-shadow:var(--shadow);padding:clamp(1rem,3vw,2rem);margin:0 0 1.2rem}.panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.2rem}.panel h2{font-family:Georgia,serif;font-size:clamp(1.7rem,3vw,2.45rem);margin:.15rem 0}.panel h3{margin:.25rem 0}.section-no{font-size:.72rem;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);font-weight:900}.instruction{color:var(--muted);max-width:770px}.callout{border-left:5px solid var(--gold);background:#fff7df;padding:.85rem 1rem;border-radius:8px;margin:1rem 0}.callout strong{color:#6b4d0f}
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.setup-card{border:1px solid #ded7cb;border-radius:18px;padding:1rem;background:#fbf8f1}.segmented{display:flex;gap:.5rem;margin-top:.65rem}.segment{flex:1;border:1px solid #cfd8d5;background:white;border-radius:12px;padding:.7rem;font-weight:800;color:var(--deep)}.segment.selected{background:var(--deep);color:white;border-color:var(--deep)}
+.role-stage{display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem}.role-card{position:relative;min-height:250px;border-radius:18px;padding:1rem;color:#fff;overflow:hidden;box-shadow:0 12px 24px rgba(20,54,58,.14)}.role-card:nth-child(1){background:#2f6f7f}.role-card:nth-child(2){background:#805d3e}.role-card:nth-child(3){background:#6c5b89}.role-card:nth-child(4){background:#3f765d}.role-icon{font-size:2rem}.role-card h3{font-family:Georgia,serif;font-size:1.2rem}.role-card p{font-size:.83rem}.role-secret{margin-top:1rem;padding:.75rem;border:1px dashed rgba(255,255,255,.5);border-radius:10px;background:rgba(0,0,0,.1);filter:blur(7px);user-select:none;transition:.2s}.role-card.revealed .role-secret{filter:none}.role-card button{margin-top:.8rem;border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.1);color:white;border-radius:999px;padding:.5rem .65rem;font-size:.72rem;font-weight:800}
+.decision-card{border:1px solid #d9d2c7;border-radius:20px;padding:1rem;margin:1rem 0;background:#fbf8f2}.decision-title{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}.decision-title h3{font-family:Georgia,serif;font-size:1.35rem}.decision-counter{font-size:.72rem;font-weight:900;background:#edf2f0;padding:.4rem .55rem;border-radius:999px}.options{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.85rem}.option{border:2px solid #e0d9ce;border-radius:15px;background:white;padding:.85rem;text-align:left;color:var(--ink);min-height:160px;transition:.15s}.option:hover,.option:focus{border-color:#9bbab3;transform:translateY(-1px)}.option.selected{border-color:var(--deep2);box-shadow:0 0 0 3px rgba(16,87,100,.1);background:#f4fbf9}.option h4{margin:0 0 .35rem;font-size:.96rem}.option p{font-size:.78rem;color:var(--muted);margin:.3rem 0}.cost{display:inline-block;background:#f5ead1;color:#6a4b12;border-radius:999px;padding:.25rem .45rem;font-size:.69rem;font-weight:900}.trade{margin-top:.5rem;font-size:.7rem;font-weight:700;color:#496361}.selected-note{margin-top:.65rem;font-size:.75rem;font-weight:800;color:var(--deep2)}
+.patient-layout{display:grid;grid-template-columns:280px 1fr;gap:1rem}.patient-file{background:linear-gradient(160deg,#edf3f0,#fffaf1);border:1px solid #d3dcd7;border-radius:20px;padding:1rem;position:relative}.patient-photo{width:112px;height:112px;border-radius:18px;display:grid;place-items:center;font-size:4rem;background:white;border:1px solid #dce2df;margin-bottom:.8rem}.patient-file h3{font-family:Georgia,serif;font-size:1.6rem}.patient-meta{display:grid;gap:.3rem;font-size:.79rem;color:#536b6e}.patient-meta span{padding-bottom:.3rem;border-bottom:1px dashed #cbd4d0}.case-box{border:1px solid #ddd5c8;background:white;border-radius:20px;padding:1.1rem}.case-box h3{font-size:1.15rem}.discussion{background:#edf5f2;border-radius:13px;padding:.8rem;margin:.9rem 0}.discussion strong{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:#2f655c}.discussion ul{margin:.4rem 0 .1rem;padding-left:1.1rem;font-size:.84rem}.role-prompt{font-size:.78rem;color:#5b6c6e;background:#f8f2e7;border-radius:10px;padding:.65rem .75rem}.outcome{display:none;margin-top:1rem;border-radius:15px;padding:1rem;border:1px solid}.outcome.show{display:block}.outcome.protected{background:#e9f4ef;border-color:#b8d8ca}.outcome.risk{background:#fff4df;border-color:#e4c78f}.outcome.failed{background:#f9e7e4;border-color:#deb4ae}.outcome-badge{display:inline-block;padding:.28rem .48rem;border-radius:999px;font-size:.68rem;font-weight:900;letter-spacing:.06em}.protected .outcome-badge{background:#2f7d68;color:white}.risk .outcome-badge{background:#b97921;color:white}.failed .outcome-badge{background:#a94b45;color:white}.outcome ul{margin:.5rem 0 .2rem;padding-left:1.1rem;font-size:.85rem}.patient-nav{display:flex;justify-content:space-between;gap:.7rem;margin-top:1rem}.patient-progress{font-size:.75rem;font-weight:900;color:#6b7776}
+.results-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin:1rem 0}.mini-patient{border-radius:12px;padding:.55rem;text-align:center;border:1px solid #ddd5c8;background:white}.mini-patient .face{font-size:1.5rem}.mini-patient strong{display:block;font-size:.68rem}.mini-patient em{display:inline-block;font-style:normal;font-size:.58rem;font-weight:900;margin-top:.25rem}.mini-patient.protected{background:#eff8f4}.mini-patient.risk{background:#fff7e7}.mini-patient.failed{background:#faece9}
+.crisis-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#611f25,#9b3e3e);color:white;border-radius:22px;padding:1.2rem 1.3rem;box-shadow:0 15px 30px rgba(96,34,36,.18)}.crisis-card:after{content:"BREAKING NEWS";position:absolute;right:-30px;top:18px;transform:rotate(17deg);font-weight:900;font-size:2rem;opacity:.08}.crisis-card h3{font-family:Georgia,serif;font-size:1.9rem}.crisis-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem}.crisis-option{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.09);color:white;border-radius:14px;padding:.8rem;text-align:left}.crisis-option.selected{background:white;color:#5e2528;border-color:white}.crisis-option h4{margin:0 0 .35rem}.crisis-option p{font-size:.77rem;margin:.25rem 0}.crisis-option .cost{background:#f5d8a0;color:#5d3b08}
+.reform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}.reform{border:1px solid #d8d1c6;border-radius:15px;padding:.8rem;background:white;text-align:left;min-height:145px}.reform.selected{border:2px solid var(--deep2);background:#eef8f5}.reform h4{margin:0 0 .3rem}.reform p{font-size:.75rem;color:var(--muted);margin:.25rem 0}.reform:disabled{opacity:.45;cursor:not-allowed}
+.compare-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.9rem}.compare-table th,.compare-table td{padding:.55rem;border-bottom:1px solid #e2dbcf;text-align:left}.compare-table th{font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:#607273}.status-dot{font-weight:900}.status-dot.protected{color:var(--green)}.status-dot.risk{color:var(--amber)}.status-dot.failed{color:var(--red)}
+.final-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.score-card{background:#103f49;color:white;border-radius:20px;padding:1.1rem}.score-card .big{font-family:Georgia,serif;font-size:3rem}.award{border:2px dashed #d7a84b;background:#fff8df;border-radius:18px;padding:1rem}.award-icon{font-size:2.3rem}.award h3{font-family:Georgia,serif;font-size:1.45rem}.report-list{display:grid;gap:.5rem}.report-row{display:grid;grid-template-columns:170px 1fr;gap:.8rem;border-bottom:1px solid #e3ddd2;padding:.55rem 0;font-size:.82rem}.report-row strong{color:#51676a}.pitch{background:#edf5f2;border-radius:18px;padding:1rem}.pitch ol{margin:.5rem 0;padding-left:1.2rem}.phrase-bank{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}.phrase{background:white;border:1px solid #cddbd6;border-radius:999px;padding:.38rem .58rem;font-size:.72rem;font-weight:800;color:#315c56}
+.footer-note{margin-top:2rem;text-align:center;color:#657779;font-size:.74rem}.footer-note strong{color:#294f53}
+.hidden{display:none!important}.actions{display:flex;justify-content:flex-end;gap:.6rem;flex-wrap:wrap;margin-top:1rem}.center{text-align:center}.live{min-height:1.2em;font-size:.75rem;color:#6f5b31}.warning{color:#8b3f38;font-weight:800}.ok{color:#2f6f5d;font-weight:800}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.hero-card{max-width:520px}.hud{position:static;grid-template-columns:repeat(2,1fr)}.credits{grid-column:1/-1}.role-stage,.reform-grid{grid-template-columns:repeat(2,1fr)}.options,.crisis-options{grid-template-columns:1fr}.patient-layout{grid-template-columns:1fr}.patient-file{display:grid;grid-template-columns:120px 1fr;gap:.8rem}.patient-photo{margin:0}.results-strip{grid-template-columns:repeat(4,1fr)}.final-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.topbar{position:static;align-items:flex-start}.main-nav{display:none}main{padding:.8rem .7rem 3rem}.hero{border-radius:20px;min-height:0}.hero h1{font-size:2.75rem}.setup-grid,.role-stage,.reform-grid{grid-template-columns:1fr}.hud{grid-template-columns:1fr 1fr}.metric{padding:.45rem}.patient-file{display:block}.results-strip{grid-template-columns:repeat(2,1fr)}.report-row{grid-template-columns:1fr;gap:.15rem}.panel{border-radius:16px;padding:1rem}.toolbar{align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+@media print{.topbar,.toolbar,.hud,.phase-nav,.actions,.hero-actions,.role-stage button,.patient-nav{display:none!important}body{background:white}.hero{min-height:0;background:white;color:#111;box-shadow:none;border:1px solid #ccc}.hero-card{box-shadow:none}.panel{box-shadow:none;break-inside:avoid}.game-shell{display:block!important}.hidden{display:none!important}}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the game</a>
+<header class="topbar">
+  <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">✚</span><span><strong>Medical English</strong><small>for Mrs Lecomte's students</small></span></a>
+  <nav class="main-nav" aria-label="Main navigation"><a href="fgsm3.html">FGSM3</a><a href="dictionary.html">Dictionary</a><a href="pronunciation.html">Pronunciation</a><a href="games.html">Games</a></nav>
+</header>
+<main id="main">
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><a href="fgsm3.html">FGSM3</a><span>›</span><span>Day 2 · Group challenge</span></nav>
+
+  <section class="hero" aria-labelledby="gameTitle">
+    <div>
+      <p class="kicker">FGSM3 · DAY 2 · GROUP CHALLENGE</p>
+      <h1 id="gameTitle">The Patient<br>Test</h1>
+      <p class="lead"><strong>Build it. Test it. Break it. Fix it.</strong> You are the new National Health Commission of Medoria. Design a healthcare system — then find out what it actually does to real patients.</p>
+      <div class="hero-actions"><button class="primary" id="heroStart" type="button">Enter the Commission →</button><button class="ghost" id="howBtn" type="button">How it works</button></div>
+    </div>
+    <aside class="hero-card" aria-label="Mission dossier">
+      <span class="stamp">CONFIDENTIAL</span>
+      <dl>
+        <div><dt>Country</dt><dd>Medoria · fictional</dd></div>
+        <div><dt>Population</dt><dd>8 million</dd></div>
+        <div><dt>Team</dt><dd>3–4 students</dd></div>
+        <div><dt>Budget</dt><dd>21 Health Credits</dd></div>
+        <div><dt>Mission</dt><dd>Protect patients without bankrupting the system</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="toolbar" aria-label="Game controls">
+    <div><strong>Group activity</strong><p>Speak English before you click. Progress stays only in this browser.</p></div>
+    <div class="toolbar-controls"><button class="tiny-btn" id="soundBtn" aria-pressed="true" type="button">🔊 Effects ON</button><button class="tiny-btn" id="printBtn" type="button">🖨 Print final report</button><button class="tiny-btn" id="resetBtn" type="button">↺ Reset game</button></div>
+    <p id="statusLive" class="live" role="status" aria-live="polite"></p>
+  </section>
+
+  <section id="howPanel" class="panel hidden">
+    <div class="panel-head"><div><span class="section-no">MISSION BRIEF</span><h2>How the Patient Test works</h2></div></div>
+    <div class="setup-grid">
+      <div class="setup-card"><strong>1 · BUILD</strong><p>Make seven policy decisions with a limited budget. Every choice creates a trade-off.</p></div>
+      <div class="setup-card"><strong>2 · TEST</strong><p>Meet seven patients. Your own policies determine whether each patient is protected, at risk or failed.</p></div>
+      <div class="setup-card"><strong>3 · SURVIVE</strong><p>A national crisis hits your system. Choose one response using whatever resources you kept.</p></div>
+      <div class="setup-card"><strong>4 · REFORM</strong><p>Make two final reforms, run the Patient Test again, then defend your system in 90 seconds.</p></div>
+    </div>
+    <div class="callout"><strong>Rule:</strong> before every major click, hear at least two different voices in the group. This is a speaking task disguised as a strategy game.</div>
+  </section>
+
+  <div id="gameShell" class="game-shell">
+    <section class="hud" aria-label="Healthcare system indicators">
+      <div class="credits"><small>Health Credits</small><strong id="creditsValue">21</strong><span> / 21</span></div>
+      <div class="metric"><div class="metric-row"><small>Access</small><strong id="accessValue">50</strong></div><div class="bar"><span id="accessBar"></span></div></div>
+      <div class="metric"><div class="metric-row"><small>Equity</small><strong id="equityValue">50</strong></div><div class="bar"><span id="equityBar"></span></div></div>
+      <div class="metric"><div class="metric-row"><small>Timely care</small><strong id="timelyValue">50</strong></div><div class="bar"><span id="timelyBar"></span></div></div>
+      <div class="metric"><div class="metric-row"><small>Workforce</small><strong id="workforceValue">50</strong></div><div class="bar"><span id="workforceBar"></span></div></div>
+      <div class="metric"><div class="metric-row"><small>Sustainability</small><strong id="sustainabilityValue">50</strong></div><div class="bar"><span id="sustainabilityBar"></span></div></div>
+    </section>
+
+    <nav class="phase-nav" aria-label="Game phases">
+      <span class="phase-pill current" data-phase-pill="setup">1 · Commission</span><span class="phase-pill" data-phase-pill="build">2 · Build</span><span class="phase-pill" data-phase-pill="patients">3 · Patient Test</span><span class="phase-pill" data-phase-pill="crisis">4 · Crisis</span><span class="phase-pill" data-phase-pill="reform">5 · Reform</span><span class="phase-pill" data-phase-pill="final">6 · Defend</span>
+    </nav>
+
+    <section id="setupPanel" class="panel" data-phase="setup">
+      <div class="panel-head"><div><span class="section-no">PHASE 1 · NATIONAL HEALTH COMMISSION</span><h2>Take your seats</h2><p class="instruction">Choose your team size, then reveal your individual role. Your role gives you a different priority — so disagreement is expected.</p></div></div>
+      <div class="setup-grid">
+        <div class="setup-card"><h3>How many students?</h3><div class="segmented"><button class="segment" type="button" data-team-size="3">3 students</button><button class="segment selected" type="button" data-team-size="4">4 students</button></div><p id="teamSizeNote" class="instruction">Four separate roles will be assigned.</p></div>
+        <div class="setup-card"><h3>Commission rule</h3><p>For every policy decision, the <strong>Finance Minister</strong> and the <strong>Equity Officer</strong> must both speak before the team votes.</p><p>For patient cases, the <strong>Clinical Adviser</strong> leads the discussion.</p></div>
+      </div>
+      <div id="roleStage" class="role-stage" style="margin-top:1rem"></div>
+      <div class="actions"><button class="primary" id="startBuild" type="button">We have our roles → Build the system</button></div>
+    </section>
+
+    <section id="buildPanel" class="panel hidden" data-phase="build">
+      <div class="panel-head"><div><span class="section-no">PHASE 2 · BUILD YOUR SYSTEM</span><h2>Seven decisions. One budget.</h2><p class="instruction">You have <strong>21 Health Credits</strong>. Expensive choices often improve access or equity; cheaper choices may protect the budget or speed up care for some patients. There is no perfect combination.</p></div></div>
+      <div class="callout"><strong>Before clicking:</strong> Finance Minister — can we afford it? Equity Officer — who might lose out? Clinical Adviser — what could happen to patients? Workforce Representative — can staff deliver it?</div>
+      <div id="decisionList"></div>
+      <p id="budgetMessage" class="live" role="status" aria-live="polite"></p>
+      <div class="actions"><button class="primary" id="lockSystem" type="button" disabled>Lock our system → Meet the patients</button></div>
+    </section>
+
+    <section id="patientsPanel" class="panel hidden" data-phase="patients">
+      <div class="panel-head"><div><span class="section-no">PHASE 3 · THE PATIENT TEST</span><h2>Your policies meet real life</h2><p class="instruction">These patients are fictional. Their outcomes are generated from the policy choices your group has just made.</p></div><span class="patient-progress" id="patientProgress">Patient 1 / 7</span></div>
+      <div id="patientStage"></div>
+      <div id="initialPatientSummary" class="hidden"></div>
+    </section>
+
+    <section id="crisisPanel" class="panel hidden" data-phase="crisis">
+      <div class="panel-head"><div><span class="section-no">PHASE 4 · NATIONAL CRISIS</span><h2>Your system is under pressure</h2><p class="instruction">A healthcare system does not operate in a calm laboratory. One national shock is about to expose your weakest point.</p></div></div>
+      <div id="crisisStage"></div>
+      <div class="actions"><button class="primary" id="confirmCrisis" type="button" disabled>Implement emergency response →</button></div>
+    </section>
+
+    <section id="reformPanel" class="panel hidden" data-phase="reform">
+      <div class="panel-head"><div><span class="section-no">PHASE 5 · REFORM CABINET</span><h2>You may change two things</h2><p class="instruction">You have seen who your original system protected and who it failed. Choose up to <strong>two reforms</strong>. Some cost Health Credits; others create a new trade-off.</p></div><div class="patient-progress"><span id="reformCount">0</span> / 2 reforms</div></div>
+      <div id="reformGrid" class="reform-grid"></div>
+      <p id="reformMessage" class="live" aria-live="polite"></p>
+      <div class="actions"><button class="primary" id="runAgain" type="button" disabled>Run the Patient Test again →</button></div>
+    </section>
+
+    <section id="finalPanel" class="panel hidden" data-phase="final">
+      <div class="panel-head"><div><span class="section-no">PHASE 6 · FINAL REPORT</span><h2>Did the reforms work?</h2><p class="instruction">Compare the two Patient Tests, inspect your trade-offs, then prepare your 90-second defence.</p></div></div>
+      <div id="comparison"></div>
+      <div class="final-grid" style="margin-top:1rem">
+        <div id="scoreCard" class="score-card"></div>
+        <div id="awardCard" class="award"></div>
+      </div>
+      <h3 style="margin-top:1.4rem">Your system dossier</h3>
+      <div id="systemReport" class="report-list"></div>
+      <div class="pitch" style="margin-top:1.2rem">
+        <span class="section-no">🎙️ 90-SECOND COMMISSION HEARING</span>
+        <h3>Defend your healthcare system</h3>
+        <ol>
+          <li>Explain <strong>how your system is funded and organised</strong>.</li>
+          <li>Identify <strong>one major strength</strong>.</li>
+          <li>Name <strong>one patient your original system failed or put at risk</strong> and explain why.</li>
+          <li>Explain <strong>one reform</strong> and its effect.</li>
+          <li>Admit <strong>one weakness that still remains</strong>.</li>
+        </ol>
+        <div class="phrase-bank"><span class="phrase">Our system is mainly funded by…</span><span class="phrase">One of its main strengths is…</span><span class="phrase">However, we realised that…</span><span class="phrase">We therefore decided to…</span><span class="phrase">The main trade-off is…</span></div>
+      </div>
+      <div class="actions"><button class="secondary" id="printFinal" type="button">🖨 Print / save report</button><button class="danger" id="playAgain" type="button">↺ Start a new commission</button></div>
+    </section>
+  </div>
+
+  <footer class="footer-note"><p><strong>For Mrs Lecomte's students.</strong> This educational simulation uses a fictional country and fictional patients. It is designed to explore healthcare-system trade-offs, not to give medical or policy advice.</p><p>Progress is stored only in this browser using local storage. No student name, answer or score is sent to Mrs Lecomte or to a third-party analytics service.</p><p>Pedagogical content and site created by Eglantine Lecomte, with the assistance of ChatGPT.</p></footer>
+</main>
+<script>
+(()=>{
+'use strict';
+const STORAGE='fgsm3_day2_patient_test_v1';
+const TOTAL=21;
+const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));
+const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
+let soundOn=true;
+function tone(freq=520,dur=.055){if(!soundOn)return;try{const A=window.AudioContext||window.webkitAudioContext;const c=new A(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);o.stop(c.currentTime+dur)}catch(e){}}
+function say(msg){$('#statusLive').textContent=msg;}
+
+const roles4=[
+ {icon:'🩺',name:'Clinical Adviser',brief:'Focus on patient safety, continuity and quality of care.',secret:'SECRET GOAL · Avoid any patient being failed because clinically necessary care is inaccessible.'},
+ {icon:'💰',name:'Finance Minister',brief:'Protect the public budget and challenge expensive promises.',secret:'SECRET GOAL · Finish with at least 3 Health Credits if you can.'},
+ {icon:'⚖️',name:'Equity Officer',brief:'Watch for income, geography and two-tier access.',secret:'SECRET GOAL · Prevent low-income or rural patients from being systematically disadvantaged.'},
+ {icon:'👥',name:'Workforce Representative',brief:'Ask whether doctors, nurses and other staff can actually deliver the policy.',secret:'SECRET GOAL · Keep the workforce indicator out of the danger zone.'}
+];
+const roles3=[
+ {icon:'🩺',name:'Clinical & Workforce Adviser',brief:'Protect patients while checking that staff can realistically deliver care.',secret:'SECRET GOAL · Avoid patient failures and keep the workforce out of the danger zone.'},roles4[1],roles4[2]
+];
+
+const decisions=[
+ {id:'coverage',title:'Who is covered?',prompt:'Decide who receives healthcare entitlement in Medoria.',options:[
+  {id:'universal',name:'Universal coverage',cost:5,desc:'Everyone ordinarily living in Medoria is covered for a broad package of care.',trade:'High access + equity · high public cost',d:{access:16,equity:18,timely:-3,workforce:-2,sustainability:-10}},
+  {id:'basic',name:'Basic universal package',cost:3,desc:'Everyone receives essential care; additional services may require extra cover.',trade:'Balanced access · some coverage gaps',d:{access:9,equity:7,timely:2,workforce:0,sustainability:3}},
+  {id:'insurance',name:'Insurance-dependent access',cost:1,desc:'Most non-emergency care requires public or private insurance.',trade:'Lower public cost · higher exclusion risk',d:{access:-11,equity:-16,timely:8,workforce:1,sustainability:9}}
+ ]},
+ {id:'gp',title:'What should patients pay to see a GP?',prompt:'Choose the point-of-use rule for primary care.',options:[
+  {id:'free',name:'No GP fee',cost:4,desc:'GP consultations are free at the point of use for covered residents.',trade:'Fewer cost barriers · heavier demand',d:{access:15,equity:11,timely:-7,workforce:-4,sustainability:-8}},
+  {id:'copay',name:'Small co-payment',cost:2,desc:'The state subsidises GP care; patients pay a modest fixed contribution.',trade:'Some cost control · some barrier risk',d:{access:7,equity:2,timely:3,workforce:0,sustainability:4}},
+  {id:'fullfee',name:'Full fee unless insured',cost:0,desc:'Patients pay the consultation fee themselves unless their insurance covers it.',trade:'Protects public budget · strong access risk',d:{access:-13,equity:-14,timely:7,workforce:2,sustainability:9}}
+ ]},
+ {id:'hospital',title:'How should hospital care work?',prompt:'Set the public guarantee for emergency and planned hospital treatment.',options:[
+  {id:'freepublic',name:'Free public hospital care',cost:5,desc:'Medically necessary public hospital care is free for covered residents.',trade:'Strong protection · capacity pressure',d:{access:13,equity:14,timely:-7,workforce:-5,sustainability:-10}},
+  {id:'mixedfees',name:'Emergency free, fees for some planned care',cost:3,desc:'Emergency care is free; some elective treatment can involve patient charges.',trade:'Middle path · some affordability risk',d:{access:5,equity:2,timely:4,workforce:-1,sustainability:3}},
+  {id:'insuredplanned',name:'Insurance for most planned care',cost:1,desc:'Emergency treatment is protected, but insurance matters greatly for elective care.',trade:'Faster lane for insured patients · two-tier risk',d:{access:-7,equity:-13,timely:8,workforce:1,sustainability:8}}
+ ]},
+ {id:'private',title:'What role should private healthcare play?',prompt:'Decide how strongly public and private provision coexist.',options:[
+  {id:'supplementary',name:'Supplementary only',cost:2,desc:'Private cover mainly adds comfort or faster elective options; public care remains central.',trade:'More equal base · fewer extra capacity routes',d:{access:3,equity:9,timely:-2,workforce:-1,sustainability:-1}},
+  {id:'parallel',name:'Public + private alongside each other',cost:1,desc:'Patients may use either sector, with private cover offering faster pathways for some care.',trade:'More choice + speed · two-tier pressure',d:{access:2,equity:-5,timely:7,workforce:1,sustainability:4}},
+  {id:'major',name:'Major private role',cost:0,desc:'Private insurance and provision are central to non-emergency access.',trade:'Fast for insured patients · high equity risk',d:{access:-4,equity:-15,timely:10,workforce:2,sustainability:9}}
+ ]},
+ {id:'rural',title:'How will you cover rural areas?',prompt:'Medoria has remote regions and several small islands.',options:[
+  {id:'guarantee',name:'Guaranteed local network',cost:4,desc:'Maintain local GP access and regional hospital capacity throughout the country.',trade:'Strong geographic equity · expensive',d:{access:14,equity:13,timely:3,workforce:-4,sustainability:-9}},
+  {id:'regional',name:'Regional hubs + telemedicine',cost:2,desc:'Use regional centres, transport links and telemedicine for many remote services.',trade:'Good reach · not every service is local',d:{access:9,equity:7,timely:4,workforce:1,sustainability:4}},
+  {id:'cities',name:'Concentrate specialist services in cities',cost:0,desc:'Centralise facilities to maximise efficiency and specialist volume.',trade:'Efficient centres · rural access risk',d:{access:-10,equity:-13,timely:5,workforce:3,sustainability:10}}
+ ]},
+ {id:'workforce',title:'What is your workforce strategy?',prompt:'Medoria already has staffing pressure in hospitals and primary care.',options:[
+  {id:'train',name:'Train more staff locally',cost:4,desc:'Expand medical, nursing and allied-health training places.',trade:'Sustainable pipeline · slow to take effect',d:{access:3,equity:2,timely:2,workforce:15,sustainability:-5}},
+  {id:'recruit',name:'Recruit internationally',cost:2,desc:'Launch a major international recruitment programme to fill vacancies quickly.',trade:'Fast relief · dependence risk',d:{access:4,equity:0,timely:8,workforce:10,sustainability:4}},
+  {id:'retain',name:'Improve pay + working conditions',cost:3,desc:'Focus on retention, workload, staffing conditions and career progression.',trade:'Strong retention · recurring cost',d:{access:4,equity:1,timely:6,workforce:14,sustainability:-7}},
+  {id:'none',name:'No major workforce package',cost:0,desc:'Keep current staffing policy and protect the immediate budget.',trade:'Cheap now · high shortage risk',d:{access:-5,equity:-2,timely:-9,workforce:-17,sustainability:9}}
+ ]},
+ {id:'injury',title:'What happens after an accident?',prompt:'Choose how accidental injuries are funded.',options:[
+  {id:'nofault',name:'National no-fault injury cover',cost:3,desc:'Treatment is covered regardless of who caused the injury; blame does not need to be proved first.',trade:'Simple access · dedicated public cost',d:{access:9,equity:8,timely:5,workforce:-1,sustainability:-6}},
+  {id:'standard',name:'Use normal healthcare coverage',cost:2,desc:'Accident care follows the same rules as other healthcare, with emergency protection.',trade:'Simple administration · coverage depends on wider system',d:{access:3,equity:2,timely:1,workforce:0,sustainability:2}},
+  {id:'liability',name:'Insurance / liability route',cost:0,desc:'Beyond emergency care, insurance or liability arrangements strongly affect payment.',trade:'Low public cost · delay and exclusion risk',d:{access:-7,equity:-10,timely:-4,workforce:0,sustainability:9}}
+ ]}
+];
+
+const patients=[
+ {id:'emma',icon:'👩‍🎓',name:'Emma',meta:['22 · university student','Low income','Large city'],story:'Emma has had abdominal pain for three weeks. She wants to see a GP and may need referral to a specialist.',questions:['Can she afford the first GP appointment?','Could cost make her delay seeking care?','What happens if she needs planned specialist care?']},
+ {id:'james',icon:'👨‍🦳',name:'James',meta:['68 · retired','Diabetes + heart disease','Regular GP care + medicines'],story:'James needs frequent primary-care appointments and ongoing treatment. A small charge once may be manageable; repeated charges are different.',questions:['Is ongoing care affordable, not just one visit?','Does his coverage protect chronic care?','Could repeated charges change his behaviour?']},
+ {id:'maya',icon:'👧',name:'Maya',meta:['8 years old','Remote rural area','Nearest major hospital: 110 km'],story:'Maya develops severe breathing problems at night. Her family needs urgent assessment and may need hospital care.',questions:['How quickly can the family reach appropriate care?','Did your rural policy create a local or regional route?','Would geography change her outcome?']},
+ {id:'daniel',icon:'👨‍💼',name:'Daniel',meta:['45 · high income','Private health insurance','Needs non-urgent knee surgery'],story:'Daniel needs an elective knee operation. The public route is under pressure, but he can afford strong private cover.',questions:['Does your system give him a faster private route?','Would a poorer patient with the same need wait longer?','Is this speed, inequality — or both?']},
+ {id:'aroha',icon:'👷‍♀️',name:'Aroha',meta:['37 · factory worker','No private insurance','Serious shoulder injury after a fall'],story:'Aroha falls from a ladder at work and needs assessment, imaging and treatment. She cannot afford a large unexpected bill.',questions:['Who pays for accident care?','Must responsibility be proved before support is available?','Would her lack of private insurance matter?']},
+ {id:'patel',icon:'👨‍⚕️',name:'Dr Patel',meta:['31 · hospital doctor','Frequent night shifts','Three colleagues recently resigned'],story:'Dr Patel is exhausted. His department is understaffed and he is considering leaving for a better-paid post abroad.',questions:['Does your system have a credible workforce strategy?','Does it solve today’s vacancies or only future ones?','What happens to patients if more staff leave?']},
+ {id:'margaret',icon:'👵',name:'Margaret',meta:['79 · low income','No private insurance','Multiple chronic conditions'],story:'Margaret needs a GP, blood tests, cardiology, physiotherapy and regular medication. She does not drive and finds complex systems difficult to navigate.',questions:['Can she afford repeated contact with the system?','Does she depend on private cover for planned care?','How many barriers accumulate for one person?']}
+];
+
+const crises=[
+ {id:'flu',title:'Severe winter flu wave',desc:'Emergency departments are overwhelmed and demand for urgent care rises sharply.',d:{access:-5,equity:-2,timely:-14,workforce:-9,sustainability:-5},responses:[
+  {id:'surge',name:'Fund a temporary surge plan',cost:3,desc:'Extra beds, overtime and short-term community capacity.',d:{access:5,equity:2,timely:10,workforce:-2,sustainability:-5}},
+  {id:'primary',name:'Redirect care through primary-care hubs',cost:2,desc:'Extended-hours GP and community clinics absorb lower-acuity cases.',d:{access:7,equity:4,timely:7,workforce:-1,sustainability:-2}},
+  {id:'triage',name:'Tighten hospital triage only',cost:0,desc:'Protect emergency departments by restricting non-urgent access.',d:{access:-4,equity:-4,timely:5,workforce:2,sustainability:5}}
+ ]},
+ {id:'resign',title:'800 nurses resign',desc:'Staff say workloads and working conditions have become unacceptable.',d:{access:-5,equity:-3,timely:-10,workforce:-16,sustainability:-3},responses:[
+  {id:'retention',name:'Emergency retention agreement',cost:3,desc:'Pay, rostering and staffing measures target immediate retention.',d:{access:3,equity:2,timely:6,workforce:14,sustainability:-6}},
+  {id:'recruit',name:'International recruitment drive',cost:2,desc:'Fast overseas recruitment fills priority vacancies.',d:{access:4,equity:0,timely:7,workforce:10,sustainability:2}},
+  {id:'redeploy',name:'Redeploy staff + postpone elective activity',cost:0,desc:'Protect urgent services using existing staff, but planned care slows down.',d:{access:-2,equity:-1,timely:-2,workforce:3,sustainability:5}}
+ ]},
+ {id:'recession',title:'Economic recession',desc:'Tax revenue falls and the health budget faces an immediate funding gap.',d:{access:-2,equity:-3,timely:-3,workforce:-3,sustainability:-15},responses:[
+  {id:'protect',name:'Protect health spending',cost:3,desc:'Use reserves and accept deeper cuts elsewhere in government.',d:{access:3,equity:3,timely:3,workforce:3,sustainability:5}},
+  {id:'copays',name:'Increase patient contributions',cost:0,desc:'Raise revenue quickly through co-payments and charges.',d:{access:-8,equity:-10,timely:3,workforce:0,sustainability:10}},
+  {id:'target',name:'Target protection to low-income patients',cost:1,desc:'Keep subsidies for vulnerable groups while tightening other spending.',d:{access:2,equity:8,timely:-1,workforce:-1,sustainability:7}}
+ ]},
+ {id:'ageing',title:'Rapidly ageing population',desc:'The number of people over 75 rises rapidly, increasing chronic-care demand.',d:{access:-5,equity:-2,timely:-8,workforce:-8,sustainability:-8},responses:[
+  {id:'community',name:'Expand community chronic care',cost:3,desc:'Invest in GP teams, nursing and community follow-up.',d:{access:8,equity:6,timely:5,workforce:2,sustainability:-4}},
+  {id:'digital',name:'Digital monitoring + telemedicine',cost:1,desc:'Use remote follow-up for suitable patients while preserving face-to-face routes.',d:{access:5,equity:1,timely:6,workforce:3,sustainability:4}},
+  {id:'ration',name:'Tighten eligibility for some services',cost:0,desc:'Protect the budget by restricting lower-priority planned care.',d:{access:-6,equity:-7,timely:4,workforce:2,sustainability:9}}
+ ]},
+ {id:'rural',title:'Rural hospital closure',desc:'One remote region loses its hospital after staffing and safety concerns.',d:{access:-11,equity:-12,timely:-6,workforce:-3,sustainability:3},responses:[
+  {id:'reopen',name:'Reopen with a protected staffing package',cost:3,desc:'Guarantee core services and incentives for rural staff.',d:{access:11,equity:12,timely:5,workforce:4,sustainability:-8}},
+  {id:'hub',name:'Create an urgent-care hub + transport network',cost:2,desc:'Replace some hospital functions with a staffed regional hub and rapid transfer.',d:{access:8,equity:7,timely:6,workforce:3,sustainability:-1}},
+  {id:'transfer',name:'Centralise emergency transfers',cost:0,desc:'Use existing ambulances and referral protocols more aggressively; local capacity is not restored.',d:{access:2,equity:0,timely:1,workforce:1,sustainability:5}}
+ ]},
+ {id:'migration',title:'Young doctors leave the country',desc:'Newly qualified doctors are moving abroad for better salaries and working conditions.',d:{access:-4,equity:-2,timely:-8,workforce:-14,sustainability:-2},responses:[
+  {id:'conditions',name:'Retention package',cost:3,desc:'Improve working conditions, supervision and early-career pay.',d:{access:3,equity:2,timely:5,workforce:13,sustainability:-6}},
+  {id:'bond',name:'Fund training for a service commitment',cost:2,desc:'Offer education support in return for a period of public service.',d:{access:2,equity:2,timely:2,workforce:9,sustainability:-2}},
+  {id:'redistribute',name:'Redistribute the existing workforce',cost:0,desc:'Move staff towards the most pressured services; some other services lose capacity.',d:{access:-1,equity:-1,timely:1,workforce:3,sustainability:5}}
+ ]}
+];
+
+const reforms=[
+ {id:'removegp',name:'Remove GP charges',cost:3,desc:'Make GP consultations free at the point of use.',d:{access:11,equity:9,timely:-4,workforce:-2,sustainability:-7}},
+ {id:'means',name:'Means-tested protection',cost:1,desc:'Protect low-income patients from GP and planned-care charges.',d:{access:6,equity:11,timely:0,workforce:0,sustainability:1}},
+ {id:'ruralnet',name:'Rural access package',cost:3,desc:'Fund regional hubs, transport and protected rural capacity.',d:{access:10,equity:10,timely:4,workforce:-1,sustainability:-6}},
+ {id:'training',name:'Expand training places',cost:3,desc:'Strengthen the long-term domestic healthcare workforce pipeline.',d:{access:2,equity:2,timely:2,workforce:12,sustainability:-5}},
+ {id:'retention',name:'Retention + working conditions deal',cost:2,desc:'Reduce avoidable staff exits through pay, workload and career measures.',d:{access:3,equity:1,timely:5,workforce:11,sustainability:-5}},
+ {id:'waiting',name:'Waiting-list partnership',cost:2,desc:'Buy short-term elective capacity from private providers.',d:{access:3,equity:-4,timely:11,workforce:1,sustainability:-3}},
+ {id:'nofault',name:'Introduce no-fault injury cover',cost:2,desc:'Guarantee accident treatment without proving blame first.',d:{access:6,equity:6,timely:4,workforce:0,sustainability:-4}},
+ {id:'telemed',name:'Telemedicine + navigation service',cost:1,desc:'Improve remote access and help patients navigate referrals and follow-up.',d:{access:7,equity:5,timely:5,workforce:2,sustainability:3}},
+ {id:'priority',name:'Prioritise high-need patients',cost:0,desc:'Use stricter clinical prioritisation so vulnerable and high-need patients move first — at the cost of slower low-priority elective care.',d:{access:-1,equity:6,timely:3,workforce:1,sustainability:4}}
+];
+
+const fresh=()=>({phase:'setup',teamSize:4,choices:{},credits:TOTAL,metrics:{access:50,equity:50,timely:50,workforce:50,sustainability:50},patientIndex:0,patientRevealed:false,initialResults:null,crisisId:null,crisisResponse:null,reforms:[],finalResults:null});
+let state=fresh();
+try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved&&saved.metrics)state=Object.assign(fresh(),saved)}catch(e){}
+function save(){localStorage.setItem(STORAGE,JSON.stringify(state))}
+function optionFor(decisionId,optId){const d=decisions.find(x=>x.id===decisionId);return d?.options.find(x=>x.id===optId)}
+function calcBuild(){let metrics={access:50,equity:50,timely:50,workforce:50,sustainability:50},spent=0;for(const d of decisions){const o=optionFor(d.id,state.choices[d.id]);if(!o)continue;spent+=o.cost;for(const k in o.d)metrics[k]+=o.d[k]}
+ const credits=TOTAL-spent;metrics.sustainability+=Math.max(-4,Math.min(8,credits-3));for(const k in metrics)metrics[k]=clamp(metrics[k]);return{credits,metrics};}
+function applyDelta(base,d){const n={...base};for(const k in d)n[k]=clamp((n[k]||0)+d[k]);return n}
+function recompute(){const b=calcBuild();state.credits=b.credits;state.metrics=b.metrics;if(state.crisisId){const c=crises.find(x=>x.id===state.crisisId);state.metrics=applyDelta(state.metrics,c.d);if(state.crisisResponse){const r=c.responses.find(x=>x.id===state.crisisResponse);state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}}
+ for(const rid of state.reforms){const r=reforms.find(x=>x.id===rid);state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}state.credits=Math.max(0,state.credits);save();renderHUD()}
+function renderHUD(){for(const k of ['access','equity','timely','workforce','sustainability']){const v=clamp(state.metrics[k]);$('#'+k+'Value').textContent=v;$('#'+k+'Bar').style.width=v+'%'}$('#creditsValue').textContent=state.credits}
+function setPhase(phase){state.phase=phase;$$('[data-phase]').forEach(x=>x.classList.toggle('hidden',x.dataset.phase!==phase));$$('[data-phase-pill]').forEach(p=>{const order=['setup','build','patients','crisis','reform','final'];p.classList.toggle('current',p.dataset.phasePill===phase);p.classList.toggle('done',order.indexOf(p.dataset.phasePill)<order.indexOf(phase))});save();window.scrollTo({top:document.querySelector('.game-shell').offsetTop-55,behavior:'smooth'})}
+function renderRoles(){const roles=state.teamSize===3?roles3:roles4;$('#roleStage').innerHTML=roles.map((r,i)=>`<article class="role-card"><span class="role-icon">${r.icon}</span><h3>${r.name}</h3><p>${r.brief}</p><div class="role-secret">${r.secret}</div><button type="button" data-reveal-role="${i}">Reveal my secret goal</button></article>`).join('');$$('[data-reveal-role]').forEach(btn=>btn.onclick=()=>{const c=btn.closest('.role-card');c.classList.toggle('revealed');btn.textContent=c.classList.contains('revealed')?'Hide secret goal':'Reveal my secret goal';tone(630)})}
+function renderDecisions(){
+ $('#decisionList').innerHTML=decisions.map((d,i)=>`<article class="decision-card"><div class="decision-title"><div><span class="section-no">DECISION ${i+1}</span><h3>${d.title}</h3><p class="instruction">${d.prompt}</p></div><span class="decision-counter">${state.choices[d.id]?'CHOSEN':'OPEN'}</span></div><div class="options">${d.options.map(o=>`<button class="option ${state.choices[d.id]===o.id?'selected':''}" type="button" data-decision="${d.id}" data-option="${o.id}"><span class="cost">${o.cost} credit${o.cost===1?'':'s'}</span><h4>${o.name}</h4><p>${o.desc}</p><div class="trade">${o.trade}</div></button>`).join('')}</div>${state.choices[d.id]?`<div class="selected-note">Commission decision: ${optionFor(d.id,state.choices[d.id]).name}</div>`:''}</article>`).join('');
+ $$('[data-decision]').forEach(btn=>btn.onclick=()=>selectDecision(btn.dataset.decision,btn.dataset.option));
+ const complete=decisions.every(d=>state.choices[d.id]);$('#lockSystem').disabled=!complete||state.credits<0;$('#budgetMessage').textContent=complete?`System ready. You have ${state.credits} Health Credit${state.credits===1?'':'s'} left for future shocks.`:`Choose ${decisions.filter(d=>!state.choices[d.id]).length} more policy decision(s).`;
+}
+function selectDecision(did,oid){const old=state.choices[did];const oldCost=old?optionFor(did,old).cost:0,newCost=optionFor(did,oid).cost;const projected=state.credits+oldCost-newCost;if(projected<0){tone(180,.12);$('#budgetMessage').innerHTML='<span class="warning">Not enough Health Credits. Change another decision or choose a cheaper option.</span>';return}state.choices[did]=oid;recompute();renderDecisions();tone(560)}
+function reformFlags(){return new Set(state.reforms)}
+function assessPatients(){const c=state.choices,R=reformFlags();const res={};
+ const lowProtected=R.has('means');
+ // Emma
+ let risk=0,reasons=[];if(c.coverage==='insurance'&&!lowProtected){risk+=2;reasons.push('Her low income and insurance-dependent coverage create an access barrier.')}if(c.gp==='fullfee'&&!R.has('removegp')&&!lowProtected){risk+=2;reasons.push('She must pay the full GP fee, so delaying care is more likely.')}else if(c.gp==='copay'&&!lowProtected){risk+=1;reasons.push('The GP co-payment is a manageable cost for some patients but can still deter low-income patients.')}if(c.hospital==='insuredplanned'&&!lowProtected){risk+=1;reasons.push('Planned specialist or hospital care depends strongly on insurance.')}res.emma=mk(risk,reasons,'Affordable primary care gives Emma an early route into the system.');
+ // James
+ risk=0;reasons=[];if(c.coverage==='insurance'&&!lowProtected){risk+=2;reasons.push('Chronic care is vulnerable when coverage depends heavily on insurance.')}if(c.gp==='fullfee'&&!R.has('removegp')&&!lowProtected){risk+=2;reasons.push('Repeated full GP fees accumulate over time.')}else if(c.gp==='copay'&&!lowProtected){risk+=1;reasons.push('Repeated co-payments can become a chronic-care burden.')}if(c.workforce==='none'&&!R.has('retention')&&!R.has('training')){risk+=1;reasons.push('Primary-care staffing pressure threatens continuity.')}res.james=mk(risk,reasons,'His regular care is financially and organisationally protected.');
+ // Maya
+ risk=0;reasons=[];if(c.rural==='cities'&&!R.has('ruralnet')&&!R.has('telemed')){risk+=3;reasons.push('Specialist capacity is concentrated far from her home.')}else if(c.rural==='regional'&&!R.has('ruralnet')){risk+=1;reasons.push('Regional hubs help, but urgent travel remains a real constraint.')}if(c.workforce==='none'&&!R.has('retention')){risk+=1;reasons.push('Staff shortages weaken emergency coverage outside major centres.')}res.maya=mk(risk,reasons,'The rural network gives Maya a credible route to urgent assessment and transfer.');
+ // Daniel
+ risk=0;reasons=[];if(c.private==='supplementary'){risk+=1;reasons.push('Private cover may help, but it does not dominate the pathway.')}if(c.private==='parallel'||c.private==='major'||c.hospital==='insuredplanned'||R.has('waiting')){reasons.push('His income and insurance give him access to a faster elective route.')}else{risk+=1;reasons.push('He remains exposed to public waiting-time pressure.')}res.daniel=mk(risk,reasons,'Daniel can obtain timely elective care — now ask whether everyone can.');
+ // Aroha
+ risk=0;reasons=[];if(c.injury==='nofault'||R.has('nofault')){reasons.push('No-fault cover gives her a direct route to funded injury treatment.')}else if(c.injury==='standard'){if(c.coverage==='insurance'&&!lowProtected){risk+=1;reasons.push('Accident care follows a wider system in which her coverage is less secure.')}else reasons.push('Her injury is handled through the ordinary healthcare system.');}else{risk+=2;reasons.push('Insurance or liability arrangements may delay or complicate funded follow-up care.');if(c.coverage==='insurance')risk+=1;}res.aroha=mk(risk,reasons,'Her accident treatment is covered without a major financial barrier.');
+ // Patel
+ risk=0;reasons=[];if(R.has('retention')){reasons.push('The new retention package directly targets staff exits and working conditions.')}else if(c.workforce==='retain'){reasons.push('Your original policy directly targets retention and working conditions.')}else if(c.workforce==='train'||R.has('training')){risk+=1;reasons.push('Training more staff strengthens the pipeline, but it does not fill tonight’s rota.')}else if(c.workforce==='recruit'){risk+=1;reasons.push('International recruitment fills vacancies faster but does not automatically solve local retention.')}else{risk+=3;reasons.push('There is no major strategy to stop shortages and burnout from worsening.')}res.patel=mk(risk,reasons,'The workforce strategy gives Dr Patel a credible reason to stay.');
+ // Margaret
+ risk=0;reasons=[];if(c.coverage==='insurance'&&!lowProtected)risk+=2;if(c.gp==='fullfee'&&!R.has('removegp')&&!lowProtected)risk+=2;else if(c.gp==='copay'&&!lowProtected)risk+=1;if(c.hospital==='insuredplanned'&&!lowProtected)risk+=1;if(c.private==='major')risk+=1;if(state.metrics.access<42)risk+=1;if(state.metrics.workforce<38)risk+=1;if(R.has('telemed'))risk=Math.max(0,risk-1);if(R.has('priority'))risk=Math.max(0,risk-1);if(risk>=4)reasons.push('Multiple barriers accumulate: cost, planned-care access and system capacity.');else if(risk>=2)reasons.push('She is covered in principle, but repeated contacts expose several practical barriers.');res.margaret=mk(risk,reasons,'Her repeated GP, specialist and follow-up needs can be navigated without a major financial or access barrier.');
+ return res;
+}
+function mk(risk,reasons,good){let status=risk>=3?'failed':risk>=1?'risk':'protected';if(!reasons.length)reasons=[good];return{status,reasons}}
+function statusLabel(s){return s==='protected'?'PROTECTED':s==='risk'?'AT RISK':'SYSTEM FAILURE'}
+function renderPatient(){const p=patients[state.patientIndex],res=assessPatients()[p.id];$('#patientProgress').textContent=`Patient ${state.patientIndex+1} / ${patients.length}`;$('#patientStage').innerHTML=`<div class="patient-layout"><aside class="patient-file"><div class="patient-photo" aria-hidden="true">${p.icon}</div><div><span class="section-no">PATIENT FILE ${String(state.patientIndex+1).padStart(2,'0')}</span><h3>${p.name}</h3><div class="patient-meta">${p.meta.map(x=>`<span>${x}</span>`).join('')}</div></div></aside><div class="case-box"><h3>What happens in YOUR system?</h3><p>${p.story}</p><div class="discussion"><strong>Discuss before revealing</strong><ul>${p.questions.map(q=>`<li>${q}</li>`).join('')}</ul></div><div class="role-prompt">🗣️ <strong>Speaking rule:</strong> Clinical Adviser leads. Finance or Equity must challenge the first answer with “But what about…?”</div><div id="patientOutcome" class="outcome ${res.status} ${state.patientRevealed?'show':''}"><span class="outcome-badge">${statusLabel(res.status)}</span><h3>${p.name}: ${res.status==='protected'?'the system holds':res.status==='risk'?'care is possible, but fragile':'your system creates a serious barrier'}</h3><ul>${res.reasons.map(r=>`<li>${r}</li>`).join('')}</ul>${p.id==='daniel'?'<p><strong>Equity check:</strong> Daniel may do well personally while the system becomes less equal. A patient outcome and a system outcome are not the same thing.</p>':''}${p.id==='aroha'?'<p><strong>Real-world connection:</strong> New Zealand uses ACC, a no-fault accident scheme — one of the ideas explored in Day 2.</p>':''}</div><div class="patient-nav"><button class="secondary" id="revealOutcome" type="button" ${state.patientRevealed?'disabled':''}>${state.patientRevealed?'Outcome revealed':'Reveal system outcome'}</button><button class="primary" id="nextPatient" type="button" ${state.patientRevealed?'':'disabled'}>${state.patientIndex===patients.length-1?'Finish Patient Test →':'Next patient →'}</button></div></div></div>`;
+ $('#revealOutcome').onclick=()=>{state.patientRevealed=true;save();renderPatient();tone(res.status==='failed'?190:res.status==='risk'?380:650,.11)};$('#nextPatient').onclick=()=>{if(state.patientIndex<patients.length-1){state.patientIndex++;state.patientRevealed=false;save();renderPatient();tone(560)}else{state.initialResults=assessPatients();save();renderInitialSummary();}};
+}
+function miniResults(results){return `<div class="results-strip">${patients.map(p=>{const r=results[p.id];return `<div class="mini-patient ${r.status}"><div class="face">${p.icon}</div><strong>${p.name}</strong><em>${statusLabel(r.status)}</em></div>`}).join('')}</div>`}
+function renderInitialSummary(){const r=state.initialResults||assessPatients();const counts=countStatuses(r);$('#patientStage').innerHTML='';$('#initialPatientSummary').classList.remove('hidden');$('#initialPatientSummary').innerHTML=`<div class="center"><span class="section-no">FIRST TEST COMPLETE</span><h2>Your system protected ${counts.protected} / 7 patients</h2><p class="instruction" style="margin:auto">“Covered” does not always mean “able to access care”. Look at who faced barriers — and why.</p></div>${miniResults(r)}<div class="callout"><strong>Commission question:</strong> Which failure worries you most: cost, geography, waiting time, workforce or two-tier access?</div><div class="actions"><button id="triggerCrisis" class="primary" type="button">Open the breaking-news alert →</button></div>`;$('#triggerCrisis').onclick=()=>{if(!state.crisisId)state.crisisId=crises[Math.floor(Math.random()*crises.length)].id;state.crisisResponse=null;recompute();renderCrisis();setPhase('crisis');tone(170,.16)} }
+function countStatuses(r){const n={protected:0,risk:0,failed:0};Object.values(r).forEach(x=>n[x.status]++);return n}
+function renderCrisis(){const c=crises.find(x=>x.id===state.crisisId);$('#crisisStage').innerHTML=`<article class="crisis-card"><span class="section-no" style="color:#ffd6a0">🚨 BREAKING NEWS</span><h3>${c.title}</h3><p>${c.desc}</p><p><strong>Immediate impact:</strong> the shock has already hit your indicators. Choose ONE emergency response.</p><div class="crisis-options">${c.responses.map(r=>`<button type="button" class="crisis-option ${state.crisisResponse===r.id?'selected':''}" data-crisis-response="${r.id}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('')}</div></article><p id="crisisMsg" class="live"></p>`;$$('[data-crisis-response]').forEach(b=>b.onclick=()=>{const r=c.responses.find(x=>x.id===b.dataset.crisisResponse);const old=state.crisisResponse?c.responses.find(x=>x.id===state.crisisResponse).cost:0;const baseCredits=calcBuild().credits - state.reforms.reduce((s,id)=>s+reforms.find(x=>x.id===id).cost,0);if(baseCredits-r.cost<0){$('#crisisMsg').innerHTML='<span class="warning">You did not keep enough Health Credits for that response.</span>';tone(180,.12);return}state.crisisResponse=r.id;recompute();renderCrisis();$('#confirmCrisis').disabled=false;tone(560)});$('#confirmCrisis').disabled=!state.crisisResponse}
+function renderReforms(){$('#reformGrid').innerHTML=reforms.map(r=>`<button type="button" class="reform ${state.reforms.includes(r.id)?'selected':''}" data-reform="${r.id}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('');$$('[data-reform]').forEach(b=>b.onclick=()=>toggleReform(b.dataset.reform));$('#reformCount').textContent=state.reforms.length;$('#runAgain').disabled=state.reforms.length===0;$('#reformMessage').textContent=state.reforms.length<2?'Choose one or two reforms. You may proceed after at least one.':'Two reforms selected. Your cabinet is ready.'}
+function toggleReform(id){const r=reforms.find(x=>x.id===id),idx=state.reforms.indexOf(id);if(idx>=0){state.reforms.splice(idx,1);recompute();renderReforms();tone(420);return}if(state.reforms.length>=2){$('#reformMessage').innerHTML='<span class="warning">Only two reforms are allowed.</span>';tone(180,.12);return}if(state.credits<r.cost){$('#reformMessage').innerHTML='<span class="warning">Not enough Health Credits for that reform.</span>';tone(180,.12);return}state.reforms.push(id);recompute();renderReforms();tone(580)}
+function renderFinal(){state.finalResults=assessPatients();save();const before=state.initialResults,after=state.finalResults;$('#comparison').innerHTML=`<table class="compare-table"><thead><tr><th>Patient</th><th>Before reform</th><th>After reform</th><th>What changed?</th></tr></thead><tbody>${patients.map(p=>{const a=before[p.id],b=after[p.id],changed=a.status!==b.status;return `<tr><td>${p.icon} <strong>${p.name}</strong></td><td><span class="status-dot ${a.status}">${statusLabel(a.status)}</span></td><td><span class="status-dot ${b.status}">${statusLabel(b.status)}</span></td><td>${changed?'Policy changes altered this patient’s pathway.':'No status change — the same structural issue remains.'}</td></tr>`}).join('')}</tbody></table>`;
+ const avg=Math.round(Object.values(state.metrics).reduce((a,b)=>a+b,0)/5),counts=countStatuses(after);$('#scoreCard').innerHTML=`<span class="section-no" style="color:#f3c86a">SYSTEM SCORE</span><div class="big">${avg}/100</div><p>${counts.protected} protected · ${counts.risk} at risk · ${counts.failed} failed</p><p><strong>${state.credits}</strong> Health Credit${state.credits===1?'':'s'} left after crisis and reforms.</p>`;
+ const entries=Object.entries(state.metrics).sort((a,b)=>b[1]-a[1]),best=entries[0],worst=entries.at(-1);let icon='🏆',title='Strongest dimension: '+labelMetric(best[0]),text=`Your best-performing indicator is ${labelMetric(best[0])} (${best[1]}/100).`;
+ if(state.metrics.sustainability<35&&state.metrics.access>70){icon='💸';title='Healthcare Utopia — budget warning';text='Access is ambitious, but your financial room is dangerously limited.'}else if(state.metrics.equity<35&&state.metrics.timely>65){icon='⚡';title='Fast lane — equity warning';text='Some patients may move quickly, but access is strongly shaped by resources or insurance.'}else if(counts.failed===0){icon='🏆';title='Patient Protection Award';text='No final patient triggered a system failure — although trade-offs still remain.'}
+ $('#awardCard').innerHTML=`<div class="award-icon">${icon}</div><span class="section-no">COMMISSION VERDICT</span><h3>${title}</h3><p>${text}</p><p><strong>Weakest indicator:</strong> ${labelMetric(worst[0])} (${worst[1]}/100).</p>`;
+ const rows=decisions.map(d=>[d.title,optionFor(d.id,state.choices[d.id]).name]);rows.push(['National crisis',crises.find(x=>x.id===state.crisisId).title]);rows.push(['Emergency response',crises.find(x=>x.id===state.crisisId).responses.find(x=>x.id===state.crisisResponse).name]);rows.push(['Final reforms',state.reforms.map(id=>reforms.find(r=>r.id===id).name).join(' + ')]);$('#systemReport').innerHTML=rows.map(([a,b])=>`<div class="report-row"><strong>${a}</strong><span>${b}</span></div>`).join('');
+}
+function labelMetric(k){return({access:'Access',equity:'Equity',timely:'Timely care',workforce:'Workforce',sustainability:'Sustainability'})[k]||k}
+function restore(){
+ $('#gameShell').classList.add('active');recompute();renderRoles();renderDecisions();if(state.initialResults)renderInitialSummary();else renderPatient();if(state.crisisId)renderCrisis();renderReforms();if(state.finalResults)renderFinal();setPhase(state.phase||'setup');
+}
+$('#heroStart').onclick=()=>{state.phase=state.phase||'setup';$('#gameShell').classList.add('active');restore();tone(620)};
+$('#howBtn').onclick=()=>$('#howPanel').classList.toggle('hidden');
+$$('[data-team-size]').forEach(b=>b.onclick=()=>{state.teamSize=Number(b.dataset.teamSize);$$('[data-team-size]').forEach(x=>x.classList.toggle('selected',x===b));$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';renderRoles();save();tone(520)});
+$('#startBuild').onclick=()=>{recompute();renderDecisions();setPhase('build');tone(650)};
+$('#lockSystem').onclick=()=>{if(!decisions.every(d=>state.choices[d.id]))return;state.patientIndex=0;state.patientRevealed=false;state.initialResults=null;renderPatient();setPhase('patients');tone(690)};
+$('#confirmCrisis').onclick=()=>{if(!state.crisisResponse)return;renderReforms();setPhase('reform');tone(640)};
+$('#runAgain').onclick=()=>{state.finalResults=assessPatients();renderFinal();setPhase('final');tone(760,.12)};
+$('#printBtn').onclick=()=>window.print();$('#printFinal').onclick=()=>window.print();
+function reset(){if(!confirm('Reset the entire Day 2 group game on this device?'))return;localStorage.removeItem(STORAGE);state=fresh();location.reload()}
+$('#resetBtn').onclick=reset;$('#playAgain').onclick=reset;
+$('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#soundBtn').setAttribute('aria-pressed',soundOn?'true':'false');$('#soundBtn').textContent=soundOn?'🔊 Effects ON':'🔇 Effects OFF';if(soundOn)tone(620)};
+// Initialise visible setup controls even before starting.
+$$('[data-team-size]').forEach(x=>x.classList.toggle('selected',Number(x.dataset.teamSize)===state.teamSize));$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';renderRoles();recompute();
+if(localStorage.getItem(STORAGE)){say('Saved group-game progress found on this device. Press “Enter the Commission” to continue.')}
+})();
+</script>
+</body>
+</html>
