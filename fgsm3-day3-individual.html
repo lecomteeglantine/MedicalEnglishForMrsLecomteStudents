@@ -21,11 +21,14 @@
   <style>
     .day3-individual-mode{position:sticky;top:0;z-index:9999;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 16px;background:#102f29;color:#fff;font:800 14px/1.35 Arial,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.18)}
     .day3-individual-mode a{color:#d9fff2;text-decoration:underline}.day3-individual-mode small{display:block;color:#cce6dc;font-weight:600;margin-top:2px}.day3-individual-build{display:inline-block;margin-left:8px;padding:3px 7px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:.65rem;letter-spacing:.04em}
-    @media(max-width:620px){.day3-individual-mode{align-items:flex-start;flex-direction:column}.day3-individual-build{margin:4px 0 0}}
-  html,body{max-width:100%;overflow-x:hidden}</style>
+    @media(max-width:620px){.day3-individual-mode{align-items:flex-start;flex-direction:column}.day3-individual-build{margin:4px 0 0}.field-status-card,.triage-hero-score,.access-hero-score,.radio-hero-score,.contingency-hero-score,.ethics-hero-score,.final-hero-score{max-width:calc(100% - 2.4rem);width:auto!important;min-width:0}.field-hero h1,.triage-hero-copy h2,.access-hero-copy h2,.radio-hero-copy h2,.contingency-hero-copy h2,.ethics-hero-copy h2,.final-hero-copy h2{overflow-wrap:anywhere}}
+    @media(max-width:430px){.field-hero h1{font-size:clamp(2.05rem,11vw,2.75rem)}.triage-hero-copy h2,.access-hero-copy h2,.radio-hero-copy h2,.contingency-hero-copy h2,.ethics-hero-copy h2,.final-hero-copy h2{font-size:clamp(2rem,10.5vw,2.8rem)}.field-question-meta{flex-wrap:wrap}.field-toolbar-actions>*{max-width:100%}}
+    html,body{max-width:100%;overflow-x:hidden}
+    .day3-storage-warning{margin:.6rem 0 0;padding:.7rem .85rem;border:1px solid #d99792;border-radius:12px;background:#fff2f1;color:#812f2a;font-weight:800;line-height:1.45}
+  </style>
 </head>
 <body class="field-body">
-  <div class="day3-individual-mode" role="region" aria-label="Activity mode"><div><strong>👤 Individual activity · Work alone</strong><small>Your progress is stored only on this device. <span class="day3-individual-build">AUDITED R3 · 31 AUG 2026</span></small></div><a href="fgsm3-day3.html">← Change activity</a></div>
+  <div class="day3-individual-mode" role="region" aria-label="Activity mode"><div><strong>👤 Individual activity · Work alone</strong><small>Your progress is stored only on this device. <span class="day3-individual-build">AUDITED R4 · 31 AUG 2026</span></small></div><a href="fgsm3-day3.html">← Change activity</a></div>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
@@ -65,7 +68,7 @@
         <button id="day3MusicToggle" class="field-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
         <button id="resetDay3" class="field-reset" type="button">Reset Day 3</button>
       </div>
-      <p id="day3AudioStatus" class="field-status-text" role="status" aria-live="polite"></p>
+      <p id="day3AudioStatus" class="field-status-text" role="status" aria-live="polite"></p><p id="day3StorageWarning" class="day3-storage-warning" role="status" hidden>⚠️ This browser is blocking local storage. You can continue, but your Day 3 progress cannot be restored after a refresh or after you close this tab.</p>
     </section>
 
     <section class="field-mission-board" aria-labelledby="missionBoardTitle">
@@ -487,8 +490,10 @@
   const MUSIC_KEY = "mrsLecomteFgsm3Day3Music";
   const $ = id => document.getElementById(id);
   const __d3clone = value => { try { if (typeof structuredClone === "function") return structuredClone(value); } catch (_) {} return JSON.parse(JSON.stringify(value)); };
-  const __d3get = key => { try { return localStorage.getItem(key); } catch (_) { return null; } };
-  const __d3set = (key,value) => { try { localStorage.setItem(key,value); return true; } catch (_) { return false; } };
+  let __d3storageAvailable = true;
+  const __d3get = key => { try { return localStorage.getItem(key); } catch (_) { __d3storageAvailable=false; return null; } };
+  const __d3set = (key,value) => { try { localStorage.setItem(key,value); return true; } catch (_) { __d3storageAvailable=false; return false; } };
+  function __d3showStorageWarning(){const el=$("day3StorageWarning");if(el)el.hidden=__d3storageAvailable;}
   const __d3obj = value => (value && typeof value === "object" && !Array.isArray(value)) ? value : {};
   const __d3scroll = () => (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) ? "auto" : "smooth";
 
@@ -899,6 +904,41 @@
       skillScores:{},skillMax:{},lastPoints:0
     }
   };
+
+  function __d3int(value,min,max,fallback=0){return Number.isInteger(value)?Math.max(min,Math.min(max,value)):fallback;}
+  function __d3missed(value,max){return Array.isArray(value)?[...new Set(value.filter(x=>Number.isInteger(x)&&x>=0&&x<max))]:[];}
+  function __d3normaliseBlock(raw,base,map,order){
+    const src=__d3obj(raw),out=__d3clone(base),indices=__d3obj(src.indices),scores=__d3obj(src.scores),missed=__d3obj(src.missed),complete=__d3obj(src.complete);
+    out.started=src.started===true;out.current=order.includes(src.current)?src.current:base.current;
+    let previousCleared=true;
+    order.forEach(k=>{
+      const len=map[k].items.length;
+      let idx=__d3int(indices[k],0,len,0),done=(complete[k]===true)||idx>=len;
+      if(!previousCleared){idx=0;done=false;}
+      out.indices[k]=done?len:idx;
+      out.scores[k]=__d3int(scores[k],0,len,0);
+      out.missed[k]=__d3missed(missed[k],len);
+      out.complete[k]=done;
+      previousCleared=done;
+    });
+    out.completeAll=order.every(k=>out.complete[k]);
+    const firstIncomplete=order.find(k=>!out.complete[k]);
+    if(firstIncomplete&&order.indexOf(out.current)>order.indexOf(firstIncomplete))out.current=firstIncomplete;
+    if(out.completeAll)out.current=order[order.length-1];
+    return out;
+  }
+  function __d3normaliseFinal(raw,base){
+    const src=__d3obj(raw),out=__d3clone(base);
+    out.started=src.started===true;
+    out.scenario=(Number.isInteger(src.scenario)&&src.scenario>=0&&src.scenario<finalScenarios.length)?src.scenario:-1;
+    const scenario=out.scenario>=0?finalScenarios[out.scenario]:null,max=scenario?scenario.items.length:10;
+    out.index=__d3int(src.index,0,max,0);out.score=__d3int(src.score,0,100,0);out.missed=__d3missed(src.missed,max);out.lastPoints=__d3int(src.lastPoints,0,10,0);
+    out.skillMax={};out.skillScores={};
+    if(scenario){scenario.items.forEach(item=>{out.skillMax[item.skill]=(out.skillMax[item.skill]||0)+10;});Object.entries(out.skillMax).forEach(([k,m])=>{out.skillScores[k]=__d3int(__d3obj(src.skillScores)[k],0,m,0);});}
+    out.completeAll=!!(scenario&&out.started&&((src.completeAll===true)||out.index>=max));if(out.completeAll)out.index=max;
+    return out;
+  }
+
   let state = load();
   let soundOn = __d3get(SOUND_KEY) !== "off";
   let musicOn = __d3get(MUSIC_KEY) === "on";
@@ -916,51 +956,36 @@
   function load(){
     try{
       const saved=__d3obj(JSON.parse(__d3get(STORAGE_KEY)||"{}"));
-      const base=__d3clone(defaults);
-      const merged={...base,...saved};
-      merged.indices={...base.indices,...(saved.indices||{})};
-      merged.scores={...base.scores,...(saved.scores||{})};
-      merged.missed={...base.missed,...(saved.missed||{})};
-      merged.complete={...base.complete,...(saved.complete||{})};
-      const s2=__d3obj(saved.mission2);
-      merged.mission2={...base.mission2,...s2};
-      merged.mission2.indices={...base.mission2.indices,...(s2.indices||{})};
-      merged.mission2.scores={...base.mission2.scores,...(s2.scores||{})};
-      merged.mission2.missed={...base.mission2.missed,...(s2.missed||{})};
-      merged.mission2.complete={...base.mission2.complete,...(s2.complete||{})};
-      const s3=__d3obj(saved.mission3);
-      merged.mission3={...base.mission3,...s3};
-      merged.mission3.indices={...base.mission3.indices,...(s3.indices||{})};
-      merged.mission3.scores={...base.mission3.scores,...(s3.scores||{})};
-      merged.mission3.missed={...base.mission3.missed,...(s3.missed||{})};
-      merged.mission3.complete={...base.mission3.complete,...(s3.complete||{})};
-      const s4=__d3obj(saved.mission4);
-      merged.mission4={...base.mission4,...s4};
-      merged.mission4.indices={...base.mission4.indices,...(s4.indices||{})};
-      merged.mission4.scores={...base.mission4.scores,...(s4.scores||{})};
-      merged.mission4.missed={...base.mission4.missed,...(s4.missed||{})};
-      merged.mission4.complete={...base.mission4.complete,...(s4.complete||{})};
-      const s5=__d3obj(saved.mission5);
-      merged.mission5={...base.mission5,...s5};
-      merged.mission5.indices={...base.mission5.indices,...(s5.indices||{})};
-      merged.mission5.scores={...base.mission5.scores,...(s5.scores||{})};
-      merged.mission5.missed={...base.mission5.missed,...(s5.missed||{})};
-      merged.mission5.complete={...base.mission5.complete,...(s5.complete||{})};
-      const s6=__d3obj(saved.mission6);
-      merged.mission6={...base.mission6,...s6};
-      merged.mission6.indices={...base.mission6.indices,...(s6.indices||{})};
-      merged.mission6.scores={...base.mission6.scores,...(s6.scores||{})};
-      merged.mission6.missed={...base.mission6.missed,...(s6.missed||{})};
-      merged.mission6.complete={...base.mission6.complete,...(s6.complete||{})};
-      const s7=__d3obj(saved.mission7);
-      merged.mission7={...base.mission7,...s7};
-      merged.mission7.missed=Array.isArray(s7.missed)?s7.missed:[];
-      merged.mission7.skillScores={...base.mission7.skillScores,...(s7.skillScores||{})};
-      merged.mission7.skillMax={...base.mission7.skillMax,...(s7.skillMax||{})};
+      const base=__d3clone(defaults),merged=__d3clone(base);
+      const m1=__d3normaliseBlock(saved,{started:base.started,current:base.current,indices:base.indices,scores:base.scores,missed:base.missed,complete:base.complete,completeAll:false},activities,["vocab","situation","video","signals"]);
+      merged.started=m1.started;merged.current=m1.current;merged.indices=m1.indices;merged.scores=m1.scores;merged.missed=m1.missed;merged.complete=m1.complete;merged.missionComplete=m1.completeAll;
+      merged.mission2=__d3normaliseBlock(saved.mission2,base.mission2,mission2Activities,["incoming","priority","resources","conditionals"]);
+      merged.mission3=__d3normaliseBlock(saved.mission3,base.mission3,mission3Activities,["roads","vulnerable","supplies","evenif"]);
+      merged.mission4=__d3normaliseBlock(saved.mission4,base.mission4,mission4Activities,["scanner","rule","research","transmission"]);
+      merged.mission5=__d3normaliseBlock(saved.mission5,base.mission5,mission5Activities,["surge","access","supplies","continuity"]);
+      merged.mission6=__d3normaliseBlock(saved.mission6,base.mission6,mission6Activities,["frame","case","challenge","land"]);
+      const s6=__d3obj(saved.mission6);merged.mission6.boardPrompt=__d3int(s6.boardPrompt,0,2,0);merged.mission6.stance=["Agree","Disagree","Qualified / mixed position"].includes(s6.stance)?s6.stance:"";
+      merged.mission7=__d3normaliseFinal(saved.mission7,base.mission7);
+      // Cross-mission invariant repair: later missions cannot remain complete when an earlier one is incomplete.
+      // This also repairs old saves created before the R4 replay safeguards.
+      const resetFrom=(n)=>{
+        if(n<=2)merged.mission2=__d3clone(base.mission2);
+        if(n<=3)merged.mission3=__d3clone(base.mission3);
+        if(n<=4)merged.mission4=__d3clone(base.mission4);
+        if(n<=5)merged.mission5=__d3clone(base.mission5);
+        if(n<=6)merged.mission6=__d3clone(base.mission6);
+        if(n<=7)merged.mission7=__d3clone(base.mission7);
+      };
+      if(!merged.missionComplete)resetFrom(2);
+      else if(!merged.mission2.completeAll)resetFrom(3);
+      else if(!merged.mission3.completeAll)resetFrom(4);
+      else if(!merged.mission4.completeAll)resetFrom(5);
+      else if(!merged.mission5.completeAll)resetFrom(6);
+      else if(!merged.mission6.completeAll)resetFrom(7);
       return merged;
     }catch{return __d3clone(defaults);}
   }
-  function save(){__d3set(STORAGE_KEY,JSON.stringify(state));}
+  function save(){__d3set(STORAGE_KEY,JSON.stringify(state));__d3showStorageWarning();}
   function status(msg){els.status.textContent=msg;clearTimeout(status.timer);status.timer=setTimeout(()=>{if(els.status.textContent===msg)els.status.textContent="";},3200);}
   function voices(){if(!("speechSynthesis" in window))return null;const v=speechSynthesis.getVoices();return v.find(x=>/^en-GB/i.test(x.lang))||v.find(x=>/^en/i.test(x.lang))||null;}
   function speak(text){if(!soundOn){status("Sound is off. The text remains visible.");return;}if(!("speechSynthesis" in window)){status("Speech synthesis is not available on this device.");return;}speechSynthesis.cancel();if(els.music)els.music.volume=.18;const duck=!!(musicOn&&els.music&&!els.music.paused);if(duck)els.music.volume=.05;const u=new SpeechSynthesisUtterance(text);u.lang="en-GB";u.rate=.93;const v=voices();if(v)u.voice=v;const restore=()=>{if(els.music)els.music.volume=.18;};u.onend=restore;u.onerror=restore;speechSynthesis.speak(u);}
@@ -1051,7 +1076,7 @@
       else if(mission2Unlocked(k)){label.textContent=state.mission2.started&&state.mission2.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
       else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
     });
-    if(state.mission2.completeAll){
+    if(state.mission2.completeAll&&state.missionComplete){
       els.clearance.textContent="Mission 2 cleared";
       els.mission2Complete.classList.remove("is-locked");
       els.mission2CompleteTitle.textContent="Field Triage Ready";
@@ -1059,7 +1084,7 @@
       els.mission3Button.disabled=false;els.mission3Button.textContent="Mission 3 · Access Restricted →";
       els.mission3Area.classList.remove("is-locked");
       els.startMission3.disabled=false;els.startMission3.textContent=state.mission3.started?"Resume Mission 3 →":"Start Mission 3 →";
-      els.startMission2.textContent="Replay Mission 2 →";
+      els.startMission2.textContent="Review Mission 2 →";
     }else{
       els.mission2Complete.classList.add("is-locked");els.mission3Button.disabled=true;els.mission3Area.classList.add("is-locked");els.startMission3.disabled=true;els.startMission3.textContent="🔒 Complete Mission 2 first";
     }
@@ -1125,7 +1150,7 @@
       else if(mission3Unlocked(k)){label.textContent=state.mission3.started&&state.mission3.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
       else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
     });
-    if(state.mission3.completeAll){
+    if(state.mission3.completeAll&&state.mission2.completeAll){
       els.clearance.textContent="Mission 3 cleared";
       els.mission3Complete.classList.remove("is-locked");
       els.mission3CompleteTitle.textContent="Access Coordinator";
@@ -1133,7 +1158,7 @@
       els.mission4Button.disabled=false;els.mission4Button.textContent="Mission 4 · Radio Stress Check →";
       els.mission4Area.classList.remove("is-locked");
       els.startMission4.disabled=false;els.startMission4.textContent=state.mission4.started?"Resume Mission 4 →":"Start Mission 4 →";
-      els.startMission3.textContent="Replay Mission 3 →";
+      els.startMission3.textContent="Review Mission 3 →";
     }else{
       els.mission3Complete.classList.add("is-locked");els.mission4Button.disabled=true;els.mission4Area.classList.add("is-locked");els.startMission4.disabled=true;els.startMission4.textContent="🔒 Complete Mission 3 first";
     }
@@ -1200,14 +1225,14 @@
       else if(mission4Unlocked(k)){label.textContent=state.mission4.started&&state.mission4.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
       else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
     });
-    if(state.mission4.completeAll){
+    if(state.mission4.completeAll&&state.mission3.completeAll){
       els.clearance.textContent="Mission 4 cleared";
       els.mission4Complete.classList.remove("is-locked");
       els.mission4CompleteTitle.textContent="Clear Field Communicator";
       els.mission4CompleteText.textContent="You identified the supplied word-stress patterns, applied the -tion / -sion rule and transferred long-word stress into humanitarian and scientific messages.";
       els.mission5Button.disabled=false;els.mission5Button.textContent="Mission 5 · Emergency Contingency Plan →";
       els.mission5Area.classList.remove("is-locked");els.startMission5.disabled=false;els.startMission5.textContent=state.mission5.started?"Resume Mission 5 →":"Start Mission 5 →";
-      els.startMission4.textContent="Replay Mission 4 →";
+      els.startMission4.textContent="Review Mission 4 →";
     }else{
       els.mission4Complete.classList.add("is-locked");els.mission5Button.disabled=true;els.mission5Area.classList.add("is-locked");els.startMission5.disabled=true;els.startMission5.textContent="🔒 Complete Mission 4 first";
     }
@@ -1276,14 +1301,14 @@
       else if(mission5Unlocked(k)){label.textContent=state.mission5.started&&state.mission5.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
       else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
     });
-    if(state.mission5.completeAll){
+    if(state.mission5.completeAll&&state.mission4.completeAll){
       els.clearance.textContent="Mission 5 cleared";
       els.mission5Complete.classList.remove("is-locked");
       els.mission5CompleteTitle.textContent="Contingency Planner";
       els.mission5CompleteText.textContent="You built a four-part 24-hour plan for patient arrivals, access, supplies and continuity using source-grounded conditional language.";
       els.mission6Button.disabled=false;els.mission6Button.textContent="Mission 6 · Humanitarian Ethics Board →";
       els.mission6Area.classList.remove("is-locked");els.startMission6.disabled=false;els.startMission6.textContent=state.mission6.started?"Resume Mission 6 →":"Enter the Ethics Board →";
-      els.startMission5.textContent="Replay Mission 5 →";
+      els.startMission5.textContent="Review Mission 5 →";
     }else{
       els.mission5Complete.classList.add("is-locked");els.mission6Button.disabled=true;els.mission6Area.classList.add("is-locked");els.startMission6.disabled=true;els.startMission6.textContent="🔒 Complete Mission 5 first";
     }
@@ -1366,7 +1391,7 @@
       else if(mission6Unlocked(k)){label.textContent=state.mission6.started&&state.mission6.current===k?"IN PROGRESS":"READY";card.disabled=false;card.classList.remove("is-locked");}
       else{label.textContent="LOCKED";card.disabled=true;card.classList.add("is-locked");}
     });
-    if(state.mission6.completeAll){
+    if(state.mission6.completeAll&&state.mission5.completeAll){
       els.clearance.textContent="Mission 6 cleared";
       els.mission6Complete.classList.remove("is-locked");
       els.mission6CompleteTitle.textContent="Humanitarian Ethics Advisor";
@@ -1374,7 +1399,7 @@
       els.mission7Button.disabled=false;els.mission7Button.textContent="FINAL · 24 Hours to Respond →";
       els.mission7Area.classList.remove("is-locked");
       els.startMission7.disabled=false;els.startMission7.textContent=state.mission7.started?(state.mission7.completeAll?"Draw another scenario →":"Resume final mission →"):"Draw final scenario →";
-      els.startMission6.textContent="Replay Mission 6 →";
+      els.startMission6.textContent="Review Mission 6 →";
     }else{
       els.mission6Complete.classList.add("is-locked");els.mission7Button.disabled=true;els.mission7Area.classList.add("is-locked");els.startMission7.disabled=true;els.startMission7.textContent="🔒 Complete Mission 6 first";
     }
@@ -1517,42 +1542,36 @@
 
   function startMission6(){
     if(!state.mission5.completeAll)return;
-    if(state.mission6.completeAll){state.mission6={...__d3clone(defaults.mission6),started:true};}
-    else state.mission6.started=true;
-    state.mission6.current=mission6Order().find(k=>mission6Unlocked(k)&&!state.mission6.complete[k])||"frame";
+    state.mission6.started=true;
+    state.mission6.current=state.mission6.completeAll?mission6Order()[0]:(mission6Order().find(k=>mission6Unlocked(k)&&!state.mission6.complete[k])||"frame");
     save();cue("start");if(musicOn)startMusic();renderMission6();els.mission6Workspace.scrollIntoView({behavior:__d3scroll(),block:"start"});setTimeout(()=>els.mission6Screen.focus({preventScroll:true}),450);
   }
 
   function startMission5(){
     if(!state.mission4.completeAll)return;
-    if(state.mission5.completeAll){state.mission5={...__d3clone(defaults.mission5),started:true};}
-    else state.mission5.started=true;
-    state.mission5.current=mission5Order().find(k=>mission5Unlocked(k)&&!state.mission5.complete[k])||"surge";
+    state.mission5.started=true;
+    state.mission5.current=state.mission5.completeAll?mission5Order()[0]:(mission5Order().find(k=>mission5Unlocked(k)&&!state.mission5.complete[k])||"surge");
     save();cue("start");if(musicOn)startMusic();renderMission5();els.mission5Workspace.scrollIntoView({behavior:__d3scroll(),block:"start"});setTimeout(()=>els.mission5Screen.focus({preventScroll:true}),450);
   }
 
   function startMission4(){
     if(!state.mission3.completeAll)return;
-    if(state.mission4.completeAll){state.mission4={...__d3clone(defaults.mission4),started:true};}
-    else state.mission4.started=true;
-    state.mission4.current=mission4Order().find(k=>mission4Unlocked(k)&&!state.mission4.complete[k])||"scanner";
+    state.mission4.started=true;
+    state.mission4.current=state.mission4.completeAll?mission4Order()[0]:(mission4Order().find(k=>mission4Unlocked(k)&&!state.mission4.complete[k])||"scanner");
     save();cue("start");if(musicOn)startMusic();renderMission4();els.mission4Workspace.scrollIntoView({behavior:__d3scroll(),block:"start"});setTimeout(()=>els.mission4Screen.focus({preventScroll:true}),450);
   }
 
   function startMission3(){
     if(!state.mission2.completeAll)return;
-    if(state.mission3.completeAll){state.mission3={...__d3clone(defaults.mission3),started:true};}
-    else state.mission3.started=true;
-    state.mission3.current=mission3Order().find(k=>mission3Unlocked(k)&&!state.mission3.complete[k])||"roads";
+    state.mission3.started=true;
+    state.mission3.current=state.mission3.completeAll?mission3Order()[0]:(mission3Order().find(k=>mission3Unlocked(k)&&!state.mission3.complete[k])||"roads");
     save();cue("start");if(musicOn)startMusic();renderMission3();els.mission3Workspace.scrollIntoView({behavior:__d3scroll(),block:"start"});setTimeout(()=>els.mission3Screen.focus({preventScroll:true}),450);
   }
 
   function startMission2(){
     if(!state.missionComplete)return;
-    if(state.mission2.completeAll){
-      state.mission2={...__d3clone(defaults.mission2),started:true};
-    }else state.mission2.started=true;
-    state.mission2.current=mission2Order().find(k=>mission2Unlocked(k)&&!state.mission2.complete[k])||"incoming";
+    state.mission2.started=true;
+    state.mission2.current=state.mission2.completeAll?mission2Order()[0]:(mission2Order().find(k=>mission2Unlocked(k)&&!state.mission2.complete[k])||"incoming");
     save();cue("start");if(musicOn)startMusic();renderMission2();els.mission2Workspace.scrollIntoView({behavior:__d3scroll(),block:"start"});setTimeout(()=>els.mission2Screen.focus({preventScroll:true}),450);
   }
 
@@ -1585,7 +1604,7 @@
   els.replayMission7.onclick=startMission7;
   els.hearFinalBrief.onclick=()=>{const s=finalScenario();if(s)speak(`${s.title}. ${s.brief}`);};
   if("speechSynthesis" in window)speechSynthesis.addEventListener?.("voiceschanged",voices);
-  syncControls();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();renderMission7();
+  syncControls();__d3showStorageWarning();updateUI();render();renderMission2();renderMission3();renderMission4();renderMission5();renderMission6();renderMission7();
 })();</script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
 </body>
 </html>
