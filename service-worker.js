@@ -1,6 +1,6 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v59-core-day3-r5.1-20260831`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v59-runtime-day3-r5.1-20260831`;
+const CORE_CACHE = `${CACHE_PREFIX}v60-core-day3-r6-20260831`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v60-runtime-day3-r6-20260831`;
 
 // Keep the first install deliberately small. Large videos and music remain runtime-only.
 // Day 3 HTML and its small WebP illustrations are pre-cached so both activities can reopen offline.
@@ -61,14 +61,26 @@ const REQUIRED_SHELL = [
   "./manifest.webmanifest"
 ];
 
+async function cacheFresh(cache, url, required = false) {
+  try {
+    const response = await fetch(url, {cache: "reload"});
+    if (!response || !response.ok) throw new Error(`HTTP ${response ? response.status : "error"}`);
+    await cache.put(url, response.clone());
+    return true;
+  } catch (error) {
+    if (required) throw error;
+    return false;
+  }
+}
+
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CORE_CACHE);
-    // Critical Day 3 shell: fail the install only if one of these files is missing.
-    await cache.addAll(REQUIRED_SHELL);
-    // Everything else is useful offline, but one optional asset must never block an update.
+    // Fetch the critical shell afresh so a browser HTTP-cache copy cannot seed a new SW with an old build.
+    await Promise.all(REQUIRED_SHELL.map(url => cacheFresh(cache, url, true)));
+    // Optional resources improve offline coverage, but no single optional asset may block an update.
     const optional = CORE_SHELL.filter(url => !REQUIRED_SHELL.includes(url));
-    await Promise.allSettled(optional.map(url => cache.add(url)));
+    await Promise.allSettled(optional.map(url => cacheFresh(cache, url, false)));
     await self.skipWaiting();
   })());
 });

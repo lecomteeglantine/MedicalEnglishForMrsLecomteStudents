@@ -29,7 +29,7 @@
   </style>
 </head>
 <body class="field-body">
-  <div class="day3-individual-mode" role="region" aria-label="Activity mode"><div><strong>👤 Individual activity · Work alone</strong><small>Your progress is stored only on this device. <span class="day3-individual-build">AUDITED R5.1 · POST-DEPLOY PATCH · 31 AUG 2026</span></small></div><a href="fgsm3-day3.html">← Change activity</a></div>
+  <div class="day3-individual-mode" role="region" aria-label="Activity mode"><div><strong>👤 Individual activity · Work alone</strong><small>Your progress is stored only on this device. <span class="day3-individual-build">AUDITED R6 · FINAL HARDENING · 31 AUG 2026</span></small></div><a href="fgsm3-day3.html">← Change activity</a></div>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
@@ -909,16 +909,23 @@
   function __d3int(value,min,max,fallback=0){return Number.isInteger(value)?Math.max(min,Math.min(max,value)):fallback;}
   function __d3missed(value,max){return Array.isArray(value)?[...new Set(value.filter(x=>Number.isInteger(x)&&x>=0&&x<max))]:[];}
   function __d3normaliseBlock(raw,base,map,order){
-    const src=__d3obj(raw),out=__d3clone(base),indices=__d3obj(src.indices),scores=__d3obj(src.scores),missed=__d3obj(src.missed),complete=__d3obj(src.complete);
+    const src=__d3obj(raw),out=__d3clone(base),indices=__d3obj(src.indices),missed=__d3obj(src.missed);
     out.started=src.started===true;out.current=order.includes(src.current)?src.current:base.current;
     let previousCleared=true;
     order.forEach(k=>{
       const len=map[k].items.length;
-      let idx=__d3int(indices[k],0,len,0),done=(complete[k]===true)||idx>=len;
-      if(!previousCleared){idx=0;done=false;}
+      let idx=__d3int(indices[k],0,len,0);
+      if(!previousCleared)idx=0;
+      // Completion is derived from the number of cleared checkpoints, never trusted from a saved flag.
+      const done=previousCleared&&idx>=len;
+      const rawMissed=__d3missed(missed[k],len);
+      // A wrong attempt can exist on the current checkpoint, but never on a future one.
+      const cleanedMissed=rawMissed.filter(x=>x<idx||(idx<len&&x===idx));
+      const missedCompleted=cleanedMissed.filter(x=>x<idx).length;
       out.indices[k]=done?len:idx;
-      out.scores[k]=__d3int(scores[k],0,len,0);
-      out.missed[k]=__d3missed(missed[k],len);
+      out.missed[k]=cleanedMissed;
+      // First-try score = cleared checkpoints minus those first missed before being corrected.
+      out.scores[k]=Math.max(0,Math.min(len,idx-missedCompleted));
       out.complete[k]=done;
       previousCleared=done;
     });
@@ -933,10 +940,21 @@
     out.started=src.started===true;
     out.scenario=(Number.isInteger(src.scenario)&&src.scenario>=0&&src.scenario<finalScenarios.length)?src.scenario:-1;
     const scenario=out.scenario>=0?finalScenarios[out.scenario]:null,max=scenario?scenario.items.length:10;
-    out.index=__d3int(src.index,0,max,0);out.score=__d3int(src.score,0,100,0);out.missed=__d3missed(src.missed,max);out.lastPoints=__d3int(src.lastPoints,0,10,0);
-    out.skillMax={};out.skillScores={};
-    if(scenario){scenario.items.forEach(item=>{out.skillMax[item.skill]=(out.skillMax[item.skill]||0)+10;});Object.entries(out.skillMax).forEach(([k,m])=>{out.skillScores[k]=__d3int(__d3obj(src.skillScores)[k],0,m,0);});}
-    out.completeAll=!!(scenario&&out.started&&((src.completeAll===true)||out.index>=max));if(out.completeAll)out.index=max;
+    out.index=__d3int(src.index,0,max,0);
+    const rawMissed=__d3missed(src.missed,max);
+    out.missed=rawMissed.filter(x=>x<out.index||(out.index<max&&x===out.index));
+    // Rebuild the score from completed checkpoints so refreshes/corrupt saves cannot duplicate points.
+    out.score=0;out.skillMax={};out.skillScores={};
+    if(scenario){
+      scenario.items.forEach(item=>{out.skillMax[item.skill]=(out.skillMax[item.skill]||0)+10;});
+      for(let i=0;i<out.index;i++){
+        const item=scenario.items[i],points=out.missed.includes(i)?6:10;
+        out.score+=points;out.skillScores[item.skill]=(out.skillScores[item.skill]||0)+points;
+      }
+    }
+    out.score=Math.max(0,Math.min(100,out.score));
+    out.lastPoints=out.index>0?(out.missed.includes(out.index-1)?6:10):0;
+    out.completeAll=!!(scenario&&out.started&&out.index>=max);if(out.completeAll)out.index=max;
     return out;
   }
 

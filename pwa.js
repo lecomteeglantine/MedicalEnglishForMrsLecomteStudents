@@ -1,5 +1,6 @@
 (() => {
   let deferredPrompt = null;
+  let serviceWorkerReady = false;
 
   const installButton = document.getElementById("installAppButton");
   const helpButton = document.getElementById("installHelpButton");
@@ -15,8 +16,14 @@
       status.classList.toggle("is-offline", !online);
     }
 
-    if (appState && !online) {
-      appState.textContent = "Offline mode: core pages and small assets remain available. Large audio and video may require a connection.";
+    if (appState) {
+      if (!online) {
+        appState.textContent = serviceWorkerReady
+          ? "Offline mode: core pages and small assets remain available. Large audio and video may require a connection."
+          : "You are offline. Offline installation has not been confirmed yet.";
+      } else if (serviceWorkerReady) {
+        appState.textContent = "Core offline access is ready. Large audio and video files may still require an internet connection.";
+      }
     }
   }
 
@@ -29,12 +36,9 @@
         );
 
         registration.update().catch(() => {});
-
-        if (appState) {
-          appState.textContent = navigator.onLine
-            ? "Core offline access is ready. Large audio and video files may still require an internet connection."
-            : "Offline mode is active. Core pages are available; large audio and video may require a connection.";
-        }
+        await navigator.serviceWorker.ready;
+        serviceWorkerReady = true;
+        updateConnectionStatus();
       } catch (_) {
         if (appState) {
           appState.textContent = "Offline installation is not available in this browser.";
