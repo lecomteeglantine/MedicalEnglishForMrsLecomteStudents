@@ -1,20 +1,16 @@
-FGSM3 DAY 2 GROUP CHALLENGE — THE PATIENT TEST
+FGSM3 DAY 1 INDIVIDUAL — HOTFIX 2026-08-31
 
-FILE TO UPLOAD TO GITHUB:
-  fgsm3-day2-patient-test.html
+CAUSE DE LA PANNE IDENTIFIÉE
+Le fichier actuellement publié sur GitHub contient une chaîne JavaScript cassée par un retour à la ligne dans le Final Live Shift. Cette erreur de syntaxe empêche tout le moteur JavaScript de s'exécuter, donc le bouton Start ne fonctionne plus.
 
-Recommended URL after upload:
-  https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day2-patient-test.html
+CORRECTION
+Le fichier fgsm3-day1-individual.html de ce ZIP contient la version R5 dont le moteur JavaScript passe le contrôle de syntaxe Node.js.
 
-This is a self-contained HTML file: CSS and JavaScript are embedded. No extra image, audio, font or library file is required.
+À FAIRE
+1. Sur la branche main du dépôt MedicalEnglishForMrsLecomteStudents, remplacer UNIQUEMENT fgsm3-day1-individual.html par celui de ce ZIP.
+2. Commit changes.
+3. Attendre la publication GitHub Pages.
+4. Sur la page du jeu, faire Ctrl+Shift+R (Windows) ou Cmd+Shift+R (Mac).
 
-Core flow:
-1. Commission roles (3 or 4 students)
-2. Seven healthcare-system decisions with 21 Health Credits
-3. Seven fictional patient tests
-4. One random national crisis + emergency response
-5. Up to two reforms
-6. Before/after patient comparison + 90-second oral defence
-
-Privacy:
-Progress is stored only in localStorage in the browser. No student data are transmitted.
+IMPORTANT
+Ne pas copier/coller le contenu du HTML dans l'éditeur GitHub : uploader directement le fichier afin d'éviter de réintroduire des retours à la ligne dans les chaînes JavaScript.
