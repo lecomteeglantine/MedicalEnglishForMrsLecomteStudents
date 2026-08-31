@@ -16,7 +16,7 @@
   <meta property="og:description" content="Choose the collaborative clinic-builder or the individual Teleconsultation Control Room.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day1.html">
-  <link rel="stylesheet" href="styles-v19.css?v=day1-hub-r2">
+  <link rel="stylesheet" href="styles-v19.css?v=day1-hub-r3">
   <style>
     :root{--hub-navy:#0b2e5c;--hub-blue:#1769c2;--hub-teal:#087b78;--hub-ink:#183047;--hub-muted:#60758a;--hub-paper:#f6f8fb;--hub-line:#d8e2ec;--hub-focus:#ffbf47}
     *{box-sizing:border-box}
@@ -74,6 +74,13 @@
     @media(max-width:760px){
       .a11y-launcher{width:48px!important;height:48px!important;min-width:48px!important;left:8px!important;bottom:8px!important}
     }
+    /* R3: global .brand uses min-width:max-content; release it on narrow screens so 150% text + extra spacing cannot create horizontal scroll. */
+    @media(max-width:760px){
+      .brand{min-width:0!important;max-width:100%;width:100%}
+      .brand-mark{flex:0 0 42px}
+      .brand>span:last-child{min-width:0;max-width:calc(100% - 52px)}
+      .brand strong,.brand small{overflow-wrap:anywhere;word-break:normal}
+    }
   </style>
 </head>
 <body class="day1-choice-page">
@@ -105,7 +112,7 @@
       <p class="hub-kicker">FGSM3 · DAY 1</p>
       <h1 id="day1HubTitle">Online medicine &amp; teleconsultation</h1>
       <p class="hub-lede">Day 1 has two different simulations. Choose the activity assigned by Mrs Lecomte: collaborate to build an online clinic, or work independently through a complete teleconsultation shift.</p>
-      <span class="hub-build">AUDITED HUB · R2 · 31 AUG 2026</span>
+      <span class="hub-build">AUDITED HUB · R3 · 31 AUG 2026</span>
     </section>
 
     <section aria-labelledby="chooseActivityTitle">
@@ -158,8 +165,8 @@
     <p><strong>Medical English for Mrs Lecomte's Students</strong></p>
     <p>Created by Mrs Lecomte, with the help of ChatGPT.</p>
   </footer>
-  <script src="pwa.js?v=day1-hub-r2" defer></script>
-  <script src="accessibility.js?v=day1-hub-r2" defer></script>
-  <!-- DAY1-HUB-AUDITED-R2-20260831 -->
+  <script src="pwa.js?v=day1-hub-r3" defer></script>
+  <script src="accessibility.js?v=day1-hub-r3" defer></script>
+  <!-- DAY1-HUB-AUDITED-R3-20260831 -->
 </body>
 </html>
