@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b3b45">
 <meta name="description" content="FGSM3 Day 2 group activity: The Patient Test — build, test and reform a fictional healthcare system.">
-<title>FGSM3 · Day 2 Group Challenge · The Patient Test</title>
+<title>FGSM3 · Day 2 · Group Activity · The Patient Test</title>
 <style>
 :root{
   --ink:#102a2e;--muted:#5e7275;--deep:#0b3b45;--deep2:#105764;--paper:#f7f1e6;--card:#fffdf8;
@@ -33,7 +33,7 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
 .results-strip{display:grid;grid-template-columns:repeat(7,1fr);gap:.5rem;margin:1rem 0}.mini-patient{border-radius:12px;padding:.55rem;text-align:center;border:1px solid #ddd5c8;background:white}.mini-patient .face{font-size:1.5rem}.mini-patient strong{display:block;font-size:.68rem}.mini-patient em{display:inline-block;font-style:normal;font-size:.58rem;font-weight:900;margin-top:.25rem}.mini-patient.protected{background:#eff8f4}.mini-patient.risk{background:#fff7e7}.mini-patient.failed{background:#faece9}
 .crisis-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#611f25,#9b3e3e);color:white;border-radius:22px;padding:1.2rem 1.3rem;box-shadow:0 15px 30px rgba(96,34,36,.18)}.crisis-card:after{content:"BREAKING NEWS";position:absolute;right:-30px;top:18px;transform:rotate(17deg);font-weight:900;font-size:2rem;opacity:.08}.crisis-card h3{font-family:Georgia,serif;font-size:1.9rem}.crisis-options{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:1rem}.crisis-option{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.09);color:white;border-radius:14px;padding:.8rem;text-align:left}.crisis-option.selected{background:white;color:#5e2528;border-color:white}.crisis-option h4{margin:0 0 .35rem}.crisis-option p{font-size:.77rem;margin:.25rem 0}.crisis-option .cost{background:#f5d8a0;color:#5d3b08}
 .reform-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.7rem}.reform{border:1px solid #d8d1c6;border-radius:15px;padding:.8rem;background:white;text-align:left;min-height:145px}.reform.selected{border:2px solid var(--deep2);background:#eef8f5}.reform h4{margin:0 0 .3rem}.reform p{font-size:.75rem;color:var(--muted);margin:.25rem 0}.reform:disabled{opacity:.45;cursor:not-allowed}
-.compare-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.9rem}.compare-table th,.compare-table td{padding:.55rem;border-bottom:1px solid #e2dbcf;text-align:left}.compare-table th{font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:#607273}.status-dot{font-weight:900}.status-dot.protected{color:var(--green)}.status-dot.risk{color:var(--amber)}.status-dot.failed{color:var(--red)}
+#comparison{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.compare-table{width:100%;border-collapse:collapse;font-size:.8rem;margin-top:.9rem}.compare-table th,.compare-table td{padding:.55rem;border-bottom:1px solid #e2dbcf;text-align:left}.compare-table th{font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:#607273}.status-dot{font-weight:900}.status-dot.protected{color:var(--green)}.status-dot.risk{color:var(--amber)}.status-dot.failed{color:var(--red)}
 .final-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.score-card{background:#103f49;color:white;border-radius:20px;padding:1.1rem}.score-card .big{font-family:Georgia,serif;font-size:3rem}.award{border:2px dashed #d7a84b;background:#fff8df;border-radius:18px;padding:1rem}.award-icon{font-size:2.3rem}.award h3{font-family:Georgia,serif;font-size:1.45rem}.report-list{display:grid;gap:.5rem}.report-row{display:grid;grid-template-columns:170px 1fr;gap:.8rem;border-bottom:1px solid #e3ddd2;padding:.55rem 0;font-size:.82rem}.report-row strong{color:#51676a}.pitch{background:#edf5f2;border-radius:18px;padding:1rem}.pitch ol{margin:.5rem 0;padding-left:1.2rem}.phrase-bank{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.8rem}.phrase{background:white;border:1px solid #cddbd6;border-radius:999px;padding:.38rem .58rem;font-size:.72rem;font-weight:800;color:#315c56}
 .footer-note{margin-top:2rem;text-align:center;color:#657779;font-size:.74rem}.footer-note strong{color:#294f53}
 .hidden{display:none!important}.actions{display:flex;justify-content:flex-end;gap:.6rem;flex-wrap:wrap;margin-top:1rem}.center{text-align:center}.live{min-height:1.2em;font-size:.75rem;color:#6f5b31}.warning{color:#8b3f38;font-weight:800}.ok{color:#2f6f5d;font-weight:800}
@@ -41,6 +41,15 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
 @media(max-width:620px){.topbar{position:static;align-items:flex-start}.main-nav{display:none}main{padding:.8rem .7rem 3rem}.hero{border-radius:20px;min-height:0}.hero h1{font-size:2.75rem}.setup-grid,.role-stage,.reform-grid{grid-template-columns:1fr}.hud{grid-template-columns:1fr 1fr}.metric{padding:.45rem}.patient-file{display:block}.results-strip{grid-template-columns:repeat(2,1fr)}.report-row{grid-template-columns:1fr;gap:.15rem}.panel{border-radius:16px;padding:1rem}.toolbar{align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media print{.topbar,.toolbar,.hud,.phase-nav,.actions,.hero-actions,.role-stage button,.patient-nav{display:none!important}body{background:white}.hero{min-height:0;background:white;color:#111;box-shadow:none;border:1px solid #ccc}.hero-card{box-shadow:none}.panel{box-shadow:none;break-inside:avoid}.game-shell{display:block!important}.hidden{display:none!important}}
+
+.day2-activity-switch{max-width:1180px;margin:14px auto 0;padding:0 clamp(1rem,3vw,2.2rem);display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.day2-activity-card{min-width:0;display:flex;flex-direction:column;gap:3px;padding:12px 14px;border:1px solid #cfd8d3;border-radius:16px;background:#fff;color:var(--deep);text-decoration:none;box-shadow:0 7px 18px rgba(21,58,61,.06)}
+.day2-activity-card strong{font-size:.84rem;letter-spacing:.055em;text-transform:uppercase}.day2-activity-card span{font-size:.9rem;font-weight:850}.day2-activity-card small{font-size:.73rem;color:#637675}
+.day2-activity-card[aria-current="page"]{background:var(--deep);color:#fff;border-color:var(--deep);box-shadow:0 9px 22px rgba(14,61,70,.18)}.day2-activity-card[aria-current="page"] small{color:#dcece8}
+.day2-activity-card:not([aria-current="page"]):hover,.day2-activity-card:not([aria-current="page"]):focus-visible{border-color:var(--deep2);box-shadow:0 0 0 3px rgba(16,87,100,.12);outline:0}
+.tiny-btn:disabled{opacity:.48;cursor:not-allowed}.build-version{display:block;margin-top:.2rem;font-size:.66rem;color:#738684;letter-spacing:.035em;font-weight:800}
+@media(max-width:620px){.day2-activity-switch{grid-template-columns:1fr;margin-top:10px}.day2-activity-card{padding:11px 12px}}
+@media(forced-colors:active){.day2-activity-card,.option,.crisis-option,.reform{border:2px solid CanvasText}}
 </style>
 </head>
 <body>
@@ -49,14 +58,22 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
   <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">✚</span><span><strong>Medical English</strong><small>for Mrs Lecomte's students</small></span></a>
   <nav class="main-nav" aria-label="Main navigation"><a href="fgsm3.html">FGSM3</a><a href="dictionary.html">Dictionary</a><a href="pronunciation.html">Pronunciation</a><a href="games.html">Games</a></nav>
 </header>
+<nav class="day2-activity-switch" aria-label="Day 2 activities">
+  <a class="day2-activity-card" href="fgsm3-day2.html">
+    <strong>👤 Individual activity</strong><span>Healthcare Systems World Tour</span><small>Complete the world tour independently.</small>
+  </a>
+  <div class="day2-activity-card" aria-current="page">
+    <strong>👥 Group activity</strong><span>The Patient Test</span><small>Work in a team of 3–4 and defend your healthcare system.</small>
+  </div>
+</nav>
 <main id="main">
-  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><a href="fgsm3.html">FGSM3</a><span>›</span><span>Day 2 · Group challenge</span></nav>
+  <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span>›</span><a href="fgsm3.html">FGSM3</a><span>›</span><span>Day 2 · Group activity</span></nav>
 
   <section class="hero" aria-labelledby="gameTitle">
     <div>
-      <p class="kicker">FGSM3 · DAY 2 · GROUP CHALLENGE</p>
+      <p class="kicker">FGSM3 · DAY 2 · GROUP ACTIVITY</p>
       <h1 id="gameTitle">The Patient<br>Test</h1>
-      <p class="lead"><strong>Build it. Test it. Break it. Fix it.</strong> You are the new National Health Commission of Medoria. Design a healthcare system — then find out what it actually does to real patients.</p>
+      <p class="lead"><strong>Build it. Test it. Break it. Fix it.</strong> You are the new National Health Commission of Medoria. Design a healthcare system — then find out what it actually does to people with very different healthcare needs.</p>
       <div class="hero-actions"><button class="primary" id="heroStart" type="button">Enter the Commission →</button><button class="ghost" id="howBtn" type="button">How it works</button></div>
     </div>
     <aside class="hero-card" aria-label="Mission dossier">
@@ -72,8 +89,8 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
   </section>
 
   <section class="toolbar" aria-label="Game controls">
-    <div><strong>Group activity</strong><p>Speak English before you click. Progress stays only in this browser.</p></div>
-    <div class="toolbar-controls"><button class="tiny-btn" id="soundBtn" aria-pressed="true" type="button">🔊 Effects ON</button><button class="tiny-btn" id="printBtn" type="button">🖨 Print final report</button><button class="tiny-btn" id="resetBtn" type="button">↺ Reset game</button></div>
+    <div><strong>Group activity</strong><p>Speak English before you click. Progress stays only in this browser.</p><small class="build-version">AUDITED BUILD · DAY2-GROUP-PATIENT-TEST-R3-AUDITED-20260831</small></div>
+    <div class="toolbar-controls"><button class="tiny-btn" id="soundBtn" aria-pressed="true" type="button">🔊 Effects ON</button><button class="tiny-btn" id="printBtn" type="button" disabled title="Available when the final report is ready">🖨 Print final report</button><button class="tiny-btn" id="resetBtn" type="button">↺ Reset game</button></div>
     <p id="statusLive" class="live" role="status" aria-live="polite"></p>
   </section>
 
@@ -105,7 +122,7 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
     <section id="setupPanel" class="panel" data-phase="setup">
       <div class="panel-head"><div><span class="section-no">PHASE 1 · NATIONAL HEALTH COMMISSION</span><h2>Take your seats</h2><p class="instruction">Choose your team size, then reveal your individual role. Your role gives you a different priority — so disagreement is expected.</p></div></div>
       <div class="setup-grid">
-        <div class="setup-card"><h3>How many students?</h3><div class="segmented"><button class="segment" type="button" data-team-size="3">3 students</button><button class="segment selected" type="button" data-team-size="4">4 students</button></div><p id="teamSizeNote" class="instruction">Four separate roles will be assigned.</p></div>
+        <div class="setup-card"><h3>How many students?</h3><div class="segmented"><button class="segment" type="button" data-team-size="3" aria-pressed="false">3 students</button><button class="segment selected" type="button" data-team-size="4" aria-pressed="true">4 students</button></div><p id="teamSizeNote" class="instruction">Four separate roles will be assigned.</p></div>
         <div class="setup-card"><h3>Commission rule</h3><p>For every policy decision, the <strong>Finance Minister</strong> and the <strong>Equity Officer</strong> must both speak before the team votes.</p><p>For patient cases, the <strong>Clinical Adviser</strong> leads the discussion.</p></div>
       </div>
       <div id="roleStage" class="role-stage" style="margin-top:1rem"></div>
@@ -169,12 +186,15 @@ main{max-width:1180px;margin:0 auto;padding:1.25rem clamp(1rem,3vw,2.2rem) 5rem}
 <script>
 (()=>{
 'use strict';
-const STORAGE='fgsm3_day2_patient_test_v1';
+const BUILD='DAY2-GROUP-PATIENT-TEST-R3-AUDITED-20260831';
+const STORAGE='fgsm3_day2_patient_test_v2';
+const LEGACY_STORAGE='fgsm3_day2_patient_test_v1';
+const SAVE_SCHEMA=2;
 const TOTAL=21;
 const clamp=n=>Math.max(0,Math.min(100,Math.round(n)));
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
-let soundOn=true;
-function tone(freq=520,dur=.055){if(!soundOn)return;try{const A=window.AudioContext||window.webkitAudioContext;const c=new A(),o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);o.stop(c.currentTime+dur)}catch(e){}}
+let soundOn=true,audioCtx=null;
+function tone(freq=520,dur=.055){if(!soundOn)return;try{const A=window.AudioContext||window.webkitAudioContext;if(!A)return;if(!audioCtx||audioCtx.state==='closed')audioCtx=new A();const c=audioCtx;if(c.state==='suspended')c.resume().catch(()=>{});const o=c.createOscillator(),g=c.createGain();o.frequency.value=freq;g.gain.value=.035;o.connect(g);g.connect(c.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,c.currentTime+dur);o.stop(c.currentTime+dur)}catch(e){}}
 function say(msg){$('#statusLive').textContent=msg;}
 
 const roles4=[
@@ -281,21 +301,36 @@ const reforms=[
  {id:'priority',name:'Prioritise high-need patients',cost:0,desc:'Use stricter clinical prioritisation so vulnerable and high-need patients move first — at the cost of slower low-priority elective care.',d:{access:-1,equity:6,timely:3,workforce:1,sustainability:4}}
 ];
 
-const fresh=()=>({phase:'setup',teamSize:4,choices:{},credits:TOTAL,metrics:{access:50,equity:50,timely:50,workforce:50,sustainability:50},patientIndex:0,patientRevealed:false,initialResults:null,crisisId:null,crisisResponse:null,reforms:[],finalResults:null});
-let state=fresh();
-try{const saved=JSON.parse(localStorage.getItem(STORAGE));if(saved&&saved.metrics)state=Object.assign(fresh(),saved)}catch(e){}
-function save(){localStorage.setItem(STORAGE,JSON.stringify(state))}
+const fresh=()=>({schema:SAVE_SCHEMA,build:BUILD,phase:'setup',teamSize:4,choices:{},credits:TOTAL,metrics:{access:50,equity:50,timely:50,workforce:50,sustainability:50},patientIndex:0,patientRevealed:false,initialResults:null,crisisId:null,crisisResponse:null,reforms:[],finalResults:null,soundOn:true});
+function safeGet(key){try{return localStorage.getItem(key)}catch(e){return null}}
+function safeSet(key,value){try{localStorage.setItem(key,value);return true}catch(e){return false}}
+function safeRemove(key){try{localStorage.removeItem(key);return true}catch(e){return false}}
+function validResults(v){if(!v||typeof v!=='object')return null;for(const p of patients){if(!v[p.id]||!['protected','risk','failed'].includes(v[p.id].status)||!Array.isArray(v[p.id].reasons))return null}return v}
+function sanitise(raw){const s=fresh();if(!raw||typeof raw!=='object')return s;
+ s.teamSize=raw.teamSize===3?3:4;
+ for(const d of decisions){const candidate=raw.choices&&raw.choices[d.id];if(optionFor(d.id,candidate))s.choices[d.id]=candidate}
+ const complete=decisions.every(d=>s.choices[d.id]);
+ const phases=['setup','build','patients','crisis','reform','final'];s.phase=phases.includes(raw.phase)?raw.phase:'setup';if(!complete&&['patients','crisis','reform','final'].includes(s.phase))s.phase='build';
+ s.patientIndex=Number.isInteger(raw.patientIndex)?Math.max(0,Math.min(patients.length-1,raw.patientIndex)):0;s.patientRevealed=!!raw.patientRevealed;
+ s.initialResults=validResults(raw.initialResults);
+ const c=crises.find(x=>x.id===raw.crisisId);s.crisisId=c?c.id:null;s.crisisResponse=c&&c.responses.some(r=>r.id===raw.crisisResponse)?raw.crisisResponse:null;
+ const unique=[...new Set(Array.isArray(raw.reforms)?raw.reforms:[])];s.reforms=unique.filter(id=>reforms.some(r=>r.id===id)).slice(0,2);
+ s.finalResults=validResults(raw.finalResults);s.soundOn=raw.soundOn!==false;return s}
+function loadSaved(){for(const key of [STORAGE,LEGACY_STORAGE]){const txt=safeGet(key);if(!txt)continue;try{return sanitise(JSON.parse(txt))}catch(e){}}return fresh()}
+let state=loadSaved();
+function save(){state.schema=SAVE_SCHEMA;state.build=BUILD;state.soundOn=soundOn;const ok=safeSet(STORAGE,JSON.stringify(state));if(ok&&safeGet(LEGACY_STORAGE))safeRemove(LEGACY_STORAGE);return ok}
+soundOn=state.soundOn!==false;
 function optionFor(decisionId,optId){const d=decisions.find(x=>x.id===decisionId);return d?.options.find(x=>x.id===optId)}
 function calcBuild(){let metrics={access:50,equity:50,timely:50,workforce:50,sustainability:50},spent=0;for(const d of decisions){const o=optionFor(d.id,state.choices[d.id]);if(!o)continue;spent+=o.cost;for(const k in o.d)metrics[k]+=o.d[k]}
  const credits=TOTAL-spent;metrics.sustainability+=Math.max(-4,Math.min(8,credits-3));for(const k in metrics)metrics[k]=clamp(metrics[k]);return{credits,metrics};}
 function applyDelta(base,d){const n={...base};for(const k in d)n[k]=clamp((n[k]||0)+d[k]);return n}
-function recompute(){const b=calcBuild();state.credits=b.credits;state.metrics=b.metrics;if(state.crisisId){const c=crises.find(x=>x.id===state.crisisId);state.metrics=applyDelta(state.metrics,c.d);if(state.crisisResponse){const r=c.responses.find(x=>x.id===state.crisisResponse);state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}}
- for(const rid of state.reforms){const r=reforms.find(x=>x.id===rid);state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}state.credits=Math.max(0,state.credits);save();renderHUD()}
+function recompute(){const b=calcBuild();state.credits=b.credits;state.metrics=b.metrics;if(state.crisisId){const c=crises.find(x=>x.id===state.crisisId);if(c){state.metrics=applyDelta(state.metrics,c.d);if(state.crisisResponse){const r=c.responses.find(x=>x.id===state.crisisResponse);if(r){state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}}}}
+ for(const rid of state.reforms){const r=reforms.find(x=>x.id===rid);if(!r)continue;state.metrics=applyDelta(state.metrics,r.d);state.credits-=r.cost}state.credits=Math.max(0,state.credits);save();renderHUD()}
 function renderHUD(){for(const k of ['access','equity','timely','workforce','sustainability']){const v=clamp(state.metrics[k]);$('#'+k+'Value').textContent=v;$('#'+k+'Bar').style.width=v+'%'}$('#creditsValue').textContent=state.credits}
-function setPhase(phase){state.phase=phase;$$('[data-phase]').forEach(x=>x.classList.toggle('hidden',x.dataset.phase!==phase));$$('[data-phase-pill]').forEach(p=>{const order=['setup','build','patients','crisis','reform','final'];p.classList.toggle('current',p.dataset.phasePill===phase);p.classList.toggle('done',order.indexOf(p.dataset.phasePill)<order.indexOf(phase))});save();window.scrollTo({top:document.querySelector('.game-shell').offsetTop-55,behavior:'smooth'})}
-function renderRoles(){const roles=state.teamSize===3?roles3:roles4;$('#roleStage').innerHTML=roles.map((r,i)=>`<article class="role-card"><span class="role-icon">${r.icon}</span><h3>${r.name}</h3><p>${r.brief}</p><div class="role-secret">${r.secret}</div><button type="button" data-reveal-role="${i}">Reveal my secret goal</button></article>`).join('');$$('[data-reveal-role]').forEach(btn=>btn.onclick=()=>{const c=btn.closest('.role-card');c.classList.toggle('revealed');btn.textContent=c.classList.contains('revealed')?'Hide secret goal':'Reveal my secret goal';tone(630)})}
+function setPhase(phase){const order=['setup','build','patients','crisis','reform','final'];if(!order.includes(phase))phase='setup';state.phase=phase;$$('[data-phase]').forEach(x=>x.classList.toggle('hidden',x.dataset.phase!==phase));$$('[data-phase-pill]').forEach(p=>{p.classList.toggle('current',p.dataset.phasePill===phase);p.classList.toggle('done',order.indexOf(p.dataset.phasePill)<order.indexOf(phase))});save();window.scrollTo({top:document.querySelector('.game-shell').offsetTop-55,behavior:'smooth'})}
+function renderRoles(){const roles=state.teamSize===3?roles3:roles4;$('#roleStage').innerHTML=roles.map((r,i)=>`<article class="role-card"><span class="role-icon" aria-hidden="true">${r.icon}</span><h3>${r.name}</h3><p>${r.brief}</p><div class="role-secret" id="roleSecret${i}" aria-hidden="true">${r.secret}</div><button type="button" data-reveal-role="${i}" aria-expanded="false" aria-controls="roleSecret${i}">Reveal my secret goal</button></article>`).join('');$$('[data-reveal-role]').forEach(btn=>btn.onclick=()=>{const c=btn.closest('.role-card'),secret=c.querySelector('.role-secret'),open=!c.classList.contains('revealed');c.classList.toggle('revealed',open);secret.setAttribute('aria-hidden',open?'false':'true');btn.setAttribute('aria-expanded',open?'true':'false');btn.textContent=open?'Hide secret goal':'Reveal my secret goal';tone(630)})}
 function renderDecisions(){
- $('#decisionList').innerHTML=decisions.map((d,i)=>`<article class="decision-card"><div class="decision-title"><div><span class="section-no">DECISION ${i+1}</span><h3>${d.title}</h3><p class="instruction">${d.prompt}</p></div><span class="decision-counter">${state.choices[d.id]?'CHOSEN':'OPEN'}</span></div><div class="options">${d.options.map(o=>`<button class="option ${state.choices[d.id]===o.id?'selected':''}" type="button" data-decision="${d.id}" data-option="${o.id}"><span class="cost">${o.cost} credit${o.cost===1?'':'s'}</span><h4>${o.name}</h4><p>${o.desc}</p><div class="trade">${o.trade}</div></button>`).join('')}</div>${state.choices[d.id]?`<div class="selected-note">Commission decision: ${optionFor(d.id,state.choices[d.id]).name}</div>`:''}</article>`).join('');
+ $('#decisionList').innerHTML=decisions.map((d,i)=>`<article class="decision-card"><div class="decision-title"><div><span class="section-no">DECISION ${i+1}</span><h3>${d.title}</h3><p class="instruction">${d.prompt}</p></div><span class="decision-counter">${state.choices[d.id]?'CHOSEN':'OPEN'}</span></div><div class="options">${d.options.map(o=>`<button class="option ${state.choices[d.id]===o.id?'selected':''}" type="button" data-decision="${d.id}" data-option="${o.id}" aria-pressed="${state.choices[d.id]===o.id?'true':'false'}"><span class="cost">${o.cost} credit${o.cost===1?'':'s'}</span><h4>${o.name}</h4><p>${o.desc}</p><div class="trade">${o.trade}</div></button>`).join('')}</div>${state.choices[d.id]?`<div class="selected-note">Commission decision: ${optionFor(d.id,state.choices[d.id]).name}</div>`:''}</article>`).join('');
  $$('[data-decision]').forEach(btn=>btn.onclick=()=>selectDecision(btn.dataset.decision,btn.dataset.option));
  const complete=decisions.every(d=>state.choices[d.id]);$('#lockSystem').disabled=!complete||state.credits<0;$('#budgetMessage').textContent=complete?`System ready. You have ${state.credits} Health Credit${state.credits===1?'':'s'} left for future shocks.`:`Choose ${decisions.filter(d=>!state.choices[d.id]).length} more policy decision(s).`;
 }
@@ -327,10 +362,10 @@ function renderPatient(){const p=patients[state.patientIndex],res=assessPatients
 function miniResults(results){return `<div class="results-strip">${patients.map(p=>{const r=results[p.id];return `<div class="mini-patient ${r.status}"><div class="face">${p.icon}</div><strong>${p.name}</strong><em>${statusLabel(r.status)}</em></div>`}).join('')}</div>`}
 function renderInitialSummary(){const r=state.initialResults||assessPatients();const counts=countStatuses(r);$('#patientStage').innerHTML='';$('#initialPatientSummary').classList.remove('hidden');$('#initialPatientSummary').innerHTML=`<div class="center"><span class="section-no">FIRST TEST COMPLETE</span><h2>Your system protected ${counts.protected} / 7 patients</h2><p class="instruction" style="margin:auto">“Covered” does not always mean “able to access care”. Look at who faced barriers — and why.</p></div>${miniResults(r)}<div class="callout"><strong>Commission question:</strong> Which failure worries you most: cost, geography, waiting time, workforce or two-tier access?</div><div class="actions"><button id="triggerCrisis" class="primary" type="button">Open the breaking-news alert →</button></div>`;$('#triggerCrisis').onclick=()=>{if(!state.crisisId)state.crisisId=crises[Math.floor(Math.random()*crises.length)].id;state.crisisResponse=null;recompute();renderCrisis();setPhase('crisis');tone(170,.16)} }
 function countStatuses(r){const n={protected:0,risk:0,failed:0};Object.values(r).forEach(x=>n[x.status]++);return n}
-function renderCrisis(){const c=crises.find(x=>x.id===state.crisisId);$('#crisisStage').innerHTML=`<article class="crisis-card"><span class="section-no" style="color:#ffd6a0">🚨 BREAKING NEWS</span><h3>${c.title}</h3><p>${c.desc}</p><p><strong>Immediate impact:</strong> the shock has already hit your indicators. Choose ONE emergency response.</p><div class="crisis-options">${c.responses.map(r=>`<button type="button" class="crisis-option ${state.crisisResponse===r.id?'selected':''}" data-crisis-response="${r.id}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('')}</div></article><p id="crisisMsg" class="live"></p>`;$$('[data-crisis-response]').forEach(b=>b.onclick=()=>{const r=c.responses.find(x=>x.id===b.dataset.crisisResponse);const old=state.crisisResponse?c.responses.find(x=>x.id===state.crisisResponse).cost:0;const baseCredits=calcBuild().credits - state.reforms.reduce((s,id)=>s+reforms.find(x=>x.id===id).cost,0);if(baseCredits-r.cost<0){$('#crisisMsg').innerHTML='<span class="warning">You did not keep enough Health Credits for that response.</span>';tone(180,.12);return}state.crisisResponse=r.id;recompute();renderCrisis();$('#confirmCrisis').disabled=false;tone(560)});$('#confirmCrisis').disabled=!state.crisisResponse}
-function renderReforms(){$('#reformGrid').innerHTML=reforms.map(r=>`<button type="button" class="reform ${state.reforms.includes(r.id)?'selected':''}" data-reform="${r.id}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('');$$('[data-reform]').forEach(b=>b.onclick=()=>toggleReform(b.dataset.reform));$('#reformCount').textContent=state.reforms.length;$('#runAgain').disabled=state.reforms.length===0;$('#reformMessage').textContent=state.reforms.length<2?'Choose one or two reforms. You may proceed after at least one.':'Two reforms selected. Your cabinet is ready.'}
+function renderCrisis(){const c=crises.find(x=>x.id===state.crisisId);$('#crisisStage').innerHTML=`<article class="crisis-card"><span class="section-no" style="color:#ffd6a0">🚨 BREAKING NEWS</span><h3>${c.title}</h3><p>${c.desc}</p><p><strong>Immediate impact:</strong> the shock has already hit your indicators. Choose ONE emergency response.</p><div class="crisis-options">${c.responses.map(r=>`<button type="button" class="crisis-option ${state.crisisResponse===r.id?'selected':''}" data-crisis-response="${r.id}" aria-pressed="${state.crisisResponse===r.id?'true':'false'}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('')}</div></article><p id="crisisMsg" class="live"></p>`;$$('[data-crisis-response]').forEach(b=>b.onclick=()=>{const r=c.responses.find(x=>x.id===b.dataset.crisisResponse);const baseCredits=calcBuild().credits - state.reforms.reduce((s,id)=>s+reforms.find(x=>x.id===id).cost,0);if(baseCredits-r.cost<0){$('#crisisMsg').innerHTML='<span class="warning">You did not keep enough Health Credits for that response.</span>';tone(180,.12);return}state.crisisResponse=r.id;recompute();renderCrisis();$('#confirmCrisis').disabled=false;tone(560)});$('#confirmCrisis').disabled=!state.crisisResponse}
+function renderReforms(){$('#reformGrid').innerHTML=reforms.map(r=>`<button type="button" class="reform ${state.reforms.includes(r.id)?'selected':''}" data-reform="${r.id}" aria-pressed="${state.reforms.includes(r.id)?'true':'false'}"><span class="cost">${r.cost} credit${r.cost===1?'':'s'}</span><h4>${r.name}</h4><p>${r.desc}</p></button>`).join('');$$('[data-reform]').forEach(b=>b.onclick=()=>toggleReform(b.dataset.reform));$('#reformCount').textContent=state.reforms.length;$('#runAgain').disabled=state.reforms.length===0;$('#reformMessage').textContent=state.reforms.length<2?'Choose one or two reforms. You may proceed after at least one.':'Two reforms selected. Your cabinet is ready.'}
 function toggleReform(id){const r=reforms.find(x=>x.id===id),idx=state.reforms.indexOf(id);if(idx>=0){state.reforms.splice(idx,1);recompute();renderReforms();tone(420);return}if(state.reforms.length>=2){$('#reformMessage').innerHTML='<span class="warning">Only two reforms are allowed.</span>';tone(180,.12);return}if(state.credits<r.cost){$('#reformMessage').innerHTML='<span class="warning">Not enough Health Credits for that reform.</span>';tone(180,.12);return}state.reforms.push(id);recompute();renderReforms();tone(580)}
-function renderFinal(){state.finalResults=assessPatients();save();const before=state.initialResults,after=state.finalResults;$('#comparison').innerHTML=`<table class="compare-table"><thead><tr><th>Patient</th><th>Before reform</th><th>After reform</th><th>What changed?</th></tr></thead><tbody>${patients.map(p=>{const a=before[p.id],b=after[p.id],changed=a.status!==b.status;return `<tr><td>${p.icon} <strong>${p.name}</strong></td><td><span class="status-dot ${a.status}">${statusLabel(a.status)}</span></td><td><span class="status-dot ${b.status}">${statusLabel(b.status)}</span></td><td>${changed?'Policy changes altered this patient’s pathway.':'No status change — the same structural issue remains.'}</td></tr>`}).join('')}</tbody></table>`;
+function renderFinal(){state.finalResults=assessPatients();save();$('#printBtn').disabled=false;$('#printBtn').removeAttribute('title');const before=state.initialResults,after=state.finalResults;$('#comparison').innerHTML=`<table class="compare-table"><thead><tr><th>Patient</th><th>Before reform</th><th>After reform</th><th>What changed?</th></tr></thead><tbody>${patients.map(p=>{const a=before[p.id],b=after[p.id],changed=a.status!==b.status;return `<tr><td>${p.icon} <strong>${p.name}</strong></td><td><span class="status-dot ${a.status}">${statusLabel(a.status)}</span></td><td><span class="status-dot ${b.status}">${statusLabel(b.status)}</span></td><td>${changed?'Policy changes altered this patient’s pathway.':'No status change — the same structural issue remains.'}</td></tr>`}).join('')}</tbody></table>`;
  const avg=Math.round(Object.values(state.metrics).reduce((a,b)=>a+b,0)/5),counts=countStatuses(after);$('#scoreCard').innerHTML=`<span class="section-no" style="color:#f3c86a">SYSTEM SCORE</span><div class="big">${avg}/100</div><p>${counts.protected} protected · ${counts.risk} at risk · ${counts.failed} failed</p><p><strong>${state.credits}</strong> Health Credit${state.credits===1?'':'s'} left after crisis and reforms.</p>`;
  const entries=Object.entries(state.metrics).sort((a,b)=>b[1]-a[1]),best=entries[0],worst=entries.at(-1);let icon='🏆',title='Strongest dimension: '+labelMetric(best[0]),text=`Your best-performing indicator is ${labelMetric(best[0])} (${best[1]}/100).`;
  if(state.metrics.sustainability<35&&state.metrics.access>70){icon='💸';title='Healthcare Utopia — budget warning';text='Access is ambitious, but your financial room is dangerously limited.'}else if(state.metrics.equity<35&&state.metrics.timely>65){icon='⚡';title='Fast lane — equity warning';text='Some patients may move quickly, but access is strongly shaped by resources or insurance.'}else if(counts.failed===0){icon='🏆';title='Patient Protection Award';text='No final patient triggered a system failure — although trade-offs still remain.'}
@@ -339,22 +374,22 @@ function renderFinal(){state.finalResults=assessPatients();save();const before=s
 }
 function labelMetric(k){return({access:'Access',equity:'Equity',timely:'Timely care',workforce:'Workforce',sustainability:'Sustainability'})[k]||k}
 function restore(){
- $('#gameShell').classList.add('active');recompute();renderRoles();renderDecisions();if(state.initialResults)renderInitialSummary();else renderPatient();if(state.crisisId)renderCrisis();renderReforms();if(state.finalResults)renderFinal();setPhase(state.phase||'setup');
+ $('#gameShell').classList.add('active');recompute();renderRoles();renderDecisions();if(state.initialResults)renderInitialSummary();else renderPatient();if(state.crisisId)renderCrisis();renderReforms();const finalReady=state.initialResults&&state.crisisId&&state.crisisResponse&&state.reforms.length>0;if(state.finalResults&&finalReady)renderFinal();else{$('#printBtn').disabled=true;if(state.phase==='final'&&!finalReady)state.phase=state.crisisId?(state.crisisResponse?'reform':'crisis'):(state.initialResults?'crisis':'patients')}setPhase(state.phase||'setup');
 }
 $('#heroStart').onclick=()=>{state.phase=state.phase||'setup';$('#gameShell').classList.add('active');restore();tone(620)};
 $('#howBtn').onclick=()=>$('#howPanel').classList.toggle('hidden');
-$$('[data-team-size]').forEach(b=>b.onclick=()=>{state.teamSize=Number(b.dataset.teamSize);$$('[data-team-size]').forEach(x=>x.classList.toggle('selected',x===b));$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';renderRoles();save();tone(520)});
+$$('[data-team-size]').forEach(b=>b.onclick=()=>{state.teamSize=Number(b.dataset.teamSize);$$('[data-team-size]').forEach(x=>{const selected=x===b;x.classList.toggle('selected',selected);x.setAttribute('aria-pressed',selected?'true':'false')});$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';renderRoles();save();tone(520)});
 $('#startBuild').onclick=()=>{recompute();renderDecisions();setPhase('build');tone(650)};
 $('#lockSystem').onclick=()=>{if(!decisions.every(d=>state.choices[d.id]))return;state.patientIndex=0;state.patientRevealed=false;state.initialResults=null;renderPatient();setPhase('patients');tone(690)};
 $('#confirmCrisis').onclick=()=>{if(!state.crisisResponse)return;renderReforms();setPhase('reform');tone(640)};
 $('#runAgain').onclick=()=>{state.finalResults=assessPatients();renderFinal();setPhase('final');tone(760,.12)};
-$('#printBtn').onclick=()=>window.print();$('#printFinal').onclick=()=>window.print();
-function reset(){if(!confirm('Reset the entire Day 2 group game on this device?'))return;localStorage.removeItem(STORAGE);state=fresh();location.reload()}
+$('#printBtn').onclick=()=>{if(!$('#printBtn').disabled)window.print()};$('#printFinal').onclick=()=>window.print();
+function reset(){if(!confirm('Reset the entire Day 2 group game on this device?'))return;safeRemove(STORAGE);safeRemove(LEGACY_STORAGE);state=fresh();location.reload()}
 $('#resetBtn').onclick=reset;$('#playAgain').onclick=reset;
-$('#soundBtn').onclick=()=>{soundOn=!soundOn;$('#soundBtn').setAttribute('aria-pressed',soundOn?'true':'false');$('#soundBtn').textContent=soundOn?'🔊 Effects ON':'🔇 Effects OFF';if(soundOn)tone(620)};
+$('#soundBtn').onclick=()=>{soundOn=!soundOn;state.soundOn=soundOn;$('#soundBtn').setAttribute('aria-pressed',soundOn?'true':'false');$('#soundBtn').textContent=soundOn?'🔊 Effects ON':'🔇 Effects OFF';save();if(soundOn)tone(620)};
 // Initialise visible setup controls even before starting.
-$$('[data-team-size]').forEach(x=>x.classList.toggle('selected',Number(x.dataset.teamSize)===state.teamSize));$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';renderRoles();recompute();
-if(localStorage.getItem(STORAGE)){say('Saved group-game progress found on this device. Press “Enter the Commission” to continue.')}
+$$('[data-team-size]').forEach(x=>{const selected=Number(x.dataset.teamSize)===state.teamSize;x.classList.toggle('selected',selected);x.setAttribute('aria-pressed',selected?'true':'false')});$('#teamSizeNote').textContent=state.teamSize===3?'The Clinical Adviser also represents workforce concerns.':'Four separate roles will be assigned.';$('#soundBtn').setAttribute('aria-pressed',soundOn?'true':'false');$('#soundBtn').textContent=soundOn?'🔊 Effects ON':'🔇 Effects OFF';renderRoles();recompute();
+if(safeGet(STORAGE)||safeGet(LEGACY_STORAGE)){say('Saved group-game progress found on this device. Press “Enter the Commission” to continue.')}
 })();
 </script>
 </body>
