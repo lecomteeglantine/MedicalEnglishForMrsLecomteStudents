@@ -10,12 +10,10 @@
 
   function updateConnectionStatus() {
     const online = navigator.onLine;
-
     if (status) {
       status.textContent = online ? "● Online" : "● Offline";
       status.classList.toggle("is-offline", !online);
     }
-
     if (appState) {
       if (!online) {
         appState.textContent = serviceWorkerReady
@@ -26,19 +24,17 @@
       }
     }
   }
-
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", async () => {
       try {
         if ("caches" in window) {
           const keys = await caches.keys();
-          await Promise.all(keys.filter(k => k.startsWith("mrs-lecomte-medical-english-") && !k.includes("v61-")).map(k => caches.delete(k)));
+          await Promise.all(keys.filter(k => k.startsWith("mrs-lecomte-medical-english-") && !k.includes("v62-")).map(k => caches.delete(k)));
         }
         const registration = await navigator.serviceWorker.register(
-          "./service-worker-v61.js",
+          "./service-worker-v62.js",
           {scope: "./", updateViaCache: "none"}
         );
-
         registration.update().catch(() => {});
         await navigator.serviceWorker.ready;
         serviceWorkerReady = true;
@@ -54,7 +50,6 @@
   window.addEventListener("beforeinstallprompt", event => {
     event.preventDefault();
     deferredPrompt = event;
-
     if (installButton) {
       installButton.hidden = false;
       installButton.disabled = false;
@@ -77,7 +72,6 @@
       installButton.hidden = true;
     }
   });
-
   helpButton?.addEventListener("click", () => {
     if (!helpBox) return;
 
@@ -92,7 +86,6 @@
 
     helpButton.setAttribute("aria-expanded", String(opening));
   });
-
   window.addEventListener("appinstalled", () => {
     deferredPrompt = null;
     if (installButton) installButton.hidden = true;
