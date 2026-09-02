@@ -1,29 +1,71 @@
-FGSM3 DAY 4 — AI CLINICAL CONTROL — TARGETED BUG FIX
-Date: 2 September 2026
+FGSM3 DAY 4 — AUDIT FIX
+========================
 
-UPLOAD TO THE ROOT OF THE GITHUB REPOSITORY:
-- fgsm3-day4-game.js   (overwrite the existing file)
+FILE TO REPLACE
+---------------
+Replace only this file at the root of the GitHub repository:
+  fgsm3-day4.html
 
-WHAT THE AUDIT FOUND
-1. CRITICAL / BLOCKING: the published fgsm3-day4-game.js contains literal line breaks inside normal quoted JavaScript strings. This is invalid JavaScript syntax and prevents the complete Day 4 game script from parsing.
-2. Because the script cannot parse, mission boot, unlocking, scoring, local progress, sound controls, music logic, speech synthesis, final test and reset logic cannot initialise reliably.
-3. The HTML structure itself is coherent: Game 1 and Game 2 are clearly separated, the mission route is visible, images have alt text, and the page contains explicit human-in-the-loop / non-medical-advice wording.
-4. The question banks already randomise answer order in the original game logic, so the correct answer is not permanently displayed in the first position.
+DO NOT DELETE / CHANGE
+----------------------
+The fix reuses the existing Day 4 assets and the existing Conference Rescue page:
+- conference-rescue.html
+- assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp
+- assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp
+- assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4
 
 WHAT THIS FIX DOES
-- Preserves the complete original 995-line game logic and all existing question banks.
-- Loads the exact pinned original source from commit 5ff7ff2.
-- Repairs only illegal newline characters occurring inside ordinary single- and double-quoted JavaScript strings.
-- Leaves template literals, comments, questions, scoring rules, progression rules, music, video behaviour, speech synthesis and stored progress unchanged.
-- Adds a visible error message if the source cannot be loaded instead of leaving students with an inert interface.
+------------------
+1. Places the two Day 4 activity cards side by side on desktop/tablet:
+   - GROUP ACTIVITY — AI Clinical Control · Board Decision
+   - INDIVIDUAL ACTIVITY — The Conference Rescue
+   On narrow phones they intentionally stack vertically to prevent overflow and tiny text.
 
-WHY A PINNED COMMIT IS USED
-The repaired loader must not fetch the current main-branch fgsm3-day4-game.js after it replaces that file, otherwise it would fetch itself recursively. Commit 5ff7ff2 is the published source audited on 2 September 2026.
+2. Keeps AI Clinical Control as a deterministic GROUP activity:
+   - 3 or 4 students
+   - 6 fixed board decisions
+   - no randomisation / no shuffled options
+   - same A/B/C path = same options, same consequences, same scores and same final briefing on laptop or phone
 
-DEPLOYMENT
-1. Unzip.
-2. Upload fgsm3-day4-game.js to the repository root.
-3. Confirm overwrite/replacement of the existing file.
-4. Wait for GitHub Pages to redeploy, then hard-refresh the Day 4 page (Ctrl+F5).
+3. Keeps the final speaking transfer explicit:
+   - every student has an automatically generated role card
+   - approximately 2 minutes speaking per student
+   - 3-person teams automatically merge Governance into Student 3's recap
 
-No other site file needs to be replaced for this targeted correction.
+4. Fixes persistence/UI issues:
+   - validates saved progress instead of trusting malformed/stale data
+   - rebuilds scores from saved choices
+   - preserves the selected group size visually after a reload
+   - locks group size once the board has started
+   - avoids jumping automatically to the final report when reopening a finished activity
+   - uses a new v2 localStorage key so old incompatible progress cannot break the activity
+
+5. Fixes answer-pattern predictability:
+   - the strongest option is no longer always B
+   - strong-choice sequence is deliberately distributed across A/B/C
+   - option order remains fixed across all devices
+
+6. Adds robustness/accessibility:
+   - keyboard focus state on activity cards
+   - aria-pressed state on group-size buttons
+   - direct video fallback link if embedded playback is blocked
+   - no duplicate IDs / no broken internal anchors
+   - no Math.random() anywhere in the group activity
+
+TESTS PERFORMED
+---------------
+- JavaScript syntax check: PASS
+- 46 HTML IDs: all unique
+- internal hash anchors: PASS
+- all six cases contain exactly A/B/C once: PASS
+- desktop chooser: group + individual cards side by side: PASS
+- 390px mobile viewport: no horizontal overflow: PASS
+- same deterministic path B-C-A-C-B-A on desktop and mobile: same labels, same result, same scores: PASS
+- 4-person recap: 4 recap cards: PASS
+- 3-person recap: 3 recap cards with Governance merged: PASS
+- no JavaScript page errors during tested full paths: PASS
+
+UPLOAD
+------
+Upload/replace fgsm3-day4.html in the SAME branch that GitHub Pages publishes.
+Then wait for GitHub Pages deployment and hard-refresh the page (Ctrl+F5 on Windows).
