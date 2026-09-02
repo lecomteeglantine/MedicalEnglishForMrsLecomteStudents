@@ -1,629 +1,185 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#07141b">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Medical English">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="FGSM3 Day 4 — two interactive Medical English games: AI Clinical Control and The Conference Rescue.">
-  <title>FGSM3 · Day 4 · Two Games</title>
+  <meta name="theme-color" content="#07141b">
+  <meta name="description" content="FGSM3 Day 4 — AI Clinical Control group activity and Conference Rescue pronunciation activity.">
+  <title>FGSM3 · Day 4 · Group + Individual Activities</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="styles-v47.css">
-
-  <style>
-    .conference-rescue-callout{
-      margin: 28px 0 34px;
-      border: 1px solid rgba(45, 212, 191, .28);
-      border-radius: 24px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top right, rgba(45,212,191,.16), transparent 34%),
-        linear-gradient(135deg, #0a2029 0%, #0d2a35 55%, #123b49 100%);
-      color: #f4fbfc;
-      box-shadow: 0 18px 50px rgba(0,0,0,.18);
-    }
-    .conference-rescue-callout-inner{
-      display:grid;
-      grid-template-columns:minmax(0,1.4fr) minmax(240px,.6fr);
-      gap:24px;
-      align-items:center;
-      padding:28px;
-    }
-    .conference-rescue-callout .eyebrow{
-      margin:0 0 8px;
-      font-size:.78rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-weight:800;
-      color:#6ee7d8;
-    }
-    .conference-rescue-callout h2{
-      margin:.1em 0 .35em;
-      font-size:clamp(1.8rem,4vw,3rem);
-      color:#fff;
-    }
-    .conference-rescue-callout p{
-      margin:0;
-      max-width:68ch;
-      color:#d8eaee;
-      line-height:1.6;
-    }
-    .conference-rescue-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:16px;
-    }
-    .conference-rescue-tags span{
-      display:inline-flex;
-      align-items:center;
-      min-height:30px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(255,255,255,.07);
-      font-size:.78rem;
-      color:#eef9fa;
-    }
-    .conference-rescue-launch{
-      display:flex;
-      flex-direction:column;
-      align-items:stretch;
-      justify-content:center;
-      gap:10px;
-      padding:20px;
-      border-radius:18px;
-      background:rgba(2,13,18,.38);
-      border:1px solid rgba(255,255,255,.12);
-    }
-    .conference-rescue-launch strong{
-      font-size:1.05rem;
-      color:#fff;
-    }
-    .conference-rescue-launch small{
-      color:#a9c8ce;
-      line-height:1.45;
-    }
-    .conference-rescue-button{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      min-height:48px;
-      padding:12px 18px;
-      border-radius:999px;
-      background:#5eead4;
-      color:#062028;
-      font-weight:900;
-      text-decoration:none;
-      box-shadow:0 8px 22px rgba(94,234,212,.18);
-      transition:transform .15s ease, filter .15s ease;
-    }
-    .conference-rescue-button:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.04);
-    }
-    .conference-rescue-button:focus-visible{
-      outline:3px solid #fff;
-      outline-offset:3px;
-    }
-    @media (max-width: 760px){
-      .conference-rescue-callout-inner{grid-template-columns:1fr;padding:22px}
-    }
-  
-    .day4-game-chooser{
-      margin:22px 0 28px;
-      padding:26px;
-      border-radius:26px;
-      background:linear-gradient(145deg,#071b24,#0c2a36);
-      color:#fff;
-      box-shadow:0 18px 48px rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.08);
-    }
-    .day4-game-chooser-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:20px;
-      margin-bottom:18px;
-    }
-    .day4-game-chooser-head p{
-      margin:0;
-      color:#b9d2d8;
-      max-width:65ch;
-      line-height:1.55;
-    }
-    .day4-game-chooser-head .count{
-      flex:0 0 auto;
-      padding:8px 12px;
-      border-radius:999px;
-      background:#5eead4;
-      color:#062028;
-      font-weight:900;
-      letter-spacing:.08em;
-      font-size:.76rem;
-    }
-    .day4-game-chooser h1{
-      color:#fff;
-      margin:.15em 0 .2em;
-      font-size:clamp(2rem,4vw,3.2rem);
-    }
-    .day4-game-grid{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:16px;
-    }
-    .day4-game-card{
-      display:flex;
-      flex-direction:column;
-      min-height:285px;
-      padding:22px;
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,.13);
-      background:rgba(255,255,255,.055);
-      color:#fff;
-      text-decoration:none;
-      transition:transform .15s ease,border-color .15s ease,background .15s ease;
-    }
-    .day4-game-card:hover{
-      transform:translateY(-2px);
-      border-color:rgba(94,234,212,.7);
-      background:rgba(255,255,255,.085);
-    }
-    .day4-game-card:focus-visible{
-      outline:3px solid #fff;
-      outline-offset:3px;
-    }
-    .day4-game-card .game-number{
-      display:inline-flex;
-      align-self:flex-start;
-      padding:7px 10px;
-      border-radius:999px;
-      background:rgba(94,234,212,.13);
-      color:#74f3df;
-      font-weight:900;
-      font-size:.76rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-    .day4-game-card .game-icon{
-      font-size:2.2rem;
-      margin:17px 0 7px;
-    }
-    .day4-game-card h2{
-      color:#fff;
-      margin:0 0 8px;
-      font-size:clamp(1.45rem,2.6vw,2rem);
-    }
-    .day4-game-card p{
-      color:#d5e7eb;
-      margin:0 0 16px;
-      line-height:1.55;
-    }
-    .day4-game-card .game-skills{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-top:auto;
-      margin-bottom:18px;
-    }
-    .day4-game-card .game-skills span{
-      padding:5px 9px;
-      border:1px solid rgba(255,255,255,.13);
-      border-radius:999px;
-      color:#cce1e5;
-      font-size:.75rem;
-    }
-    .day4-game-card .game-cta{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:46px;
-      padding:11px 16px;
-      border-radius:999px;
-      background:#5eead4;
-      color:#062028;
-      font-weight:900;
-    }
-    .day4-game-card.rescue{
-      background:
-        radial-gradient(circle at top right,rgba(45,212,191,.14),transparent 35%),
-        rgba(255,255,255,.055);
-    }
-    .day4-section-label{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      margin:26px 0 12px;
-      font-weight:900;
-      color:#0a5160;
-      letter-spacing:.1em;
-      text-transform:uppercase;
-      font-size:.78rem;
-    }
-    .day4-section-label::after{
-      content:"";
-      height:1px;
-      flex:1;
-      background:rgba(10,81,96,.2);
-    }
-    @media(max-width:760px){
-      .day4-game-grid{grid-template-columns:1fr}
-      .day4-game-chooser-head{align-items:flex-start;flex-direction:column}
-      .day4-game-card{min-height:0}
-    }
-
-  </style>
-
   <link rel="canonical" href="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day4.html">
-  <meta property="og:title" content="FGSM3 · Day 4 · Two Games">
-  <meta property="og:description" content="FGSM3 Day 4 — two interactive Medical English games: AI Clinical Control and The Conference Rescue.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://lecomteeglantine.github.io/MedicalEnglishForMrsLecomteStudents/fgsm3-day4.html">
+  <style>
+    :root{--g4-ink:#092530;--g4-deep:#071b24;--g4-deep2:#0d3441;--g4-teal:#16a89c;--g4-mint:#5eead4;--g4-paper:#f6fbfb;--g4-line:#cfe6e8;--g4-red:#b42318;--g4-gold:#b7791f}
+    *{box-sizing:border-box}
+    body{margin:0;background:#edf6f6;color:var(--g4-ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    .skip-link{position:absolute;left:-9999px;top:8px;z-index:999;background:#fff;color:#000;padding:10px 14px;border-radius:8px}.skip-link:focus{left:8px}
+    .topbar{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:14px clamp(16px,4vw,40px);background:#fff;border-bottom:1px solid #d9e7e9;position:sticky;top:0;z-index:20}
+    .brand{display:flex;align-items:center;gap:9px;color:#0b4351;text-decoration:none}.brand-mark{font-size:1.7rem}.brand span:last-child{display:flex;flex-direction:column}.brand small{font-size:.72rem;color:#53727a}
+    .main-nav{display:flex;flex-wrap:wrap;gap:6px}.main-nav a{color:#1b5663;text-decoration:none;padding:8px 10px;border-radius:999px;font-weight:700;font-size:.88rem}.main-nav a:hover,.main-nav a:focus-visible{background:#e6f5f4;outline:none}
+    .g4-main{width:min(1180px,calc(100% - 28px));margin:0 auto;padding:22px 0 54px}.breadcrumb{display:flex;gap:8px;align-items:center;font-size:.84rem;margin-bottom:16px}.breadcrumb a{color:#0b6970}
+    .g4-chooser{background:linear-gradient(145deg,#071b24,#0c2a36);color:#fff;border-radius:26px;padding:26px;box-shadow:0 18px 48px rgba(0,0,0,.14);margin-bottom:26px}.g4-chooser-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-end;margin-bottom:18px}.g4-kicker{text-transform:uppercase;letter-spacing:.13em;font-weight:900;font-size:.74rem;color:#5eead4}.g4-chooser h1{font-size:clamp(2rem,4vw,3.25rem);margin:.15em 0 .2em}.g4-chooser p{margin:0;max-width:74ch;color:#cfe3e7;line-height:1.6}.g4-count{background:var(--g4-mint);color:#062028;padding:8px 12px;border-radius:999px;font-weight:900;font-size:.75rem;white-space:nowrap}
+    .g4-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.g4-choice-card{display:flex;flex-direction:column;min-height:286px;padding:22px;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.055);color:#fff;text-decoration:none;transition:.15s transform,.15s border-color}.g4-choice-card:hover{transform:translateY(-2px);border-color:rgba(94,234,212,.75)}.g4-choice-card .badge{align-self:flex-start;padding:6px 9px;border-radius:999px;background:rgba(94,234,212,.14);color:#83f5e4;font-size:.74rem;font-weight:900;text-transform:uppercase;letter-spacing:.1em}.g4-choice-card .icon{font-size:2.2rem;margin:16px 0 4px}.g4-choice-card h2{margin:0 0 8px;color:#fff}.g4-choice-card p{margin:0 0 14px}.g4-choice-card .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}.g4-choice-card .tags span{border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:5px 9px;color:#d4e7eb;font-size:.75rem}.g4-choice-card .cta{margin-top:18px;display:flex;justify-content:center;background:var(--g4-mint);color:#062028;border-radius:999px;padding:12px 15px;font-weight:900}
+    .g4-label{display:flex;align-items:center;gap:10px;margin:28px 0 12px;color:#0a5160;font-weight:900;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}.g4-label:after{content:"";height:1px;flex:1;background:#bcdde0}
+    .g4-hero{position:relative;min-height:410px;border-radius:28px;overflow:hidden;background:#07303a;box-shadow:0 18px 48px rgba(3,42,50,.16);margin-bottom:22px}.g4-hero img{position:absolute;width:100%;height:100%;object-fit:cover;inset:0}.g4-hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,17,22,.93) 0%,rgba(2,17,22,.78) 47%,rgba(2,17,22,.25) 100%)}.g4-hero-copy{position:relative;z-index:2;color:#fff;padding:clamp(28px,6vw,64px);max-width:760px}.g4-hero-copy h2{font-size:clamp(2.3rem,5vw,4.6rem);line-height:.97;margin:.13em 0}.g4-hero-copy .lead{font-size:1.08rem;line-height:1.65;color:#d9eef0}.g4-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.g4-pill{background:rgba(94,234,212,.14);border:1px solid rgba(94,234,212,.34);color:#bffaf0;padding:7px 10px;border-radius:999px;font-size:.8rem;font-weight:800}.g4-primary,.g4-secondary{appearance:none;border:0;border-radius:999px;padding:12px 18px;font:inherit;font-weight:900;cursor:pointer}.g4-primary{background:var(--g4-mint);color:#062028}.g4-secondary{background:#e6f5f4;color:#0a5963;border:1px solid #b9dddd}.g4-primary:disabled,.g4-secondary:disabled{opacity:.5;cursor:not-allowed}
+    .g4-panel{background:#fff;border:1px solid var(--g4-line);border-radius:22px;padding:clamp(18px,3vw,28px);box-shadow:0 10px 28px rgba(8,55,63,.07);margin:18px 0}.g4-panel h2,.g4-panel h3{margin-top:0}.g4-instructions{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}.g4-steps{counter-reset:g4step;list-style:none;padding:0;margin:0;display:grid;gap:10px}.g4-steps li{position:relative;padding:12px 14px 12px 52px;background:#f4fbfb;border:1px solid #d7ecee;border-radius:14px;line-height:1.5}.g4-steps li:before{counter-increment:g4step;content:counter(g4step);position:absolute;left:13px;top:12px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#0b6970;color:#fff;font-weight:900}.g4-rule{padding:16px;border-radius:16px;background:#071b24;color:#e8f6f7}.g4-rule strong{color:#7ff5e5}.g4-rule p{margin:.45em 0 0;line-height:1.55}.g4-roles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}.g4-role{padding:13px;border:1px solid #d5e8ea;border-radius:14px;background:#fbfefe}.g4-role b{display:block;color:#09626a;margin-bottom:4px}.g4-role p{margin:0;font-size:.88rem;line-height:1.45}
+    .g4-video-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px;align-items:stretch}.g4-video{background:#071b24;border-radius:18px;overflow:hidden;min-height:300px;display:grid;place-items:center}.g4-video video{display:block;width:100%;height:auto;max-height:470px}.g4-video-note{background:#eefafa;border:1px solid #cee9eb;border-radius:18px;padding:18px}.g4-video-note h3{margin-top:0}.g4-video-note ul{padding-left:20px;line-height:1.55}
+    .g4-board-head{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end}.g4-board-head p{margin-bottom:0}.g4-score-strip{display:grid;grid-template-columns:repeat(4,minmax(115px,1fr));gap:9px;margin:18px 0}.g4-meter{padding:12px;border-radius:14px;background:#f2fafa;border:1px solid #d5ebec}.g4-meter span{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.07em;font-weight:900;color:#52727a}.g4-meter strong{font-size:1.35rem;color:#075a63}.g4-progress{height:9px;background:#d7e9ea;border-radius:999px;overflow:hidden;margin-top:8px}.g4-progress i{display:block;height:100%;width:0;background:#13a89c;transition:width .2s ease}
+    .g4-case{display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start}.g4-case-visual{border-radius:18px;overflow:hidden;background:#0b3540;min-height:200px}.g4-case-visual img{width:100%;height:100%;object-fit:cover;display:block;min-height:200px}.g4-round-chip{display:inline-flex;padding:6px 9px;border-radius:999px;background:#dff5f3;color:#07636b;font-size:.75rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.g4-case h3{font-size:1.6rem;margin:.45em 0 .3em}.g4-case p{line-height:1.6}.g4-evidence{border-left:4px solid #12a89d;background:#eefafa;border-radius:0 12px 12px 0;padding:12px 14px;margin:13px 0;font-size:.92rem}.g4-options{display:grid;gap:10px;margin-top:16px}.g4-option{width:100%;text-align:left;border:1px solid #bddfe1;background:#fff;border-radius:16px;padding:14px;cursor:pointer;font:inherit;color:#123f48;transition:.12s}.g4-option:hover,.g4-option:focus-visible{border-color:#0d938b;box-shadow:0 0 0 3px rgba(13,147,139,.12);outline:none}.g4-option b{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e1f4f3;color:#07636b;margin-right:8px}.g4-option small{display:block;margin:6px 0 0 38px;color:#637d82;line-height:1.45}.g4-option.is-selected{border-color:#0c887f;background:#ecfbf8}.g4-outcome{margin-top:15px;padding:15px;border-radius:15px;background:#071b24;color:#eefafa;display:none}.g4-outcome.show{display:block}.g4-outcome strong{color:#6ff0dd}.g4-outcome .delta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.g4-outcome .delta span{padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.08);font-size:.76rem}.g4-next-row{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px}.g4-path{font-size:.82rem;color:#60797e}
+    .g4-final{display:none}.g4-final.show{display:block}.g4-result-banner{border-radius:20px;padding:22px;background:linear-gradient(135deg,#071b24,#0b414e);color:#fff}.g4-result-banner h2{margin:.2em 0}.g4-result-banner p{color:#d8ecef;line-height:1.55}.g4-final-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:18px;margin-top:18px}.g4-summary-card{border:1px solid #d1e7e9;border-radius:18px;background:#fff;padding:18px}.g4-summary-card h3{margin-top:0}.g4-decision-list{display:grid;gap:8px}.g4-decision{padding:10px 12px;background:#f4fbfb;border-radius:12px;border:1px solid #dbecee;font-size:.9rem;line-height:1.45}.g4-recaps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.g4-recap{padding:16px;border-radius:16px;border:1px solid #cfe5e7;background:#fbfefe}.g4-recap .student{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;font-weight:900;color:#0d7778}.g4-recap h3{margin:.35em 0}.g4-recap ol{margin:.4em 0 0;padding-left:19px;line-height:1.5}.g4-recap .time{display:inline-flex;margin-top:10px;border-radius:999px;padding:5px 8px;background:#e2f6f4;color:#075d65;font-size:.75rem;font-weight:900}.g4-language{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.g4-language div{padding:12px;border-radius:13px;background:#f1f9fa;border:1px solid #d6eaec}.g4-language b{display:block;color:#08646b;margin-bottom:4px}.g4-reset-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}.g4-status{font-size:.88rem;color:#58757c;min-height:1.3em;margin-top:8px}.g4-source{font-size:.85rem;color:#5f787e;line-height:1.5;border-top:1px solid #dbecee;padding-top:14px;margin-top:16px}
+    .site-footer{padding:28px clamp(18px,4vw,44px);background:#071b24;color:#d8eaee;text-align:center}.site-footer a{color:#78eedd}.site-footer .privacy{max-width:900px;margin:8px auto 0;font-size:.82rem;line-height:1.5}
+    @media(max-width:880px){.g4-instructions,.g4-video-grid,.g4-final-grid{grid-template-columns:1fr}.g4-roles{grid-template-columns:repeat(2,1fr)}.g4-case{grid-template-columns:1fr}.g4-case-visual{max-height:260px}.g4-score-strip{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.topbar{position:static;align-items:flex-start;flex-direction:column}.main-nav{width:100%}.g4-choice-grid{grid-template-columns:1fr}.g4-chooser-head{align-items:flex-start;flex-direction:column}.g4-hero{min-height:480px}.g4-hero:after{background:linear-gradient(0deg,rgba(2,17,22,.94) 0%,rgba(2,17,22,.72) 70%,rgba(2,17,22,.3) 100%)}.g4-hero-copy{padding:28px 20px}.g4-roles,.g4-recaps,.g4-language{grid-template-columns:1fr}.g4-board-head{grid-template-columns:1fr}.g4-next-row{align-items:stretch;flex-direction:column}.g4-next-row .g4-primary{width:100%}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
 </head>
-<body class="ai4-body">
+<body>
   <a class="skip-link" href="#main">Skip to main content</a>
   <header class="topbar">
     <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🩺</span><span><strong>Medical English</strong><small>for Mrs Lecomte's Students</small></span></a>
     <nav class="main-nav" aria-label="Main navigation">
-      <a href="index.html">Home</a>
-      <a href="dictionary.html">Dictionary</a>
-      <a href="fgsm2.html">FGSM2</a>
-      <a href="fgsm3.html">FGSM3</a>
-      <a href="grammar.html">Grammar</a>
-      <a href="pronunciation.html">Pronunciation</a>
-      <a href="games.html">Games</a>
+      <a href="index.html">Home</a><a href="dictionary.html">Dictionary</a><a href="fgsm2.html">FGSM2</a><a href="fgsm3.html">FGSM3</a><a href="grammar.html">Grammar</a><a href="pronunciation.html">Pronunciation</a><a href="games.html">Games</a>
     </nav>
   </header>
 
-  <main id="main" class="ai4-main">
+  <main id="main" class="g4-main">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">›</span><a href="fgsm3.html">FGSM3</a><span aria-hidden="true">›</span><span aria-current="page">Day 4</span></nav>
 
-    <section class="day4-game-chooser" aria-labelledby="day4ChooseTitle">
-      <div class="day4-game-chooser-head">
-        <div>
-          <span class="ai4-kicker">FGSM3 · DAY 4</span>
-          <h1 id="day4ChooseTitle">Choose your game</h1>
-          <p>Day 4 contains <strong>two separate games</strong>. You can play either one independently: one focuses on AI and clinical decision-making, the other on pronunciation for scientific presentations.</p>
-        </div>
-        <span class="count">2 GAMES</span>
-      </div>
-
-      <div class="day4-game-grid">
-        <a class="day4-game-card" href="#ai-clinical-control">
-          <span class="game-number">Game 1 of 2</span>
-          <span class="game-icon" aria-hidden="true">🧠</span>
-          <h2>AI Clinical Control</h2>
-          <p>Enter the Human-in-the-Loop control room and work through AI vocabulary, clinical feeds, evidence, certainty and accountability.</p>
-          <div class="game-skills" aria-label="Game 1 skills">
-            <span>AI &amp; medicine</span><span>evidence</span><span>modals</span><span>debate</span>
-          </div>
-          <span class="game-cta">Play Game 1 →</span>
-        </a>
-
-        <a class="day4-game-card rescue" href="conference-rescue.html">
-          <span class="game-number">Game 2 of 2</span>
-          <span class="game-icon" aria-hidden="true">🎤</span>
-          <h2>The Conference Rescue</h2>
-          <p>Your scientific presentation starts soon. Rescue your pronunciation before you take the stage.</p>
-          <div class="game-skills" aria-label="Game 2 skills">
-            <span>medical terms</span><span>TH</span><span>word stress</span><span>intonation</span>
-          </div>
-          <span class="game-cta">Play Game 2 →</span>
-        </a>
+    <section class="g4-chooser" aria-labelledby="chooseTitle">
+      <div class="g4-chooser-head"><div><span class="g4-kicker">FGSM3 · DAY 4</span><h1 id="chooseTitle">Choose your activity</h1><p>Day 4 now contains one <strong>group decision activity</strong> on AI in medicine and one <strong>individual pronunciation activity</strong> for scientific presentations.</p></div><span class="g4-count">2 ACTIVITIES</span></div>
+      <div class="g4-choice-grid">
+        <a class="g4-choice-card" href="#ai-clinical-control"><span class="badge">Group activity</span><span class="icon" aria-hidden="true">🧠</span><h2>AI Clinical Control · Board Decision</h2><p>Work as a clinical governance team. Discuss six fixed cases, make collective choices and defend your final protocol.</p><div class="tags"><span>AI &amp; medicine</span><span>evidence</span><span>ethics</span><span>2-min recap each</span></div><span class="cta">Start the group activity →</span></a>
+        <a class="g4-choice-card" href="conference-rescue.html"><span class="badge">Individual activity</span><span class="icon" aria-hidden="true">🎤</span><h2>The Conference Rescue</h2><p>Your scientific presentation starts soon. Rescue your pronunciation, word stress and intonation before you take the stage.</p><div class="tags"><span>medical terms</span><span>TH</span><span>word stress</span><span>intonation</span></div><span class="cta">Open Conference Rescue →</span></a>
       </div>
     </section>
 
-    <div class="day4-section-label" id="ai-clinical-control">Game 1 · AI Clinical Control</div>
+    <div class="g4-label" id="ai-clinical-control">Group activity · AI Clinical Control</div>
 
-    <section class="ai4-hero" aria-labelledby="ai4Title">
-      <img class="ai4-hero-image" src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Vintage-style illustration of a doctor, a patient and an artificial-intelligence system in a medical setting." decoding="async" width="356" height="267">
-      <div class="ai4-hero-overlay" aria-hidden="true"></div>
-      <div class="ai4-hero-copy">
-        <p class="ai4-kicker">FGSM3 · DAY 4 · GAME 1 OF 2</p>
-        <h2 id="ai4Title" class="ai4-main-title">AI Clinical Control</h2>
-        <p class="ai4-subtitle">Human in the Loop</p>
-        <p class="ai4-lead">AI can monitor, flag patterns and support clinical work. Your job is to understand exactly what the system is doing — and keep the human decision-maker in control.</p>
-        <button id="startDay4Mission1" class="ai4-primary" type="button">Boot Mission 1 →</button>
-      </div>
-      <div class="ai4-status-card" aria-label="Day 4 mission status"><span>CONTROL ROOM</span><strong>MISSION 01</strong><b>SYSTEM BOOT</b><small id="day4Clearance">Clearance pending</small></div>
-    </section>
-
-    <section class="ai4-toolbar" aria-label="Day 4 controls">
-      <div><strong>Clinical control panel</strong><span>Progress is stored only on this device.</span></div>
-      <div class="ai4-toolbar-actions">
-        <button id="day4SoundToggle" class="ai4-toggle" type="button" aria-pressed="true">🔊 Sound ON</button>
-        <button id="day4MusicToggle" class="ai4-toggle" type="button" aria-pressed="false">🎵 Music OFF</button>
-        <button id="resetDay4" class="ai4-reset" type="button">Reset Day 4</button>
-      </div>
-      <p id="day4AudioStatus" class="ai4-status-text" role="status" aria-live="polite">Day 4 soundtrack installed. Tap Music OFF to start the AI Clinical Control theme.</p>
-    </section>
-
-    <section class="ai4-board" aria-labelledby="ai4MissionTitle">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 01</p><h2 id="ai4MissionTitle">Mission 1 · System Boot</h2><p>Learn the core language from the Day 4 worksheet, then prove that you can tell the difference between an AI function, a regulatory label, a patient concern and a human responsibility.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION PROGRESS</span><strong id="day4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4ProgressBar"></i></div></div>
-      </div>
-
-      <div class="ai4-activity-grid">
-        <button class="ai4-activity-card" data-ai4-activity="lexicon" type="button"><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor, patient and AI system in a medical setting." loading="lazy" decoding="async" width="356" height="267"><div><small>CLINICAL LEXICON</small><strong>Load the Vocabulary</strong><p>Decode the ten core terms from the Day 4 worksheet.</p><b id="ai4StatusLexicon">READY</b></div></button>
-        <button class="ai4-activity-card" data-ai4-activity="signals" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="AI-assisted medical consultation illustration." loading="lazy" decoding="async" width="356" height="267"><div><small>SIGNAL RECOGNITION</small><strong>Read the System</strong><p>Choose the term that best fits a real medical-AI context.</p><b id="ai4StatusSignals">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-activity="boundaries" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system." loading="lazy" decoding="async" width="356" height="267"><div><small>TRUST BOUNDARY</small><strong>Who Does What?</strong><p>Separate system functions, regulation, patient risk and human control.</p><b id="ai4StatusBoundaries">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-activity="clearance" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor maintaining oversight while using AI in medicine." loading="lazy" decoding="async" width="356" height="267"><div><small>HUMAN-IN-THE-LOOP</small><strong>Final Boot Check</strong><p>Check the report's core message before the live clinical feed opens.</p><b id="ai4StatusClearance">LOCKED</b></div></button>
+    <section class="g4-hero" aria-labelledby="groupTitle">
+      <img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Vintage-style illustration of a doctor, a patient and an artificial-intelligence system in a medical setting." width="356" height="267">
+      <div class="g4-hero-copy">
+        <p class="g4-kicker">HUMAN-IN-THE-LOOP · GROUP MISSION</p>
+        <h2 id="groupTitle">The AI Hospital Safety Board</h2>
+        <p class="lead">Your hospital is deciding how six AI-supported clinical tools should be used. There is no randomisation: every option has a fixed consequence. If two groups make the same choices on different devices, they receive the <strong>same path, same scores and same final briefing</strong>.</p>
+        <div class="g4-pill-row"><span class="g4-pill">Teams of 3–4</span><span class="g4-pill">6 board decisions</span><span class="g4-pill">≈ 20 min discussion</span><span class="g4-pill">2 min per student recap</span></div>
+        <button class="g4-primary" id="jumpInstructions" type="button">Read the instructions ↓</button>
       </div>
     </section>
 
-    <section class="ai4-workspace" aria-labelledby="ai4WorkspaceTitle">
-      <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACTIVE CONSOLE</p><h2 id="ai4WorkspaceTitle">System waiting</h2><p id="ai4WorkspaceIntro">Boot Mission 1 to start the vocabulary clearance.</p></div><div class="ai4-score-box"><span>FIRST-TRY SCORE</span><strong id="day4Score">0</strong></div></div>
-      <div id="ai4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>AI clinical control offline</h3><p>Start Mission 1 to initialise the system.</p></div></div>
-      <div id="ai4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-    </section>
-
-    <section id="day4Mission1Complete" class="ai4-completion is-locked" aria-labelledby="day4CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">🧠</div>
-      <div><p class="ai4-kicker dark">MISSION 01 CLEARANCE</p><h2 id="day4CompleteTitle">System Boot is not cleared yet.</h2><p id="day4CompleteText">Complete all four control-room activities.</p></div>
-      <button id="day4Mission2Button" class="ai4-primary" type="button" disabled>🔒 Mission 2 · Live Clinical Feed</button>
-    </section>
-
-    <section id="day4Mission2" class="ai4-board ai4-mission2 is-locked" aria-labelledby="ai4Mission2Title">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 02</p><h2 id="ai4Mission2Title">Mission 2 · Live Clinical Feed</h2><p>Watch the supplied news report, then verify exactly what each AI system does — and where human judgement still matters.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 2 PROGRESS</span><strong id="day4Mission2ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission2ProgressBar"></i></div></div>
+    <section class="g4-panel" id="instructions" aria-labelledby="instructionsTitle">
+      <div class="g4-instructions">
+        <div><h2 id="instructionsTitle">Student instructions</h2><ol class="g4-steps"><li>Form a team of <strong>3 or 4 students</strong>. Choose your group size below.</li><li>Assign the fixed roles. Do not randomise roles or choices.</li><li>Watch or review the Day 4 AI video together. Focus on what the AI does and where human judgement remains necessary.</li><li>For each board case, <strong>discuss before clicking</strong>. Choose one option as a team.</li><li>Read the consequence. You cannot change a decision after moving to the next case unless you reset the whole board.</li><li>At the end, use the automatically generated briefing. <strong>Every student speaks for approximately 2 minutes.</strong></li></ol></div>
+        <div><div class="g4-rule"><strong>DETERMINISTIC MODE · NO RANDOM CHOICES</strong><p>Options are never shuffled and the game never uses a random number. The decision code A/B/C fully determines the consequence, scores and final result. Laptop, tablet and phone therefore behave identically for the same choice path.</p></div><h3 style="margin-top:18px">Choose your group size</h3><div style="display:flex;gap:9px;flex-wrap:wrap"><button class="g4-secondary group-size" type="button" data-size="3">3 students</button><button class="g4-secondary group-size" type="button" data-size="4">4 students</button></div><p id="groupSizeStatus" class="g4-status" role="status">Choose 3 or 4 students before starting.</p></div>
       </div>
+      <div class="g4-roles" aria-label="Fixed group roles">
+        <article class="g4-role"><b>Student 1 · Clinical Safety Lead</b><p>Ask what the AI may miss and when a human must intervene.</p></article>
+        <article class="g4-role"><b>Student 2 · Evidence Lead</b><p>Check whether claims match the evidence and its limitations.</p></article>
+        <article class="g4-role"><b>Student 3 · Patient &amp; Ethics Lead</b><p>Protect consent, transparency, fairness and patient trust.</p></article>
+        <article class="g4-role"><b>Student 4 · Governance Lead</b><p>Track responsibility, documentation and the final protocol. In a 3-person team, Student 3 also covers this role.</p></article>
+      </div>
+    </section>
 
-      <div class="ai4-video-console">
-        <div class="ai4-video-frame">
-          <video id="day4ClinicalVideo" controls preload="metadata" poster="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp">
-            <source src="assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4" type="video/mp4">
-            Your browser does not support embedded video.
-          </video>
-        </div>
-        <div class="ai4-video-brief">
-          <span class="ai4-live-chip">● LIVE CLINICAL FEED</span>
-          <h3>How AI is transforming healthcare</h3>
-          <p>The report follows three clinical uses: early sepsis detection, live 3-D navigation in spine surgery and seizure detection from brainwaves.</p>
-          <div class="ai4-feed-modules" aria-label="Three AI systems in the report">
-            <article><b>01</b><strong>SEPSIS</strong><span>Vital-sign monitoring</span></article>
-            <article><b>02</b><strong>SPINE</strong><span>Live 3-D navigation</span></article>
-            <article><b>03</b><strong>EEG</strong><span>Seizure detection</span></article>
-          </div>
-          <p class="ai4-video-note"><strong>Audio behaviour:</strong> your Day 4 music pauses while the video plays and resumes afterwards if Music is ON.</p>
+    <section class="g4-panel" aria-labelledby="videoTitle">
+      <div class="g4-video-grid">
+        <div class="g4-video"><video id="clinicalVideo" controls preload="metadata" poster="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp"><source src="assets/fgsm3/day4/video/day4-ai-transforming-healthcare.mp4" type="video/mp4">Your browser does not support embedded video.</video></div>
+        <div class="g4-video-note"><h2 id="videoTitle">Clinical feed refresher</h2><p>The supplied report follows three real-world types of AI support already studied in your Day 4 material:</p><ul><li><strong>Sepsis:</strong> monitoring vital signs to flag risk earlier.</li><li><strong>Spine surgery:</strong> live 3-D navigation to support the surgeon.</li><li><strong>EEG:</strong> detecting subtle seizure patterns from brainwaves.</li></ul><p><strong>While you watch:</strong> identify what the system can do, what it cannot decide alone, and what information a human clinician still needs.</p></div>
+      </div>
+    </section>
+
+    <section class="g4-panel" id="board" aria-labelledby="boardTitle">
+      <div class="g4-board-head"><div><p class="g4-kicker" style="color:#08716f">BOARD ROOM · SIX FIXED DECISIONS</p><h2 id="boardTitle">AI Clinical Control Board</h2><p>Discuss first. One student clicks only when the whole team has agreed.</p></div><button id="startBoard" class="g4-primary" type="button" disabled>Choose group size first</button></div>
+      <div class="g4-score-strip" aria-label="Board score profile">
+        <div class="g4-meter"><span>Safety</span><strong id="scoreSafety">0</strong><div class="g4-progress"><i id="barSafety"></i></div></div>
+        <div class="g4-meter"><span>Evidence</span><strong id="scoreEvidence">0</strong><div class="g4-progress"><i id="barEvidence"></i></div></div>
+        <div class="g4-meter"><span>Patient trust</span><strong id="scoreTrust">0</strong><div class="g4-progress"><i id="barTrust"></i></div></div>
+        <div class="g4-meter"><span>Efficiency</span><strong id="scoreEfficiency">0</strong><div class="g4-progress"><i id="barEfficiency"></i></div></div>
+      </div>
+      <div id="caseArea" hidden>
+        <div class="g4-case">
+          <div class="g4-case-visual"><img id="caseImage" src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="AI-supported clinical decision illustration."></div>
+          <div><span class="g4-round-chip" id="roundChip">Decision 1 of 6</span><h3 id="caseTitle"></h3><p id="caseText"></p><div class="g4-evidence" id="caseEvidence"></div><div class="g4-options" id="options" aria-label="Decision options"></div><div class="g4-outcome" id="outcome" role="status" aria-live="polite"></div><div class="g4-next-row"><span class="g4-path" id="pathText">Decision path: —</span><button id="nextCase" class="g4-primary" type="button" disabled>Next decision →</button></div></div>
         </div>
       </div>
-
-      <div class="ai4-activity-grid ai4-m2-grid">
-        <button class="ai4-activity-card" data-ai4-m2="overview" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="3-D visualisation from the supplied AI and medicine news report." loading="lazy" decoding="async" width="1280" height="720"><div><small>FIRST VIEWING</small><strong>Feed Orientation</strong><p>Seven rapid checks on the report's main ideas.</p><b id="ai4M2StatusOverview">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m2="sepsis" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor and AI system in a medical setting." loading="lazy" decoding="async" width="356" height="267"><div><small>EARLY WARNING</small><strong>Sepsis Feed</strong><p>Track what the system monitors and why earlier alerts matter.</p><b id="ai4M2StatusSepsis">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m2="tools" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Spinal navigation image from the supplied report." loading="lazy" decoding="async" width="1280" height="720"><div><small>CLINICAL TOOLS</small><strong>Navigation + Neuro</strong><p>Verify the spine-navigation and seizure-detection systems.</p><b id="ai4M2StatusTools">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m2="human" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Human clinician working alongside an AI system." loading="lazy" decoding="async" width="356" height="267"><div><small>SAFETY LAYER</small><strong>Keep the Human in the Loop</strong><p>Check the patient's view, risks and final-decision boundary.</p><b id="ai4M2StatusHuman">LOCKED</b></div></button>
-      </div>
-
-      <div class="ai4-workspace ai4-m2-workspace" aria-labelledby="ai4M2WorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">LIVE FEED CONSOLE</p><h2 id="ai4M2WorkspaceTitle">Feed waiting</h2><p id="ai4M2WorkspaceIntro">Clear Mission 1, then start Feed Orientation.</p></div><div class="ai4-score-box"><span>MISSION 2 SCORE</span><strong id="day4Mission2Score">0</strong></div></div>
-        <div id="ai4M2Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">📡</span><h3>Clinical feed locked</h3><p>Mission 1 clearance is required.</p></div></div>
-        <div id="ai4M2Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
+      <div id="boardWaiting" class="g4-status">The board will open after you choose a group size and press Start.</div>
     </section>
 
-    <section id="day4Mission2Complete" class="ai4-completion ai4-m2-complete is-locked" aria-labelledby="day4M2CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">📡</div>
-      <div><p class="ai4-kicker dark">MISSION 02 CLEARANCE</p><h2 id="day4M2CompleteTitle">Live Clinical Feed is not cleared yet.</h2><p id="day4M2CompleteText">Complete all four live-feed activities.</p></div>
-      <button id="day4Mission3Button" class="ai4-primary" type="button" disabled>🔒 Mission 3 · Override the Algorithm</button>
-    </section>
-
-
-    <section id="day4Mission3" class="ai4-board ai4-mission3 is-locked" aria-labelledby="ai4Mission3Title">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 03</p><h2 id="ai4Mission3Title">Mission 3 · Override the Algorithm</h2><p>Eight worksheet cases contain a mismatch between the AI's first answer and the rest of the clinical information. Spot the conflict, keep your language cautious and know when human review is essential.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 3 PROGRESS</span><strong id="day4Mission3ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission3ProgressBar"></i></div></div>
-      </div>
-
-      <div class="ai4-override-banner" role="note">
-        <div class="ai4-override-icon" aria-hidden="true">🛑</div>
-        <div><span>HUMAN REVIEW PROTOCOL</span><strong>Do not diagnose. Check the mismatch.</strong><p>These are English-learning scenarios from the Day 4 worksheet. Your task is to notice information the AI output does not adequately explain, not to practise real clinical decision-making.</p></div>
-        <div class="ai4-override-stats"><b>8</b><span>case files</span><b>9</b><span>silent-letter checks</span></div>
-      </div>
-
-      <div class="ai4-activity-grid ai4-m3-grid">
-        <button class="ai4-activity-card" data-ai4-m3="conflict" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI-supported medical case." loading="lazy" decoding="async" width="356" height="267"><div><small>CASE SCANNER</small><strong>Spot the Conflict</strong><p>Find the detail that makes the AI's first answer incomplete.</p><b id="ai4M3StatusConflict">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m3="review" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation from the Day 4 report." loading="lazy" decoding="async" width="1280" height="720"><div><small>HUMAN OVERRIDE</small><strong>Re-check the AI</strong><p>Choose the most source-consistent reason for human review.</p><b id="ai4M3StatusReview">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m3="silent" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical English pronunciation activity." loading="lazy" decoding="async" width="356" height="267"><div><small>PRONUNCIATION SCANNER</small><strong>Silent Letter Check</strong><p>Hear the word, then identify the letter you write but do not pronounce.</p><b id="ai4M3StatusSilent">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m3="brief" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Human clinician checking an AI output." loading="lazy" decoding="async" width="1280" height="720"><div><small>CAUTIOUS REPORTING</small><strong>Override Brief</strong><p>Select the clearest, most cautious way to explain why the case needs another look.</p><b id="ai4M3StatusBrief">LOCKED</b></div></button>
-      </div>
-
-      <div class="ai4-workspace ai4-m3-workspace" aria-labelledby="ai4M3WorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">OVERRIDE CONSOLE</p><h2 id="ai4M3WorkspaceTitle">Override waiting</h2><p id="ai4M3WorkspaceIntro">Clear Mission 2, then open Spot the Conflict.</p></div><div class="ai4-score-box"><span>MISSION 3 SCORE</span><strong id="day4Mission3Score">0</strong></div></div>
-        <div id="ai4M3Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🛑</span><h3>Human review locked</h3><p>Mission 2 clearance is required.</p></div></div>
-        <div id="ai4M3Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="day4Mission3Complete" class="ai4-completion ai4-m3-complete is-locked" aria-labelledby="day4M3CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">🛑</div>
-      <div><p class="ai4-kicker dark">MISSION 03 CLEARANCE</p><h2 id="day4M3CompleteTitle">Override the Algorithm is not cleared yet.</h2><p id="day4M3CompleteText">Complete all four human-review activities.</p></div>
-      <button id="day4Mission4Button" class="ai4-primary" type="button" disabled>🔒 Mission 4 · Evidence Scanner</button>
-    </section>
-
-
-
-    <section id="day4Mission4" class="ai4-board ai4-mission4 is-locked" aria-labelledby="ai4Mission4Title">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 04</p><h2 id="ai4Mission4Title">Mission 4 · Evidence Scanner</h2><p>The Harvard study looks impressive — but your job is to read the numbers, limits and claims precisely. Separate what the article supports from what would be hype.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 4 PROGRESS</span><strong id="day4Mission4ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission4ProgressBar"></i></div></div>
-      </div>
-
-      <div class="ai4-evidence-dashboard" role="note" aria-label="Key figures from the Harvard AI study reported in the supplied article">
-        <div><span>FAST TRIAGE</span><strong>67%</strong><small>AI exact / very close diagnosis</small></div>
-        <div><span>DOCTORS</span><strong>50–55%</strong><small>same fast-triage experiment</small></div>
-        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference not statistically significant</small></div>
-        <div><span>TREATMENT PLANS</span><strong>89% vs 34%</strong><small>AI vs 46 doctors</small></div>
-      </div>
-
-      <div class="ai4-activity-grid ai4-m4-grid">
-        <button class="ai4-activity-card" data-ai4-m4="numbers" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI visualisation used as the evidence scanner illustration." loading="lazy" decoding="async" width="1280" height="720"><div><small>DATA CHECK</small><strong>Read the Numbers</strong><p>Match the figures to exactly what the study reported.</p><b id="ai4M4StatusNumbers">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m4="headlines" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor reviewing an AI claim." loading="lazy" decoding="async" width="356" height="267"><div><small>CLAIM CHECK</small><strong>Headline Scanner</strong><p>Decide whether a claim is supported, overclaimed or not supported.</p><b id="ai4M4StatusHeadlines">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m4="limits" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Medical AI display representing study limitations." loading="lazy" decoding="async" width="1280" height="720"><div><small>LIMITATION CHECK</small><strong>Find the Limitation</strong><p>Identify what the experiment did not test and what risks remain.</p><b id="ai4M4StatusLimits">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m4="tfng" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Evidence verification activity." loading="lazy" decoding="async" width="356" height="267"><div><small>SOURCE VERIFICATION</small><strong>True · False · Not Given</strong><p>Use the article only — not outside knowledge.</p><b id="ai4M4StatusTfng">LOCKED</b></div></button>
-      </div>
-
-      <div class="ai4-workspace ai4-m4-workspace" aria-labelledby="ai4M4WorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">EVIDENCE CONSOLE</p><h2 id="ai4M4WorkspaceTitle">Scanner waiting</h2><p id="ai4M4WorkspaceIntro">Clear Mission 3, then open Read the Numbers.</p></div><div class="ai4-score-box"><span>MISSION 4 SCORE</span><strong id="day4Mission4Score">0</strong></div></div>
-        <div id="ai4M4Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🔎</span><h3>Evidence scanner locked</h3><p>Mission 3 clearance is required.</p></div></div>
-        <div id="ai4M4Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="day4Mission4Complete" class="ai4-completion ai4-m4-complete is-locked" aria-labelledby="day4M4CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">🔎</div>
-      <div><p class="ai4-kicker dark">MISSION 04 CLEARANCE</p><h2 id="day4M4CompleteTitle">Evidence Scanner is not cleared yet.</h2><p id="day4M4CompleteText">Complete all four evidence-audit activities.</p></div>
-      <button id="day4Mission5Button" class="ai4-primary" type="button" disabled>🔒 Mission 5 · Certainty Calibration</button>
-    </section>
-
-    <section id="day4Mission5" class="ai4-board ai4-mission5 is-locked" aria-labelledby="ai4Mission5Title">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 05</p><h2 id="ai4Mission5Title">Mission 5 · Certainty Calibration</h2><p>Clinical and scientific language should match the strength of the evidence. Calibrate each claim so it is clear, precise and no more certain than the data allow.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 5 PROGRESS</span><strong id="day4Mission5ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission5ProgressBar"></i></div></div>
-      </div>
-
-      <div class="ai4-calibration-panel" role="note" aria-label="Certainty calibration guide">
-        <div><span>STRONG DEDUCTION</span><strong>must · can’t</strong><small>Use when the evidence strongly supports or rules out an explanation.</small></div>
-        <div><span>POSSIBILITY</span><strong>may · might · could</strong><small>Use when the evidence allows an explanation but does not prove it.</small></div>
-        <div><span>PREDICTION</span><strong>will · won’t</strong><small>Use for a prediction stated with confidence.</small></div>
-        <div><span>LIKELIHOOD</span><strong>is likely to · is unlikely to</strong><small>Use when you want to calibrate a prediction more cautiously.</small></div>
-      </div>
-
-      <div class="ai4-activity-grid ai4-m5-grid">
-        <button class="ai4-activity-card" data-ai4-m5="dial" type="button" disabled><span class="ai4-card-number">01</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Clinical AI display used for a certainty calibration activity." loading="lazy" decoding="async" width="1280" height="720"><div><small>CONFIDENCE DIAL</small><strong>Set the Certainty Level</strong><p>Choose the modal that matches what the evidence actually supports.</p><b id="ai4M5StatusDial">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m5="overclaim" type="button" disabled><span class="ai4-card-number">02</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Doctor checking the strength of an AI claim." loading="lazy" decoding="async" width="356" height="267"><div><small>CLAIM CONTROL</small><strong>Overclaiming Detector</strong><p>Flag wording that is too strong — or too weak — for the evidence.</p><b id="ai4M5StatusOverclaim">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m5="future" type="button" disabled><span class="ai4-card-number">03</span><img src="assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp" alt="Medical team considering future uses of AI." loading="lazy" decoding="async" width="356" height="267"><div><small>MEDICINE 2035</small><strong>Prediction Language</strong><p>Use will, won’t, likely, unlikely and possibility modals accurately.</p><b id="ai4M5StatusFuture">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m5="claim" type="button" disabled><span class="ai4-card-number">04</span><img src="assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp" alt="Evidence display for choosing a calibrated scientific claim." loading="lazy" decoding="async" width="1280" height="720"><div><small>EVIDENCE → CLAIM</small><strong>Calibrate the Conclusion</strong><p>Turn a result or limitation into careful scientific English.</p><b id="ai4M5StatusClaim">LOCKED</b></div></button>
-      </div>
-
-      <div class="ai4-workspace ai4-m5-workspace" aria-labelledby="ai4M5WorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">CERTAINTY CONSOLE</p><h2 id="ai4M5WorkspaceTitle">Calibration waiting</h2><p id="ai4M5WorkspaceIntro">Clear Mission 4, then open Set the Certainty Level.</p></div><div class="ai4-score-box"><span>MISSION 5 SCORE</span><strong id="day4Mission5Score">0</strong></div></div>
-        <div id="ai4M5Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🎚️</span><h3>Certainty calibrator locked</h3><p>Mission 4 clearance is required.</p></div></div>
-        <div id="ai4M5Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="day4Mission5Complete" class="ai4-completion ai4-m5-complete is-locked" aria-labelledby="day4M5CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">🎚️</div>
-      <div><p class="ai4-kicker dark">MISSION 05 CLEARANCE</p><h2 id="day4M5CompleteTitle">Certainty Calibration is not cleared yet.</h2><p id="day4M5CompleteText">Complete all four calibration activities.</p></div>
-      <button id="day4Mission6Button" class="ai4-primary" type="button" disabled>🔒 Mission 6 · Accountability Board</button>
-    </section>
-
-
-
-    <section id="day4Mission6" class="ai4-board ai4-mission6 is-locked" aria-labelledby="ai4Mission6Title">
-      <div class="ai4-heading">
-        <div><p class="ai4-kicker dark">CONTROL ROOM · SYSTEM 06</p><h2 id="ai4Mission6Title">Mission 6 · Accountability Board</h2><p>Three difficult questions, one rule: <strong>your opinion is never the answer key</strong>. The scored work is how well you frame the issue, use evidence, represent the other side fairly and reach a qualified verdict.</p></div>
-        <div class="ai4-progress-card" aria-live="polite"><span>MISSION 6 PROGRESS</span><strong id="day4Mission6ProgressText">0 / 4</strong><div class="ai4-progress-track"><i id="day4Mission6ProgressBar"></i></div></div>
-      </div>
-
-      <div class="ai4-board-statements" aria-label="The three debate statements from the Day 4 worksheet">
-        <article><span>BOARD CASE 01</span><p>“In ten years, AI will diagnose patients better than doctors.”</p></article>
-        <article><span>BOARD CASE 02</span><p>“If an AI makes a diagnostic error, the doctor — not the AI company — should be held responsible.”</p></article>
-        <article><span>BOARD CASE 03</span><p>“Patients should always be told when AI is involved in their diagnosis or treatment.”</p></article>
-      </div>
-
-      <div class="ai4-opinion-notice" role="note"><strong>⚖️ No opinion is marked right or wrong.</strong><span>The score checks argument structure, source use, fair counterargument and calibrated conclusions.</span></div>
-
-      <div class="ai4-evidence-record" role="note" aria-label="Evidence on record from the supplied Day 4 article">
-        <div><span>FAST TRIAGE</span><strong>67% vs 50–55%</strong><small>AI vs doctors in one text-record experiment</small></div>
-        <div><span>MORE DETAIL</span><strong>82% vs 70–79%</strong><small>difference reported as not statistically significant</small></div>
-        <div><span>LIMITATION</span><strong>Text records only</strong><small>appearance and distress were not tested</small></div>
-        <div><span>ACCOUNTABILITY</span><strong>No formal framework</strong><small>the article presents responsibility as unresolved</small></div>
-      </div>
-
-      <div class="ai4-activity-grid ai4-m6-grid">
-        <button class="ai4-activity-card" data-ai4-m6="frame" type="button" disabled><span class="ai4-card-number">01</span><div class="ai4-board-icon" aria-hidden="true">◉</div><div><small>FRAME THE CASE</small><strong>Frame the Issue</strong><p>Define what is really being debated without prejudging the answer.</p><b id="ai4M6StatusFrame">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m6="evidence" type="button" disabled><span class="ai4-card-number">02</span><div class="ai4-board-icon" aria-hidden="true">▤</div><div><small>EVIDENCE ON RECORD</small><strong>Build the Case</strong><p>Use only claims and limitations actually supported by the Day 4 material.</p><b id="ai4M6StatusEvidence">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m6="steelman" type="button" disabled><span class="ai4-card-number">03</span><div class="ai4-board-icon" aria-hidden="true">⇄</div><div><small>OTHER SIDE</small><strong>Steelman It</strong><p>Represent an opposing view fairly before you challenge it.</p><b id="ai4M6StatusSteelman">LOCKED</b></div></button>
-        <button class="ai4-activity-card" data-ai4-m6="verdict" type="button" disabled><span class="ai4-card-number">04</span><div class="ai4-board-icon" aria-hidden="true">⚖</div><div><small>FINAL VERDICT</small><strong>Reach a Balanced Position</strong><p>Synthesise the evidence and finish with a clear, qualified conclusion.</p><b id="ai4M6StatusVerdict">LOCKED</b></div></button>
-      </div>
-
-      <div class="ai4-workspace ai4-m6-workspace" aria-labelledby="ai4M6WorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">ACCOUNTABILITY BOARD</p><h2 id="ai4M6WorkspaceTitle">Board locked</h2><p id="ai4M6WorkspaceIntro">Clear Mission 5, then open Frame the Issue.</p></div><div class="ai4-score-box"><span>MISSION 6 SCORE</span><strong id="day4Mission6Score">0</strong></div></div>
-        <div id="ai4M6Screen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">⚖️</span><h3>Accountability Board locked</h3><p>Mission 5 clearance is required.</p></div></div>
-        <div id="ai4M6Feedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="day4Mission6Complete" class="ai4-completion ai4-m6-complete is-locked" aria-labelledby="day4M6CompleteTitle">
-      <div class="ai4-completion-badge" aria-hidden="true">⚖️</div>
-      <div><p class="ai4-kicker dark">MISSION 06 CLEARANCE</p><h2 id="day4M6CompleteTitle">Accountability Board is not cleared yet.</h2><p id="day4M6CompleteText">Complete all four argument stages.</p></div>
-      <button id="day4FinalButton" class="ai4-primary" type="button" disabled>🔒 FINAL · Human-in-the-Loop Test</button>
-    </section>
-
-    <section id="day4BoardBrief" class="ai4-board-brief is-locked" aria-labelledby="ai4BoardBriefTitle">
-      <div class="ai4-board-brief-head"><div><p class="ai4-kicker dark">UNSCORED SPEAKING TRANSFER</p><h2 id="ai4BoardBriefTitle">Your 60-second Accountability Brief</h2><p>Choose any position. The site grades none of your opinions — use the structure to prepare a spoken response.</p></div><button id="newDay4BoardPrompt" class="ai4-secondary" type="button">↻ New board case</button></div>
-      <blockquote id="day4BoardPromptText">Complete Mission 6 to draw a board case.</blockquote>
-      <div class="ai4-stance-row" aria-label="Choose a position"><button type="button" data-ai4-stance="Agree">Agree</button><button type="button" data-ai4-stance="Disagree">Disagree</button><button type="button" data-ai4-stance="Qualified / mixed position">Qualified / mixed</button></div>
-      <div class="ai4-brief-template">
-        <article><b>FRAME</b><span>What's really at stake here is… / The question comes down to…</span></article>
-        <article><b>EVIDENCE</b><span>Going back to the study/report,… / The data show that…</span></article>
-        <article><b>OTHER SIDE</b><span>The strongest version of that view is… / To be fair to that argument,…</span></article>
-        <article><b>VERDICT</b><span>Pulling the threads together,… / On balance, the stronger case is…</span></article>
-      </div>
-      <p id="day4StanceStatus" class="ai4-stance-status">Choose any position. Your viewpoint is not scored.</p>
-    </section>
-
-    <section id="day4Final" class="ai4-final is-locked" aria-labelledby="day4FinalTitle">
-      <div class="ai4-final-hero">
-        <div class="ai4-final-copy">
-          <p class="ai4-kicker">FINAL DAY 4 CLEARANCE</p>
-          <h2 id="day4FinalTitle">The Human-in-the-Loop Test</h2>
-          <p class="ai4-final-lead">One fictional AI-control case. Ten mixed checkpoints. Your job is not to prove that AI is good or bad — it is to use the Day 4 evidence accurately and keep human judgement in the loop.</p>
-          <div class="ai4-final-actions"><button id="startDay4Final" class="ai4-primary" type="button" disabled>🔒 Complete Mission 6 first</button><button id="hearDay4FinalBrief" class="ai4-secondary" type="button" disabled>🔊 Hear case briefing</button></div>
-        </div>
-        <div class="ai4-final-score"><span>FINAL SCORE</span><strong id="day4FinalScore">0 / 100</strong><small>10 first try · 6 after correction</small></div>
-      </div>
-
-      <div class="ai4-final-case" aria-live="polite">
-        <div id="day4FinalCaseIcon" class="ai4-final-case-icon" aria-hidden="true">🧠</div>
-        <div><span>CONTROL-ROOM CASE</span><h3 id="day4FinalCaseTitle">Locked</h3><p id="day4FinalCaseBrief">Complete Mission 6 to receive your final case.</p></div>
-      </div>
-
-      <div class="ai4-final-skills" aria-label="Skills assessed"><span>Vocabulary</span><span>Video</span><span>Human oversight</span><span>Silent letters</span><span>Evidence</span><span>Limitations</span><span>Modals</span><span>Overclaiming</span><span>Accountability</span><span>Integrated judgement</span></div>
-
-      <div class="ai4-final-progress"><div><span>FINAL CHECKPOINTS</span><strong id="day4FinalProgressText">0 / 10</strong></div><div class="ai4-progress-track"><i id="day4FinalProgressBar"></i></div></div>
-
-      <div class="ai4-workspace ai4-final-workspace" aria-labelledby="day4FinalWorkspaceTitle">
-        <div class="ai4-workspace-head"><div><p class="ai4-kicker dark">FINAL · CONTROL DESK</p><h2 id="day4FinalWorkspaceTitle">Final test locked</h2><p id="day4FinalWorkspaceIntro">Clear the Accountability Board first.</p></div><div class="ai4-score-box"><span>CHECKPOINT</span><strong id="day4FinalCheckpoint">—</strong></div></div>
-        <div id="day4FinalScreen" class="ai4-screen" tabindex="-1"><div class="ai4-waiting"><span aria-hidden="true">🧠</span><h3>Final case locked</h3><p>Complete Mission 6 to enter the Human-in-the-Loop Test.</p></div></div>
-        <div id="day4FinalFeedback" class="ai4-feedback" role="status" aria-live="polite"></div>
-      </div>
-
-      <section id="day4FinalResult" class="ai4-final-result is-locked" aria-labelledby="day4FinalResultTitle">
-        <div class="ai4-final-result-badge" id="day4FinalResultBadge" aria-hidden="true">✓</div>
-        <div class="ai4-final-result-copy"><p class="ai4-kicker dark">DAY 4 COMPLETE</p><h2 id="day4FinalResultTitle">Human-in-the-Loop Test complete</h2><p id="day4FinalResultText">Your final report will appear here.</p><div id="day4FinalSkillBreakdown" class="ai4-final-breakdown"></div><p class="ai4-final-disclaimer"><strong>Training note:</strong> this score assesses English, evidence reading and communication choices. It is not a clinical qualification and the fictional cases are not medical advice.</p></div>
-        <div class="ai4-final-result-actions"><button id="replayDay4Final" class="ai4-secondary" type="button">↻ Draw another case</button><a class="ai4-primary ai4-final-link" href="fgsm3.html">Back to FGSM3 →</a></div>
-      </section>
-    </section>
-
-    <section class="ai4-roadmap" aria-labelledby="ai4RoadmapTitle">
-      <p class="ai4-kicker">DAY 4 ROUTE</p><h2 id="ai4RoadmapTitle">AI Clinical Control · Mission Map</h2><p>Each mission checks a different part of responsible AI communication in medicine.</p>
-      <div class="ai4-roadmap-grid">
-        <div class="ai4-roadmap-card active"><span>01 · ACTIVE</span><strong>System Boot</strong><p>Vocabulary and human-in-the-loop principles.</p><b>NOW</b></div>
-        <div id="ai4RoadmapM2" class="ai4-roadmap-card"><span id="ai4RoadmapM2State">02 · LOCKED</span><strong>Live Clinical Feed</strong><p>Sepsis, spine navigation and seizure detection from the supplied video.</p><b>VIDEO</b></div>
-        <div id="ai4RoadmapM3" class="ai4-roadmap-card"><span id="ai4RoadmapM3State">03 · LOCKED</span><strong>Override the Algorithm</strong><p>Spot what the AI may have missed in eight fictional cases.</p><b>SILENT LETTERS</b></div>
-        <div id="ai4RoadmapM4" class="ai4-roadmap-card"><span id="ai4RoadmapM4State">04 · LOCKED</span><strong>Evidence Scanner</strong><p>Read the Harvard study without turning results into hype.</p><b>RESEARCH</b></div>
-        <div id="ai4RoadmapM5" class="ai4-roadmap-card"><span id="ai4RoadmapM5State">05 · LOCKED</span><strong>Certainty Calibration</strong><p>Use modals to match the strength of the claim to the evidence.</p><b>MODALS</b></div>
-        <div id="ai4RoadmapM6" class="ai4-roadmap-card"><span id="ai4RoadmapM6State">06 · LOCKED</span><strong>Accountability Board</strong><p>Argue responsibility, transparency and the future role of AI.</p><b>ETHICS</b></div>
-        <div id="ai4RoadmapFinal" class="ai4-roadmap-card"><span id="ai4RoadmapFinalState">FINAL · LOCKED</span><strong>Human-in-the-Loop Test</strong><p>A new fictional case combines the whole Day 4 skill set.</p><b>FINAL</b></div>
-      </div>
-      <div class="ai4-source-note"><strong>Day 4 source rule</strong><p>This game follows the supplied worksheet: AI is presented as a tool that can monitor or support specific clinical tasks, while the final clinical decision remains human. The game is for English learning, not clinical training or medical advice.</p></div>
+    <section class="g4-panel g4-final" id="finalBrief" aria-labelledby="finalTitle">
+      <div class="g4-result-banner"><p class="g4-kicker">BOARD COMPLETE · FIXED RESULT</p><h2 id="finalTitle">Your Human-in-the-Loop Protocol</h2><p id="finalVerdict"></p><p><strong>Decision code:</strong> <span id="finalPath"></span> · This code is enough to reproduce the same result on any device.</p></div>
+      <div class="g4-final-grid"><div class="g4-summary-card"><h3>What your team decided</h3><div class="g4-decision-list" id="decisionList"></div><div class="g4-reset-row"><button id="copyBrief" class="g4-secondary" type="button">Copy team brief</button><button id="resetBoard" class="g4-secondary" type="button">Reset all decisions</button></div><p id="copyStatus" class="g4-status" role="status"></p></div><div class="g4-summary-card"><h3>Final score profile</h3><div class="g4-score-strip"><div class="g4-meter"><span>Safety</span><strong id="finalSafety"></strong></div><div class="g4-meter"><span>Evidence</span><strong id="finalEvidence"></strong></div><div class="g4-meter"><span>Trust</span><strong id="finalTrust"></strong></div><div class="g4-meter"><span>Efficiency</span><strong id="finalEfficiency"></strong></div></div><p id="finalInterpretation"></p></div></div>
+      <h2 style="margin-top:26px">2-minute recap · every student speaks</h2><p>Use the prompts below. Do <strong>not</strong> simply read the cards: prepare a short spoken recap in your own words. Aim for approximately two minutes each.</p><div id="recapCards" class="g4-recaps"></div>
+      <h3 style="margin-top:24px">Useful language</h3><div class="g4-language"><div><b>Justify a choice</b>We chose this option because… / Our priority was… / The evidence suggests that…</div><div><b>Keep claims careful</b>The AI may help to… / This does not prove that… / A limitation is that…</div><div><b>Explain human oversight</b>The system should flag…, but the clinician must… / Human review is essential when…</div><div><b>Reach a verdict</b>On balance, our protocol would… / We would approve it only if… / The main safeguard is…</div></div>
+      <p class="g4-source"><strong>Training note:</strong> this is an English-learning and communication activity based on the supplied Day 4 worksheet and video. It does not provide medical advice or clinical training. Scores reward cautious evidence use, human oversight, transparency and workable governance — not a real-world treatment decision.</p>
     </section>
   </main>
 
-  <audio id="day4Music" loop preload="none">
-    <source src="assets/fgsm3/day4/music/day4-ai-clinical-control-suno.mp3" type="audio/mpeg">
-  </audio>
-
-  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Data created in the learning tools is stored locally in your browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
-  <script src="fgsm3-day4-game.js" defer></script><script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
+  <footer class="site-footer"><p><strong>Medical English for Mrs Lecomte's Students</strong></p><p>Created by Mrs Lecomte, with the help of ChatGPT.</p><p class="privacy"><strong>Privacy &amp; GDPR:</strong> this site has no student account, analytics, advertising or database. Progress for this activity is stored locally in the browser on this device and is not sent to Mrs Lecomte, ChatGPT/OpenAI or a server by this site. <a href="privacy.html">Privacy details</a> · <a href="accessibility.html">Accessibility</a></p></footer>
+  <script>
+  (()=>{
+    'use strict';
+    const STORAGE_KEY='fgsm3_day4_ai_group_v1';
+    const MAX_PER_AXIS=24;
+    const imageVintage='assets/fgsm3/day4/images/day4-ai-medicine-vintage.webp';
+    const imageFeed='assets/fgsm3/day4/images/day4-live-clinical-feed-poster.webp';
+    const cases=[
+      {id:'sepsis',title:'Early sepsis warning',image:imageVintage,text:'The monitoring system flags a high risk of sepsis while the doctor is also assessing possible cardiac symptoms. What protocol should your hospital adopt?',evidence:'Day 4 principle: AI can monitor vital signs continuously and flag patterns, but the clinical decision remains human.',options:[
+        {key:'A',label:'Let the alert automatically trigger treatment without clinician review.',detail:'Fast, but the AI alert becomes the decision.',d:{safety:0,evidence:1,trust:1,efficiency:4},out:'The board gains speed but removes the human review layer. A risk flag is being treated as a final clinical decision.'},
+        {key:'B',label:'Use the alert to trigger prompt clinician review of the patient, vital signs and clinical context.',detail:'AI flags; clinician verifies and decides.',d:{safety:4,evidence:4,trust:3,efficiency:3},out:'Strong human-in-the-loop design: the system catches patterns while the clinician checks whether the alert fits the whole clinical picture.'},
+        {key:'C',label:'Ignore AI alerts until unmistakable classical signs appear.',detail:'Avoid reliance on AI by waiting for obvious signs.',d:{safety:1,evidence:1,trust:2,efficiency:0},out:'This avoids automation bias, but it also discards the early-warning purpose of the tool and may delay review.'}
+      ]},
+      {id:'spine',title:'3-D navigation in spine surgery',image:imageFeed,text:'During surgery, the live 3-D navigation view does not seem to match what the surgeon is seeing. What should happen next?',evidence:'The report presents the tool as a live navigation aid — similar to a GPS — not as an autonomous surgeon.',options:[
+        {key:'A',label:'Follow the navigation display because the AI has more data than the surgeon.',detail:'System output overrides the surgeon.',d:{safety:0,evidence:1,trust:1,efficiency:3},out:'The protocol turns decision support into automatic authority. A mismatch is exactly when human review is most important.'},
+        {key:'B',label:'Pause, verify the system and anatomy, and allow the surgeon to override the tool.',detail:'Use the navigation aid, but keep surgical judgement in control.',d:{safety:4,evidence:4,trust:3,efficiency:2},out:'The navigation system remains useful while the surgeon retains authority when the tool and the operative findings conflict.'},
+        {key:'C',label:'Ban navigation technology from all future spine procedures.',detail:'Remove the tool entirely after one mismatch.',d:{safety:2,evidence:1,trust:2,efficiency:0},out:'This removes one risk but ignores the potential benefit of a support tool that can be checked, calibrated and overridden.'}
+      ]},
+      {id:'eeg',title:'Seizure detection from EEG',image:imageFeed,text:'The EEG model identifies a subtle pattern that may represent seizure activity. The patient has no obvious visible seizure. How should the alert be handled?',evidence:'The Day 4 report shows AI scanning brainwave patterns rapidly; subtle activity can be difficult for a tired human observer to detect.',options:[
+        {key:'A',label:'Record “seizure confirmed” automatically in the patient record.',detail:'Convert the alert directly into a diagnosis.',d:{safety:0,evidence:0,trust:1,efficiency:4},out:'The wording is too certain. Pattern detection can support review, but the alert alone should not become an unquestioned diagnosis.'},
+        {key:'B',label:'Ask a clinician to review the EEG pattern and the patient’s clinical context promptly.',detail:'Treat the AI output as a flag requiring human interpretation.',d:{safety:4,evidence:4,trust:3,efficiency:3},out:'The team uses the AI for rapid detection while keeping interpretation and the final decision with a clinician.'},
+        {key:'C',label:'Dismiss the alert because no visible seizure is occurring.',detail:'Only act when the seizure is obvious to the eye.',d:{safety:1,evidence:1,trust:2,efficiency:1},out:'This underuses the tool: the point of EEG analysis is partly to detect electrical activity that may be subtle or not obvious visually.'}
+      ]},
+      {id:'evidence',title:'Evidence before deployment',image:imageVintage,text:'A board member quotes the Harvard emergency-triage result: “AI got 67%, doctors got 50–55%, so AI is now proven better than emergency doctors.” How should your team respond?',evidence:'The supplied article states that the experiment used text-based records; patient appearance and distress were not tested, and some comparisons were not statistically significant.',options:[
+        {key:'A',label:'Accept the claim: one higher percentage proves superiority in real clinical practice.',detail:'Turn a study result into a broad conclusion.',d:{safety:1,evidence:0,trust:1,efficiency:3},out:'This overclaims. The result is interesting, but the study conditions and limitations matter before generalising to routine care.'},
+        {key:'B',label:'Use the result as promising evidence, but state the limitations and require local evaluation before broad deployment.',detail:'Match the claim to what the study actually tested.',d:{safety:4,evidence:4,trust:3,efficiency:2},out:'This is calibrated evidence use: the result supports further use and evaluation without pretending the study tested every part of real emergency medicine.'},
+        {key:'C',label:'Reject all AI research because the study did not test visual appearance.',detail:'Treat one limitation as a reason to discard all evidence.',d:{safety:2,evidence:1,trust:2,efficiency:0},out:'A limitation should narrow a conclusion, not erase the entire study. The board still needs to weigh what the evidence does support.'}
+      ]},
+      {id:'patient',title:'Patient transparency',image:imageVintage,text:'Your hospital introduces an AI tool that helps clinicians summarise and flag information during care. What should patients be told?',evidence:'Day 4 raises cyberchondria, trust and the principle that AI should complement clinicians rather than replace them.',options:[
+        {key:'A',label:'Say nothing: mentioning AI will only make patients anxious.',detail:'Hide AI involvement to protect reassurance.',d:{safety:2,evidence:1,trust:0,efficiency:4},out:'This may feel efficient, but hidden use can damage trust and makes it harder to explain what the system does and does not decide.'},
+        {key:'B',label:'Explain the AI’s role clearly, its limits, and that a clinician remains responsible for the final decision.',detail:'Use transparent, proportionate communication.',d:{safety:4,evidence:3,trust:4,efficiency:2},out:'The patient receives a realistic explanation: the tool supports care, while responsibility and final clinical judgement remain human.'},
+        {key:'C',label:'Tell patients the AI is more accurate than doctors, so they should trust its output.',detail:'Use certainty to build confidence.',d:{safety:0,evidence:0,trust:0,efficiency:3},out:'This is an overclaim and can create false reassurance. Trust should come from accurate communication, not exaggerated certainty.'}
+      ]},
+      {id:'governance',title:'When an AI-supported decision goes wrong',image:imageVintage,text:'An AI-supported recommendation contributes to an error. Your hospital now needs an accountability protocol. Which model is strongest?',evidence:'The supplied article says accountability remains unresolved and notes concerns about AI error, liability and clinicians deferring too readily to AI.',options:[
+        {key:'A',label:'Make the individual doctor solely responsible and do not review the system.',detail:'Treat the event only as an individual human failure.',d:{safety:1,evidence:1,trust:1,efficiency:3},out:'The clinician’s responsibility matters, but this model misses system design, logging, governance and opportunities to prevent recurrence.'},
+        {key:'B',label:'Require clinician review, preserve decision logs, investigate the incident and escalate system issues through organisational/vendor governance.',detail:'Combine human responsibility with system accountability.',d:{safety:4,evidence:4,trust:4,efficiency:2},out:'This creates a workable governance loop: human decisions remain reviewable, while recurring system problems can also be identified and addressed.'},
+        {key:'C',label:'Make the AI company solely responsible because the output came from its system.',detail:'Remove clinical responsibility whenever AI was involved.',d:{safety:1,evidence:1,trust:1,efficiency:2},out:'This ignores the human-in-the-loop principle and the fact that AI output is used inside a clinical and organisational process.'}
+      ]}
+    ];
+    const state={size:null,index:0,choices:[],scores:{safety:0,evidence:0,trust:0,efficiency:0},started:false,finished:false};
+    const $=id=>document.getElementById(id);
+    const scoreIds={safety:['scoreSafety','barSafety'],evidence:['scoreEvidence','barEvidence'],trust:['scoreTrust','barTrust'],efficiency:['scoreEfficiency','barEfficiency']};
+    function save(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch(e){}}
+    function clearSave(){try{localStorage.removeItem(STORAGE_KEY);}catch(e){}}
+    function restore(){try{const raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;const s=JSON.parse(raw);if(!s||![3,4].includes(s.size)||!Array.isArray(s.choices))return;Object.assign(state,s);state.scores=Object.assign({safety:0,evidence:0,trust:0,efficiency:0},s.scores||{});}catch(e){clearSave();}}
+    function updateScores(){Object.entries(scoreIds).forEach(([axis,[textId,barId]])=>{const value=Number(state.scores[axis]||0);$(textId).textContent=value+' / '+MAX_PER_AXIS;$(barId).style.width=Math.min(100,(value/MAX_PER_AXIS)*100)+'%';});}
+    function setSize(size){if(state.started&&!state.finished)return;state.size=size;document.querySelectorAll('.group-size').forEach(b=>{b.setAttribute('aria-pressed',String(Number(b.dataset.size)===size));b.style.background=Number(b.dataset.size)===size?'#0b6970':'#e6f5f4';b.style.color=Number(b.dataset.size)===size?'#fff':'#0a5963';});$('groupSizeStatus').textContent=size+' students selected. Roles are fixed: Student 1 Safety, Student 2 Evidence, Student 3 Patient/Ethics'+(size===4?', Student 4 Governance.':'; Student 3 also covers Governance.');$('startBoard').disabled=false;$('startBoard').textContent=state.started?'Continue board':'Start board →';save();}
+    function start(){if(!state.size)return;state.started=true;$('caseArea').hidden=false;$('boardWaiting').hidden=true;$('startBoard').disabled=true;$('startBoard').textContent='Board in progress';renderCase();save();$('caseArea').scrollIntoView({behavior:'smooth',block:'start'});}
+    function renderCase(){if(state.index>=cases.length){finish();return;}const c=cases[state.index];$('roundChip').textContent='Decision '+(state.index+1)+' of '+cases.length;$('caseTitle').textContent=c.title;$('caseText').textContent=c.text;$('caseEvidence').innerHTML='<strong>Evidence on record:</strong> '+c.evidence;$('caseImage').src=c.image;$('caseImage').alt=c.id==='spine'||c.id==='eeg'?'Clinical AI visualisation from the Day 4 video.':'Doctor, patient and AI system in a medical setting.';const wrap=$('options');wrap.innerHTML='';const existing=state.choices[state.index]||null;c.options.forEach(opt=>{const btn=document.createElement('button');btn.type='button';btn.className='g4-option';btn.dataset.key=opt.key;btn.innerHTML='<b>'+opt.key+'</b>'+opt.label+'<small>'+opt.detail+'</small>';if(existing){btn.disabled=true;if(existing.key===opt.key)btn.classList.add('is-selected');}else{btn.addEventListener('click',()=>choose(opt,btn));}wrap.appendChild(btn);});$('outcome').classList.remove('show');$('outcome').innerHTML='';$('nextCase').textContent=state.index===cases.length-1?'Build final briefing →':'Next decision →';if(existing){const selected=c.options.find(o=>o.key===existing.key);const delta=selected?Object.entries(selected.d).map(([k,v])=>'<span>'+({'safety':'Safety','evidence':'Evidence','trust':'Trust','efficiency':'Efficiency'}[k])+': +'+v+'</span>').join(''):'';$('outcome').innerHTML='<strong>Board consequence:</strong> '+existing.out+'<div class="delta">'+delta+'</div>';$('outcome').classList.add('show');$('nextCase').disabled=false;}else{$('nextCase').disabled=true;}$('pathText').textContent='Decision path: '+(state.choices.length?state.choices.map(x=>x.key).join(' → '):'—');}
+    function choose(opt,btn){if(state.choices[state.index])return;state.choices[state.index]={id:cases[state.index].id,key:opt.key,label:opt.label,out:opt.out};Object.keys(state.scores).forEach(k=>state.scores[k]+=Number(opt.d[k]||0));document.querySelectorAll('.g4-option').forEach(b=>{b.disabled=true;if(b===btn)b.classList.add('is-selected');});const delta=Object.entries(opt.d).map(([k,v])=>'<span>'+({'safety':'Safety','evidence':'Evidence','trust':'Trust','efficiency':'Efficiency'}[k])+': +'+v+'</span>').join('');$('outcome').innerHTML='<strong>Board consequence:</strong> '+opt.out+'<div class="delta">'+delta+'</div>';$('outcome').classList.add('show');$('nextCase').disabled=false;$('pathText').textContent='Decision path: '+state.choices.map(x=>x.key).join(' → ');updateScores();save();}
+    function next(){if(!state.choices[state.index])return;state.index++;if(state.index>=cases.length){finish();}else{renderCase();$('caseArea').scrollIntoView({behavior:'smooth',block:'start'});}save();}
+    function pct(axis){return Math.round((state.scores[axis]/MAX_PER_AXIS)*100);}
+    function finish(){state.finished=true;$('board').querySelector('#caseArea').hidden=true;$('boardWaiting').hidden=false;$('boardWaiting').textContent='Board complete. Your deterministic briefing is ready below.';const avg=Math.round((pct('safety')+pct('evidence')+pct('trust')+pct('efficiency'))/4);let title,desc;if(avg>=80&&pct('safety')>=80&&pct('evidence')>=80&&pct('trust')>=80){title='Board-approved with strong safeguards.';desc='Your protocol uses AI as decision support while preserving human review, careful evidence language, patient transparency and an accountability trail.';}else if(avg>=65){title='Conditional approval — strengthen the safeguards.';desc='Your protocol has workable elements, but one or more domains need clearer human oversight, evidence limits, patient communication or governance.';}else{title='Protocol requires revision before deployment.';desc='Your choices create substantial gaps in safe oversight, evidence use, transparency or accountability. Use the recap to explain what your board would change.'}$('finalVerdict').innerHTML='<strong>'+title+'</strong> '+desc;$('finalPath').textContent=state.choices.map(x=>x.key).join('-');$('finalSafety').textContent=pct('safety')+'%';$('finalEvidence').textContent=pct('evidence')+'%';$('finalTrust').textContent=pct('trust')+'%';$('finalEfficiency').textContent=pct('efficiency')+'%';$('finalInterpretation').textContent='Overall board profile: '+avg+'%. The four axes are deliberately separate: a fast protocol is not automatically a safe or evidence-based one.';const list=$('decisionList');list.innerHTML='';state.choices.forEach((ch,i)=>{const div=document.createElement('div');div.className='g4-decision';div.innerHTML='<strong>'+(i+1)+'. '+cases[i].title+' · '+ch.key+'</strong><br>'+ch.label;list.appendChild(div);});buildRecaps();$('finalBrief').classList.add('show');save();setTimeout(()=>$('finalBrief').scrollIntoView({behavior:'smooth',block:'start'}),50);}
+    function buildRecaps(){const path=state.choices.map(x=>x.key).join('-');const safetyChoice=state.choices[0]?.label||'';const evidenceChoice=state.choices[3]?.label||'';const patientChoice=state.choices[4]?.label||'';const governanceChoice=state.choices[5]?.label||'';const common='<li>State one thing your group would keep and one thing you would improve.</li><li>Finish with one clear human-in-the-loop rule.</li>';let cards=[
+      {s:'Student 1',r:'Clinical Safety Lead',pts:['Explain your sepsis decision: '+safetyChoice,'Explain how your team handled the spine or EEG mismatch.','Identify one situation in which a clinician must override or verify the AI.']},
+      {s:'Student 2',r:'Evidence Lead',pts:['Explain your evidence decision: '+evidenceChoice,'Use one Day 4 limitation to show why a percentage does not automatically prove real-world superiority.','Use cautious language: may, might, could, is likely to, does not prove.']},
+      {s:'Student 3',r:'Patient & Ethics Lead',pts:['Explain your patient-transparency decision: '+patientChoice,'Say how your protocol protects trust without exaggerating what AI can do.','Give your view on whether patients should be told when AI supports care.']}
+    ];if(state.size===4){cards.push({s:'Student 4',r:'Governance Lead',pts:['Explain your accountability decision: '+governanceChoice,'Say what should be documented or reviewed when an AI-supported decision goes wrong.','Give the team’s final deployment verdict using decision code '+path+'.']});}else{cards[2].pts.push('Also cover governance: '+governanceChoice);cards[2].pts.push('Give the team’s final deployment verdict using decision code '+path+'.');}
+      const wrap=$('recapCards');wrap.innerHTML='';cards.forEach(c=>{const art=document.createElement('article');art.className='g4-recap';art.innerHTML='<span class="student">'+c.s+'</span><h3>'+c.r+'</h3><ol>'+c.pts.map(p=>'<li>'+p+'</li>').join('')+'</ol><span class="time">≈ 2 minutes speaking</span>';wrap.appendChild(art);});}
+    function resetAll(){if(!confirm('Reset the entire AI Safety Board and delete all choices on this device?'))return;clearSave();state.size=null;state.index=0;state.choices=[];state.scores={safety:0,evidence:0,trust:0,efficiency:0};state.started=false;state.finished=false;$('caseArea').hidden=true;$('boardWaiting').hidden=false;$('boardWaiting').textContent='The board will open after you choose a group size and press Start.';$('finalBrief').classList.remove('show');$('startBoard').disabled=true;$('startBoard').textContent='Choose group size first';document.querySelectorAll('.group-size').forEach(b=>{b.setAttribute('aria-pressed','false');b.style.background='';b.style.color='';});$('groupSizeStatus').textContent='Choose 3 or 4 students before starting.';updateScores();window.scrollTo({top:$('instructions').offsetTop-20,behavior:'smooth'});}
+    function briefText(){const lines=['AI Clinical Control — Group Board Brief','Group size: '+state.size,'Decision code: '+state.choices.map(x=>x.key).join('-'),'Scores: Safety '+pct('safety')+'%, Evidence '+pct('evidence')+'%, Patient trust '+pct('trust')+'%, Efficiency '+pct('efficiency')+'%',''];state.choices.forEach((ch,i)=>lines.push((i+1)+'. '+cases[i].title+' ['+ch.key+'] '+ch.label));return lines.join('\n');}
+    async function copyBrief(){const text=briefText();try{await navigator.clipboard.writeText(text);$('copyStatus').textContent='Team brief copied.';}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');$('copyStatus').textContent='Team brief copied.';}catch(err){$('copyStatus').textContent='Copy was blocked by this browser. You can copy the decision code manually: '+state.choices.map(x=>x.key).join('-');}ta.remove();}}
+    $('jumpInstructions').addEventListener('click',()=>$('instructions').scrollIntoView({behavior:'smooth'}));document.querySelectorAll('.group-size').forEach(b=>b.addEventListener('click',()=>setSize(Number(b.dataset.size))));$('startBoard').addEventListener('click',start);$('nextCase').addEventListener('click',next);$('resetBoard').addEventListener('click',resetAll);$('copyBrief').addEventListener('click',copyBrief);
+    restore();updateScores();if(state.size)setSize(state.size);if(state.finished&&state.choices.length===cases.length){finish();}else if(state.started){$('caseArea').hidden=false;$('boardWaiting').hidden=true;$('startBoard').disabled=true;$('startBoard').textContent='Board in progress';renderCase();}
+  })();
+  </script>
+  <script src="pwa.js" defer></script><script src="accessibility.js" defer></script>
 </body>
 </html>
