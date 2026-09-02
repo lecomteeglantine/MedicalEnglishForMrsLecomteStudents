@@ -1,0 +1,20 @@
+Scenario: D4-AI-BOARD-V3
+Cases: 6
+Options per case: A/B/C fixed
+Complete paths audited: 729
+Determinism failures: 0
+Distinct future-option sequences: 1
+Randomisation: none
+Device-dependent branching: none
+Representative desktop/mobile parity paths: 5/5 PASS
+320px overflow: PASS
+390px overflow: PASS
+768px overflow: PASS
+1024px overflow: PASS
+3-student recap: PASS
+4-student recap: PASS
+Mid-answer refresh restore: PASS
+Corrupt localStorage rejection: PASS
+Mid-activity restart: PASS
+JS syntax: PASS
+Duplicate HTML ids: 0
