@@ -1,9 +1,9 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v61-core-day5-audit-r2-20260904`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v61-runtime-day5-audit-r2-20260904`;
+const CORE_CACHE = `${CACHE_PREFIX}v62-core-day5-resume-r3-20260904`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v62-runtime-day5-resume-r3-20260904`;
 
 // Keep the first install deliberately small. Large videos and music remain runtime-only.
-// Day 3 HTML and its small WebP illustrations are pre-cached so both activities can reopen offline.
+// Core course pages are pre-cached; Day 5 HTML/JS/CSS are explicitly required so the game can resume offline.
 const CORE_SHELL = [
   "./",
   "./index.html",
@@ -59,7 +59,7 @@ const REQUIRED_SHELL = [
   "./fgsm3-day3-individual.html",
   "./fgsm3-day5.html",
   "./fgsm3-day5-game.js",
-  "./styles-v37.css",
+  "./styles-v54.css",
   "./pwa.js",
   "./accessibility.js",
   "./manifest.webmanifest"

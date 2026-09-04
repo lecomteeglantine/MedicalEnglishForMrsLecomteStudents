@@ -313,6 +313,40 @@
     const ids=new Set(questions.map(q=>q.id));
     return new Set(order).size===questions.length&&order.every(id=>ids.has(id));
   }
+  // Resume safely after a reload. A correct answer is saved before the learner
+  // presses “Next”, so the persisted index can legitimately still point at an
+  // already-answered item. Move to the first unanswered item and rebuild score
+  // counters from the saved answer/wrong-answer sets to avoid a dead screen or
+  // score drift after reloads, interrupted sessions or partially stale storage.
+  function reconcileQuestionProgress(prefix,questions){
+    const orderKey=`${prefix}Order`, answeredKey=`${prefix}AnsweredIds`, wrongKey=`${prefix}WrongIds`;
+    const indexKey=`${prefix}Index`, scoreKey=`${prefix}Score`, firstTryKey=`${prefix}FirstTry`;
+    if(!validOrder(state[orderKey],questions))return false;
+    const validIds=new Set(questions.map(q=>q.id));
+    const uniqueValid=list=>[...new Set((Array.isArray(list)?list:[]).filter(id=>validIds.has(id)))];
+    const answered=uniqueValid(state[answeredKey]);
+    const wrong=uniqueValid(state[wrongKey]);
+    const answeredSet=new Set(answered), wrongSet=new Set(wrong);
+    const next=state[orderKey].findIndex(id=>!answeredSet.has(id));
+    const safeIndex=next===-1?questions.length:next;
+    const safeScore=answered.reduce((sum,id)=>sum+(wrongSet.has(id)?6:10),0);
+    const safeFirstTry=answered.reduce((sum,id)=>sum+(wrongSet.has(id)?0:1),0);
+    let changed=false;
+    const assign=(key,value)=>{
+      const before=state[key];
+      const same=Array.isArray(value)&&Array.isArray(before)?before.length===value.length&&before.every((v,i)=>v===value[i]):before===value;
+      if(!same){state[key]=value;changed=true;}
+    };
+    assign(answeredKey,answered);
+    assign(wrongKey,wrong);
+    assign(indexKey,safeIndex);
+    assign(scoreKey,safeScore);
+    assign(firstTryKey,safeFirstTry);
+    if(prefix==="reality")assign("realityCards",answered.length);
+    if(prefix==="script")assign("scriptAudited",answered.length);
+    if(prefix==="invisible")assign("invisibleReviewed",answered.length);
+    return changed;
+  }
   function ping(freq=520,dur=.055){if(!state.sound)return; try{const C=window.AudioContext||window.webkitAudioContext; const c=new C(),o=c.createOscillator(),g=c.createGain(); o.frequency.value=freq; o.type="sine"; g.gain.setValueAtTime(.035,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur); o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur); setTimeout(()=>c.close(),200);}catch(e){}}
   function startMusicPlayback(){const music=$("day5Music"); if(!music)return; music.volume=.18; const p=music.play(); if(p&&typeof p.catch==="function")p.catch(()=>{musicOn=false;storageSet(MUSIC_KEY,"off");syncMusicButton();const status=$("day5AudioStatus");if(status)status.textContent="Music could not start in this browser. Sound effects still work; press Music again to retry.";});}
   function stopMusicPlayback(reset=true){const music=$("day5Music"); if(!music)return; music.pause(); if(reset)music.currentTime=0;}
@@ -523,6 +557,7 @@
       state.criteriaIndex=0; state.criteriaScore=0; state.criteriaFirstTry=0;
       state.criteriaAnsweredIds=[]; state.criteriaWrongIds=[]; save();
     }
+    if(reconcileQuestionProgress("criteria",criteriaQuestions))save();
     renderQuestion();
   }
   function criterionItem(){
@@ -591,6 +626,7 @@
       state.realityWrongIds=[];
       save();
     }
+    if(reconcileQuestionProgress("reality",realityQuestions))save();
     renderRealityQuestion();
     document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
@@ -668,6 +704,7 @@
       state.scriptVerdicts={};
       save();
     }
+    if(reconcileQuestionProgress("script",scriptQuestions))save();
     renderScriptQuestion();
     document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
@@ -747,6 +784,7 @@
       state.invisibleWrongIds=[];
       save();
     }
+    if(reconcileQuestionProgress("invisible",invisibleQuestions))save();
     renderInvisibleQuestion();
     document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
@@ -843,6 +881,7 @@
     if(!validOrder(state.ratingsOrder,ratingsCalibrationQuestions)){
       state.ratingsOrder=shuffle(ratingsCalibrationQuestions.map(q=>q.id));state.ratingsIndex=0;state.ratingsScore=0;state.ratingsFirstTry=0;state.ratingsAnsweredIds=[];state.ratingsWrongIds=[];save();
     }
+    if(reconcileQuestionProgress("ratings",ratingsCalibrationQuestions))save();
     renderRatingsCalibration();document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
   function ratingsItem(){const id=state.ratingsOrder?.[state.ratingsIndex];return ratingsCalibrationQuestions.find(q=>q.id===id);}
@@ -886,6 +925,7 @@
       state.writersOrder=[...shuffle(decisionIds),...shuffle(languageIds)];
       state.writersIndex=0;state.writersScore=0;state.writersFirstTry=0;state.writersAnsweredIds=[];state.writersWrongIds=[];state.writersNotes={};state.writersDone=false;save();
     }
+    if(reconcileQuestionProgress("writers",writersQuestions))save();
     renderWritersQuestion();
     document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
@@ -981,6 +1021,7 @@
     if(!validOrder(state.finalOrder,finalQuestions)){
       state.finalOrder=shuffle(finalQuestions.map(q=>q.id));state.finalIndex=0;state.finalScore=0;state.finalFirstTry=0;state.finalAnsweredIds=[];state.finalWrongIds=[];state.finalChallengeDone=false;state.finalDecisions={};save();
     }
+    if(reconcileQuestionProgress("final",finalQuestions))save();
     renderFinalQuestion();
     $("day5FinalScreen").scrollIntoView({behavior:"smooth",block:"center"});
   }
