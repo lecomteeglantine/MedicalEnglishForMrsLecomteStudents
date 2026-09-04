@@ -1,6 +1,6 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v62-core-day5-resume-r3-20260904`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v62-runtime-day5-resume-r3-20260904`;
+const CORE_CACHE = `${CACHE_PREFIX}v63-core-day5-r4-v49-20260904`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v63-runtime-day5-r4-v49-20260904`;
 
 // Keep the first install deliberately small. Large videos and music remain runtime-only.
 // Core course pages are pre-cached; Day 5 HTML/JS/CSS are explicitly required so the game can resume offline.
@@ -127,6 +127,26 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
+  // Day 5 is deliberately network-first and bypasses the browser HTTP cache.
+  // This prevents any pre-R4 cached HTML/JS from keeping the game broken after deployment.
+  const isDay5Page = url.pathname.endsWith("/fgsm3-day5.html");
+  const isDay5Engine = url.pathname.endsWith("/fgsm3-day5-game.js");
+  if (isDay5Page || isDay5Engine) {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(request, {cache: "no-store"});
+        if (response && response.ok) {
+          const cache = await caches.open(RUNTIME_CACHE);
+          await cache.put(request, response.clone());
+        }
+        return response;
+      } catch (_) {
+        return (await caches.match(request, {ignoreSearch:true})) || Response.error();
+      }
+    })());
+    return;
+  }
 
   // Browsers use Range requests for seeking in audio/video. Passing them directly
   // to the network avoids broken partial-response caching and scrubber failures.

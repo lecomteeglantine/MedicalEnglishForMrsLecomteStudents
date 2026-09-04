@@ -1,6 +1,8 @@
 (() => {
   "use strict";
-  const KEY = "mrsLecomteFgsm3Day5StreamingV48";
+  const DAY5_BUILD = "DAY5-R4-V49-SELF-CONTAINED-20260904";
+  console.info("FGSM3 Day 5", DAY5_BUILD);
+  const KEY = "mrsLecomteFgsm3Day5StreamingV49";
   const MUSIC_KEY = "mrsLecomteFgsm3Day5Music";
   const defaultState = {
     sound:true,
@@ -1084,6 +1086,7 @@
   }
 
   document.addEventListener("DOMContentLoaded",()=>{
+    try {
     updateUI();
     $("startDay5Mission1").addEventListener("click",()=>{document.querySelector(".stream5-board").scrollIntoView({behavior:"smooth"}); ping();});
     document.querySelectorAll(".pilot-review-btn").forEach(b=>b.addEventListener("click",()=>showPilot(b.dataset.review)));
@@ -1117,5 +1120,14 @@
     else if(state.mission4){showInvisibleClearance();}
     else if(state.mission3){showScriptClearance();}
     else if(state.mission2){showRealityClearance();}
+    window.__DAY5_READY__ = true;
+    window.__DAY5_BUILD__ = DAY5_BUILD;
+    document.documentElement.dataset.day5Ready = "R4-V49";
+    window.dispatchEvent(new CustomEvent("day5ready", {detail: DAY5_BUILD}));
+    } catch (error) {
+      console.error("FGSM3 Day 5 boot failure", error);
+      window.__DAY5_BOOT_ERROR__ = String(error && (error.stack || error.message) || error);
+      window.dispatchEvent(new CustomEvent("day5booterror", {detail: window.__DAY5_BOOT_ERROR__}));
+    }
   });
 })();
