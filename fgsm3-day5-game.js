@@ -20,6 +20,7 @@
     realityIndex:0,
     realityOrder:[],
     realityAnsweredIds:[],
+    realityWrongIds:[],
     mission2:false,
     scriptDone:false,
     scriptScore:0,
@@ -28,6 +29,7 @@
     scriptIndex:0,
     scriptOrder:[],
     scriptAnsweredIds:[],
+    scriptWrongIds:[],
     scriptVerdicts:{},
     mission3:false,
     invisibleDone:false,
@@ -37,6 +39,7 @@
     invisibleIndex:0,
     invisibleOrder:[],
     invisibleAnsweredIds:[],
+    invisibleWrongIds:[],
     mission4:false,
     finalRatings:{},
     ratingsSubmitted:0,
@@ -46,6 +49,7 @@
     ratingsIndex:0,
     ratingsOrder:[],
     ratingsAnsweredIds:[],
+    ratingsWrongIds:[],
     mission5:false,
     writersDone:false,
     writersScore:0,
@@ -53,6 +57,7 @@
     writersIndex:0,
     writersOrder:[],
     writersAnsweredIds:[],
+    writersWrongIds:[],
     writersNotes:{},
     mission6:false,
     finalChallengeDone:false,
@@ -61,6 +66,7 @@
     finalIndex:0,
     finalOrder:[],
     finalAnsweredIds:[],
+    finalWrongIds:[],
     finalDecisions:{},
     finalDone:false
   };
@@ -81,7 +87,9 @@
   let writersLocked = false;
   let finalFirstAttempt = true;
   let finalLocked = false;
-  let musicOn = localStorage.getItem(MUSIC_KEY) === "on";
+  // Music is an active playback state, so it always starts OFF after a reload.
+  // This avoids showing “Music ON” while browser autoplay rules keep the audio paused.
+  let musicOn = false;
 
   const pilots = {
     trauma:{title:"Trauma Bay", genre:"Emergency drama"},
@@ -281,11 +289,32 @@
   ];
 
   function $(id){return document.getElementById(id);}
-  function load(){try{return {...defaultState,...JSON.parse(localStorage.getItem(KEY)||"{}")} }catch(e){return {...defaultState};}}
-  function save(){localStorage.setItem(KEY,JSON.stringify(state)); updateUI();}
+  function freshDefault(){return JSON.parse(JSON.stringify(defaultState));}
+  function storageGet(key){try{return window.localStorage.getItem(key);}catch(_){return null;}}
+  function storageSet(key,value){try{window.localStorage.setItem(key,value);return true;}catch(_){return false;}}
+  function storageRemove(key){try{window.localStorage.removeItem(key);return true;}catch(_){return false;}}
+  function repairState(candidate){
+    const s={...freshDefault(),...(candidate&&typeof candidate==="object"&&!Array.isArray(candidate)?candidate:{})};
+    const arrayKeys=["criteriaOrder","criteriaAnsweredIds","criteriaWrongIds","realityOrder","realityAnsweredIds","realityWrongIds","scriptOrder","scriptAnsweredIds","scriptWrongIds","invisibleOrder","invisibleAnsweredIds","invisibleWrongIds","ratingsOrder","ratingsAnsweredIds","ratingsWrongIds","writersOrder","writersAnsweredIds","writersWrongIds","finalOrder","finalAnsweredIds","finalWrongIds"];
+    arrayKeys.forEach(k=>{if(!Array.isArray(s[k]))s[k]=[];});
+    const objectKeys=["pilots","scriptVerdicts","finalRatings","writersNotes","finalDecisions"];
+    objectKeys.forEach(k=>{if(!s[k]||typeof s[k]!=="object"||Array.isArray(s[k]))s[k]={};});
+    const numberKeys=["criteriaScore","criteriaFirstTry","criteriaIndex","realityScore","realityFirstTry","realityCards","realityIndex","scriptScore","scriptFirstTry","scriptAudited","scriptIndex","invisibleScore","invisibleFirstTry","invisibleReviewed","invisibleIndex","ratingsSubmitted","ratingsScore","ratingsFirstTry","ratingsIndex","writersScore","writersFirstTry","writersIndex","finalScore","finalFirstTry","finalIndex"];
+    numberKeys.forEach(k=>{const n=Number(s[k]);s[k]=Number.isFinite(n)&&n>=0?n:0;});
+    ["criteriaDone","mission1","realityDone","mission2","scriptDone","mission3","invisibleDone","mission4","ratingsCheckDone","mission5","writersDone","mission6","finalChallengeDone","finalDone"].forEach(k=>{s[k]=s[k]===true;});
+    s.sound=s.sound!==false;
+    return s;
+  }
+  function load(){try{const raw=storageGet(KEY);return repairState(raw?JSON.parse(raw):{});}catch(_){return freshDefault();}}
+  function save(){storageSet(KEY,JSON.stringify(state)); updateUI();}
   function shuffle(arr){const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a;}
+  function validOrder(order,questions){
+    if(!Array.isArray(order)||order.length!==questions.length)return false;
+    const ids=new Set(questions.map(q=>q.id));
+    return new Set(order).size===questions.length&&order.every(id=>ids.has(id));
+  }
   function ping(freq=520,dur=.055){if(!state.sound)return; try{const C=window.AudioContext||window.webkitAudioContext; const c=new C(),o=c.createOscillator(),g=c.createGain(); o.frequency.value=freq; o.type="sine"; g.gain.setValueAtTime(.035,c.currentTime); g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur); o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur); setTimeout(()=>c.close(),200);}catch(e){}}
-  function startMusicPlayback(){const music=$("day5Music"); if(!music)return; music.volume=.18; const p=music.play(); if(p&&typeof p.catch==="function")p.catch(()=>{$("day5AudioStatus").textContent="Music is ready. Tap Music again if your browser blocked playback.";});}
+  function startMusicPlayback(){const music=$("day5Music"); if(!music)return; music.volume=.18; const p=music.play(); if(p&&typeof p.catch==="function")p.catch(()=>{musicOn=false;storageSet(MUSIC_KEY,"off");syncMusicButton();const status=$("day5AudioStatus");if(status)status.textContent="Music could not start in this browser. Sound effects still work; press Music again to retry.";});}
   function stopMusicPlayback(reset=true){const music=$("day5Music"); if(!music)return; music.pause(); if(reset)music.currentTime=0;}
   function syncMusicButton(){const b=$("day5MusicToggle"); if(!b)return; b.setAttribute("aria-pressed",String(musicOn)); b.textContent=musicOn?"🎵 Music ON":"🎵 Music OFF";}
   function applyMusicState(fromUser=false){syncMusicButton(); if(musicOn){if(fromUser)startMusicPlayback();}else stopMusicPlayback();}
@@ -489,7 +518,7 @@
 
   function startCriteria(){
     if(state.criteriaDone){ finishCriteria(); return; }
-    if(!Array.isArray(state.criteriaOrder)||state.criteriaOrder.length!==criteriaQuestions.length){
+    if(!validOrder(state.criteriaOrder,criteriaQuestions)){
       state.criteriaOrder=shuffle(criteriaQuestions.map(q=>q.id));
       state.criteriaIndex=0; state.criteriaScore=0; state.criteriaFirstTry=0;
       state.criteriaAnsweredIds=[]; state.criteriaWrongIds=[]; save();
@@ -552,13 +581,14 @@
   function startReality(){
     if(!state.mission1)return;
     if(state.mission2){showRealityClearance();return;}
-    if(!Array.isArray(state.realityOrder)||state.realityOrder.length!==realityQuestions.length){
+    if(!validOrder(state.realityOrder,realityQuestions)){
       state.realityOrder=shuffle(realityQuestions.map(q=>q.id));
       state.realityIndex=0;
       state.realityScore=0;
       state.realityFirstTry=0;
       state.realityCards=0;
       state.realityAnsweredIds=[];
+      state.realityWrongIds=[];
       save();
     }
     renderRealityQuestion();
@@ -571,7 +601,7 @@
   function renderRealityQuestion(){
     const item=realityItem();
     if(!item){finishReality();return;}
-    realityLocked=false; realityFirstAttempt=true;
+    realityLocked=(state.realityAnsweredIds||[]).includes(item.id); realityFirstAttempt=!(state.realityWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="REALITY SCORE";
     $("day5Score").textContent=state.realityScore||0;
     $("stream5WorkspaceTitle").textContent="Reality Intelligence";
@@ -603,7 +633,8 @@
       $("nextReality").addEventListener("click",()=>{state.realityIndex=(state.realityIndex||0)+1; save(); renderRealityQuestion();});
     } else {
       realityFirstAttempt=false;
-      btn.classList.add("is-wrong"); btn.disabled=true; ping(210,.10);
+      if(!(state.realityWrongIds||[]).includes(item.id))state.realityWrongIds=[...(state.realityWrongIds||[]),item.id];
+      save(); btn.classList.add("is-wrong"); btn.disabled=true; ping(210,.10);
       const hint=choice==="OVERCLAIM"?"Overclaim means the statement goes further than the source allows.":choice==="NOT STATED"?"Not stated means the source gives no basis for deciding this claim.":"Check whether the source supports this claim, contradicts it, or simply does not address it.";
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Evidence mismatch.</strong> ${hint} Try again.</div>`;
     }
@@ -626,13 +657,14 @@
   function startScriptAudit(){
     if(!state.mission2)return;
     if(state.mission3){showScriptClearance();return;}
-    if(!Array.isArray(state.scriptOrder)||state.scriptOrder.length!==scriptQuestions.length){
+    if(!validOrder(state.scriptOrder,scriptQuestions)){
       state.scriptOrder=shuffle(scriptQuestions.map(q=>q.id));
       state.scriptIndex=0;
       state.scriptScore=0;
       state.scriptFirstTry=0;
       state.scriptAudited=0;
       state.scriptAnsweredIds=[];
+      state.scriptWrongIds=[];
       state.scriptVerdicts={};
       save();
     }
@@ -646,7 +678,7 @@
   function renderScriptQuestion(){
     const item=scriptItem();
     if(!item){finishScriptAudit();return;}
-    scriptLocked=false; scriptFirstAttempt=true;
+    scriptLocked=(state.scriptAnsweredIds||[]).includes(item.id); scriptFirstAttempt=!(state.scriptWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="SCRIPT SCORE";
     $("day5Score").textContent=state.scriptScore||0;
     $("stream5WorkspaceTitle").textContent=`Script Audit · ${item.show}`;
@@ -680,7 +712,8 @@
       $("nextScriptScene").addEventListener("click",()=>{state.scriptIndex=(state.scriptIndex||0)+1;save();renderScriptQuestion();});
     } else {
       scriptFirstAttempt=false;
-      btn.classList.add("is-wrong"); btn.disabled=true; ping(210,.10);
+      if(!(state.scriptWrongIds||[]).includes(item.id))state.scriptWrongIds=[...(state.scriptWrongIds||[]),item.id];
+      save(); btn.classList.add("is-wrong"); btn.disabled=true; ping(210,.10);
       const hint=choice==="UNREALISTIC"?"Is the scene actually incompatible with the evidence, or has television mainly compressed/intensified something recognisable?":choice==="DRAMATISED"?"Dramatised means the underlying process remains recognisable but timing, frequency or intensity has been altered for storytelling.":choice==="DEPENDS"?"Use DEPENDS only when missing context genuinely prevents a confident verdict.":"Check whether the evidence deck makes this representation credible as shown.";
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Review note rejected.</strong> ${hint} Try again.</div>`;
     }
@@ -704,13 +737,14 @@
   function startInvisibleWork(){
     if(!state.mission3)return;
     if(state.mission4){showInvisibleClearance();return;}
-    if(!Array.isArray(state.invisibleOrder)||state.invisibleOrder.length!==invisibleQuestions.length){
+    if(!validOrder(state.invisibleOrder,invisibleQuestions)){
       state.invisibleOrder=shuffle(invisibleQuestions.map(q=>q.id));
       state.invisibleIndex=0;
       state.invisibleScore=0;
       state.invisibleFirstTry=0;
       state.invisibleReviewed=0;
       state.invisibleAnsweredIds=[];
+      state.invisibleWrongIds=[];
       save();
     }
     renderInvisibleQuestion();
@@ -723,7 +757,7 @@
   function renderInvisibleQuestion(){
     const item=invisibleItem();
     if(!item){finishInvisibleWork();return;}
-    invisibleLocked=false; invisibleFirstAttempt=true;
+    invisibleLocked=(state.invisibleAnsweredIds||[]).includes(item.id); invisibleFirstAttempt=!(state.invisibleWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="INVISIBLE SHIFT SCORE";
     $("day5Score").textContent=state.invisibleScore||0;
     $("stream5WorkspaceTitle").textContent=`What TV Leaves Out · ${item.module}`;
@@ -753,7 +787,7 @@
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Evidence restored${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextInvisible" class="stream5-inline-next" type="button">${state.invisibleIndex===invisibleQuestions.length-1?"Complete the Invisible Shift":"Next off-screen file →"}</button></div>`;
       $("nextInvisible").addEventListener("click",()=>{state.invisibleIndex=(state.invisibleIndex||0)+1;save();renderInvisibleQuestion();});
     }else{
-      invisibleFirstAttempt=false; btn.classList.add("is-wrong");btn.disabled=true;ping(205,.10);
+      invisibleFirstAttempt=false;if(!(state.invisibleWrongIds||[]).includes(item.id))state.invisibleWrongIds=[...(state.invisibleWrongIds||[]),item.id];save();btn.classList.add("is-wrong");btn.disabled=true;ping(205,.10);
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>That edit note goes too far.</strong> Use the named evidence cue: distinguish what the source actually supports from what would be an assumption. Try again.</div>`;
     }
   }
@@ -806,15 +840,15 @@
     const count=Object.keys(state.finalRatings||{}).filter(k=>state.finalRatings[k]?.submitted).length;
     if(count<4)return;
     if(state.mission5){showRatingsClearance();return;}
-    if(!Array.isArray(state.ratingsOrder)||state.ratingsOrder.length!==ratingsCalibrationQuestions.length){
-      state.ratingsOrder=shuffle(ratingsCalibrationQuestions.map(q=>q.id));state.ratingsIndex=0;state.ratingsScore=0;state.ratingsFirstTry=0;state.ratingsAnsweredIds=[];save();
+    if(!validOrder(state.ratingsOrder,ratingsCalibrationQuestions)){
+      state.ratingsOrder=shuffle(ratingsCalibrationQuestions.map(q=>q.id));state.ratingsIndex=0;state.ratingsScore=0;state.ratingsFirstTry=0;state.ratingsAnsweredIds=[];state.ratingsWrongIds=[];save();
     }
     renderRatingsCalibration();document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
   }
   function ratingsItem(){const id=state.ratingsOrder?.[state.ratingsIndex];return ratingsCalibrationQuestions.find(q=>q.id===id);}
   function renderRatingsCalibration(){
     const item=ratingsItem();if(!item){finishRatingsCalibration();return;}
-    ratingsLocked=false;ratingsFirstAttempt=true;
+    ratingsLocked=(state.ratingsAnsweredIds||[]).includes(item.id);ratingsFirstAttempt=!(state.ratingsWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";$("day5Score").textContent=state.ratingsScore||0;
     $("stream5WorkspaceTitle").textContent="Ratings Department · Board Calibration";
     $("stream5WorkspaceIntro").textContent=`Calibration ${state.ratingsIndex+1} of ${ratingsCalibrationQuestions.length} · Keep entertainment, evidence and realism separate.`;
@@ -831,7 +865,7 @@
       save();ping(860,.08);document.querySelector(".stream5-score-box span").textContent="CALIBRATION SCORE";$("day5Score").textContent=state.ratingsScore;
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Board calibrated${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextRatingsCalibration" class="stream5-inline-next" type="button">${state.ratingsIndex===ratingsCalibrationQuestions.length-1?"Accept final ratings":"Next calibration →"}</button></div>`;
       $("nextRatingsCalibration").addEventListener("click",()=>{state.ratingsIndex=(state.ratingsIndex||0)+1;save();renderRatingsCalibration();});
-    }else{ratingsFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(210,.10);$("stream5Feedback").innerHTML='<div class="stream5-feedback-bad"><strong>Ratings logic rejected.</strong> Separate the evidence from your taste, and separate each review dimension. Try again.</div>';}
+    }else{ratingsFirstAttempt=false;if(!(state.ratingsWrongIds||[]).includes(item.id))state.ratingsWrongIds=[...(state.ratingsWrongIds||[]),item.id];save();btn.classList.add("is-wrong");btn.disabled=true;ping(210,.10);$("stream5Feedback").innerHTML='<div class="stream5-feedback-bad"><strong>Ratings logic rejected.</strong> Separate the evidence from your taste, and separate each review dimension. Try again.</div>';}
   }
   function finishRatingsCalibration(){state.ratingsCheckDone=true;state.mission5=true;save();ping(980,.15);updateUI();showRatingsClearance();}
   function showRatingsClearance(){
@@ -846,11 +880,11 @@
   function startWritersRoom(){
     if(!state.mission5)return;
     if(state.mission6){showWritersClearance();return;}
-    if(!Array.isArray(state.writersOrder)||state.writersOrder.length!==writersQuestions.length){
+    if(!validOrder(state.writersOrder,writersQuestions)){
       const decisionIds=writersQuestions.filter(q=>q.phase==="DECISION").map(q=>q.id);
       const languageIds=writersQuestions.filter(q=>q.phase!=="DECISION").map(q=>q.id);
       state.writersOrder=[...shuffle(decisionIds),...shuffle(languageIds)];
-      state.writersIndex=0;state.writersScore=0;state.writersFirstTry=0;state.writersAnsweredIds=[];state.writersNotes={};state.writersDone=false;save();
+      state.writersIndex=0;state.writersScore=0;state.writersFirstTry=0;state.writersAnsweredIds=[];state.writersWrongIds=[];state.writersNotes={};state.writersDone=false;save();
     }
     renderWritersQuestion();
     document.querySelector(".stream5-workspace").scrollIntoView({behavior:"smooth",block:"start"});
@@ -860,7 +894,7 @@
 
   function renderWritersQuestion(){
     const item=writersItem();if(!item){finishWritersRoom();return;}
-    writersLocked=false;writersFirstAttempt=true;
+    writersLocked=(state.writersAnsweredIds||[]).includes(item.id);writersFirstAttempt=!(state.writersWrongIds||[]).includes(item.id);
     document.querySelector(".stream5-score-box span").textContent="WRITERS’ SCORE";
     $("day5Score").textContent=state.writersScore||0;
     $("stream5WorkspaceTitle").textContent="Notes for the Writers";
@@ -893,7 +927,7 @@
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>${esc(label)}${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextWriterNote" class="stream5-inline-next" type="button">${state.writersIndex===writersQuestions.length-1?"Send notes to the board":"Next writer note →"}</button></div>`;
       $("nextWriterNote").addEventListener("click",()=>{state.writersIndex=(state.writersIndex||0)+1;save();renderWritersQuestion();});
     }else{
-      writersFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);
+      writersFirstAttempt=false;if(!(state.writersWrongIds||[]).includes(item.id))state.writersWrongIds=[...(state.writersWrongIds||[]),item.id];save();btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-bad"><strong>Not the strongest production note yet.</strong> Ask what the scene needs: preserve it, revise it, remove a misleading element, or restore missing context. Try again.</div>`;
     }
   }
@@ -944,8 +978,8 @@
     if(!state.mission6)return;
     if(state.finalDone){showGreenlightClearance();return;}
     if(state.finalChallengeDone){showCommissioningDesk();return;}
-    if(!Array.isArray(state.finalOrder)||state.finalOrder.length!==finalQuestions.length){
-      state.finalOrder=shuffle(finalQuestions.map(q=>q.id));state.finalIndex=0;state.finalScore=0;state.finalFirstTry=0;state.finalAnsweredIds=[];state.finalChallengeDone=false;state.finalDecisions={};save();
+    if(!validOrder(state.finalOrder,finalQuestions)){
+      state.finalOrder=shuffle(finalQuestions.map(q=>q.id));state.finalIndex=0;state.finalScore=0;state.finalFirstTry=0;state.finalAnsweredIds=[];state.finalWrongIds=[];state.finalChallengeDone=false;state.finalDecisions={};save();
     }
     renderFinalQuestion();
     $("day5FinalScreen").scrollIntoView({behavior:"smooth",block:"center"});
@@ -953,7 +987,7 @@
   function finalItem(){const id=state.finalOrder?.[state.finalIndex];return finalQuestions.find(q=>q.id===id);}
   function renderFinalQuestion(){
     const item=finalItem();if(!item){finishFinalChallenge();return;}
-    finalLocked=false;finalFirstAttempt=true;
+    finalLocked=(state.finalAnsweredIds||[]).includes(item.id);finalFirstAttempt=!(state.finalWrongIds||[]).includes(item.id);
     $("day5FinalScore").textContent=state.finalScore||0;
     $("day5FinalFeedback").innerHTML="";
     $("day5FinalScreen").classList.remove("is-empty");
@@ -970,7 +1004,7 @@
       save();ping(930,.08);$("day5FinalScore").textContent=state.finalScore||0;
       $("day5FinalFeedback").innerHTML=`<div class="stream5-feedback-good"><strong>Board logic accepted${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextFinalQuestion" class="stream5-inline-next" type="button">${state.finalIndex===finalQuestions.length-1?"Open the commissioning slate":"Next board file →"}</button></div>`;
       $("nextFinalQuestion").addEventListener("click",()=>{state.finalIndex=(state.finalIndex||0)+1;save();renderFinalQuestion();});
-    }else{finalFirstAttempt=false;btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);$("day5FinalFeedback").innerHTML='<div class="stream5-feedback-bad"><strong>Board challenge.</strong> Separate evidence, review dimensions and storytelling value. Try again.</div>';}
+    }else{finalFirstAttempt=false;if(!(state.finalWrongIds||[]).includes(item.id))state.finalWrongIds=[...(state.finalWrongIds||[]),item.id];save();btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);$("day5FinalFeedback").innerHTML='<div class="stream5-feedback-bad"><strong>Board challenge.</strong> Separate evidence, review dimensions and storytelling value. Try again.</div>';}
   }
   function finishFinalChallenge(){state.finalChallengeDone=true;save();ping(1040,.14);showCommissioningDesk();}
 
@@ -1014,8 +1048,8 @@
     document.querySelectorAll(".pilot-review-btn").forEach(b=>b.addEventListener("click",()=>showPilot(b.dataset.review)));
     $("startCriteriaCheck").addEventListener("click",()=>{if(!$("startCriteriaCheck").disabled) startCriteria();});
     $("day5SoundToggle").addEventListener("click",()=>{state.sound=!state.sound; $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF"; $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound)); save(); $("day5AudioStatus").textContent=state.sound?"Sound effects are on. Music is controlled separately.":"Sound effects are off. Music is controlled separately."; if(state.sound)ping();});
-    $("day5MusicToggle").addEventListener("click",()=>{musicOn=!musicOn; localStorage.setItem(MUSIC_KEY,musicOn?"on":"off"); applyMusicState(true); $("day5AudioStatus").textContent=musicOn?"Music on. Streaming Platform Review Board — Greenlight Room is playing.":"Music off. Sound effects remain available.";});
-    $("resetDay5").addEventListener("click",()=>{if(confirm("Reset all Day 5 ratings and progress on this device?")){localStorage.removeItem(KEY); state={...defaultState,pilots:{}}; location.reload();}});
+    $("day5MusicToggle").addEventListener("click",()=>{musicOn=!musicOn; storageSet(MUSIC_KEY,musicOn?"on":"off"); applyMusicState(true); $("day5AudioStatus").textContent=musicOn?"Music on. Streaming Platform Review Board — Greenlight Room is playing.":"Music off. Sound effects remain available.";});
+    $("resetDay5").addEventListener("click",()=>{if(confirm("Reset all Day 5 ratings and progress on this device?")){storageRemove(KEY); state=freshDefault(); location.reload();}});
     $("day5Mission2Button").addEventListener("click",()=>{if(state.mission1)$("day5Mission2").scrollIntoView({behavior:"smooth",block:"start"});});
     $("startRealityCheck").addEventListener("click",()=>{if(!$("startRealityCheck").disabled)startReality();});
     $("day5Mission3Button").addEventListener("click",()=>{if(state.mission2)$("day5Mission3").scrollIntoView({behavior:"smooth",block:"start"});});
@@ -1031,7 +1065,10 @@
     $("startGreenlightMeeting").addEventListener("click",()=>{if(!$("startGreenlightMeeting").disabled)startGreenlightMeeting();});
     $("day5SoundToggle").textContent=state.sound?"🔊 Sound ON":"🔇 Sound OFF";
     $("day5SoundToggle").setAttribute("aria-pressed",String(state.sound));
+    storageSet(MUSIC_KEY,"off");
     applyMusicState(false);
+    const music=$("day5Music");
+    music?.addEventListener("error",()=>{musicOn=false;storageSet(MUSIC_KEY,"off");syncMusicButton();const status=$("day5AudioStatus");if(status)status.textContent="Music file unavailable right now. Sound effects still work.";});
     if(state.finalDone){showGreenlightClearance();}
     else if(state.finalChallengeDone){showCommissioningDesk();}
     else if(state.mission6){showWritersClearance();}
