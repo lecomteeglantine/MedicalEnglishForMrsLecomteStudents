@@ -1,8 +1,8 @@
 (() => {
   "use strict";
-  const DAY5_BUILD = "DAY5-R4-V49-SELF-CONTAINED-20260904";
+  const DAY5_BUILD = "DAY5-R5-V50-UI-REFRESH-20260904";
   console.info("FGSM3 Day 5", DAY5_BUILD);
-  const KEY = "mrsLecomteFgsm3Day5StreamingV49";
+  const KEY = "mrsLecomteFgsm3Day5StreamingV50";
   const MUSIC_KEY = "mrsLecomteFgsm3Day5Music";
   const defaultState = {
     sound:true,
@@ -548,7 +548,7 @@
     const sliders=dimensions.map(([id,label,help])=>{const val=saved[id]||3; return `<label class="stream5-slider-row"><span><strong>${label}</strong><small>${help}</small></span><input type="range" min="1" max="5" step="1" value="${val}" data-rating="${id}"><output data-out="${id}">${val}/5</output></label>`;}).join("");
     $("stream5Screen").innerHTML=`<div class="stream5-review-panel"><div class="stream5-review-title"><span>FIRST IMPRESSION</span><h3>${esc(p.title)}</h3><p>${esc(p.genre)} · Rate the pitch, not the real-world medical accuracy. Evidence comes later.</p></div><div class="stream5-sliders">${sliders}</div><label class="stream5-comment"><span>Optional board note</span><textarea id="pilotNote" maxlength="240" placeholder="What makes you trust or distrust this pilot at first glance?">${esc(saved.note||"")}</textarea></label><button id="savePilotReview" class="stream5-primary" type="button">Save first impression</button></div>`;
     $("stream5Screen").querySelectorAll("input[type=range]").forEach(inp=>inp.addEventListener("input",()=>{$("stream5Screen").querySelector(`[data-out="${inp.dataset.rating}"]`).textContent=`${inp.value}/5`;}));
-    $("savePilotReview").addEventListener("click",()=>{const values={submitted:true,note:$("pilotNote").value.trim()}; $("stream5Screen").querySelectorAll("[data-rating]").forEach(i=>values[i.dataset.rating]=Number(i.value)); state.pilots={...(state.pilots||{}),[key]:values}; save(); ping(680,.08); $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Saved.</strong> Your first impression of ${esc(p.title)} is on the board. You will be able to compare it with source evidence later.</div>`;});
+    $("savePilotReview").addEventListener("click",()=>{const values={submitted:true,note:$("pilotNote").value.trim()}; $("stream5Screen").querySelectorAll("[data-rating]").forEach(i=>values[i.dataset.rating]=Number(i.value)); state.pilots={...(state.pilots||{}),[key]:values}; save(); updateUI(); ping(680,.08); $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Saved.</strong> Your first impression of ${esc(p.title)} is on the board. You will be able to compare it with source evidence later.</div>`;});
     $("stream5Screen").focus();
   }
 
@@ -606,7 +606,7 @@
     }
   }
   function finishCriteria(){
-    state.criteriaDone=true; state.mission1=true; state.criteriaIndex=criteriaQuestions.length; save(); ping(880,.14);
+    state.criteriaDone=true; state.mission1=true; state.criteriaIndex=criteriaQuestions.length; save(); updateUI(); ping(880,.14);
     $("stream5WorkspaceTitle").textContent="Review Board training cleared";
     $("stream5WorkspaceIntro").textContent="You now have a common rating language for the four pilots.";
     document.querySelector(".stream5-score-box span").textContent="CRITERIA SCORE";
@@ -664,7 +664,7 @@
         state.realityCards=(state.realityCards||0)+1;
         state.realityAnsweredIds=[...(state.realityAnsweredIds||[]),item.id];
       }
-      save(); ping(790,.08);
+      save(); updateUI(); ping(790,.08);
       document.querySelector(".stream5-score-box span").textContent="REALITY SCORE";
       $("day5Score").textContent=state.realityScore;
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>${esc(item.a)} · Evidence card collected${newCard?` · +${pts}`:""}</strong> ${esc(item.ex)} <button id="nextReality" class="stream5-inline-next" type="button">${state.realityIndex===realityQuestions.length-1?"Complete evidence deck":"Next evidence card →"}</button></div>`;
@@ -678,7 +678,7 @@
     }
   }
   function finishReality(){
-    state.realityDone=true; state.mission2=true; state.realityCards=realityQuestions.length; save(); ping(920,.15); showRealityClearance();
+    state.realityDone=true; state.mission2=true; state.realityCards=realityQuestions.length; save(); updateUI(); ping(920,.15); showRealityClearance();
   }
   function showRealityClearance(){
     document.querySelector(".stream5-score-box span").textContent="REALITY SCORE";
@@ -868,7 +868,7 @@
       if(!chosen){$("stream5Feedback").innerHTML='<div class="stream5-feedback-bad"><strong>One thing is missing.</strong> Choose the evidence that most influenced your final review.</div>';return;}
       const values={submitted:true,evidence:chosen.value,note:$("finalPilotNote").value.trim()};
       $("stream5Screen").querySelectorAll("[data-final-dim]").forEach(i=>values[i.dataset.finalDim]=Number(i.value));
-      state.finalRatings={...(state.finalRatings||{}),[key]:values};save();ping(720,.08);
+      state.finalRatings={...(state.finalRatings||{}),[key]:values};save();updateUI();ping(720,.08);
       const deltas=dimensions.map(([id,label])=>{const a=Number(initial[id]||3),b=Number(values[id]||a),d=b-a;return `${label.replace(/^.. /,"")}: ${d===0?"no change":(d>0?`+${d}`:`${d}`)}`;}).join(" · ");
       $("stream5Feedback").innerHTML=`<div class="stream5-feedback-good"><strong>Final rating saved.</strong> ${esc(deltas)}. Your evidence choice is attached to the review.</div>`;
     });
@@ -962,7 +962,7 @@
         state.writersAnsweredIds=[...(state.writersAnsweredIds||[]),item.id];
         state.writersNotes={...(state.writersNotes||{}),[item.id]:item.a};
       }
-      save();ping(900,.08);
+      save();updateUI();ping(900,.08);
       document.querySelector(".stream5-score-box span").textContent="WRITERS’ SCORE";
       $("day5Score").textContent=state.writersScore||0;
       const label=item.phase==="DECISION"?`Production note: ${item.a}`:"Consultant note accepted";
@@ -1044,12 +1044,12 @@
     if(choice===item.a){
       finalLocked=true;btn.classList.add("is-correct");const fresh=!(state.finalAnsweredIds||[]).includes(item.id);const pts=finalFirstAttempt?10:6;
       if(fresh){state.finalScore=(state.finalScore||0)+pts;if(finalFirstAttempt)state.finalFirstTry=(state.finalFirstTry||0)+1;state.finalAnsweredIds=[...(state.finalAnsweredIds||[]),item.id];}
-      save();ping(930,.08);$("day5FinalScore").textContent=state.finalScore||0;
+      save();updateUI();ping(930,.08);$("day5FinalScore").textContent=state.finalScore||0;
       $("day5FinalFeedback").innerHTML=`<div class="stream5-feedback-good"><strong>Board logic accepted${fresh?` · +${pts}`:""}.</strong> ${esc(item.ex)} <button id="nextFinalQuestion" class="stream5-inline-next" type="button">${state.finalIndex===finalQuestions.length-1?"Open the commissioning slate":"Next board file →"}</button></div>`;
       $("nextFinalQuestion").addEventListener("click",()=>{state.finalIndex=(state.finalIndex||0)+1;save();renderFinalQuestion();});
     }else{finalFirstAttempt=false;if(!(state.finalWrongIds||[]).includes(item.id))state.finalWrongIds=[...(state.finalWrongIds||[]),item.id];save();btn.classList.add("is-wrong");btn.disabled=true;ping(190,.10);$("day5FinalFeedback").innerHTML='<div class="stream5-feedback-bad"><strong>Board challenge.</strong> Separate evidence, review dimensions and storytelling value. Try again.</div>';}
   }
-  function finishFinalChallenge(){state.finalChallengeDone=true;save();ping(1040,.14);showCommissioningDesk();}
+  function finishFinalChallenge(){state.finalChallengeDone=true;save();updateUI();ping(1040,.14);showCommissioningDesk();}
 
   function showCommissioningDesk(){
     $("day5FinalScreen").classList.remove("is-empty");

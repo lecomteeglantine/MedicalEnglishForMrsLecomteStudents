@@ -1,9 +1,9 @@
 const CACHE_PREFIX = "mrs-lecomte-medical-english-";
-const CORE_CACHE = `${CACHE_PREFIX}v63-core-day5-r4-v49-20260904`;
-const RUNTIME_CACHE = `${CACHE_PREFIX}v63-runtime-day5-r4-v49-20260904`;
+const CORE_CACHE = `${CACHE_PREFIX}v64-core-day5-r5-v50-20260904`;
+const RUNTIME_CACHE = `${CACHE_PREFIX}v64-runtime-day5-r5-v50-20260904`;
 
 // Keep the first install deliberately small. Large videos and music remain runtime-only.
-// Core course pages are pre-cached; Day 5 HTML/JS/CSS are explicitly required so the game can resume offline.
+// Core course pages are pre-cached; Day 5 HTML/CSS are required. The Day 5 engine is embedded in the HTML, so SW installation cannot be blocked by a stale/missing external JS file.
 const CORE_SHELL = [
   "./",
   "./index.html",
@@ -22,7 +22,6 @@ const CORE_SHELL = [
   "./fgsm3-day3-go-bag.html",
   "./fgsm3-day3-individual.html",
   "./fgsm3-day5.html",
-  "./fgsm3-day5-game.js",
   "./assets/fgsm3/day3/images/day3-displacement-context.webp",
   "./assets/fgsm3/day3/images/day3-cnn-msf-poster.webp",
   "./assets/fgsm3/day3/images/day3-humanitarian-archive.webp",
@@ -58,7 +57,6 @@ const REQUIRED_SHELL = [
   "./fgsm3-day3-go-bag.html",
   "./fgsm3-day3-individual.html",
   "./fgsm3-day5.html",
-  "./fgsm3-day5-game.js",
   "./styles-v54.css",
   "./pwa.js",
   "./accessibility.js",
@@ -129,10 +127,9 @@ self.addEventListener("fetch", event => {
   if (url.origin !== self.location.origin) return;
 
   // Day 5 is deliberately network-first and bypasses the browser HTTP cache.
-  // This prevents any pre-R4 cached HTML/JS from keeping the game broken after deployment.
+  // This prevents any pre-R5 cached HTML from keeping the game broken after deployment.
   const isDay5Page = url.pathname.endsWith("/fgsm3-day5.html");
-  const isDay5Engine = url.pathname.endsWith("/fgsm3-day5-game.js");
-  if (isDay5Page || isDay5Engine) {
+  if (isDay5Page) {
     event.respondWith((async () => {
       try {
         const response = await fetch(request, {cache: "no-store"});
